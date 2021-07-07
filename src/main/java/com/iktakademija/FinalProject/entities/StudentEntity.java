@@ -1,27 +1,42 @@
 package com.iktakademija.FinalProject.entities;
 
-public class StudentEntity {
+import java.util.List;
 
-	private IdentityEntity identity;
-	private UserEntity user;
+public class StudentEntity extends UserEntity {
+
+	/************************************************************
+	 * Attributes
+	 ************************************************************/
+
+	private ClassEntity clazz;
+	private List<ParentEntity> parents;
+
+	/************************************************************
+	 * Constructors
+	 ************************************************************/
 
 	public StudentEntity() {
 		super();
 	}
 
-	public IdentityEntity getIdentity() {
-		return identity;
+	/************************************************************
+	 * Getters & Setters
+	 ************************************************************/
+	
+	public ClassEntity getClazz() {
+		return clazz;
 	}
 
-	public void setIdentity(IdentityEntity identity) {
-		this.identity = identity;
+	public void setClazz(ClassEntity clazz) {
+		this.clazz = clazz;
 	}
 
-	public UserEntity getUser() {
-		return user;
+	public List<ParentEntity> getParents() {
+		return parents;
 	}
 
-	public void setUser(UserEntity user) {
-		this.user = user;
+	public void setParents(List<ParentEntity> parents) {
+		this.parents = parents;
 	}
+
 }

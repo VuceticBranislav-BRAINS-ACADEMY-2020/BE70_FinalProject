@@ -2,11 +2,20 @@ package com.iktakademija.FinalProject.entities;
 
 import java.time.LocalDate;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Version;
+
 import com.iktakademija.FinalProject.entities.enums.EGrade;
 import com.iktakademija.FinalProject.entities.enums.EStage;
 
 public class GradeEntity {
 
+	/************************************************************
+	 * Attributes
+	 ************************************************************/
+	
 	private EGrade type;
 	private Integer value;
 	private LocalDate entred;
@@ -16,9 +25,30 @@ public class GradeEntity {
 	private StudentEntity student;
 	private TeacherEntity teacher;
 
+	/************************************************************
+	 * Shadow Attributes
+	 ************************************************************/
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer id;
+
+	@Version
+	private Integer version;
+
+	private Integer deleted;
+
+	/************************************************************
+	 * Constructors
+	 ************************************************************/
+	
 	public GradeEntity() {
 		super();
 	}
+	
+	/************************************************************
+	 * Getters & Setters
+	 ************************************************************/
 
 	public EGrade getType() {
 		return type;
@@ -83,5 +113,29 @@ public class GradeEntity {
 	public void setTeacher(TeacherEntity teacher) {
 		this.teacher = teacher;
 	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public Integer getVersion() {
+		return version;
+	}
+
+	public void setVersion(Integer version) {
+		this.version = version;
+	}
+
+	public Integer getDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(Integer deleted) {
+		this.deleted = deleted;
+	}	
 
 }
