@@ -1,18 +1,29 @@
 package com.iktakademija.FinalProject.entities;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+//@Entity(name = AddressEntity.TABLE_NAME)
+//@Table(name = AddressEntity.TABLE_NAME)
 @Entity(name = "address")
 @Table(name = "address")
 @JsonIgnoreProperties({ "handler", "hibernateLazyInitializer" })
 public class AddressEntity {
+
+//	public static final String TABLE_NAME= "address";
 
 	/************************************************************
 	 * Attributes
@@ -24,9 +35,17 @@ public class AddressEntity {
 	private String apartment;
 
 	/************************************************************
+	 * Relation Attributes
+	 ************************************************************/
+
+	@OneToMany(mappedBy = "address", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JsonManagedReference(value = "Identity_Address_1")
+	private Set<IdentityEntity> identities = new HashSet<>();
+
+	/************************************************************
 	 * Shadow Attributes
 	 ************************************************************/
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
@@ -39,7 +58,7 @@ public class AddressEntity {
 	/************************************************************
 	 * Constructors
 	 ************************************************************/
-	
+
 	public AddressEntity() {
 		super();
 	}
@@ -47,7 +66,7 @@ public class AddressEntity {
 	/************************************************************
 	 * Getters & Setters
 	 ************************************************************/
-	
+
 	public String getCity() {
 		return city;
 	}
@@ -102,6 +121,14 @@ public class AddressEntity {
 
 	public void setDeleted(Integer deleted) {
 		this.deleted = deleted;
+	}
+
+	public Set<IdentityEntity> getIdentities() {
+		return identities;
+	}
+
+	public void setIdentities(Set<IdentityEntity> identities) {
+		this.identities = identities;
 	}
 
 }

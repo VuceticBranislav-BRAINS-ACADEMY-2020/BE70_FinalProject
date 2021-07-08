@@ -2,14 +2,25 @@ package com.iktakademija.FinalProject.entities;
 
 import java.time.LocalDate;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.persistence.Version;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.iktakademija.FinalProject.entities.enums.EGrade;
 import com.iktakademija.FinalProject.entities.enums.EStage;
 
+@Entity(name = "grade")
+@Table(name = "grade")
+@JsonIgnoreProperties({ "handler", "hibernateLazyInitializer" })
 public class GradeEntity {
 
 	/************************************************************
@@ -19,10 +30,25 @@ public class GradeEntity {
 	private EGrade type;
 	private Integer value;
 	private LocalDate entred;
-	private Integer generation;
 	private EStage stage;
+	
+	/************************************************************
+	 * Relation Attributes
+	 ************************************************************/
+	
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JoinColumn(name = "subject")
+	@JsonBackReference(value = "Grade_Subject_1")
 	private SubjectEntity subject;
+	
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JoinColumn(name = "student")
+	@JsonBackReference(value = "Grade_Student_1")
 	private StudentEntity student;
+	
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JoinColumn(name = "teacher")
+	@JsonBackReference(value = "Grade_Teacher_1")
 	private TeacherEntity teacher;
 
 	/************************************************************
@@ -49,7 +75,7 @@ public class GradeEntity {
 	/************************************************************
 	 * Getters & Setters
 	 ************************************************************/
-
+	
 	public EGrade getType() {
 		return type;
 	}
@@ -72,14 +98,6 @@ public class GradeEntity {
 
 	public void setEntred(LocalDate entred) {
 		this.entred = entred;
-	}
-
-	public Integer getGeneration() {
-		return generation;
-	}
-
-	public void setGeneration(Integer generation) {
-		this.generation = generation;
 	}
 
 	public EStage getStage() {
@@ -136,6 +154,6 @@ public class GradeEntity {
 
 	public void setDeleted(Integer deleted) {
 		this.deleted = deleted;
-	}	
+	}		
 
 }

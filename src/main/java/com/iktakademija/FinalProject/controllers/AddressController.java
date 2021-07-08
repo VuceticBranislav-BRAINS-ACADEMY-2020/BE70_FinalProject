@@ -1,6 +1,6 @@
 package com.iktakademija.FinalProject.controllers;
 
-import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,11 +25,11 @@ public class AddressController {
 	 * REST method: GET, path: ""<BR>
 	 * Error status messages: none<BR>
 	 * Postman identification tag: <B>ADR01</B>
-	 * @return list of {@link AddressEntity} from database or empty list if nothing to return.
+	 * @return set of {@link AddressEntity} from database or empty set if nothing to return.
 	 */
 	@RequestMapping(method = RequestMethod.GET, path = "")
 	public ResponseEntity<?> getAllAdresses() {
-		List<AddressEntity> ar = addressRepositories.findAll();
-		return new ResponseEntity<List<AddressEntity>>(ar, HttpStatus.OK);
+		Set<AddressEntity> ar = addressRepositories.findAll();
+		return new ResponseEntity<Set<AddressEntity>>(ar, HttpStatus.OK);
 	}
 }

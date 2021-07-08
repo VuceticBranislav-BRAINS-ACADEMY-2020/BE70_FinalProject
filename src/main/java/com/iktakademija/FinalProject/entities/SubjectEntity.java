@@ -1,12 +1,27 @@
 package com.iktakademija.FinalProject.entities;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.persistence.Version;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+@Entity(name = "subject")
+@Table(name = "subject")
+@JsonIgnoreProperties({ "handler", "hibernateLazyInitializer" })
 public class SubjectEntity {
 
 	/************************************************************
@@ -16,9 +31,22 @@ public class SubjectEntity {
 	private String name;
 	private Integer fond;
 	private String plan;
-	private List<TeacherEntity> teacher;
-	private List<GradeEntity> grades;
-	private List<ClassEntity> classes;
+	
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+	@JoinTable(name = "subject_teacher", joinColumns = {
+			@JoinColumn(name = "idsubject", nullable = false, updatable = false) }, inverseJoinColumns = {
+					@JoinColumn(name = "idteacher", nullable = false, updatable = false) })
+	private Set<TeacherEntity> teacher = new HashSet<>();
+	
+	@OneToMany(mappedBy = "subject", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JsonManagedReference(value = "Grade_Subject_1")
+	private Set<GradeEntity> grades = new HashSet<>();
+	
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+	@JoinTable(name = "subject_class", joinColumns = {
+			@JoinColumn(name = "idsubject", nullable = false, updatable = false) }, inverseJoinColumns = {
+					@JoinColumn(name = "idclass", nullable = false, updatable = false) })
+	private Set<ClassEntity> classes = new HashSet<>();
 
 	/************************************************************
 	 * Shadow Attributes
@@ -69,27 +97,27 @@ public class SubjectEntity {
 		this.plan = plan;
 	}
 
-	public List<TeacherEntity> getTeacher() {
+	public Set<TeacherEntity> getTeacher() {
 		return teacher;
 	}
 
-	public void setTeacher(List<TeacherEntity> teacher) {
+	public void setTeacher(Set<TeacherEntity> teacher) {
 		this.teacher = teacher;
 	}
 
-	public List<GradeEntity> getGrades() {
+	public Set<GradeEntity> getGrades() {
 		return grades;
 	}
 
-	public void setGrades(List<GradeEntity> grades) {
+	public void setGrades(Set<GradeEntity> grades) {
 		this.grades = grades;
 	}
 
-	public List<ClassEntity> getClasses() {
+	public Set<ClassEntity> getClasses() {
 		return classes;
 	}
 
-	public void setClasses(List<ClassEntity> classes) {
+	public void setClasses(Set<ClassEntity> classes) {
 		this.classes = classes;
 	}
 

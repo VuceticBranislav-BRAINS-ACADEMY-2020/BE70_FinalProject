@@ -1,12 +1,28 @@
 package com.iktakademija.FinalProject.entities;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.persistence.Version;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+@Entity(name = "clazz")
+@Table(name = "clazz")
+@JsonIgnoreProperties({ "handler", "hibernateLazyInitializer" })
 public class ClassEntity {
 
 	/************************************************************
@@ -14,8 +30,24 @@ public class ClassEntity {
 	 ************************************************************/
 
 	private String name;
+	
+	/************************************************************
+	 * Relation Attributes
+	 ************************************************************/
+	
+	@OneToOne(cascade =CascadeType.REFRESH,fetch =FetchType.LAZY)
+	@JoinColumn(name ="homeclass")
 	private TeacherEntity homeClassMaster;
-	private List<StudentEntity> students;
+	
+	@OneToMany(mappedBy = "clazz", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JsonManagedReference(value = "Student_Class_1")
+	private Set<StudentEntity> students = new HashSet<>();
+	
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+	@JoinTable(name = "subject_class", joinColumns = {
+			@JoinColumn(name = "idclass", nullable = false, updatable = false) }, inverseJoinColumns = {
+					@JoinColumn(name = "idsubject", nullable = false, updatable = false) })
+	private Set<SubjectEntity> subjects = new HashSet<>();
 
 	/************************************************************
 	 * Shadow Attributes
@@ -58,11 +90,11 @@ public class ClassEntity {
 		this.homeClassMaster = homeClassMaster;
 	}
 
-	public List<StudentEntity> getStudents() {
+	public Set<StudentEntity> getStudents() {
 		return students;
 	}
 
-	public void setStudents(List<StudentEntity> students) {
+	public void setStudents(Set<StudentEntity> students) {
 		this.students = students;
 	}
 
@@ -88,6 +120,14 @@ public class ClassEntity {
 
 	public void setDeleted(Integer deleted) {
 		this.deleted = deleted;
+	}
+
+	public Set<SubjectEntity> getSubjects() {
+		return subjects;
+	}
+
+	public void setSubjects(Set<SubjectEntity> subjects) {
+		this.subjects = subjects;
 	}
 
 }

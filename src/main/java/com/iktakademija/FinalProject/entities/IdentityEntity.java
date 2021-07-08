@@ -1,12 +1,28 @@
 package com.iktakademija.FinalProject.entities;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.persistence.Version;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+@Entity(name = "identity")
+@Table(name = "identity")
+@JsonIgnoreProperties({ "handler", "hibernateLazyInitializer" })
 public class IdentityEntity {
 
 	/************************************************************
@@ -16,9 +32,21 @@ public class IdentityEntity {
 	private String firstname;
 	private String lastname;
 	private String jmbg;
-	private AddressEntity address;
 	private String contact;
 	private LocalDate birthdate;
+
+	/************************************************************
+	 * Relation Attributes
+	 ************************************************************/
+
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JoinColumn(name = "address")
+	@JsonBackReference(value = "Identity_Address_1")
+	private AddressEntity address;
+
+	@OneToMany(mappedBy = "identity", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JsonManagedReference(value = "User_Identity_1")
+	private Set<UserEntity> users = new HashSet<>();
 
 	/************************************************************
 	 * Shadow Attributes
@@ -115,6 +143,14 @@ public class IdentityEntity {
 
 	public void setDeleted(Integer deleted) {
 		this.deleted = deleted;
+	}
+
+	public Set<UserEntity> getUsers() {
+		return users;
+	}
+
+	public void setUsers(Set<UserEntity> users) {
+		this.users = users;
 	}
 
 }
