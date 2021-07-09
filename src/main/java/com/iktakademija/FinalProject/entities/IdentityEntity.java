@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -13,15 +14,15 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 import javax.persistence.Version;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.iktakademija.FinalProject.entities.enums.EStatus;
 
 @Entity(name = "identity")
-@Table(name = "identity")
+//@Table(name = "identity")
 @JsonIgnoreProperties({ "handler", "hibernateLazyInitializer" })
 public class IdentityEntity {
 
@@ -29,10 +30,19 @@ public class IdentityEntity {
 	 * Attributes
 	 ************************************************************/
 
+	@Column
 	private String firstname;
+	
+	@Column
 	private String lastname;
+	
+	@Column(nullable = false)
 	private String jmbg;
+	
+	@Column
 	private String contact;
+	
+	@Column
 	private LocalDate birthdate;
 
 	/************************************************************
@@ -59,7 +69,8 @@ public class IdentityEntity {
 	@Version
 	private Integer version;
 
-	private Integer deleted;
+	@Column
+	private EStatus status;
 
 	/************************************************************
 	 * Constructors
@@ -137,12 +148,12 @@ public class IdentityEntity {
 		this.version = version;
 	}
 
-	public Integer getDeleted() {
-		return deleted;
+	public EStatus getStatus() {
+		return status;
 	}
 
-	public void setDeleted(Integer deleted) {
-		this.deleted = deleted;
+	public void setStatus(EStatus status) {
+		this.status = status;
 	}
 
 	public Set<UserEntity> getUsers() {

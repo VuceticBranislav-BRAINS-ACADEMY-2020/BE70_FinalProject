@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -14,14 +15,14 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.Table;
 import javax.persistence.Version;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.iktakademija.FinalProject.entities.enums.EStatus;
 
 @Entity(name = "clazz")
-@Table(name = "clazz")
+//@Table(name = "clazz")
 @JsonIgnoreProperties({ "handler", "hibernateLazyInitializer" })
 public class ClassEntity {
 
@@ -29,24 +30,25 @@ public class ClassEntity {
 	 * Attributes
 	 ************************************************************/
 
+	@Column
 	private String name;
-	
+
 	/************************************************************
 	 * Relation Attributes
 	 ************************************************************/
-	
-	@OneToOne(cascade =CascadeType.REFRESH,fetch =FetchType.LAZY)
-	@JoinColumn(name ="homeclass")
+
+	@OneToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JoinColumn(name = "homeclass")
 	private TeacherEntity homeClassMaster;
-	
+
 	@OneToMany(mappedBy = "clazz", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JsonManagedReference(value = "Student_Class_1")
 	private Set<StudentEntity> students = new HashSet<>();
-	
+
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
 	@JoinTable(name = "subject_class", joinColumns = {
-			@JoinColumn(name = "idclass", nullable = false, updatable = false) }, inverseJoinColumns = {
-					@JoinColumn(name = "idsubject", nullable = false, updatable = false) })
+			@JoinColumn(name = "idc", nullable = false, updatable = false) }, inverseJoinColumns = {
+					@JoinColumn(name = "ids", nullable = false, updatable = false) })
 	private Set<SubjectEntity> subjects = new HashSet<>();
 
 	/************************************************************
@@ -60,7 +62,8 @@ public class ClassEntity {
 	@Version
 	private Integer version;
 
-	private Integer deleted;
+	@Column
+	private EStatus status;
 
 	/************************************************************
 	 * Constructors
@@ -114,12 +117,12 @@ public class ClassEntity {
 		this.version = version;
 	}
 
-	public Integer getDeleted() {
-		return deleted;
+	public EStatus getStatus() {
+		return status;
 	}
 
-	public void setDeleted(Integer deleted) {
-		this.deleted = deleted;
+	public void setStatus(EStatus status) {
+		this.status = status;
 	}
 
 	public Set<SubjectEntity> getSubjects() {

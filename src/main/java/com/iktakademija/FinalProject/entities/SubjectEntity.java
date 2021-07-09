@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -13,14 +14,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 import javax.persistence.Version;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.iktakademija.FinalProject.entities.enums.EStatus;
 
 @Entity(name = "subject")
-@Table(name = "subject")
+//@Table(name = "subject")
 @JsonIgnoreProperties({ "handler", "hibernateLazyInitializer" })
 public class SubjectEntity {
 
@@ -28,24 +29,33 @@ public class SubjectEntity {
 	 * Attributes
 	 ************************************************************/
 
+	@Column(nullable = false)
 	private String name;
+
+	@Column
 	private Integer fond;
+
+	@Column
 	private String plan;
-	
+
+	/************************************************************
+	 * Relation Attributes
+	 ************************************************************/
+
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
 	@JoinTable(name = "subject_teacher", joinColumns = {
-			@JoinColumn(name = "idsubject", nullable = false, updatable = false) }, inverseJoinColumns = {
-					@JoinColumn(name = "idteacher", nullable = false, updatable = false) })
+			@JoinColumn(name = "ids", nullable = false, updatable = false) }, inverseJoinColumns = {
+					@JoinColumn(name = "idt", nullable = false, updatable = false) })
 	private Set<TeacherEntity> teacher = new HashSet<>();
-	
+
 	@OneToMany(mappedBy = "subject", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JsonManagedReference(value = "Grade_Subject_1")
 	private Set<GradeEntity> grades = new HashSet<>();
-	
+
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
 	@JoinTable(name = "subject_class", joinColumns = {
-			@JoinColumn(name = "idsubject", nullable = false, updatable = false) }, inverseJoinColumns = {
-					@JoinColumn(name = "idclass", nullable = false, updatable = false) })
+			@JoinColumn(name = "ids", nullable = false, updatable = false) }, inverseJoinColumns = {
+					@JoinColumn(name = "idc", nullable = false, updatable = false) })
 	private Set<ClassEntity> classes = new HashSet<>();
 
 	/************************************************************
@@ -59,7 +69,8 @@ public class SubjectEntity {
 	@Version
 	private Integer version;
 
-	private Integer deleted;
+	@Column
+	private EStatus status;
 
 	/************************************************************
 	 * Constructors
@@ -68,7 +79,7 @@ public class SubjectEntity {
 	public SubjectEntity() {
 		super();
 	}
-	
+
 	/************************************************************
 	 * Getters & Setters
 	 ************************************************************/
@@ -137,12 +148,12 @@ public class SubjectEntity {
 		this.version = version;
 	}
 
-	public Integer getDeleted() {
-		return deleted;
+	public EStatus getStatus() {
+		return status;
 	}
 
-	public void setDeleted(Integer deleted) {
-		this.deleted = deleted;
-	}	
+	public void setStatus(EStatus status) {
+		this.status = status;
+	}
 
 }

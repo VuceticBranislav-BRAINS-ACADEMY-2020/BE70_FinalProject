@@ -4,22 +4,23 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 import javax.persistence.Version;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.iktakademija.FinalProject.entities.enums.EStatus;
 
 //@Entity(name = AddressEntity.TABLE_NAME)
 //@Table(name = AddressEntity.TABLE_NAME)
 @Entity(name = "address")
-@Table(name = "address")
+//@Table(name = "address")
 @JsonIgnoreProperties({ "handler", "hibernateLazyInitializer" })
 public class AddressEntity {
 
@@ -29,9 +30,16 @@ public class AddressEntity {
 	 * Attributes
 	 ************************************************************/
 
+	@Column
 	private String city;
+
+	@Column
 	private String street;
+
+	@Column
 	private String number;
+
+	@Column
 	private String apartment;
 
 	/************************************************************
@@ -52,8 +60,9 @@ public class AddressEntity {
 
 	@Version
 	private Integer version;
-
-	private Integer deleted;
+	
+	@Column
+	private EStatus status;
 
 	/************************************************************
 	 * Constructors
@@ -115,12 +124,12 @@ public class AddressEntity {
 		this.version = version;
 	}
 
-	public Integer getDeleted() {
-		return deleted;
+	public EStatus getStatus() {
+		return status;
 	}
 
-	public void setDeleted(Integer deleted) {
-		this.deleted = deleted;
+	public void setStatus(EStatus status) {
+		this.status = status;
 	}
 
 	public Set<IdentityEntity> getIdentities() {
