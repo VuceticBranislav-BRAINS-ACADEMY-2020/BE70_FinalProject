@@ -3,6 +3,8 @@ package com.iktakademija.FinalProject.entities;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,7 +20,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.iktakademija.FinalProject.entities.enums.EStatus;
 
 @Entity(name = "user")
-//@Table(name = "user")
 @JsonIgnoreProperties({ "handler", "hibernateLazyInitializer" })
 @Inheritance(strategy = InheritanceType.JOINED)
 public class UserEntity {
@@ -30,7 +31,7 @@ public class UserEntity {
 	@Column(nullable = false)
 	private String password;
 	
-	@Column(nullable = false)
+	@Column(nullable = false, unique = true)
 	private String username;
 
 	/************************************************************
@@ -41,6 +42,11 @@ public class UserEntity {
 	@JoinColumn(name = "identity")
 	@JsonBackReference(value = "User_Identity_1")
 	private IdentityEntity identity;
+	
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JoinColumn(name= "role")
+	@JsonBackReference(value = "Role_Class_1")
+	private RoleEntity role;
 
 	/************************************************************
 	 * Shadow Attributes
@@ -54,6 +60,7 @@ public class UserEntity {
 	private Integer version;
 
 	@Column
+	@Enumerated(value = EnumType.STRING)
 	private EStatus status;
 
 	/************************************************************
@@ -114,6 +121,14 @@ public class UserEntity {
 
 	public void setIdentity(IdentityEntity identity) {
 		this.identity = identity;
+	}
+	
+	public RoleEntity getRole() {
+		return role;
+	}
+
+	public void setRole(RoleEntity role) {
+		this.role = role;
 	}
 
 }

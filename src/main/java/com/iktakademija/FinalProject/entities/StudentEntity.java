@@ -18,7 +18,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity(name = "student")
-//@Table(name = "student")
 @JsonIgnoreProperties({ "handler", "hibernateLazyInitializer" })
 @PrimaryKeyJoinColumn(name = "id")
 public class StudentEntity extends UserEntity {
@@ -26,6 +25,11 @@ public class StudentEntity extends UserEntity {
 	/************************************************************
 	 * Attributes
 	 ************************************************************/
+	
+	/************************************************************
+	 * Relation Attributes
+	 ************************************************************/
+	
 	@OneToMany(mappedBy = "student", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JsonManagedReference(value = "Grade_Student_1")
 	private Set<GradeEntity> grades = new HashSet<>();
@@ -41,7 +45,11 @@ public class StudentEntity extends UserEntity {
 					@JoinColumn(name = "idp", nullable = false, updatable = false) })
 	@JsonManagedReference(value = "Student_Parent_1")
 	private Set<ParentEntity> parents = new HashSet<>();
-
+	
+	/************************************************************
+	 * Shadow Attributes
+	 ************************************************************/
+	
 	/************************************************************
 	 * Constructors
 	 ************************************************************/

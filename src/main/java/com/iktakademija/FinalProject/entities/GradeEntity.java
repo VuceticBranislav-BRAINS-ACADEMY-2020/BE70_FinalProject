@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,7 +22,6 @@ import com.iktakademija.FinalProject.entities.enums.EStage;
 import com.iktakademija.FinalProject.entities.enums.EStatus;
 
 @Entity(name = "grade")
-//@Table(name = "grade")
 @JsonIgnoreProperties({ "handler", "hibernateLazyInitializer" })
 public class GradeEntity {
 
@@ -29,6 +30,7 @@ public class GradeEntity {
 	 ************************************************************/
 	
 	@Column
+	@Enumerated(value = EnumType.STRING)
 	private EGrade type;
 	
 	@Column(nullable = false)
@@ -38,6 +40,7 @@ public class GradeEntity {
 	private LocalDate entered;
 	
 	@Column
+	@Enumerated(value = EnumType.STRING)
 	private EStage stage;
 
 	/************************************************************
@@ -71,6 +74,7 @@ public class GradeEntity {
 	private Integer version;
 
 	@Column
+	@Enumerated(value = EnumType.STRING)
 	private EStatus status;
 
 	/************************************************************

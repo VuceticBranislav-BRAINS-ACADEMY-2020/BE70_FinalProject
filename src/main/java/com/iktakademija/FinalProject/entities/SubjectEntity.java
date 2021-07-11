@@ -6,6 +6,8 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,7 +23,6 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.iktakademija.FinalProject.entities.enums.EStatus;
 
 @Entity(name = "subject")
-//@Table(name = "subject")
 @JsonIgnoreProperties({ "handler", "hibernateLazyInitializer" })
 public class SubjectEntity {
 
@@ -70,6 +71,7 @@ public class SubjectEntity {
 	private Integer version;
 
 	@Column
+	@Enumerated(value = EnumType.STRING)
 	private EStatus status;
 
 	/************************************************************
