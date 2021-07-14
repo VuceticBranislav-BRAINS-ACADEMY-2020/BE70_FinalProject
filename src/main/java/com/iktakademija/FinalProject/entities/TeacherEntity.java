@@ -1,20 +1,15 @@
 package com.iktakademija.FinalProject.entities;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity(name = "teacher")
 @JsonIgnoreProperties({ "handler", "hibernateLazyInitializer" })
@@ -30,17 +25,12 @@ public class TeacherEntity extends UserEntity {
 	 ************************************************************/
 
 	@OneToOne(mappedBy = "homeClassMaster", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	private ClassEntity homeClass;
+	private GroupEntity homeClassMaster;
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
-	@JoinTable(name = "subject_teacher", joinColumns = {
-			@JoinColumn(name = "idt", nullable = false, updatable = false) }, inverseJoinColumns = {
-					@JoinColumn(name = "ids", nullable = false, updatable = false) })
-	private Set<SubjectEntity> subjects = new HashSet<>();
-
-	@OneToMany(mappedBy = "teacher", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JsonManagedReference(value = "Grade_Teacher_1")
-	private Set<GradeEntity> grades = new HashSet<>();
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JoinColumn(name = "subject")
+	@JsonBackReference(value = "Subject_Teacher_1")
+	private JoinTableSubjectTeacher subject;
 
 	/************************************************************
 	 * Constructors
@@ -49,25 +39,25 @@ public class TeacherEntity extends UserEntity {
 	public TeacherEntity() {
 		super();
 	}
-
+	
 	/************************************************************
 	 * Getters & Setters
 	 ************************************************************/
-
-	public ClassEntity getHomeClass() {
-		return homeClass;
+	
+	public GroupEntity getHomeClassMaster() {
+		return homeClassMaster;
 	}
 
-	public void setHomeClass(ClassEntity homeClass) {
-		this.homeClass = homeClass;
+	public void setHomeClassMaster(GroupEntity homeClassMaster) {
+		this.homeClassMaster = homeClassMaster;
 	}
 
-	public Set<SubjectEntity> getSubjects() {
-		return subjects;
+	public JoinTableSubjectTeacher getSubject() {
+		return subject;
 	}
 
-	public void setSubjects(Set<SubjectEntity> subjects) {
-		this.subjects = subjects;
-	}
+	public void setSubject(JoinTableSubjectTeacher subject) {
+		this.subject = subject;
+	}	
 
 }

@@ -23,7 +23,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.iktakademija.FinalProject.entities.enums.EStatus;
 
-@Entity(name = "identity")
+@Entity(name = "personality")
 @JsonIgnoreProperties({ "handler", "hibernateLazyInitializer" })
 public class PersonEntity {
 
@@ -41,7 +41,7 @@ public class PersonEntity {
 	private String jmbg;
 	
 	@Column
-	private String contact;
+	private String mphone;
 	
 	@Column
 	private LocalDate birthdate;
@@ -52,11 +52,11 @@ public class PersonEntity {
 
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "address")
-	@JsonBackReference(value = "Identity_Address_1")
+	@JsonBackReference(value = "Person_Address_1")
 	private AddressEntity address;
 
-	@OneToMany(mappedBy = "identity", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JsonManagedReference(value = "User_Identity_1")
+	@OneToMany(mappedBy = "personality", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JsonManagedReference(value = "User_Person_1")
 	private Set<UserEntity> users = new HashSet<>();
 
 	/************************************************************
@@ -85,7 +85,7 @@ public class PersonEntity {
 	/************************************************************
 	 * Getters & Setters
 	 ************************************************************/
-
+	
 	public String getFirstname() {
 		return firstname;
 	}
@@ -110,20 +110,12 @@ public class PersonEntity {
 		this.jmbg = jmbg;
 	}
 
-	public AddressEntity getAddress() {
-		return address;
+	public String getMphone() {
+		return mphone;
 	}
 
-	public void setAddress(AddressEntity address) {
-		this.address = address;
-	}
-
-	public String getContact() {
-		return contact;
-	}
-
-	public void setContact(String contact) {
-		this.contact = contact;
+	public void setMphone(String mphone) {
+		this.mphone = mphone;
 	}
 
 	public LocalDate getBirthdate() {
@@ -132,6 +124,22 @@ public class PersonEntity {
 
 	public void setBirthdate(LocalDate birthdate) {
 		this.birthdate = birthdate;
+	}
+
+	public AddressEntity getAddress() {
+		return address;
+	}
+
+	public void setAddress(AddressEntity address) {
+		this.address = address;
+	}
+
+	public Set<UserEntity> getUsers() {
+		return users;
+	}
+
+	public void setUsers(Set<UserEntity> users) {
+		this.users = users;
 	}
 
 	public Integer getId() {
@@ -156,14 +164,6 @@ public class PersonEntity {
 
 	public void setStatus(EStatus status) {
 		this.status = status;
-	}
-
-	public Set<UserEntity> getUsers() {
-		return users;
-	}
-
-	public void setUsers(Set<UserEntity> users) {
-		this.users = users;
 	}
 
 }

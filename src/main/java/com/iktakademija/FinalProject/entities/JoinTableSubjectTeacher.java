@@ -4,42 +4,40 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.Version;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.iktakademija.FinalProject.entities.enums.ERole;
-import com.iktakademija.FinalProject.entities.enums.EStatus;
 
-@Entity(name = "role")
+@Entity(name = "subject_teacher")
 @JsonIgnoreProperties({ "handler", "hibernateLazyInitializer" })
-public class RoleEntity {
-
+public class JoinTableSubjectTeacher {
+	
 	/************************************************************
 	 * Attributes
 	 ************************************************************/
 
-	@Column(name = "role")
-	@Enumerated(value = EnumType.STRING)
-	private ERole role;
-
 	/************************************************************
 	 * Relation Attributes
 	 ************************************************************/
-
-	@OneToMany(mappedBy = "role", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JsonManagedReference(value = "Role_User_1")
-	private Set<UserEntity> users = new HashSet<>();
-
+	
+	@OneToMany(mappedBy = "subject", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JsonManagedReference(value = "Subject_Teacher_1")
+	private Set<TeacherEntity> teachers = new HashSet<>();
+	
+	@OneToMany(mappedBy = "teacher", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JsonManagedReference(value = "Subject_Teacher_2")
+	private Set<SubjectEntity> subjects = new HashSet<>();
+	
+	@OneToMany(mappedBy = "sub_tch", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JsonManagedReference(value = "Subject_Teacher_3")
+	private Set<GroupEntity> group = new HashSet<>();
+	
 	/************************************************************
 	 * Shadow Attributes
 	 ************************************************************/
@@ -47,19 +45,12 @@ public class RoleEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-
-	@Version
-	private Integer version;
-
-	@Column
-	@Enumerated(value = EnumType.STRING)
-	private EStatus status;
-
+	
 	/************************************************************
 	 * Constructors
 	 ************************************************************/
 
-	public RoleEntity() {
+	public JoinTableSubjectTeacher() {
 		super();
 	}
 	
@@ -67,20 +58,28 @@ public class RoleEntity {
 	 * Getters & Setters
 	 ************************************************************/
 	
-	public ERole getRole() {
-		return role;
+	public Set<TeacherEntity> getTeachers() {
+		return teachers;
 	}
 
-	public void setRole(ERole role) {
-		this.role = role;
+	public void setTeachers(Set<TeacherEntity> teachers) {
+		this.teachers = teachers;
 	}
 
-	public Set<UserEntity> getUsers() {
-		return users;
+	public Set<SubjectEntity> getSubjects() {
+		return subjects;
 	}
 
-	public void setUsers(Set<UserEntity> users) {
-		this.users = users;
+	public void setSubjects(Set<SubjectEntity> subjects) {
+		this.subjects = subjects;
+	}
+
+	public Set<GroupEntity> getGroup() {
+		return group;
+	}
+
+	public void setGroup(Set<GroupEntity> group) {
+		this.group = group;
 	}
 
 	public Integer getId() {
@@ -90,21 +89,5 @@ public class RoleEntity {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
-	public Integer getVersion() {
-		return version;
-	}
-
-	public void setVersion(Integer version) {
-		this.version = version;
-	}
-
-	public EStatus getStatus() {
-		return status;
-	}
-
-	public void setStatus(EStatus status) {
-		this.status = status;
-	}	
 
 }

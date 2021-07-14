@@ -19,12 +19,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.iktakademija.FinalProject.entities.enums.EStatus;
 
-//@Entity(name = AddressEntity.TABLE_NAME)
 @Entity(name = "address")
 @JsonIgnoreProperties({ "handler", "hibernateLazyInitializer" })
 public class AddressEntity {
-
-//	public static final String TABLE_NAME= "address";
 
 	/************************************************************
 	 * Attributes
@@ -47,8 +44,8 @@ public class AddressEntity {
 	 ************************************************************/
 
 	@OneToMany(mappedBy = "address", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JsonManagedReference(value = "Identity_Address_1")
-	private Set<PersonEntity> identities = new HashSet<>();
+	@JsonManagedReference(value = "Person_Address_1")
+	private Set<PersonEntity> personality = new HashSet<>();
 
 	/************************************************************
 	 * Shadow Attributes
@@ -72,7 +69,7 @@ public class AddressEntity {
 	public AddressEntity() {
 		super();
 	}
-
+	
 	/************************************************************
 	 * Getters & Setters
 	 ************************************************************/
@@ -109,6 +106,14 @@ public class AddressEntity {
 		this.apartment = apartment;
 	}
 
+	public Set<PersonEntity> getPersonality() {
+		return personality;
+	}
+
+	public void setPersonality(Set<PersonEntity> personality) {
+		this.personality = personality;
+	}
+
 	public Integer getId() {
 		return id;
 	}
@@ -131,14 +136,6 @@ public class AddressEntity {
 
 	public void setStatus(EStatus status) {
 		this.status = status;
-	}
-
-	public Set<PersonEntity> getIdentities() {
-		return identities;
-	}
-
-	public void setIdentities(Set<PersonEntity> identities) {
-		this.identities = identities;
-	}
+	}	
 
 }

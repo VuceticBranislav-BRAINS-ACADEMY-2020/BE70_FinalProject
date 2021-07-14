@@ -48,19 +48,19 @@ public class GradeEntity {
 	 ************************************************************/
 
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinColumn(name = "subject")
-	@JsonBackReference(value = "Grade_Subject_1")
-	private SubjectEntity subject;
-
+	@JoinColumn(name = "sub_cls")
+	@JsonBackReference(value = "Subject_Class_3")
+	private JoinTableSubjectClass sub_cls;
+	
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinColumn(name = "student")
-	@JsonBackReference(value = "Grade_Student_1")
-	private StudentEntity student;
-
+	@JoinColumn(name = "std_cls")
+	@JsonBackReference(value = "Student_Class_3")
+	private JoinTableStudentClass std_cls;
+	
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinColumn(name = "teacher")
-	@JsonBackReference(value = "Grade_Teacher_1")
-	private TeacherEntity teacher;
+	@JoinColumn(name = "sub_tch")
+	@JsonBackReference(value = "Subject_Teacher_3")
+	private JoinTableSubjectTeacher sub_tch;
 
 	/************************************************************
 	 * Shadow Attributes
@@ -88,7 +88,7 @@ public class GradeEntity {
 	/************************************************************
 	 * Getters & Setters
 	 ************************************************************/
-
+	
 	public EGradeType getType() {
 		return type;
 	}
@@ -121,28 +121,28 @@ public class GradeEntity {
 		this.stage = stage;
 	}
 
-	public SubjectEntity getSubject() {
-		return subject;
+	public JoinTableSubjectClass getSub_cls() {
+		return sub_cls;
 	}
 
-	public void setSubject(SubjectEntity subject) {
-		this.subject = subject;
+	public void setSub_cls(JoinTableSubjectClass sub_cls) {
+		this.sub_cls = sub_cls;
 	}
 
-	public StudentEntity getStudent() {
-		return student;
+	public JoinTableStudentClass getStd_cls() {
+		return std_cls;
 	}
 
-	public void setStudent(StudentEntity student) {
-		this.student = student;
+	public void setStd_cls(JoinTableStudentClass std_cls) {
+		this.std_cls = std_cls;
 	}
 
-	public TeacherEntity getTeacher() {
-		return teacher;
+	public JoinTableSubjectTeacher getSub_tch() {
+		return sub_tch;
 	}
 
-	public void setTeacher(TeacherEntity teacher) {
-		this.teacher = teacher;
+	public void setSub_tch(JoinTableSubjectTeacher sub_tch) {
+		this.sub_tch = sub_tch;
 	}
 
 	public Integer getId() {

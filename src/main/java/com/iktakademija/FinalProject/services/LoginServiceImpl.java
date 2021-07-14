@@ -26,7 +26,7 @@ public class LoginServiceImpl implements LoginService {
 	public String getJWTToken(UserEntity userEntity) {
 		// Generate list of authorities
 		List<GrantedAuthority> grantedAuthority = AuthorityUtils
-				.commaSeparatedStringToAuthorityList(userEntity.getRole().getName().toString());
+				.commaSeparatedStringToAuthorityList(userEntity.getRole().getRole().toString());
 		// Build token
 		String token = Jwts.builder().setId("softtekJWT") // not important
 				.setSubject(userEntity.getUsername()) // ...setup owner of token...

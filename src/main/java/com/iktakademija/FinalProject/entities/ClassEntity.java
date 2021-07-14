@@ -1,8 +1,5 @@
 package com.iktakademija.FinalProject.entities;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,14 +10,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Version;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.iktakademija.FinalProject.entities.enums.EStatus;
 
 @Entity(name = "clazz")
@@ -33,24 +27,23 @@ public class ClassEntity {
 
 	@Column
 	private String name;
+	
+	@Column
+	private Integer year;
 
 	/************************************************************
 	 * Relation Attributes
 	 ************************************************************/
-
-	@OneToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinColumn(name = "homeclass")
-	private TeacherEntity homeClassMaster;
-
-	@OneToMany(mappedBy = "clazz", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JsonManagedReference(value = "Student_Class_1")
-	private Set<StudentEntity> students = new HashSet<>();
-
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
-	@JoinTable(name = "subject_class", joinColumns = {
-			@JoinColumn(name = "idc", nullable = false, updatable = false) }, inverseJoinColumns = {
-					@JoinColumn(name = "ids", nullable = false, updatable = false) })
-	private Set<SubjectEntity> subjects = new HashSet<>();
+	
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JoinColumn(name = "subject")
+	@JsonBackReference(value = "Subject_Class_2")
+	private JoinTableSubjectClass subject;
+	
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JoinColumn(name = "student")
+	@JsonBackReference(value = "Student_Class_2")
+	private JoinTableStudentClass student;
 
 	/************************************************************
 	 * Shadow Attributes
@@ -74,11 +67,11 @@ public class ClassEntity {
 	public ClassEntity() {
 		super();
 	}
-
+	
 	/************************************************************
 	 * Getters & Setters
 	 ************************************************************/
-
+	
 	public String getName() {
 		return name;
 	}
@@ -87,20 +80,28 @@ public class ClassEntity {
 		this.name = name;
 	}
 
-	public TeacherEntity getHomeClassMaster() {
-		return homeClassMaster;
+	public Integer getYear() {
+		return year;
 	}
 
-	public void setHomeClassMaster(TeacherEntity homeClassMaster) {
-		this.homeClassMaster = homeClassMaster;
+	public void setYear(Integer year) {
+		this.year = year;
 	}
 
-	public Set<StudentEntity> getStudents() {
-		return students;
+	public JoinTableSubjectClass getSubject() {
+		return subject;
 	}
 
-	public void setStudents(Set<StudentEntity> students) {
-		this.students = students;
+	public void setSubject(JoinTableSubjectClass subject) {
+		this.subject = subject;
+	}
+
+	public JoinTableStudentClass getStudent() {
+		return student;
+	}
+
+	public void setStudent(JoinTableStudentClass student) {
+		this.student = student;
 	}
 
 	public Integer getId() {
@@ -125,14 +126,6 @@ public class ClassEntity {
 
 	public void setStatus(EStatus status) {
 		this.status = status;
-	}
-
-	public Set<SubjectEntity> getSubjects() {
-		return subjects;
-	}
-
-	public void setSubjects(Set<SubjectEntity> subjects) {
-		this.subjects = subjects;
 	}
 
 }

@@ -1,5 +1,8 @@
 package com.iktakademija.FinalProject.entities;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,45 +12,44 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Version;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.iktakademija.FinalProject.entities.enums.EStatus;
 
-@Entity(name = "user")
+@Entity(name = "group")
 @JsonIgnoreProperties({ "handler", "hibernateLazyInitializer" })
-@Inheritance(strategy = InheritanceType.JOINED)
-public class UserEntity {
+public class GroupEntity {
 
 	/************************************************************
 	 * Attributes
 	 ************************************************************/
-
-	@Column(nullable = false)
-	private String password;
 	
-	@Column(nullable = false, unique = true)
-	private String username;
-
+	@Column
+	private String letter;	
+	
+	@OneToOne(mappedBy = "homeClassMaster", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	private TeacherEntity homeClassMaster;
+	
 	/************************************************************
 	 * Relation Attributes
 	 ************************************************************/
-
-	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinColumn(name = "personality")
-	@JsonBackReference(value = "User_Person_1")
-	private PersonEntity personality;
 	
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinColumn(name = "role")
-	@JsonBackReference(value = "Role_User_1")
-	private RoleEntity role;
-
+	@JoinColumn(name = "clazz")
+	@JsonBackReference(value = "Group_Class_1")
+	private ClassEntity clazz;
+	
+	@OneToMany(mappedBy = "group", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JsonManagedReference(value = "Student_Group_1")
+	private Set<StudentEntity> students = new HashSet<>();
+	
 	/************************************************************
 	 * Shadow Attributes
 	 ************************************************************/
@@ -62,49 +64,49 @@ public class UserEntity {
 	@Column
 	@Enumerated(value = EnumType.STRING)
 	private EStatus status;
-
+	
 	/************************************************************
 	 * Constructors
 	 ************************************************************/
 
-	public UserEntity() {
+	public GroupEntity() {
 		super();
 	}
-	
+
 	/************************************************************
 	 * Getters & Setters
 	 ************************************************************/
-
-	public String getPassword() {
-		return password;
+	
+	public String getLetter() {
+		return letter;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setLetter(String letter) {
+		this.letter = letter;
 	}
 
-	public String getUsername() {
-		return username;
+	public TeacherEntity getHomeClassMaster() {
+		return homeClassMaster;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setHomeClassMaster(TeacherEntity homeClassMaster) {
+		this.homeClassMaster = homeClassMaster;
 	}
 
-	public PersonEntity getPersonality() {
-		return personality;
+	public ClassEntity getClazz() {
+		return clazz;
 	}
 
-	public void setPersonality(PersonEntity personality) {
-		this.personality = personality;
+	public void setClazz(ClassEntity clazz) {
+		this.clazz = clazz;
 	}
 
-	public RoleEntity getRole() {
-		return role;
+	public Set<StudentEntity> getStudents() {
+		return students;
 	}
 
-	public void setRole(RoleEntity role) {
-		this.role = role;
+	public void setStudents(Set<StudentEntity> students) {
+		this.students = students;
 	}
 
 	public Integer getId() {
@@ -129,6 +131,6 @@ public class UserEntity {
 
 	public void setStatus(EStatus status) {
 		this.status = status;
-	}
-
+	}	
+	
 }
