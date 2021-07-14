@@ -25,7 +25,7 @@ import com.iktakademija.FinalProject.entities.enums.EStatus;
 
 @Entity(name = "identity")
 @JsonIgnoreProperties({ "handler", "hibernateLazyInitializer" })
-public class IdentityEntity {
+public class PersonEntity {
 
 	/************************************************************
 	 * Attributes
@@ -78,7 +78,7 @@ public class IdentityEntity {
 	 * Constructors
 	 ************************************************************/
 
-	public IdentityEntity() {
+	public PersonEntity() {
 		super();
 	}
 

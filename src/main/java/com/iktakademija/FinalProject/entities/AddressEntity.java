@@ -48,7 +48,7 @@ public class AddressEntity {
 
 	@OneToMany(mappedBy = "address", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JsonManagedReference(value = "Identity_Address_1")
-	private Set<IdentityEntity> identities = new HashSet<>();
+	private Set<PersonEntity> identities = new HashSet<>();
 
 	/************************************************************
 	 * Shadow Attributes
@@ -133,11 +133,11 @@ public class AddressEntity {
 		this.status = status;
 	}
 
-	public Set<IdentityEntity> getIdentities() {
+	public Set<PersonEntity> getIdentities() {
 		return identities;
 	}
 
-	public void setIdentities(Set<IdentityEntity> identities) {
+	public void setIdentities(Set<PersonEntity> identities) {
 		this.identities = identities;
 	}
 

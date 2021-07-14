@@ -41,7 +41,7 @@ public class UserEntity {
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "identity")
 	@JsonBackReference(value = "User_Identity_1")
-	private IdentityEntity identity;
+	private PersonEntity identity;
 	
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name= "role")
@@ -115,11 +115,11 @@ public class UserEntity {
 		this.status = status;
 	}
 
-	public IdentityEntity getIdentity() {
+	public PersonEntity getIdentity() {
 		return identity;
 	}
 
-	public void setIdentity(IdentityEntity identity) {
+	public void setIdentity(PersonEntity identity) {
 		this.identity = identity;
 	}
 	

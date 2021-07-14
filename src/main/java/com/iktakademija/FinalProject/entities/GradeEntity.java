@@ -17,7 +17,7 @@ import javax.persistence.Version;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.iktakademija.FinalProject.entities.enums.EGrade;
+import com.iktakademija.FinalProject.entities.enums.EGradeType;
 import com.iktakademija.FinalProject.entities.enums.EStage;
 import com.iktakademija.FinalProject.entities.enums.EStatus;
 
@@ -31,7 +31,7 @@ public class GradeEntity {
 	
 	@Column
 	@Enumerated(value = EnumType.STRING)
-	private EGrade type;
+	private EGradeType type;
 	
 	@Column(nullable = false)
 	private Integer value;
@@ -89,11 +89,11 @@ public class GradeEntity {
 	 * Getters & Setters
 	 ************************************************************/
 
-	public EGrade getType() {
+	public EGradeType getType() {
 		return type;
 	}
 
-	public void setType(EGrade type) {
+	public void setType(EGradeType type) {
 		this.type = type;
 	}
 
