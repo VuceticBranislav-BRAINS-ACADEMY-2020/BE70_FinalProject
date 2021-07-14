@@ -23,7 +23,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.iktakademija.FinalProject.entities.enums.EStatus;
 
-@Entity(name = "group")
+@Entity(name = "classgroup")
 @JsonIgnoreProperties({ "handler", "hibernateLazyInitializer" })
 public class GroupEntity {
 
@@ -32,21 +32,22 @@ public class GroupEntity {
 	 ************************************************************/
 	
 	@Column
-	private String letter;	
-	
-	@OneToOne(mappedBy = "homeClassMaster", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	private TeacherEntity homeClassMaster;
-	
+	private String letter;		
+
 	/************************************************************
 	 * Relation Attributes
 	 ************************************************************/
+	
+	@OneToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JoinColumn(name = "homeClassMaster")
+	private TeacherEntity homeClassMaster;
 	
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "clazz")
 	@JsonBackReference(value = "Group_Class_1")
 	private ClassEntity clazz;
 	
-	@OneToMany(mappedBy = "group", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "classgroup", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JsonManagedReference(value = "Student_Group_1")
 	private Set<StudentEntity> students = new HashSet<>();
 	
@@ -131,6 +132,6 @@ public class GroupEntity {
 
 	public void setStatus(EStatus status) {
 		this.status = status;
-	}	
+	}
 	
 }

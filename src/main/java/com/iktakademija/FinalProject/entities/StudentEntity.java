@@ -24,9 +24,9 @@ public class StudentEntity extends UserEntity {
 	 ************************************************************/
 	
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinColumn(name = "group")
+	@JoinColumn(name = "classgroup")
 	@JsonBackReference(value = "Student_Group_1")
-	private GroupEntity group;
+	private GroupEntity classgroup;
 	
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "clazz")
@@ -54,12 +54,12 @@ public class StudentEntity extends UserEntity {
 	 * Getters & Setters
 	 ************************************************************/
 	
-	public GroupEntity getGroup() {
-		return group;
+	public GroupEntity getClassgroup() {
+		return classgroup;
 	}
 
-	public void setGroup(GroupEntity group) {
-		this.group = group;
+	public void setClassgroup(GroupEntity classgroup) {
+		this.classgroup = classgroup;
 	}
 
 	public JoinTableStudentClass getClazz() {
