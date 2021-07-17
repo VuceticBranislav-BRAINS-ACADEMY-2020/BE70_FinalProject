@@ -1,15 +1,17 @@
 package com.iktakademija.FinalProject.entities;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.iktakademija.FinalProject.securities.Views;
 
@@ -29,12 +31,12 @@ public class TeacherEntity extends UserEntity {
 
 	@OneToOne(mappedBy = "homeClassMaster", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	private GroupEntity homeClassMaster;
-
-	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinColumn(name = "subject")
-	@JsonBackReference(value = "Subject_Teacher_1")
-	private JoinTableSubjectTeacher subject;
-
+	
+	@OneToMany(mappedBy = "teachers", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JsonManagedReference(value = "Subject_Teacher_1")
+	private Set<JoinTableSubjectTeacher> subject = new HashSet<>();
+	
+	
 	/************************************************************
 	 * Constructors
 	 ************************************************************/
@@ -59,12 +61,12 @@ public class TeacherEntity extends UserEntity {
 		this.homeClassMaster = homeClassMaster;
 	}
 
-	public JoinTableSubjectTeacher getSubject() {
+	public Set<JoinTableSubjectTeacher> getSubject() {
 		return subject;
 	}
 
-	public void setSubject(JoinTableSubjectTeacher subject) {
+	public void setSubject(Set<JoinTableSubjectTeacher> subject) {
 		this.subject = subject;
-	}	
+	}
 
 }

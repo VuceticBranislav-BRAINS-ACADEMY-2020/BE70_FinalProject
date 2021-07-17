@@ -1,18 +1,16 @@
 package com.iktakademija.FinalProject.entities;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity(name = "subject_teacher")
 @JsonIgnoreProperties({ "handler", "hibernateLazyInitializer" })
@@ -26,17 +24,20 @@ public class JoinTableSubjectTeacher {
 	 * Relation Attributes
 	 ************************************************************/
 	
-	@OneToMany(mappedBy = "subject", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JsonManagedReference(value = "Subject_Teacher_1")
-	private Set<TeacherEntity> teachers = new HashSet<>();
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JoinColumn(name = "teachers")
+	@JsonBackReference(value = "Subject_Teacher_1")
+	private TeacherEntity teachers;
 	
-	@OneToMany(mappedBy = "teacher", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JsonManagedReference(value = "Subject_Teacher_2")
-	private Set<SubjectEntity> subjects = new HashSet<>();
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JoinColumn(name = "subjects")
+	@JsonBackReference(value = "Subject_Teacher_2")
+	private SubjectEntity subjects;
 	
-	@OneToMany(mappedBy = "sub_tch", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JsonManagedReference(value = "Subject_Teacher_3")
-	private Set<GradeEntity> grade = new HashSet<>();
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JoinColumn(name = "grade")
+	@JsonBackReference(value = "Subject_Teacher_3")
+	private GradeEntity grade;
 	
 	/************************************************************
 	 * Shadow Attributes
@@ -57,30 +58,6 @@ public class JoinTableSubjectTeacher {
 	/************************************************************
 	 * Getters & Setters
 	 ************************************************************/
-	
-	public Set<TeacherEntity> getTeachers() {
-		return teachers;
-	}
-
-	public void setTeachers(Set<TeacherEntity> teachers) {
-		this.teachers = teachers;
-	}
-
-	public Set<SubjectEntity> getSubjects() {
-		return subjects;
-	}
-
-	public void setSubjects(Set<SubjectEntity> subjects) {
-		this.subjects = subjects;
-	}
-
-	public Set<GradeEntity> getGrade() {
-		return grade;
-	}
-
-	public void setGrade(Set<GradeEntity> grade) {
-		this.grade = grade;
-	}
 
 	public Integer getId() {
 		return id;
@@ -88,6 +65,30 @@ public class JoinTableSubjectTeacher {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public TeacherEntity getTeachers() {
+		return teachers;
+	}
+
+	public void setTeachers(TeacherEntity teachers) {
+		this.teachers = teachers;
+	}
+
+	public SubjectEntity getSubjects() {
+		return subjects;
+	}
+
+	public void setSubjects(SubjectEntity subjects) {
+		this.subjects = subjects;
+	}
+
+	public GradeEntity getGrade() {
+		return grade;
+	}
+
+	public void setGrade(GradeEntity grade) {
+		this.grade = grade;
 	}
 
 }

@@ -1,5 +1,8 @@
 package com.iktakademija.FinalProject.entities;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,12 +12,11 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Version;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.iktakademija.FinalProject.entities.enums.EStatus;
 
 @Entity(name = "subject")
@@ -37,16 +39,15 @@ public class SubjectEntity {
 	/************************************************************
 	 * Relation Attributes
 	 ************************************************************/
-
-	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinColumn(name = "clazz")
-	@JsonBackReference(value = "Subject_Class_2")
-	private JoinTableSubjectClass clazz;
 	
-	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinColumn(name = "teacher")
-	@JsonBackReference(value = "Subject_Teacher_2")
-	private JoinTableSubjectTeacher teacher;
+	@OneToMany(mappedBy = "subject", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JsonManagedReference(value = "Subject_Class_2")
+	private Set<JoinTableSubjectClass> clazz = new HashSet<>();
+	
+	@OneToMany(mappedBy = "subjects", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JsonManagedReference(value = "Subject_Teacher_2")
+	private Set<JoinTableSubjectTeacher> teacher = new HashSet<>();
+	
 	
 	/************************************************************
 	 * Shadow Attributes
@@ -99,22 +100,6 @@ public class SubjectEntity {
 		this.plan = plan;
 	}
 
-	public JoinTableSubjectClass getClazz() {
-		return clazz;
-	}
-
-	public void setClazz(JoinTableSubjectClass clazz) {
-		this.clazz = clazz;
-	}
-
-	public JoinTableSubjectTeacher getTeacher() {
-		return teacher;
-	}
-
-	public void setTeacher(JoinTableSubjectTeacher teacher) {
-		this.teacher = teacher;
-	}
-
 	public Integer getId() {
 		return id;
 	}
@@ -137,6 +122,22 @@ public class SubjectEntity {
 
 	public void setStatus(EStatus status) {
 		this.status = status;
+	}
+
+	public Set<JoinTableSubjectClass> getClazz() {
+		return clazz;
+	}
+
+	public void setClazz(Set<JoinTableSubjectClass> clazz) {
+		this.clazz = clazz;
+	}
+
+	public Set<JoinTableSubjectTeacher> getTeacher() {
+		return teacher;
+	}
+
+	public void setTeacher(Set<JoinTableSubjectTeacher> teacher) {
+		this.teacher = teacher;
 	}
 
 }

@@ -41,7 +41,7 @@ INSERT INTO `student` (`id`) VALUES ('33');
 INSERT INTO `student` (`id`) VALUES ('36');
 INSERT INTO `parent` (`id`) VALUES ('34');
 
-INSERT INTO `parent` (`email`, `id`, `student`) VALUES ('email@gmail.com', '34', '36');
+#INSERT INTO `parent` (`email`, `id`, `student`) VALUES ('email@gmail.com', '34', '36');
 
 # Hibernate sequence fixup
 UPDATE hibernate_sequence SET next_val = 50;

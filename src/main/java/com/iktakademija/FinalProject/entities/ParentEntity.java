@@ -1,15 +1,17 @@
 package com.iktakademija.FinalProject.entities;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.iktakademija.FinalProject.securities.Views;
 
@@ -29,11 +31,10 @@ public class ParentEntity extends UserEntity {
 	/************************************************************
 	 * Relation Attributes
 	 ************************************************************/
-
-	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinColumn(name = "student")
-	@JsonBackReference(value = "Student_Parent_2")
-	private JoinTableStudentParent student;
+	
+	@OneToMany(mappedBy = "parent", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JsonManagedReference(value = "Student_Parent_2")
+	private Set<JoinTableStudentParent> student = new HashSet<>();
 	
 	/************************************************************
 	 * Constructors
@@ -43,15 +44,14 @@ public class ParentEntity extends UserEntity {
 		super();
 	}
 	
+	/************************************************************
+	 * Getters & Setters
+	 ************************************************************/	
 	
 	public ParentEntity(String username, String password, PersonEntity personality, RoleEntity role) {
 		super(username, password, personality, role);
 	}
 
-	/************************************************************
-	 * Getters & Setters
-	 ************************************************************/
-	
 	public String getEmail() {
 		return email;
 	}
@@ -60,11 +60,11 @@ public class ParentEntity extends UserEntity {
 		this.email = email;
 	}
 
-	public JoinTableStudentParent getStudent() {
+	public Set<JoinTableStudentParent> getStudent() {
 		return student;
 	}
 
-	public void setStudent(JoinTableStudentParent student) {
+	public void setStudent(Set<JoinTableStudentParent> student) {
 		this.student = student;
 	}
 

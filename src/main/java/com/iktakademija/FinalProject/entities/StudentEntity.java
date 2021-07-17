@@ -1,14 +1,19 @@
 package com.iktakademija.FinalProject.entities;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.iktakademija.FinalProject.securities.Views;
 
@@ -31,15 +36,13 @@ public class StudentEntity extends UserEntity {
 	@JsonBackReference(value = "Student_Group_1")
 	private GroupEntity classgroup;
 	
-	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinColumn(name = "clazz")
-	@JsonBackReference(value = "Student_Class_1")
-	private JoinTableStudentClass clazz;
+	@OneToMany(mappedBy = "student", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JsonManagedReference(value = "Student_Class_1")
+	private Set<JoinTableStudentClass> clazz = new HashSet<>();
 	
-	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinColumn(name = "parent")
-	@JsonBackReference(value = "Student_Parent_1")
-	private JoinTableStudentParent parent;
+	@OneToMany(mappedBy = "student", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JsonManagedReference(value = "Student_Parent_1")
+	private Set<JoinTableStudentParent> parent = new HashSet<>();
 	
 	/************************************************************
 	 * Shadow Attributes
@@ -56,7 +59,7 @@ public class StudentEntity extends UserEntity {
 	public StudentEntity(String username, String password, PersonEntity personality, RoleEntity role) {
 		super(username, password, personality, role);
 	}
-
+	
 	/************************************************************
 	 * Getters & Setters
 	 ************************************************************/
@@ -69,20 +72,20 @@ public class StudentEntity extends UserEntity {
 		this.classgroup = classgroup;
 	}
 
-	public JoinTableStudentClass getClazz() {
+	public Set<JoinTableStudentClass> getClazz() {
 		return clazz;
 	}
 
-	public void setClazz(JoinTableStudentClass clazz) {
+	public void setClazz(Set<JoinTableStudentClass> clazz) {
 		this.clazz = clazz;
 	}
 
-	public JoinTableStudentParent getParent() {
+	public Set<JoinTableStudentParent> getParent() {
 		return parent;
 	}
 
-	public void setParent(JoinTableStudentParent parent) {
+	public void setParent(Set<JoinTableStudentParent> parent) {
 		this.parent = parent;
-	}	
+	}
 
 }

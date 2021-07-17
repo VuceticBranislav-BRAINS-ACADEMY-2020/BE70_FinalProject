@@ -1,18 +1,16 @@
 package com.iktakademija.FinalProject.entities;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity(name = "student_class")
 @JsonIgnoreProperties({ "handler", "hibernateLazyInitializer" })
@@ -25,18 +23,21 @@ public class JoinTableStudentClass {
 	/************************************************************
 	 * Relation Attributes
 	 ************************************************************/
-
-	@OneToMany(mappedBy = "clazz", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JsonManagedReference(value = "Student_Class_1")
-	private Set<StudentEntity> student = new HashSet<>();
-
-	@OneToMany(mappedBy = "student", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JsonManagedReference(value = "Student_Class_2")
-	private Set<ClassEntity> clazz = new HashSet<>();
 	
-	@OneToMany(mappedBy = "std_cls", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JsonManagedReference(value = "Student_Class_3")
-	private Set<GradeEntity> grade = new HashSet<>();
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JoinColumn(name = "student")
+	@JsonBackReference(value = "Student_Class_1")
+	private StudentEntity student;
+	
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JoinColumn(name = "clazz")
+	@JsonBackReference(value = "Student_Class_2")
+	private ClassEntity clazz;
+	
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JoinColumn(name = "grade")
+	@JsonBackReference(value = "Student_Class_3")
+	private GradeEntity grade;
 	
 	/************************************************************
 	 * Shadow Attributes
@@ -58,29 +59,22 @@ public class JoinTableStudentClass {
 	 * Getters & Setters
 	 ************************************************************/
 	
-	public Set<StudentEntity> getStudent() {
+	public StudentEntity getStudent() {
 		return student;
 	}
 
-	public void setStudent(Set<StudentEntity> student) {
+	public void setStudent(StudentEntity student) {
 		this.student = student;
 	}
 
-	public Set<ClassEntity> getClazz() {
+	public ClassEntity getClazz() {
 		return clazz;
 	}
 
-	public void setClazz(Set<ClassEntity> clazz) {
+	public void setClazz(ClassEntity clazz) {
 		this.clazz = clazz;
 	}
 
-	public Set<GradeEntity> getGrade() {
-		return grade;
-	}
-
-	public void setGrade(Set<GradeEntity> grade) {
-		this.grade = grade;
-	}
 
 	public Integer getId() {
 		return id;
@@ -88,6 +82,14 @@ public class JoinTableStudentClass {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}	
+	}
+
+	public GradeEntity getGrade() {
+		return grade;
+	}
+
+	public void setGrade(GradeEntity grade) {
+		this.grade = grade;
+	}
 
 }
