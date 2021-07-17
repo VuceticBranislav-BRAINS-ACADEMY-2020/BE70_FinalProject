@@ -6,7 +6,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import com.iktakademija.FinalProject.entities.AddressEntity;
 
-public interface AddressRepositories extends CrudRepository<AddressEntity, Integer> {
+public interface AddressRepository extends CrudRepository<AddressEntity, Integer> {
 
 	@Override
 	Set<AddressEntity> findAll();

@@ -10,14 +10,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.iktakademija.FinalProject.entities.AddressEntity;
-import com.iktakademija.FinalProject.repositories.AddressRepositories;
+import com.iktakademija.FinalProject.repositories.AddressRepository;
 
 @RestController
 @RequestMapping(path = "/address")
 public class AddressController {
 
 	@Autowired
-	private AddressRepositories addressRepositories;
+	private AddressRepository addressRepositories;
 
 	/**
 	 * REST endpoint that returns all addresses from data base. 

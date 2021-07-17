@@ -17,23 +17,26 @@ import javax.persistence.Version;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonView;
 import com.iktakademija.FinalProject.entities.enums.EStatus;
+import com.iktakademija.FinalProject.securities.Views;
 
 @Entity(name = "address")
 @JsonIgnoreProperties({ "handler", "hibernateLazyInitializer" })
+@JsonView(value = {Views.Admin.class})
 public class AddressEntity {
 
 	/************************************************************
 	 * Attributes
 	 ************************************************************/
 
-	@Column
+	@Column(nullable = false)
 	private String city;
 
-	@Column
+	@Column(nullable = false)
 	private String street;
 
-	@Column
+	@Column(nullable = false)
 	private String number;
 
 	@Column

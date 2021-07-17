@@ -10,10 +10,13 @@ import javax.persistence.PrimaryKeyJoinColumn;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.iktakademija.FinalProject.securities.Views;
 
 @Entity(name = "parent")
 @JsonIgnoreProperties({ "handler", "hibernateLazyInitializer" })
 @PrimaryKeyJoinColumn(name = "id")
+@JsonView(value = {Views.Admin.class})
 public class ParentEntity extends UserEntity {
 
 	/************************************************************
@@ -40,6 +43,11 @@ public class ParentEntity extends UserEntity {
 		super();
 	}
 	
+	
+	public ParentEntity(String username, String password, PersonEntity personality, RoleEntity role) {
+		super(username, password, personality, role);
+	}
+
 	/************************************************************
 	 * Getters & Setters
 	 ************************************************************/

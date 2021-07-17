@@ -7,7 +7,8 @@ import org.springframework.data.repository.CrudRepository;
 import com.iktakademija.FinalProject.entities.AdminEntity;
 
 public interface AdminRepository extends CrudRepository<AdminEntity, Integer> {
-
-	public AdminEntity findByUsername(String username);
+	
+	@Override
 	public List<AdminEntity> findAll();
+
 }

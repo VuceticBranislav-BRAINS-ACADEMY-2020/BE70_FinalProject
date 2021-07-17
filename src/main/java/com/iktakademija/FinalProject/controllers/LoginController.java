@@ -14,6 +14,11 @@ import com.iktakademija.FinalProject.repositories.UserRepository;
 import com.iktakademija.FinalProject.services.LoginService;
 import com.iktakademija.FinalProject.utils.Encryption;
 
+/**
+ * Login endpoint.
+ * <BR>Provide token for registred user based on username and password.
+ * @see #login
+ */
 @RestController
 public class LoginController {
 	
@@ -23,6 +28,14 @@ public class LoginController {
 	@Autowired
 	private LoginService loginService;
 	
+	/**
+	 *  Request authorization token from server.
+	 *  <BR>User must be in database in order to get token.
+	 *  
+	 * @param username registred in database
+	 * @param password registred in database
+	 * @return {@link HttpStatus.OK} when token is granted, {@link HttpStatus.UNAUTHORIZED} otherwise. 
+	 */
 	@RequestMapping(method = RequestMethod.POST, path = "/login")
 	public ResponseEntity<?> login(@RequestParam String username, @RequestParam String password){
 		// Find user by username		

@@ -17,11 +17,14 @@ import javax.persistence.Version;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonView;
 import com.iktakademija.FinalProject.entities.enums.EStatus;
+import com.iktakademija.FinalProject.securities.Views;
 
 @Entity(name = "user")
 @JsonIgnoreProperties({ "handler", "hibernateLazyInitializer" })
 @Inheritance(strategy = InheritanceType.JOINED)
+//@JsonView(value = {Views.Admin.class})
 public class UserEntity {
 
 	/************************************************************
@@ -69,8 +72,17 @@ public class UserEntity {
 
 	public UserEntity() {
 		super();
-	}
+	}	
 	
+	public UserEntity(String username, String password, PersonEntity personality, RoleEntity role) {
+		super();
+		this.password = password;
+		this.username = username;
+		this.personality = personality;
+		this.role = role;
+		this.status = EStatus.ACTIVE;
+	}
+
 	/************************************************************
 	 * Getters & Setters
 	 ************************************************************/

@@ -2,11 +2,12 @@ package com.iktakademija.FinalProject.controllers.utils.enums;
 
 /**
  * REST Message Codes
- * <BR> 1 - Note. {@link #NONE}
- * <BR> 100 - Invalid procedure parameters, or null. {@link #INVALID_PARAMETERS}
- * <BR> 110 - Requested item not found. {@link #NOT_FOUND}
- * <BR> 111 - Found item do not satisfy requirements. {@link #NOT_ADEQUATE}
- * <BR> 112 - Item with provided credentials already exists in data base. {@link #ALREADY_EXISTS}
+ * <BR> 1 - Note.
+ * <BR> 100 - Invalid procedure parameters, or null.
+ * <BR> 110 - Requested item not found.
+ * <BR> 111 - Found item do not satisfy requirements. 
+ * <BR> 112 - Item with provided credentials already exists in data base. 
+ * <BR> 150 - Role do not exist or invalide. 
  */
 public enum ERESTErrorCodes {
 
@@ -15,7 +16,8 @@ public enum ERESTErrorCodes {
 	INVALID_PARAMETERS (100, "Invalid procedure parameters, or null."),
 	NOT_FOUND          (110, "Requested item not found"),
 	NOT_ADEQUATE       (111, "Found item do not satisfy requirements."),
-	ALREADY_EXISTS     (112, "Item with provided credentials already exists in data base.");
+	ALREADY_EXISTS     (112, "Item with provided credentials already exists in data base."),
+	ROLE_NOT_EXISTS    (150, "Role do not exist or invalide.");
 
 	ERESTErrorCodes(int value, String message) {
 		this.value = value;
