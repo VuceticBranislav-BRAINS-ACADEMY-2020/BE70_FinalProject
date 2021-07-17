@@ -1,5 +1,7 @@
 package com.iktakademija.FinalProject.entities.dtos;
 
+import javax.validation.constraints.NotBlank;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -13,20 +15,23 @@ import com.iktakademija.FinalProject.securities.Views;
  * @see AddressEntity
  * @author GM
  */
-@JsonView(value = Views.Admin.class)
 @JsonPropertyOrder(value = { "city", "street", "number", "apartment" })
+@JsonView(value = Views.Admin.class)
 public class NewAddressDTO {
 
 	/************************************************************
 	 * Attributes
 	 ************************************************************/
-
+	
+	@NotBlank
 	@JsonProperty(value = "City")
 	private String city;
-
+	
+	@NotBlank
 	@JsonProperty(value = "Stresst")
 	private String street;
-
+	
+	@NotBlank
 	@JsonProperty(value = "Number")
 	private String number;
 

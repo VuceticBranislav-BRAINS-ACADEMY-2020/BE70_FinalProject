@@ -18,13 +18,19 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Version;
 
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonView;
 import com.iktakademija.FinalProject.entities.enums.EStatus;
+import com.iktakademija.FinalProject.securities.Views;
 
 @Entity(name = "personality")
 @JsonIgnoreProperties({ "handler", "hibernateLazyInitializer" })
+@JsonView(value = Views.Admin.class)
 public class PersonEntity {
 
 	/************************************************************
@@ -37,13 +43,14 @@ public class PersonEntity {
 	@Column
 	private String lastname;
 	
-	@Column(nullable = false)
+	@Column(nullable = false, unique = true)
 	private String jmbg;
 	
 	@Column
 	private String mphone;
 	
 	@Column
+	@DateTimeFormat(iso = ISO.DATE)
 	private LocalDate birthdate;
 
 	/************************************************************

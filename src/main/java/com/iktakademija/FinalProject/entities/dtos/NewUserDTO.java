@@ -1,5 +1,7 @@
 package com.iktakademija.FinalProject.entities.dtos;
 
+import javax.validation.constraints.NotBlank;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -21,15 +23,19 @@ public class NewUserDTO {
 	 * Attributes
 	 ************************************************************/
 	
+	@NotBlank
 	@JsonProperty(value = "Username")
 	private String username;
 
+	@NotBlank
 	@JsonProperty(value = "Password")
 	private String password;
 
+	@NotBlank
 	@JsonProperty(value = "ID Personality")
 	private Integer personalityId;	
-
+	
+	@NotBlank
 	@JsonProperty(value = "ID Role")
 	private ERole role;
 	

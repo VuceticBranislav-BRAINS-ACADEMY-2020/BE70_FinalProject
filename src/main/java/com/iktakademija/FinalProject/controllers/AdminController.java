@@ -17,11 +17,13 @@ import com.iktakademija.FinalProject.controllers.utils.enums.ERESTErrorCodes;
 import com.iktakademija.FinalProject.entities.AddressEntity;
 import com.iktakademija.FinalProject.entities.AdminEntity;
 import com.iktakademija.FinalProject.entities.ParentEntity;
+import com.iktakademija.FinalProject.entities.PersonEntity;
 import com.iktakademija.FinalProject.entities.StudentEntity;
 import com.iktakademija.FinalProject.entities.TeacherEntity;
 import com.iktakademija.FinalProject.entities.UserEntity;
 import com.iktakademija.FinalProject.entities.dtos.AdminDTO;
 import com.iktakademija.FinalProject.entities.dtos.NewAddressDTO;
+import com.iktakademija.FinalProject.entities.dtos.NewPersonDTO;
 import com.iktakademija.FinalProject.entities.dtos.NewUserDTO;
 import com.iktakademija.FinalProject.repositories.AdminRepository;
 import com.iktakademija.FinalProject.repositories.ParentRepository;
@@ -35,6 +37,8 @@ import com.iktakademija.FinalProject.services.AdminService;
  * <BR>Provide all admin functionalities
  * @see #getAllAdmins 
  * @see #addUser
+ * @see #addAddress
+ * @see #addPerson
  */
 @RestController
 @RequestMapping(path = "/api/v1/admin")
@@ -139,7 +143,30 @@ public class AdminController {
 	@RequestMapping(method = RequestMethod.POST, path = "/address")
 	public ResponseEntity<?> addAddress(@RequestBody NewAddressDTO newAddress) {	
 		
-		AddressEntity address = adminService.createAddress(newAddress);			
+		AddressEntity address = adminService.createAddress(newAddress);	
+		if (address == null ) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_PARAMETERS), HttpStatus.NOT_ACCEPTABLE);
 		return new ResponseEntity<AddressEntity>(address, HttpStatus.OK);
+	}
+	
+	/**
+	 * Add new person to database.
+	 * If there is no internal error method return {@link HttpStatus.OK}.<BR><BR>
+	 * 
+	 * REST method: <B>POST</B><BR>
+	 * Path inside controller: <B>"/admin/person"</B><BR>
+	 * Allowed for <B>Admin</B><BR>
+	 * Error status messages: <B>none</B><BR>
+	 * Postman identification tag: <B>ADM04</B>
+	 * @return Added person if there is no errors.
+	 * @see AdminController
+	 */
+	@Secured("ROLE_ADMIN")
+	@JsonView(value = Views.Admin.class)
+	@RequestMapping(method = RequestMethod.POST, path = "/person")
+	public ResponseEntity<?> addPerson(@RequestBody NewPersonDTO newPerson) {	
+		
+		PersonEntity person = adminService.createPerson(newPerson);	
+		if (person == null ) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_PARAMETERS), HttpStatus.NOT_ACCEPTABLE);
+		return new ResponseEntity<PersonEntity>(person, HttpStatus.OK);
 	}
 }

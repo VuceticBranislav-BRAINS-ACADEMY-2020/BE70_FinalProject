@@ -14,8 +14,8 @@ import com.iktakademija.FinalProject.securities.Views;
  * @see AddressEntity
  * @author GM
  */
-@JsonView(value = {Views.Admin.class})
 @JsonPropertyOrder(value =  {"city", "street", "number", "apartment"})
+@JsonView(value = Views.Admin.class)
 public class AddressDTO {
 	
 	/************************************************************

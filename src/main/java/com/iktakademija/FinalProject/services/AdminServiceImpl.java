@@ -16,6 +16,7 @@ import com.iktakademija.FinalProject.entities.StudentEntity;
 import com.iktakademija.FinalProject.entities.TeacherEntity;
 import com.iktakademija.FinalProject.entities.dtos.AdminDTO;
 import com.iktakademija.FinalProject.entities.dtos.NewAddressDTO;
+import com.iktakademija.FinalProject.entities.dtos.NewPersonDTO;
 import com.iktakademija.FinalProject.entities.dtos.NewUserDTO;
 import com.iktakademija.FinalProject.entities.enums.EStatus;
 import com.iktakademija.FinalProject.repositories.AddressRepository;
@@ -130,6 +131,28 @@ public class AdminServiceImpl implements AdminService {
 		
 		return address;
 	}
+	
+	@Override
+	public PersonEntity createPerson(NewPersonDTO source) {
+		
+		Optional<AddressEntity> op = addressRepository.findById(source.getAddress());
+		if (op.isPresent() == false) return null;
+		AddressEntity address = op.get();
+		
+		PersonEntity person = new PersonEntity();
+		person.setAddress(address);
+		person.setBirthdate(source.getBirthdate());
+		person.setFirstname(source.getFirstname());
+		person.setJmbg(source.getJmbg());
+		person.setLastname(source.getLastname());
+		person.setMphone(source.getMphone());
+		person.setStatus(EStatus.ACTIVE);
+		
+		person = personRepository.save(person);
+		
+		return person;
+	}
+	
 	
 	/************************************************************
 	 * Repository related
