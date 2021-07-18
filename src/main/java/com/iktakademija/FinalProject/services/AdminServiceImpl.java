@@ -18,6 +18,7 @@ import com.iktakademija.FinalProject.entities.dtos.AdminDTO;
 import com.iktakademija.FinalProject.entities.dtos.NewAddressDTO;
 import com.iktakademija.FinalProject.entities.dtos.NewPersonDTO;
 import com.iktakademija.FinalProject.entities.dtos.NewUserDTO;
+import com.iktakademija.FinalProject.entities.enums.ERole;
 import com.iktakademija.FinalProject.entities.enums.EStatus;
 import com.iktakademija.FinalProject.repositories.AddressRepository;
 import com.iktakademija.FinalProject.repositories.AdminRepository;
@@ -63,7 +64,7 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public AdminEntity createAdmin(NewUserDTO source) {
 		
-		Optional<RoleEntity> opr = roleRepository.findByRole(source.getRole());
+		Optional<RoleEntity> opr = roleRepository.findByRole(ERole.ROLE_ADMIN);
 		if (opr.isPresent() == false) return null;
 		RoleEntity role = opr.get();
 		
@@ -77,7 +78,7 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public StudentEntity createStudent(NewUserDTO source) {
 		
-		Optional<RoleEntity> opr = roleRepository.findByRole(source.getRole());
+		Optional<RoleEntity> opr = roleRepository.findByRole(ERole.ROLE_STUDENT);
 		if (opr.isPresent() == false) return null;
 		RoleEntity role = opr.get();
 		
@@ -91,7 +92,7 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public ParentEntity createParent(NewUserDTO source) {
 		
-		Optional<RoleEntity> opr = roleRepository.findByRole(source.getRole());
+		Optional<RoleEntity> opr = roleRepository.findByRole(ERole.ROLE_PARENT);
 		if (opr.isPresent() == false) return null;
 		RoleEntity role = opr.get();
 		
@@ -105,7 +106,7 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public TeacherEntity createTeacher(NewUserDTO source) {
 		
-		Optional<RoleEntity> opr = roleRepository.findByRole(source.getRole());
+		Optional<RoleEntity> opr = roleRepository.findByRole(ERole.ROLE_TEACHER);
 		if (opr.isPresent() == false) return null;
 		RoleEntity role = opr.get();
 		

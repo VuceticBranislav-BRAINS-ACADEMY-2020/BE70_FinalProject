@@ -17,9 +17,7 @@ import javax.persistence.Version;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonView;
 import com.iktakademija.FinalProject.entities.enums.EStatus;
-import com.iktakademija.FinalProject.securities.Views;
 
 @Entity(name = "user")
 @JsonIgnoreProperties({ "handler", "hibernateLazyInitializer" })

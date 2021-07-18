@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.iktakademija.FinalProject.entities.AdminEntity;
-import com.iktakademija.FinalProject.entities.enums.ERole;
 import com.iktakademija.FinalProject.securities.Views;
 
 /**
@@ -16,7 +15,7 @@ import com.iktakademija.FinalProject.securities.Views;
  * @author GM
  */
 @JsonView(value = Views.Admin.class)
-@JsonPropertyOrder(value = {"username", "password", "personalityId", "role"})
+@JsonPropertyOrder(value = {"username", "password", "personalityId"})
 public class NewUserDTO {
 	
 	/************************************************************
@@ -34,10 +33,6 @@ public class NewUserDTO {
 	@NotBlank
 	@JsonProperty(value = "ID Personality")
 	private Integer personalityId;	
-	
-	@NotBlank
-	@JsonProperty(value = "ID Role")
-	private ERole role;
 	
 	/************************************************************
 	 * Constructors
@@ -73,14 +68,6 @@ public class NewUserDTO {
 
 	public void setPersonalityId(Integer personalityId) {
 		this.personalityId = personalityId;
-	}
-
-	public ERole getRole() {
-		return role;
-	}
-
-	public void setRole(ERole role) {
-		this.role = role;
 	}
 
 }

@@ -49,7 +49,7 @@ public class JoinTableStudentParent {
 	public JoinTableStudentParent() {
 		super();
 	}
-	
+
 	/************************************************************
 	 * Getters & Setters
 	 ************************************************************/

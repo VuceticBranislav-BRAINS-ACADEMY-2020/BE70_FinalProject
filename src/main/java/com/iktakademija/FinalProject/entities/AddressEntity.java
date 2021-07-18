@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Version;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -45,7 +46,8 @@ public class AddressEntity {
 	/************************************************************
 	 * Relation Attributes
 	 ************************************************************/
-
+	
+	@JsonIgnore
 	@OneToMany(mappedBy = "address", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JsonManagedReference(value = "Person_Address_1")
 	private Set<PersonEntity> personality = new HashSet<>();
@@ -108,11 +110,13 @@ public class AddressEntity {
 	public void setApartment(String apartment) {
 		this.apartment = apartment;
 	}
-
+	
+	@JsonIgnore
 	public Set<PersonEntity> getPersonality() {
 		return personality;
 	}
-
+	
+	@JsonIgnore
 	public void setPersonality(Set<PersonEntity> personality) {
 		this.personality = personality;
 	}

@@ -26,4 +26,5 @@ public class UserController {
 		//return new ResponseEntity<RESTMessage>(new RESTMessage(ERESTMessageCodes.LIST_EMPTY), HttpStatus.OK);
 		return new ResponseEntity<List<UserEntity>>((List<UserEntity>) userRepository.findAll(), HttpStatus.OK);
 	}
+
 }

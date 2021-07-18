@@ -22,6 +22,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -61,7 +62,8 @@ public class PersonEntity {
 	@JoinColumn(name = "address")
 	@JsonBackReference(value = "Person_Address_1")
 	private AddressEntity address;
-
+	
+	@JsonIgnore
 	@OneToMany(mappedBy = "personality", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JsonManagedReference(value = "User_Person_1")
 	private Set<UserEntity> users = new HashSet<>();
@@ -140,11 +142,13 @@ public class PersonEntity {
 	public void setAddress(AddressEntity address) {
 		this.address = address;
 	}
-
+	
+	@JsonIgnore
 	public Set<UserEntity> getUsers() {
 		return users;
 	}
-
+	
+	@JsonIgnore
 	public void setUsers(Set<UserEntity> users) {
 		this.users = users;
 	}

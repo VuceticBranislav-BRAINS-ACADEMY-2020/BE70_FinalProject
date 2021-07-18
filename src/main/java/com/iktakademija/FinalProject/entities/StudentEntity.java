@@ -12,6 +12,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -36,10 +37,12 @@ public class StudentEntity extends UserEntity {
 	@JsonBackReference(value = "Student_Group_1")
 	private GroupEntity classgroup;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "student", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JsonManagedReference(value = "Student_Class_1")
 	private Set<JoinTableStudentClass> clazz = new HashSet<>();
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "student", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JsonManagedReference(value = "Student_Parent_1")
 	private Set<JoinTableStudentParent> parent = new HashSet<>();
@@ -72,18 +75,22 @@ public class StudentEntity extends UserEntity {
 		this.classgroup = classgroup;
 	}
 
+	@JsonIgnore
 	public Set<JoinTableStudentClass> getClazz() {
 		return clazz;
 	}
-
+	
+	@JsonIgnore
 	public void setClazz(Set<JoinTableStudentClass> clazz) {
 		this.clazz = clazz;
 	}
-
+	
+	@JsonIgnore
 	public Set<JoinTableStudentParent> getParent() {
 		return parent;
 	}
 
+	@JsonIgnore
 	public void setParent(Set<JoinTableStudentParent> parent) {
 		this.parent = parent;
 	}

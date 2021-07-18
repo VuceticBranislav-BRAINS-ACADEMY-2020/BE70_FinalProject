@@ -10,6 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -32,6 +33,7 @@ public class ParentEntity extends UserEntity {
 	 * Relation Attributes
 	 ************************************************************/
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "parent", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JsonManagedReference(value = "Student_Parent_2")
 	private Set<JoinTableStudentParent> student = new HashSet<>();
@@ -59,11 +61,13 @@ public class ParentEntity extends UserEntity {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
+	
+	@JsonIgnore
 	public Set<JoinTableStudentParent> getStudent() {
 		return student;
 	}
-
+	
+	@JsonIgnore
 	public void setStudent(Set<JoinTableStudentParent> student) {
 		this.student = student;
 	}

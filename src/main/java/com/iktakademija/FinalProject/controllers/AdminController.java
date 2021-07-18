@@ -16,27 +16,20 @@ import com.iktakademija.FinalProject.controllers.utils.RESTError;
 import com.iktakademija.FinalProject.controllers.utils.enums.ERESTErrorCodes;
 import com.iktakademija.FinalProject.entities.AddressEntity;
 import com.iktakademija.FinalProject.entities.AdminEntity;
-import com.iktakademija.FinalProject.entities.ParentEntity;
 import com.iktakademija.FinalProject.entities.PersonEntity;
-import com.iktakademija.FinalProject.entities.StudentEntity;
-import com.iktakademija.FinalProject.entities.TeacherEntity;
-import com.iktakademija.FinalProject.entities.UserEntity;
 import com.iktakademija.FinalProject.entities.dtos.AdminDTO;
 import com.iktakademija.FinalProject.entities.dtos.NewAddressDTO;
 import com.iktakademija.FinalProject.entities.dtos.NewPersonDTO;
 import com.iktakademija.FinalProject.entities.dtos.NewUserDTO;
 import com.iktakademija.FinalProject.repositories.AdminRepository;
-import com.iktakademija.FinalProject.repositories.ParentRepository;
-import com.iktakademija.FinalProject.repositories.StudentRepository;
-import com.iktakademija.FinalProject.repositories.TeacherRepository;
 import com.iktakademija.FinalProject.securities.Views;
 import com.iktakademija.FinalProject.services.AdminService;
 
 /**
- * Admin Endpoint.
+ * Admin endpoint.
  * <BR>Provide all admin functionalities
  * @see #getAllAdmins 
- * @see #addUser
+ * @see #addAdmin
  * @see #addAddress
  * @see #addPerson
  */
@@ -49,21 +42,21 @@ public class AdminController {
 	
 //	@Autowired
 //	private UserRepository userRepository;
-	
-	@Autowired
-	private StudentRepository studentRepository;	
-	
-	@Autowired
-	private ParentRepository parentRepository;
+//	
+//	@Autowired
+//	private StudentRepository studentRepository;	
+//	
+//	@Autowired
+//	private ParentRepository parentRepository;
 	
 	@Autowired
 	private AdminRepository adminRepository;
 	
 //	@Autowired
 //	private RoleRepository roleRepository;
-	
-	@Autowired
-	private TeacherRepository teacherRepository;
+//	
+//	@Autowired
+//	private TeacherRepository teacherRepository;
 	
 	/**
 	 * Returns all admins from data base. 
@@ -94,36 +87,19 @@ public class AdminController {
 	 * Path inside controller: <B>"/admin/user"</B><BR>
 	 * Allowed for <B>Admin</B><BR>
 	 * Error status messages: <B>none</B><BR>
-	 * Postman identification tag: <B>ADM02</B>
+	 * Postman identification tag: <B>ADM04</B>
 	 * @return Added administrator if there is no errors.
 	 * @see AdminController
 	 */
 	@Secured("ROLE_ADMIN")
 	@JsonView(value = Views.Admin.class)
-	@RequestMapping(method = RequestMethod.POST, path = "/user")
-	public ResponseEntity<?> addUser(@RequestBody NewUserDTO newUser) {	
-				
-		switch (newUser.getRole()) {
-		case ROLE_ADMIN:
-			AdminEntity adminEntity = adminService.createAdmin(newUser);
-			adminEntity = adminRepository.save(adminEntity);
-			return new ResponseEntity<UserEntity>(adminEntity, HttpStatus.OK);
-		case ROLE_PARENT:
-			ParentEntity parentEntity = adminService.createParent(newUser);
-			parentEntity = parentRepository.save(parentEntity);
-			return new ResponseEntity<ParentEntity>(parentEntity, HttpStatus.OK);
-		case ROLE_STUDENT:
-			StudentEntity studentEntity = adminService.createStudent(newUser);
-			studentEntity = studentRepository.save(studentEntity);
-			return new ResponseEntity<StudentEntity>(studentEntity, HttpStatus.OK);
-		case ROLE_TEACHER:
-		case ROLE_CLASSMASTER:
-			TeacherEntity teacherEntity = adminService.createTeacher(newUser);
-			teacherEntity = teacherRepository.save(teacherEntity);
-			return new ResponseEntity<TeacherEntity>(teacherEntity, HttpStatus.OK);
-		}		
-
-		return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.ROLE_NOT_EXISTS), HttpStatus.NOT_ACCEPTABLE);
+	@RequestMapping(method = RequestMethod.POST, path = "")
+	public ResponseEntity<?> addAdmin(@RequestBody NewUserDTO newUser) {	
+		
+		AdminEntity user = adminService.createAdmin(newUser);
+		user = adminRepository.save(user);
+		return new ResponseEntity<AdminEntity>(user, HttpStatus.OK);
+	
 	}
 	
 	/**
@@ -134,7 +110,7 @@ public class AdminController {
 	 * Path inside controller: <B>"/admin/address"</B><BR>
 	 * Allowed for <B>Admin</B><BR>
 	 * Error status messages: <B>none</B><BR>
-	 * Postman identification tag: <B>ADM03</B>
+	 * Postman identification tag: <B>ADM02</B>
 	 * @return Added adress if there is no errors.
 	 * @see AdminController
 	 */
@@ -156,7 +132,7 @@ public class AdminController {
 	 * Path inside controller: <B>"/admin/person"</B><BR>
 	 * Allowed for <B>Admin</B><BR>
 	 * Error status messages: <B>none</B><BR>
-	 * Postman identification tag: <B>ADM04</B>
+	 * Postman identification tag: <B>ADM03</B>
 	 * @return Added person if there is no errors.
 	 * @see AdminController
 	 */
