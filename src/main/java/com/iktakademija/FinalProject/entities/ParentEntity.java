@@ -10,7 +10,6 @@ import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -33,7 +32,6 @@ public class ParentEntity extends UserEntity {
 	 * Relation Attributes
 	 ************************************************************/
 	
-	@JsonIgnore
 	@OneToMany(mappedBy = "parent", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JsonManagedReference(value = "Student_Parent_2")
 	private Set<JoinTableStudentParent> student = new HashSet<>();
@@ -46,13 +44,13 @@ public class ParentEntity extends UserEntity {
 		super();
 	}
 	
-	/************************************************************
-	 * Getters & Setters
-	 ************************************************************/	
-	
 	public ParentEntity(String username, String password, PersonEntity personality, RoleEntity role) {
 		super(username, password, personality, role);
-	}
+	}	
+	
+	/************************************************************
+	 * Getters & Setters
+	 ************************************************************/
 
 	public String getEmail() {
 		return email;
@@ -62,14 +60,23 @@ public class ParentEntity extends UserEntity {
 		this.email = email;
 	}
 	
-	@JsonIgnore
-	public Set<JoinTableStudentParent> getStudent() {
+	public Set<JoinTableStudentParent> getStudents() {
 		return student;
 	}
 	
-	@JsonIgnore
 	public void setStudent(Set<JoinTableStudentParent> student) {
 		this.student = student;
 	}
+	
+//	@SuppressWarnings("unlikely-arg-type")
+//	public Set<StudentEntity> getStudent() {
+//
+//		Set<StudentEntity> retVal = new HashSet<>();
+//		for (JoinTableStudentParent jt : this.getStudents()) {
+//			if (jt.getParent().equals(this.getId()))
+//				retVal.add(jt.getStudent());
+//		}
+//		return retVal;
+//	}
 
 }

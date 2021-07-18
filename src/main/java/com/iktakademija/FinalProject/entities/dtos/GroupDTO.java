@@ -3,19 +3,21 @@ package com.iktakademija.FinalProject.entities.dtos;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonView;
-import com.iktakademija.FinalProject.entities.AdminEntity;
+import com.iktakademija.FinalProject.entities.ClassEntity;
+import com.iktakademija.FinalProject.entities.GroupEntity;
+import com.iktakademija.FinalProject.entities.TeacherEntity;
 import com.iktakademija.FinalProject.entities.enums.EStatus;
 import com.iktakademija.FinalProject.securities.Views;
 
 /**
- * Administration DTO.
- * <BR>Provide all information related to {@link AdminEntity}
- * @see AdminEntity
+ * Group DTO.
+ * <BR>Provide all information related to {@link GroupEntity}.
+ * @see GroupEntity
  * @author GM
  */
 @JsonView(value = Views.Admin.class)
-@JsonPropertyOrder(value =  {"id", "username", "personality", "role", "version", "status"})
-public class AdminDTO {
+@JsonPropertyOrder(value =  {"id", "letter", "homeClassMaster", "clazz", "version", "status"})
+public class GroupDTO {
 	
 	/************************************************************
 	 * Attributes
@@ -24,29 +26,29 @@ public class AdminDTO {
 	@JsonProperty(value = "ID")
 	private Integer id;	
 	
-	@JsonProperty(value = "Username")
-	private String username;
+	@JsonProperty(value = "Class Mark")
+	private String letter;	
 
-	@JsonProperty(value = "Personality")
-	private PersonDTO personality;	
-
-	@JsonProperty(value = "Role")
-	private RoleDTO role;	
+	@JsonProperty(value = "Homeclass Teacher")
+	private TeacherEntity homeClassMaster;
+	
+	@JsonProperty(value = "Class")
+	private ClassEntity clazz;
 	
 	@JsonProperty(value = "Version")
 	private Integer version;
 	
 	@JsonProperty(value = "Status")
 	private EStatus status;
-	
+
 	/************************************************************
 	 * Constructors
 	 ************************************************************/
 
-	public AdminDTO() {
+	public GroupDTO() {
 		super();
 	}
-	
+
 	/************************************************************
 	 * Getters & Setters
 	 ************************************************************/
@@ -59,28 +61,28 @@ public class AdminDTO {
 		this.id = id;
 	}
 
-	public String getUsername() {
-		return username;
+	public String getLetter() {
+		return letter;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setLetter(String letter) {
+		this.letter = letter;
 	}
 
-	public PersonDTO getPersonality() {
-		return personality;
+	public TeacherEntity getHomeClassMaster() {
+		return homeClassMaster;
 	}
 
-	public void setPersonality(PersonDTO personality) {
-		this.personality = personality;
+	public void setHomeClassMaster(TeacherEntity homeClassMaster) {
+		this.homeClassMaster = homeClassMaster;
 	}
 
-	public RoleDTO getRole() {
-		return role;
+	public ClassEntity getClazz() {
+		return clazz;
 	}
 
-	public void setRole(RoleDTO role) {
-		this.role = role;
+	public void setClazz(ClassEntity clazz) {
+		this.clazz = clazz;
 	}
 
 	public Integer getVersion() {

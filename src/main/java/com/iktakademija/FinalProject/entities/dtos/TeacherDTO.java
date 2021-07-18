@@ -3,19 +3,19 @@ package com.iktakademija.FinalProject.entities.dtos;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonView;
-import com.iktakademija.FinalProject.entities.AdminEntity;
+import com.iktakademija.FinalProject.entities.TeacherEntity;
 import com.iktakademija.FinalProject.entities.enums.EStatus;
 import com.iktakademija.FinalProject.securities.Views;
 
 /**
- * Administration DTO.
- * <BR>Provide all information related to {@link AdminEntity}
- * @see AdminEntity
+ * Teacher DTO.
+ * <BR>Provide all information related to {@link TeacherEntity}
+ * @see TeacherEntity
  * @author GM
  */
 @JsonView(value = Views.Admin.class)
-@JsonPropertyOrder(value =  {"id", "username", "personality", "role", "version", "status"})
-public class AdminDTO {
+@JsonPropertyOrder(value =  {"id", "username", "personality", "roleId", "version", "status"})
+public class TeacherDTO {
 	
 	/************************************************************
 	 * Attributes
@@ -26,7 +26,7 @@ public class AdminDTO {
 	
 	@JsonProperty(value = "Username")
 	private String username;
-
+	
 	@JsonProperty(value = "Personality")
 	private PersonDTO personality;	
 
@@ -43,13 +43,17 @@ public class AdminDTO {
 	 * Constructors
 	 ************************************************************/
 
-	public AdminDTO() {
+	public TeacherDTO() {
 		super();
 	}
-	
+
 	/************************************************************
 	 * Getters & Setters
 	 ************************************************************/
+	
+	public String getUsername() {
+		return username;
+	}
 
 	public Integer getId() {
 		return id;
@@ -57,14 +61,6 @@ public class AdminDTO {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
 	}
 
 	public PersonDTO getPersonality() {
@@ -97,6 +93,10 @@ public class AdminDTO {
 
 	public void setStatus(EStatus status) {
 		this.status = status;
-	}		
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
 
 }

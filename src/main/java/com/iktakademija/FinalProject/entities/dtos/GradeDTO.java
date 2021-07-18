@@ -1,21 +1,25 @@
 package com.iktakademija.FinalProject.entities.dtos;
 
+import java.time.LocalDate;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonView;
-import com.iktakademija.FinalProject.entities.AdminEntity;
+import com.iktakademija.FinalProject.entities.ClassEntity;
+import com.iktakademija.FinalProject.entities.enums.EGradeType;
+import com.iktakademija.FinalProject.entities.enums.EStage;
 import com.iktakademija.FinalProject.entities.enums.EStatus;
 import com.iktakademija.FinalProject.securities.Views;
 
 /**
- * Administration DTO.
- * <BR>Provide all information related to {@link AdminEntity}
- * @see AdminEntity
+ * Class DTO.
+ * <BR>Provide all information related to {@link ClassEntity}.
+ * @see ClassEntity
  * @author GM
  */
 @JsonView(value = Views.Admin.class)
-@JsonPropertyOrder(value =  {"id", "username", "personality", "role", "version", "status"})
-public class AdminDTO {
+@JsonPropertyOrder(value =  {"id", "type", "value", "entered", "stage", "version", "status"})
+public class GradeDTO {
 	
 	/************************************************************
 	 * Attributes
@@ -24,33 +28,36 @@ public class AdminDTO {
 	@JsonProperty(value = "ID")
 	private Integer id;	
 	
-	@JsonProperty(value = "Username")
-	private String username;
-
-	@JsonProperty(value = "Personality")
-	private PersonDTO personality;	
-
-	@JsonProperty(value = "Role")
-	private RoleDTO role;	
+	@JsonProperty(value = "Type")
+	private EGradeType type;
+	
+	@JsonProperty(value = "Value")
+	private Integer value;
+	
+	@JsonProperty(value = "Date Entered")
+	private LocalDate entered;
+	
+	@JsonProperty(value = "Stage")
+	private EStage stage;	
 	
 	@JsonProperty(value = "Version")
 	private Integer version;
 	
 	@JsonProperty(value = "Status")
 	private EStatus status;
-	
+
 	/************************************************************
 	 * Constructors
 	 ************************************************************/
 
-	public AdminDTO() {
+	public GradeDTO() {
 		super();
 	}
-	
+
 	/************************************************************
 	 * Getters & Setters
 	 ************************************************************/
-
+	
 	public Integer getId() {
 		return id;
 	}
@@ -59,28 +66,36 @@ public class AdminDTO {
 		this.id = id;
 	}
 
-	public String getUsername() {
-		return username;
+	public EGradeType getType() {
+		return type;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setType(EGradeType type) {
+		this.type = type;
 	}
 
-	public PersonDTO getPersonality() {
-		return personality;
+	public Integer getValue() {
+		return value;
 	}
 
-	public void setPersonality(PersonDTO personality) {
-		this.personality = personality;
+	public void setValue(Integer value) {
+		this.value = value;
 	}
 
-	public RoleDTO getRole() {
-		return role;
+	public LocalDate getEntered() {
+		return entered;
 	}
 
-	public void setRole(RoleDTO role) {
-		this.role = role;
+	public void setEntered(LocalDate entered) {
+		this.entered = entered;
+	}
+
+	public EStage getStage() {
+		return stage;
+	}
+
+	public void setStage(EStage stage) {
+		this.stage = stage;
 	}
 
 	public Integer getVersion() {
@@ -97,6 +112,6 @@ public class AdminDTO {
 
 	public void setStatus(EStatus status) {
 		this.status = status;
-	}		
+	}	
 
 }

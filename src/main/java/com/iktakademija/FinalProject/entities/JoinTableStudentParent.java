@@ -8,11 +8,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity(name = "student_parent")
+@Table(name = "student_parent", uniqueConstraints = { @UniqueConstraint(columnNames = { "student", "parent" }) })
 @JsonIgnoreProperties({ "handler", "hibernateLazyInitializer" })
 public class JoinTableStudentParent {
 	
@@ -48,6 +51,12 @@ public class JoinTableStudentParent {
 
 	public JoinTableStudentParent() {
 		super();
+	}
+	
+	public JoinTableStudentParent(ParentEntity parent, StudentEntity student) {
+		super();
+		this.parent = parent;
+		this.student = student;
 	}
 
 	/************************************************************

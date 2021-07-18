@@ -6,7 +6,6 @@ import java.util.Set;
 import org.springframework.data.repository.CrudRepository;
 
 import com.iktakademija.FinalProject.entities.AddressEntity;
-import com.iktakademija.FinalProject.entities.PersonEntity;
 
 public interface AddressRepository extends CrudRepository<AddressEntity, Integer> {
 	

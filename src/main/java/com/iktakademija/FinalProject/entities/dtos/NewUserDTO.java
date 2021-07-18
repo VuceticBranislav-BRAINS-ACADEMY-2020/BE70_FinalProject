@@ -15,7 +15,7 @@ import com.iktakademija.FinalProject.securities.Views;
  * @author GM
  */
 @JsonView(value = Views.Admin.class)
-@JsonPropertyOrder(value = {"username", "password", "personalityId"})
+@JsonPropertyOrder(value = {"username", "password", "personality"})
 public class NewUserDTO {
 	
 	/************************************************************

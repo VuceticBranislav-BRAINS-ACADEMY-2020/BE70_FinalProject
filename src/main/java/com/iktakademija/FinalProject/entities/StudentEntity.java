@@ -58,11 +58,11 @@ public class StudentEntity extends UserEntity {
 	public StudentEntity() {
 		super();
 	}	
-	
+
 	public StudentEntity(String username, String password, PersonEntity personality, RoleEntity role) {
 		super(username, password, personality, role);
 	}
-	
+
 	/************************************************************
 	 * Getters & Setters
 	 ************************************************************/

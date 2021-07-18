@@ -37,8 +37,11 @@ public class AdminServiceImpl implements AdminService {
 	@Autowired
 	private PersonRepository personRepository;
 	
-//	@Autowired
-//	private StudentRepository studentRepository;
+	@Autowired
+	private PersonService personService;
+
+	@Autowired
+	private RoleService roleService;
 	
 	@Autowired
 	private AddressRepository addressRepository;
@@ -152,8 +155,20 @@ public class AdminServiceImpl implements AdminService {
 		person = personRepository.save(person);
 		
 		return person;
-	}
+	}	
 	
+	@Override
+	public AdminDTO createDTO(AdminEntity source) {
+
+		AdminDTO retVal = new AdminDTO();
+		retVal.setId(source.getId());
+		retVal.setUsername(source.getUsername());
+		retVal.setPersonality(personService.createDTO(source.getPersonality()));
+		retVal.setRole(roleService.createDTO(source.getRole()));
+		retVal.setVersion(source.getVersion());
+		retVal.setStatus(source.getStatus());
+		return retVal;
+	}	
 	
 	/************************************************************
 	 * Repository related
@@ -165,8 +180,8 @@ public class AdminServiceImpl implements AdminService {
 		// Get list of users from database
 		List<AdminEntity> admins = adminRepository.findAll();
 
-		// Return list of converted AdminEntity to AdminDTO
-		return admins.stream().map(admin -> new AdminDTO(admin)).collect(Collectors.toList());
+		// Return list of converted AdminEntity to AdminDTO		
+		return admins.stream().map(admin -> this.createDTO(admin)).collect(Collectors.toList());
 	}
 
 }

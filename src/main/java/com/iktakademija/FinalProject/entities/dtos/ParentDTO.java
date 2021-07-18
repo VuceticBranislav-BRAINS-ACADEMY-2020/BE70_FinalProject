@@ -1,21 +1,23 @@
 package com.iktakademija.FinalProject.entities.dtos;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonView;
-import com.iktakademija.FinalProject.entities.AdminEntity;
+import com.iktakademija.FinalProject.entities.ParentEntity;
 import com.iktakademija.FinalProject.entities.enums.EStatus;
 import com.iktakademija.FinalProject.securities.Views;
 
 /**
- * Administration DTO.
- * <BR>Provide all information related to {@link AdminEntity}
- * @see AdminEntity
+ * Parent DTO.
+ * <BR>Provide all information related to {@link ParentEntity}
+ * @see ParentEntity
  * @author GM
  */
 @JsonView(value = Views.Admin.class)
-@JsonPropertyOrder(value =  {"id", "username", "personality", "role", "version", "status"})
-public class AdminDTO {
+@JsonPropertyOrder(value =  {"id", "username", "personality", "roleId", "version", "status", "email", "childs"})
+public class ParentDTO {
 	
 	/************************************************************
 	 * Attributes
@@ -26,7 +28,7 @@ public class AdminDTO {
 	
 	@JsonProperty(value = "Username")
 	private String username;
-
+	
 	@JsonProperty(value = "Personality")
 	private PersonDTO personality;	
 
@@ -39,17 +41,27 @@ public class AdminDTO {
 	@JsonProperty(value = "Status")
 	private EStatus status;
 	
+	@JsonProperty(value = "EMail")
+	private String email;
+	
+	@JsonProperty(value = "ID Childs")
+	private List<Integer> childs;
+	
 	/************************************************************
 	 * Constructors
 	 ************************************************************/
 
-	public AdminDTO() {
+	public ParentDTO() {
 		super();
 	}
-	
+
 	/************************************************************
 	 * Getters & Setters
 	 ************************************************************/
+	
+	public String getUsername() {
+		return username;
+	}
 
 	public Integer getId() {
 		return id;
@@ -57,14 +69,6 @@ public class AdminDTO {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
 	}
 
 	public PersonDTO getPersonality() {
@@ -97,6 +101,26 @@ public class AdminDTO {
 
 	public void setStatus(EStatus status) {
 		this.status = status;
-	}		
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public List<Integer> getChilds() {
+		return childs;
+	}
+
+	public void setChilds(List<Integer> childs) {
+		this.childs = childs;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
 
 }

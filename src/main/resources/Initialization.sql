@@ -22,6 +22,7 @@ INSERT INTO personality (`id`, `birthdate`, `firstname`, `jmbg`, `lastname`, `mp
 INSERT INTO personality (`id`, `birthdate`, `firstname`, `jmbg`, `lastname`, `mphone`, `status`, `version`, `address`) VALUES ('23', '2000-07-10', 'Ivan',  '1007000323658', 'Prpara', '+064456456', 'ACTIVE', '0', '12');
 INSERT INTO personality (`id`, `birthdate`, `firstname`, `jmbg`, `lastname`, `mphone`, `status`, `version`, `address`) VALUES ('24', '1999-11-11', 'Janko', '1111999124578', 'Dindo', '+063635789', 'ACTIVE', '0', '13');
 INSERT INTO personality (`id`, `birthdate`, `firstname`, `jmbg`, `lastname`, `mphone`, `status`, `version`, `address`) VALUES ('25', '2005-09-01', 'Marko', '0109005987413', 'Kostic', '+063333333', 'ACTIVE', '0', '14');
+INSERT INTO personality (`id`, `birthdate`, `firstname`, `jmbg`, `lastname`, `mphone`, `status`, `version`, `address`) VALUES ('26', '2005-09-01', 'Kiki', '0109005987888', 'Jokic', '+063233233', 'ACTIVE', '0', '14');
 
 # Users
 INSERT INTO user (`id`, `password`, `status`, `username`, `version`, `personality`, `role`) VALUES ('30', '$2a$10$jgw8uiTl3yQgXlw6yOJEg.vhFFvOcki2wgTTNC9/NZ4SfSj8CGZGW', 'ACTIVE', 'admin', '0', '20', '1');
@@ -31,6 +32,7 @@ INSERT INTO user (`id`, `password`, `status`, `username`, `version`, `personalit
 INSERT INTO user (`id`, `password`, `status`, `username`, `version`, `personality`, `role`) VALUES ('34', '$2a$10$jgw8uiTl3yQgXlw6yOJEg.vhFFvOcki2wgTTNC9/NZ4SfSj8CGZGW', 'ACTIVE', 'sole', '0', '24', '5');
 INSERT INTO user (`id`, `password`, `status`, `username`, `version`, `personality`, `role`) VALUES ('35', '$2a$10$jgw8uiTl3yQgXlw6yOJEg.vhFFvOcki2wgTTNC9/NZ4SfSj8CGZGW', 'ACTIVE', 'xxxx', '0', '20', '3');
 INSERT INTO user (`id`, `password`, `status`, `username`, `version`, `personality`, `role`) VALUES ('36', '$2a$10$jgw8uiTl3yQgXlw6yOJEg.vhFFvOcki2wgTTNC9/NZ4SfSj8CGZGW', 'ACTIVE', 'nnn', '0', '25', '4');
+INSERT INTO user (`id`, `password`, `status`, `username`, `version`, `personality`, `role`) VALUES ('37', '$2a$10$jgw8uiTl3yQgXlw6yOJEg.vhFFvOcki2wgTTNC9/NZ4SfSj8CGZGW', 'ACTIVE', 'mamaitata', '0', '26', '5');
 
 # Specializations
 INSERT INTO `admin` (`id`) VALUES ('30');
@@ -39,10 +41,9 @@ INSERT INTO `teacher` (`id`) VALUES ('32');
 INSERT INTO `teacher` (`id`) VALUES ('35');
 INSERT INTO `student` (`id`) VALUES ('33');
 INSERT INTO `student` (`id`) VALUES ('36');
-INSERT INTO `parent` (`id`) VALUES ('34');
-
 # Parent
 INSERT INTO `parent` (`email`, `id`) VALUES ('email@gmail.com', '34');
+INSERT INTO `parent` (`email`, `id`) VALUES ('xxx@gmail.com', '37');
 
 # Parent-Strudent
 INSERT INTO student_parent (`id`, `parent`, `student`) VALUES ('40', '34', '36');

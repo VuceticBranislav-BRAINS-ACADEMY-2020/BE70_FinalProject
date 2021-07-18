@@ -3,54 +3,49 @@ package com.iktakademija.FinalProject.entities.dtos;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonView;
-import com.iktakademija.FinalProject.entities.AdminEntity;
+import com.iktakademija.FinalProject.entities.RoleEntity;
+import com.iktakademija.FinalProject.entities.enums.ERole;
 import com.iktakademija.FinalProject.entities.enums.EStatus;
 import com.iktakademija.FinalProject.securities.Views;
 
 /**
- * Administration DTO.
- * <BR>Provide all information related to {@link AdminEntity}
- * @see AdminEntity
+ * Role DTO.
+ * <BR>Provide all information related to {@link RoleEntity}.
+ * @see RoleEntity
  * @author GM
  */
 @JsonView(value = Views.Admin.class)
-@JsonPropertyOrder(value =  {"id", "username", "personality", "role", "version", "status"})
-public class AdminDTO {
+@JsonPropertyOrder(value =  {"id", "roleId", "version", "status"})
+public class RoleDTO {
 	
 	/************************************************************
 	 * Attributes
 	 ************************************************************/
 	
 	@JsonProperty(value = "ID")
-	private Integer id;	
-	
-	@JsonProperty(value = "Username")
-	private String username;
+	private Integer id;		
 
-	@JsonProperty(value = "Personality")
-	private PersonDTO personality;	
-
-	@JsonProperty(value = "Role")
-	private RoleDTO role;	
+	@JsonProperty(value = "Role Name")
+	private ERole roleId;	
 	
 	@JsonProperty(value = "Version")
 	private Integer version;
 	
 	@JsonProperty(value = "Status")
-	private EStatus status;
+	private EStatus status;		
 	
 	/************************************************************
 	 * Constructors
 	 ************************************************************/
 
-	public AdminDTO() {
+	public RoleDTO() {
 		super();
 	}
-	
+
 	/************************************************************
 	 * Getters & Setters
 	 ************************************************************/
-
+	
 	public Integer getId() {
 		return id;
 	}
@@ -59,28 +54,12 @@ public class AdminDTO {
 		this.id = id;
 	}
 
-	public String getUsername() {
-		return username;
+	public ERole getRoleId() {
+		return roleId;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public PersonDTO getPersonality() {
-		return personality;
-	}
-
-	public void setPersonality(PersonDTO personality) {
-		this.personality = personality;
-	}
-
-	public RoleDTO getRole() {
-		return role;
-	}
-
-	public void setRole(RoleDTO role) {
-		this.role = role;
+	public void setRoleId(ERole roleId) {
+		this.roleId = roleId;
 	}
 
 	public Integer getVersion() {
@@ -97,6 +76,6 @@ public class AdminDTO {
 
 	public void setStatus(EStatus status) {
 		this.status = status;
-	}		
+	}
 
 }

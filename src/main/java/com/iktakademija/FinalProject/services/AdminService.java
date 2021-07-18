@@ -26,6 +26,8 @@ public interface AdminService {
 	AddressEntity createAddress(NewAddressDTO source);
 	PersonEntity createPerson(NewPersonDTO source);
 	
+	public AdminDTO createDTO(AdminEntity source);
+	
 	/************************************************************
 	 * Repository related
 	 ************************************************************/

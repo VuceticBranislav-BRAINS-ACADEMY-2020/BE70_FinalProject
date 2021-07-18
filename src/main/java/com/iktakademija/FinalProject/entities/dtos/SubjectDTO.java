@@ -3,19 +3,19 @@ package com.iktakademija.FinalProject.entities.dtos;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonView;
-import com.iktakademija.FinalProject.entities.AdminEntity;
+import com.iktakademija.FinalProject.entities.SubjectEntity;
 import com.iktakademija.FinalProject.entities.enums.EStatus;
 import com.iktakademija.FinalProject.securities.Views;
 
 /**
- * Administration DTO.
- * <BR>Provide all information related to {@link AdminEntity}
- * @see AdminEntity
+ * Subject DTO.
+ * <BR>Provide all information related to {@link SubjectEntity}
+ * @see SubjectEntity
  * @author GM
  */
 @JsonView(value = Views.Admin.class)
-@JsonPropertyOrder(value =  {"id", "username", "personality", "role", "version", "status"})
-public class AdminDTO {
+@JsonPropertyOrder(value =  {"id", "name", "fond", "plan", "version", "status"})
+public class SubjectDTO {
 	
 	/************************************************************
 	 * Attributes
@@ -24,14 +24,14 @@ public class AdminDTO {
 	@JsonProperty(value = "ID")
 	private Integer id;	
 	
-	@JsonProperty(value = "Username")
-	private String username;
+	@JsonProperty(value = "Name")
+	private String name;
 
-	@JsonProperty(value = "Personality")
-	private PersonDTO personality;	
+	@JsonProperty(value = "Fond")
+	private Integer fond;
 
-	@JsonProperty(value = "Role")
-	private RoleDTO role;	
+	@JsonProperty(value = "Plan Description")
+	private String plan;
 	
 	@JsonProperty(value = "Version")
 	private Integer version;
@@ -43,7 +43,7 @@ public class AdminDTO {
 	 * Constructors
 	 ************************************************************/
 
-	public AdminDTO() {
+	public SubjectDTO() {
 		super();
 	}
 	
@@ -59,28 +59,28 @@ public class AdminDTO {
 		this.id = id;
 	}
 
-	public String getUsername() {
-		return username;
+	public String getName() {
+		return name;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public PersonDTO getPersonality() {
-		return personality;
+	public Integer getFond() {
+		return fond;
 	}
 
-	public void setPersonality(PersonDTO personality) {
-		this.personality = personality;
+	public void setFond(Integer fond) {
+		this.fond = fond;
 	}
 
-	public RoleDTO getRole() {
-		return role;
+	public String getPlan() {
+		return plan;
 	}
 
-	public void setRole(RoleDTO role) {
-		this.role = role;
+	public void setPlan(String plan) {
+		this.plan = plan;
 	}
 
 	public Integer getVersion() {
@@ -97,6 +97,6 @@ public class AdminDTO {
 
 	public void setStatus(EStatus status) {
 		this.status = status;
-	}		
+	}
 
 }
