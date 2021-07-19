@@ -14,7 +14,7 @@ import com.iktakademija.FinalProject.securities.Views;
  * @author GM
  */
 @JsonView(value = Views.Admin.class)
-@JsonPropertyOrder(value =  {"id", "username", "personality", "role", "version", "status"})
+@JsonPropertyOrder(value =  {"id", "username", "person", "role", "version", "status", "email"})
 public class AdminDTO {
 	
 	/************************************************************
@@ -27,8 +27,8 @@ public class AdminDTO {
 	@JsonProperty(value = "Username")
 	private String username;
 
-	@JsonProperty(value = "Personality")
-	private PersonDTO personality;	
+	@JsonProperty(value = "Person")
+	private PersonDTO person;	
 
 	@JsonProperty(value = "Role")
 	private RoleDTO role;	
@@ -38,6 +38,9 @@ public class AdminDTO {
 	
 	@JsonProperty(value = "Status")
 	private EStatus status;
+	
+	@JsonProperty(value = "EMail")
+	private String email;
 	
 	/************************************************************
 	 * Constructors
@@ -67,12 +70,12 @@ public class AdminDTO {
 		this.username = username;
 	}
 
-	public PersonDTO getPersonality() {
-		return personality;
+	public PersonDTO getPerson() {
+		return person;
 	}
 
-	public void setPersonality(PersonDTO personality) {
-		this.personality = personality;
+	public void setPerson(PersonDTO person) {
+		this.person = person;
 	}
 
 	public RoleDTO getRole() {
@@ -97,6 +100,14 @@ public class AdminDTO {
 
 	public void setStatus(EStatus status) {
 		this.status = status;
-	}		
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}	
 
 }

@@ -1,20 +1,25 @@
 package com.iktakademija.FinalProject.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.iktakademija.FinalProject.controllers.utils.RESTError;
+import com.iktakademija.FinalProject.controllers.utils.enums.ERESTErrorCodes;
 import com.iktakademija.FinalProject.entities.StudentEntity;
 import com.iktakademija.FinalProject.entities.dtos.NewUserDTO;
-import com.iktakademija.FinalProject.repositories.StudentRepository;
+import com.iktakademija.FinalProject.entities.dtos.StudentDTO;
 import com.iktakademija.FinalProject.securities.Views;
-import com.iktakademija.FinalProject.services.AdminService;
+import com.iktakademija.FinalProject.services.StudentService;
 
 /**
  * Student endpoint.
@@ -25,10 +30,44 @@ import com.iktakademija.FinalProject.services.AdminService;
 public class StudentController {
 	
 	@Autowired
-	private AdminService adminService;
+	private StudentService studentService;
 	
-	@Autowired
-	private StudentRepository studentRepository;
+	// STU10
+	@Secured("ROLE_ADMIN")
+	@RequestMapping(method = RequestMethod.GET, path = "/admin")
+	public ResponseEntity<?> getAllStudents() {
+		return new ResponseEntity<List<StudentDTO>>(studentService.getDTOList(), HttpStatus.OK);
+	}
+	
+	// STU11
+	@Secured("ROLE_ADMIN")
+	@RequestMapping(method = RequestMethod.GET, path = "/admin/{id}")
+	public ResponseEntity<?> getStudentById(@PathVariable(value = "id") Integer studentId) {
+		if (studentId == null) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_PARAMETERS), HttpStatus.NOT_ACCEPTABLE);		
+		StudentDTO dto = studentService.getStudentDTO(studentId);
+		if (dto == null) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.NOT_FOUND), HttpStatus.NOT_ACCEPTABLE);		
+		return new ResponseEntity<StudentDTO>(dto, HttpStatus.OK);	
+	}
+	
+	// STU12
+	@Secured("ROLE_ADMIN")
+	@RequestMapping(method = RequestMethod.PUT, path = "/admin/{id}")
+	public ResponseEntity<?> setStudent(@PathVariable(value = "id") Integer studentId, @RequestBody NewUserDTO newStudent) {
+		if (studentId == null || newStudent == null) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_PARAMETERS), HttpStatus.NOT_ACCEPTABLE);			
+		StudentDTO dto = studentService.setStudent(studentId, newStudent);
+		if (dto == null) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.NOT_FOUND), HttpStatus.NOT_ACCEPTABLE);
+		return new ResponseEntity<StudentDTO>(dto, HttpStatus.OK);	
+	}
+	
+	// STU13
+	@Secured("ROLE_ADMIN")
+	@RequestMapping(method = RequestMethod.DELETE, path = "/admin/{id}")
+	public ResponseEntity<?> removeStudent(@PathVariable(value = "id") Integer studentId) {
+		if (studentId == null) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_PARAMETERS), HttpStatus.NOT_ACCEPTABLE);			
+		StudentDTO dto = studentService.removeStudent(studentId);
+		if (dto == null) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.NOT_FOUND), HttpStatus.NOT_ACCEPTABLE);
+		return new ResponseEntity<StudentDTO>(dto, HttpStatus.OK);	
+	}
 	
 	/**
 	 * Add new student to database.
@@ -47,10 +86,9 @@ public class StudentController {
 	@RequestMapping(method = RequestMethod.POST, path = "/admin")
 	public ResponseEntity<?> addStudent(@RequestBody NewUserDTO newUser) {
 
-		StudentEntity user = adminService.createStudent(newUser);
-		user = studentRepository.save(user);
-		return new ResponseEntity<StudentEntity>(user, HttpStatus.OK);
-
+		StudentEntity student = studentService.createStudent(newUser);
+		if (student == null ) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_PARAMETERS), HttpStatus.NOT_ACCEPTABLE);
+		return new ResponseEntity<StudentDTO>(studentService.createDTO(student), HttpStatus.OK);
 	}
 	
 }

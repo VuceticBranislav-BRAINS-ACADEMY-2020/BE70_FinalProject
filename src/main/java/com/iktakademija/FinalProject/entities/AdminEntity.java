@@ -1,5 +1,6 @@
 package com.iktakademija.FinalProject.entities;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 
@@ -17,6 +18,9 @@ public class AdminEntity extends UserEntity {
 	 * Attributes
 	 ************************************************************/
 
+	@Column
+	private String email;
+
 	/************************************************************
 	 * Constructors
 	 ************************************************************/
@@ -25,11 +29,20 @@ public class AdminEntity extends UserEntity {
 		super();
 	}
 
-	public AdminEntity(String username, String password, PersonEntity personality, RoleEntity role) {
-		super(username, password, personality, role);
-	}	
+	public AdminEntity(String username, String password, PersonEntity person, RoleEntity role) {
+		super(username, password, person, role);
+	}
 	
 	/************************************************************
 	 * Getters & Setters
 	 ************************************************************/
+	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}	
+	
 }

@@ -29,7 +29,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.iktakademija.FinalProject.entities.enums.EStatus;
 import com.iktakademija.FinalProject.securities.Views;
 
-@Entity(name = "personality")
+@Entity(name = "person")
 @JsonIgnoreProperties({ "handler", "hibernateLazyInitializer" })
 @JsonView(value = Views.Admin.class)
 public class PersonEntity {
@@ -64,7 +64,7 @@ public class PersonEntity {
 	private AddressEntity address;
 	
 	@JsonIgnore
-	@OneToMany(mappedBy = "personality", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "person", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JsonManagedReference(value = "User_Person_1")
 	private Set<UserEntity> users = new HashSet<>();
 

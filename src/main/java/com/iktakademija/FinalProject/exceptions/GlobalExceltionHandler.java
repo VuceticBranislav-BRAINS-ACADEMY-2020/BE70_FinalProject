@@ -19,10 +19,8 @@ import com.iktakademija.FinalProject.controllers.utils.enums.ERESTErrorCodes;
 public class GlobalExceltionHandler extends ResponseEntityExceptionHandler {
 
 	@ExceptionHandler(value = DataIntegrityViolationException.class)
-	public ResponseEntity<?> handleAccessDeniedException(HttpServletRequest req, DataIntegrityViolationException e) {
-		
+	public ResponseEntity<?> handleAccessDeniedException(HttpServletRequest req, DataIntegrityViolationException e) {		
 		return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.ALREADY_EXISTS), HttpStatus.NOT_ACCEPTABLE);
-
 	}
 	    
 //	@ExceptionHandler({ Exception.class })

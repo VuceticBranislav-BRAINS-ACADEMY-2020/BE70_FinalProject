@@ -59,8 +59,8 @@ public class StudentEntity extends UserEntity {
 		super();
 	}	
 
-	public StudentEntity(String username, String password, PersonEntity personality, RoleEntity role) {
-		super(username, password, personality, role);
+	public StudentEntity(String username, String password, PersonEntity person, RoleEntity role) {
+		super(username, password, person, role);
 	}
 
 	/************************************************************

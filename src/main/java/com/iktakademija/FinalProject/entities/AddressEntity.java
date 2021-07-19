@@ -50,7 +50,7 @@ public class AddressEntity {
 	@JsonIgnore
 	@OneToMany(mappedBy = "address", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JsonManagedReference(value = "Person_Address_1")
-	private Set<PersonEntity> personality = new HashSet<>();
+	private Set<PersonEntity> person = new HashSet<>();
 
 	/************************************************************
 	 * Shadow Attributes
@@ -110,15 +110,13 @@ public class AddressEntity {
 	public void setApartment(String apartment) {
 		this.apartment = apartment;
 	}
-	
-	@JsonIgnore
-	public Set<PersonEntity> getPersonality() {
-		return personality;
+
+	public Set<PersonEntity> getPerson() {
+		return person;
 	}
-	
-	@JsonIgnore
-	public void setPersonality(Set<PersonEntity> personality) {
-		this.personality = personality;
+
+	public void setPerson(Set<PersonEntity> person) {
+		this.person = person;
 	}
 
 	public Integer getId() {

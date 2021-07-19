@@ -1,5 +1,6 @@
 package com.iktakademija.FinalProject.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -7,23 +8,18 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.iktakademija.FinalProject.entities.AddressEntity;
 import com.iktakademija.FinalProject.entities.AdminEntity;
-import com.iktakademija.FinalProject.entities.ParentEntity;
 import com.iktakademija.FinalProject.entities.PersonEntity;
 import com.iktakademija.FinalProject.entities.RoleEntity;
 import com.iktakademija.FinalProject.entities.StudentEntity;
-import com.iktakademija.FinalProject.entities.TeacherEntity;
 import com.iktakademija.FinalProject.entities.dtos.AdminDTO;
-import com.iktakademija.FinalProject.entities.dtos.NewAddressDTO;
-import com.iktakademija.FinalProject.entities.dtos.NewPersonDTO;
 import com.iktakademija.FinalProject.entities.dtos.NewUserDTO;
 import com.iktakademija.FinalProject.entities.enums.ERole;
 import com.iktakademija.FinalProject.entities.enums.EStatus;
-import com.iktakademija.FinalProject.repositories.AddressRepository;
 import com.iktakademija.FinalProject.repositories.AdminRepository;
 import com.iktakademija.FinalProject.repositories.PersonRepository;
 import com.iktakademija.FinalProject.repositories.RoleRepository;
+import com.iktakademija.FinalProject.utils.Encryption;
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -43,127 +39,44 @@ public class AdminServiceImpl implements AdminService {
 	@Autowired
 	private RoleService roleService;
 	
-	@Autowired
-	private AddressRepository addressRepository;
-	
 	/************************************************************
 	 * Controller related
 	 ************************************************************/
 	
-//	@Override
-//	public UserEntity createUser(NewUserDTO source) {
-//		
-//		Optional<RoleEntity> opr = roleRepository.findById(source.getRoleId());
-//		if (opr.isPresent() == false) return null;
-//		RoleEntity role = opr.get();
-//		
-//		Optional<PersonEntity> opp = personRepository.findById(source.getPersonalityId());
-//		if (opp.isPresent() == false) return null;
-//		PersonEntity personality = opp.get();
-//		
-//		return new UserEntity(source.getUsername(), source.getPassword(), personality, role);
-//	}
-	
 	@Override
-	public AdminEntity createAdmin(NewUserDTO source) {
-		
+	public AdminEntity createAdmin(NewUserDTO source) {		
 		Optional<RoleEntity> opr = roleRepository.findByRole(ERole.ROLE_ADMIN);
 		if (opr.isPresent() == false) return null;
 		RoleEntity role = opr.get();
 		
-		Optional<PersonEntity> opp = personRepository.findById(source.getPersonalityId());
+		Optional<PersonEntity> opp = personRepository.findById(source.getPersonId());
 		if (opp.isPresent() == false) return null;
-		PersonEntity personality = opp.get();
+		PersonEntity person = opp.get();
 		
-		return new AdminEntity(source.getUsername(), source.getPassword(), personality, role);
+		AdminEntity admin = new AdminEntity(source.getUsername(), Encryption.passwordEncode(source.getPassword()), person, role);		
+		return adminRepository.save(admin);
 	}
 	
 	@Override
-	public StudentEntity createStudent(NewUserDTO source) {
-		
+	public StudentEntity createStudent(NewUserDTO source) {		
 		Optional<RoleEntity> opr = roleRepository.findByRole(ERole.ROLE_STUDENT);
 		if (opr.isPresent() == false) return null;
 		RoleEntity role = opr.get();
 		
-		Optional<PersonEntity> opp = personRepository.findById(source.getPersonalityId());
+		Optional<PersonEntity> opp = personRepository.findById(source.getPersonId());
 		if (opp.isPresent() == false) return null;
-		PersonEntity personality = opp.get();
+		PersonEntity person = opp.get();
 		
-		return new StudentEntity(source.getUsername(), source.getPassword(), personality, role);		
+		return new StudentEntity(source.getUsername(), source.getPassword(), person, role);		
 	}
-	
-	@Override
-	public ParentEntity createParent(NewUserDTO source) {
-		
-		Optional<RoleEntity> opr = roleRepository.findByRole(ERole.ROLE_PARENT);
-		if (opr.isPresent() == false) return null;
-		RoleEntity role = opr.get();
-		
-		Optional<PersonEntity> opp = personRepository.findById(source.getPersonalityId());
-		if (opp.isPresent() == false) return null;
-		PersonEntity personality = opp.get();
-		
-		return new ParentEntity(source.getUsername(), source.getPassword(), personality, role);		
-	}
-	
-	@Override
-	public TeacherEntity createTeacher(NewUserDTO source) {
-		
-		Optional<RoleEntity> opr = roleRepository.findByRole(ERole.ROLE_TEACHER);
-		if (opr.isPresent() == false) return null;
-		RoleEntity role = opr.get();
-		
-		Optional<PersonEntity> opp = personRepository.findById(source.getPersonalityId());
-		if (opp.isPresent() == false) return null;
-		PersonEntity personality = opp.get();
-		
-		return new TeacherEntity(source.getUsername(), source.getPassword(), personality, role);		
-	}	
-	
-	@Override
-	public AddressEntity createAddress(NewAddressDTO source) {		
-		
-		// TODO Check is same address exists in database
-		AddressEntity address = new AddressEntity();
-		address.setCity(source.getCity());
-		address.setStreet(source.getStreet());
-		address.setNumber(source.getNumber());
-		address.setApartment(source.getApartment());
-		address.setStatus(EStatus.ACTIVE);
-		
-		address = addressRepository.save(address);
-		
-		return address;
-	}
-	
-	@Override
-	public PersonEntity createPerson(NewPersonDTO source) {
-		
-		Optional<AddressEntity> op = addressRepository.findById(source.getAddress());
-		if (op.isPresent() == false) return null;
-		AddressEntity address = op.get();
-		
-		PersonEntity person = new PersonEntity();
-		person.setAddress(address);
-		person.setBirthdate(source.getBirthdate());
-		person.setFirstname(source.getFirstname());
-		person.setJmbg(source.getJmbg());
-		person.setLastname(source.getLastname());
-		person.setMphone(source.getMphone());
-		person.setStatus(EStatus.ACTIVE);
-		
-		person = personRepository.save(person);
-		
-		return person;
-	}	
 	
 	@Override
 	public AdminDTO createDTO(AdminEntity source) {
-
 		AdminDTO retVal = new AdminDTO();
+		if (source == null) return retVal;
 		retVal.setId(source.getId());
 		retVal.setUsername(source.getUsername());
-		retVal.setPersonality(personService.createDTO(source.getPersonality()));
+		retVal.setPerson(personService.createDTO(source.getPerson()));
 		retVal.setRole(roleService.createDTO(source.getRole()));
 		retVal.setVersion(source.getVersion());
 		retVal.setStatus(source.getStatus());
@@ -184,4 +97,48 @@ public class AdminServiceImpl implements AdminService {
 		return admins.stream().map(admin -> this.createDTO(admin)).collect(Collectors.toList());
 	}
 
+
+	@Override
+	public List<AdminDTO> getDTOList() {
+		List<AdminDTO> list = new ArrayList<>();
+		for (AdminEntity admin : adminRepository.findAllUndeleted()) 
+			list.add(this.createDTO(admin));		
+		return list;
+	}
+	
+	@Override
+	public AdminDTO getAdminDTO(Integer adminId) {
+		Optional<AdminEntity> op = adminRepository.findById(adminId);
+		if (op.isPresent() == false) return null;
+		return this.createDTO(op.get());
+	}	
+	
+	@Override
+	public AdminDTO setAdmin(Integer adminId, NewUserDTO newAdmin) {			
+		Optional<AdminEntity> opa = adminRepository.findById(adminId);
+		if (opa.isPresent() == false) return null;
+		AdminEntity admin = opa.get();		
+		if (newAdmin.getPassword() != null) admin.setPassword(Encryption.passwordEncode(newAdmin.getPassword()));
+		
+		Optional<PersonEntity> opp = personRepository.findById(newAdmin.getPersonId());
+		if (opp.isPresent() == false) return null;
+		PersonEntity person = opp.get();	
+		
+		if (newAdmin.getPersonId() != null) admin.setPerson(person); // TODO Fix this
+		if (newAdmin.getUsername() != null) admin.setUsername(newAdmin.getUsername());
+
+		admin = adminRepository.save(admin);
+		return this.createDTO(admin);		
+	}
+	
+	@Override
+	public AdminDTO removeAdmin(Integer adminId) {			
+		Optional<AdminEntity> op = adminRepository.findById(adminId);
+		if (op.isPresent() == false) return null;
+		AdminEntity admin = op.get();		
+		admin.setStatus(EStatus.DELETED);			
+		admin = adminRepository.save(admin);
+		return this.createDTO(admin);		
+	}
+	
 }

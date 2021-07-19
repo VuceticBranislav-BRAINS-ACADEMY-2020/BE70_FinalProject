@@ -40,9 +40,9 @@ public class UserEntity {
 	 ************************************************************/
 
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinColumn(name = "personality")
+	@JoinColumn(name = "person")
 	@JsonBackReference(value = "User_Person_1")
-	private PersonEntity personality;
+	private PersonEntity person;
 	
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "role")
@@ -72,11 +72,11 @@ public class UserEntity {
 		super();
 	}	
 	
-	public UserEntity(String username, String password, PersonEntity personality, RoleEntity role) {
+	public UserEntity(String username, String password, PersonEntity person, RoleEntity role) {
 		super();
 		this.password = password;
 		this.username = username;
-		this.personality = personality;
+		this.person = person;
 		this.role = role;
 		this.status = EStatus.ACTIVE;
 	}
@@ -100,13 +100,13 @@ public class UserEntity {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-
-	public PersonEntity getPersonality() {
-		return personality;
+	
+	public PersonEntity getPerson() {
+		return person;
 	}
 
-	public void setPersonality(PersonEntity personality) {
-		this.personality = personality;
+	public void setPerson(PersonEntity person) {
+		this.person = person;
 	}
 
 	public RoleEntity getRole() {

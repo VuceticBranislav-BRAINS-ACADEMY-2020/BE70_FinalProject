@@ -44,8 +44,8 @@ public class ParentEntity extends UserEntity {
 		super();
 	}
 	
-	public ParentEntity(String username, String password, PersonEntity personality, RoleEntity role) {
-		super(username, password, personality, role);
+	public ParentEntity(String username, String password, PersonEntity person, RoleEntity role) {
+		super(username, password, person, role);
 	}	
 	
 	/************************************************************
@@ -67,16 +67,5 @@ public class ParentEntity extends UserEntity {
 	public void setStudent(Set<JoinTableStudentParent> student) {
 		this.student = student;
 	}
-	
-//	@SuppressWarnings("unlikely-arg-type")
-//	public Set<StudentEntity> getStudent() {
-//
-//		Set<StudentEntity> retVal = new HashSet<>();
-//		for (JoinTableStudentParent jt : this.getStudents()) {
-//			if (jt.getParent().equals(this.getId()))
-//				retVal.add(jt.getStudent());
-//		}
-//		return retVal;
-//	}
 
 }

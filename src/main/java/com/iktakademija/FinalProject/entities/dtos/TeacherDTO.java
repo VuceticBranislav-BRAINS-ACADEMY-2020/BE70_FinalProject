@@ -14,7 +14,7 @@ import com.iktakademija.FinalProject.securities.Views;
  * @author GM
  */
 @JsonView(value = Views.Admin.class)
-@JsonPropertyOrder(value =  {"id", "username", "personality", "roleId", "version", "status"})
+@JsonPropertyOrder(value =  {"id", "username", "person", "roleId", "version", "status"})
 public class TeacherDTO {
 	
 	/************************************************************
@@ -27,8 +27,8 @@ public class TeacherDTO {
 	@JsonProperty(value = "Username")
 	private String username;
 	
-	@JsonProperty(value = "Personality")
-	private PersonDTO personality;	
+	@JsonProperty(value = "Person")
+	private PersonDTO person;	
 
 	@JsonProperty(value = "Role")
 	private RoleDTO role;	
@@ -63,12 +63,12 @@ public class TeacherDTO {
 		this.id = id;
 	}
 
-	public PersonDTO getPersonality() {
-		return personality;
+	public PersonDTO getPerson() {
+		return person;
 	}
 
-	public void setPersonality(PersonDTO personality) {
-		this.personality = personality;
+	public void setPerson(PersonDTO person) {
+		this.person = person;
 	}
 
 	public RoleDTO getRole() {

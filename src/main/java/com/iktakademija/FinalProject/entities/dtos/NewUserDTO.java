@@ -15,7 +15,7 @@ import com.iktakademija.FinalProject.securities.Views;
  * @author GM
  */
 @JsonView(value = Views.Admin.class)
-@JsonPropertyOrder(value = {"username", "password", "personality"})
+@JsonPropertyOrder(value = {"username", "password", "person"})
 public class NewUserDTO {
 	
 	/************************************************************
@@ -31,8 +31,8 @@ public class NewUserDTO {
 	private String password;
 
 	@NotBlank
-	@JsonProperty(value = "ID Personality")
-	private Integer personalityId;	
+	@JsonProperty(value = "ID Person")
+	private Integer personId;	
 	
 	/************************************************************
 	 * Constructors
@@ -62,12 +62,12 @@ public class NewUserDTO {
 		this.password = password;
 	}
 
-	public Integer getPersonalityId() {
-		return personalityId;
+	public Integer getPersonId() {
+		return personId;
 	}
 
-	public void setPersonalityId(Integer personalityId) {
-		this.personalityId = personalityId;
+	public void setPersonId(Integer personId) {
+		this.personId = personId;
 	}
 
 }

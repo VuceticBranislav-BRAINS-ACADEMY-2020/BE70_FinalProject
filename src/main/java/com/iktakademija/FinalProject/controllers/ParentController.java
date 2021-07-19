@@ -26,7 +26,6 @@ import com.iktakademija.FinalProject.repositories.JoinTableStudentParentReposito
 import com.iktakademija.FinalProject.repositories.ParentRepository;
 import com.iktakademija.FinalProject.repositories.StudentRepository;
 import com.iktakademija.FinalProject.securities.Views;
-import com.iktakademija.FinalProject.services.AdminService;
 import com.iktakademija.FinalProject.services.ParentService;
 
 /**
@@ -36,9 +35,6 @@ import com.iktakademija.FinalProject.services.ParentService;
 @RestController
 @RequestMapping(path = "/api/v1/parent")
 public class ParentController {
-	
-	@Autowired
-	private AdminService adminService;
 	
 	@Autowired
 	private ParentRepository parentRepository;
@@ -52,7 +48,7 @@ public class ParentController {
 	@Autowired
 	private JoinTableStudentParentRepository joinTableStudentParentRepository;
 	
-	// PAR02
+	// PAR10
 	@Secured("ROLE_ADMIN")
 	@JsonView(value = Views.Admin.class)
 	@RequestMapping(method = RequestMethod.GET, path = "")
@@ -60,12 +56,11 @@ public class ParentController {
 		return new ResponseEntity<List<ParentDTO>>( parentService.getDTOList(), HttpStatus.OK);		
 	}
 	
-	// PAR03
+	// PAR11
 	@Secured("ROLE_ADMIN")
 	@JsonView(value = Views.Admin.class)
 	@RequestMapping(method = RequestMethod.GET, path = "/{id}")
-	public ResponseEntity<?> getParentsById(@PathVariable(value = "id") Integer parentID) {		
-		
+	public ResponseEntity<?> getParentsById(@PathVariable(value = "id") Integer parentID) {	
 		if (parentID == null) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_PARAMETERS), HttpStatus.NOT_ACCEPTABLE);		
 		ParentDTO dto = parentService.getParentDTO(parentID);
 		if (dto == null) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.NOT_FOUND), HttpStatus.NOT_ACCEPTABLE);
@@ -89,19 +84,36 @@ public class ParentController {
 	@JsonView(value = Views.Admin.class)
 	@RequestMapping(method = RequestMethod.POST, path = "/admin")
 	public ResponseEntity<?> addParent(@RequestBody NewUserDTO newUser) {
-
-		ParentEntity user = adminService.createParent(newUser);
+		ParentEntity user = parentService.createParent(newUser);
 		user = parentRepository.save(user);
 		return new ResponseEntity<ParentEntity>(user, HttpStatus.OK);
-
 	}
 	
-	// PAR04
+	// PAR12
+	@Secured("ROLE_ADMIN")
+	@RequestMapping(method = RequestMethod.PUT, path = "/admin/{id}")
+	public ResponseEntity<?> setParent(@PathVariable(value = "id") Integer parentId, @RequestBody NewUserDTO newParent) {
+		if (parentId == null || newParent == null) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_PARAMETERS), HttpStatus.NOT_ACCEPTABLE);			
+		ParentDTO dto = parentService.setParent(parentId, newParent);
+		if (dto == null) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.NOT_FOUND), HttpStatus.NOT_ACCEPTABLE);
+		return new ResponseEntity<ParentDTO>(dto, HttpStatus.OK);	
+	}
+	
+	// PAR13
+	@Secured("ROLE_ADMIN")
+	@RequestMapping(method = RequestMethod.DELETE, path = "/admin/{id}")
+	public ResponseEntity<?> removeParent(@PathVariable(value = "id") Integer parentId) {
+		if (parentId == null) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_PARAMETERS), HttpStatus.NOT_ACCEPTABLE);			
+		ParentDTO dto = parentService.removeParent(parentId);
+		if (dto == null) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.NOT_FOUND), HttpStatus.NOT_ACCEPTABLE);
+		return new ResponseEntity<ParentDTO>(dto, HttpStatus.OK);	
+	}
+	
+	// PAR14
 	@Secured("ROLE_ADMIN")
 	@JsonView(value = Views.Admin.class)
 	@RequestMapping(method = RequestMethod.PUT, path = "/admin/child")
 	public ResponseEntity<?> addChild(@RequestParam("parent") Integer parentID, @RequestParam("child") Integer childID) {
-
 		if (parentID == null || childID == null) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_PARAMETERS), HttpStatus.NOT_ACCEPTABLE);
 		
 		Optional<ParentEntity> opp = parentRepository.findById(parentID);
@@ -117,7 +129,5 @@ public class ParentController {
 		join = joinTableStudentParentRepository.save(join);
 
 		return new ResponseEntity<ParentEntity>(parent, HttpStatus.OK);
-
 	}
-	
 }
