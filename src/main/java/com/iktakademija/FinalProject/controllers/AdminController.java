@@ -17,7 +17,7 @@ import com.iktakademija.FinalProject.controllers.utils.RESTError;
 import com.iktakademija.FinalProject.controllers.utils.enums.ERESTErrorCodes;
 import com.iktakademija.FinalProject.entities.AdminEntity;
 import com.iktakademija.FinalProject.entities.dtos.AdminDTO;
-import com.iktakademija.FinalProject.entities.dtos.NewUserDTO;
+import com.iktakademija.FinalProject.entities.dtos.NewAdminDTO;
 import com.iktakademija.FinalProject.securities.Views;
 import com.iktakademija.FinalProject.services.AdminService;
 
@@ -67,7 +67,7 @@ public class AdminController {
 	// ADM12
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(method = RequestMethod.PUT, path = "/{id}")
-	public ResponseEntity<?> setAdmin(@PathVariable(value = "id") Integer adminId, @RequestBody NewUserDTO newAdmin) {
+	public ResponseEntity<?> setAdmin(@PathVariable(value = "id") Integer adminId, @RequestBody NewAdminDTO newAdmin) {
 		if (adminId == null || newAdmin == null) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_PARAMETERS), HttpStatus.NOT_ACCEPTABLE);			
 		AdminDTO dto = adminService.setAdmin(adminId, newAdmin);
 		if (dto == null) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.NOT_FOUND), HttpStatus.NOT_ACCEPTABLE);
@@ -99,7 +99,7 @@ public class AdminController {
 	@Secured("ROLE_ADMIN")
 	@JsonView(value = Views.Admin.class)
 	@RequestMapping(method = RequestMethod.POST, path = "")
-	public ResponseEntity<?> addAdmin(@RequestBody NewUserDTO newUser) {	
+	public ResponseEntity<?> addAdmin(@RequestBody NewAdminDTO newUser) {	
 		
 		AdminEntity user = adminService.createAdmin(newUser);
 		if (user == null ) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_PARAMETERS), HttpStatus.NOT_ACCEPTABLE);

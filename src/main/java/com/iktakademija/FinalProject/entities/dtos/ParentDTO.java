@@ -41,7 +41,7 @@ public class ParentDTO {
 	@JsonProperty(value = "Status")
 	private EStatus status;
 	
-	@JsonProperty(value = "EMail")
+	@JsonProperty(value = "eMail")
 	private String email;
 	
 	@JsonProperty(value = "ID Childs")

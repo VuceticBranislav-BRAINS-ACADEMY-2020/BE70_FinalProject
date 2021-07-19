@@ -5,7 +5,7 @@ import java.util.List;
 import com.iktakademija.FinalProject.entities.AdminEntity;
 import com.iktakademija.FinalProject.entities.StudentEntity;
 import com.iktakademija.FinalProject.entities.dtos.AdminDTO;
-import com.iktakademija.FinalProject.entities.dtos.NewUserDTO;
+import com.iktakademija.FinalProject.entities.dtos.NewAdminDTO;
 
 public interface AdminService {
 	
@@ -15,13 +15,10 @@ public interface AdminService {
 	AdminDTO createDTO(AdminEntity source);	
 	List<AdminDTO> getDTOList();
 	AdminDTO getAdminDTO(Integer adminId);
-	AdminDTO setAdmin(Integer adminId, NewUserDTO newAdmin);
+	AdminDTO setAdmin(Integer adminId, NewAdminDTO newAdmin);
 	AdminDTO removeAdmin(Integer adminId);
-	//UserEntity createUser(NewUserDTO source);	
-	AdminEntity createAdmin(NewUserDTO source);
-	StudentEntity createStudent(NewUserDTO source);
-//	ParentEntity createParent(NewUserDTO source);
-//	TeacherEntity createTeacher(NewUserDTO source);		
+	AdminEntity createAdmin(NewAdminDTO source);
+	StudentEntity createStudent(NewAdminDTO source);	
 
 	/************************************************************
 	 * Repository related

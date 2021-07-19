@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import com.iktakademija.FinalProject.entities.PersonEntity;
 import com.iktakademija.FinalProject.entities.RoleEntity;
 import com.iktakademija.FinalProject.entities.TeacherEntity;
-import com.iktakademija.FinalProject.entities.dtos.NewUserDTO;
+import com.iktakademija.FinalProject.entities.dtos.NewTeacherDTO;
 import com.iktakademija.FinalProject.entities.dtos.TeacherDTO;
 import com.iktakademija.FinalProject.entities.enums.ERole;
 import com.iktakademija.FinalProject.entities.enums.EStatus;
@@ -38,7 +38,7 @@ public class TeacherServiceImpl implements TeacherService {
 	private PersonRepository personRepository;
 	
 	@Override
-	public TeacherEntity createTeacher(NewUserDTO source) {		
+	public TeacherEntity createTeacher(NewTeacherDTO source) {		
 		Optional<RoleEntity> opr = roleRepository.findByRole(ERole.ROLE_TEACHER);
 		if (opr.isPresent() == false) return null;
 		RoleEntity role = opr.get();
@@ -80,7 +80,7 @@ public class TeacherServiceImpl implements TeacherService {
 	}
 
 	@Override
-	public TeacherDTO setTeacher(Integer teacherId, NewUserDTO newTeacher) {
+	public TeacherDTO setTeacher(Integer teacherId, NewTeacherDTO newTeacher) {
 		Optional<TeacherEntity> opa = teacherRepository.findById(teacherId);
 		if (opa.isPresent() == false) return null;
 		TeacherEntity teacher = opa.get();		

@@ -16,7 +16,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.iktakademija.FinalProject.controllers.utils.RESTError;
 import com.iktakademija.FinalProject.controllers.utils.enums.ERESTErrorCodes;
 import com.iktakademija.FinalProject.entities.TeacherEntity;
-import com.iktakademija.FinalProject.entities.dtos.NewUserDTO;
+import com.iktakademija.FinalProject.entities.dtos.NewTeacherDTO;
 import com.iktakademija.FinalProject.entities.dtos.TeacherDTO;
 import com.iktakademija.FinalProject.securities.Views;
 import com.iktakademija.FinalProject.services.TeacherService;
@@ -52,7 +52,7 @@ public class TeacherController {
 	// TEA12
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(method = RequestMethod.PUT, path = "/admin/{id}")
-	public ResponseEntity<?> setTeacher(@PathVariable(value = "id") Integer teacherId, @RequestBody NewUserDTO newTeacher) {
+	public ResponseEntity<?> setTeacher(@PathVariable(value = "id") Integer teacherId, @RequestBody NewTeacherDTO newTeacher) {
 		if (teacherId == null || newTeacher == null) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_PARAMETERS), HttpStatus.NOT_ACCEPTABLE);			
 		TeacherDTO dto = teacherService.setTeacher(teacherId, newTeacher);
 		if (dto == null) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.NOT_FOUND), HttpStatus.NOT_ACCEPTABLE);
@@ -84,7 +84,7 @@ public class TeacherController {
 	@Secured("ROLE_ADMIN")
 	@JsonView(value = Views.Admin.class)
 	@RequestMapping(method = RequestMethod.POST, path = "/admin")
-	public ResponseEntity<?> addTeacher(@RequestBody NewUserDTO newUser) {
+	public ResponseEntity<?> addTeacher(@RequestBody NewTeacherDTO newUser) {
 
 		TeacherEntity user = teacherService.createTeacher(newUser);
 		if (user == null ) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_PARAMETERS), HttpStatus.NOT_ACCEPTABLE);

@@ -13,7 +13,7 @@ import com.iktakademija.FinalProject.entities.PersonEntity;
 import com.iktakademija.FinalProject.entities.RoleEntity;
 import com.iktakademija.FinalProject.entities.StudentEntity;
 import com.iktakademija.FinalProject.entities.dtos.AdminDTO;
-import com.iktakademija.FinalProject.entities.dtos.NewUserDTO;
+import com.iktakademija.FinalProject.entities.dtos.NewAdminDTO;
 import com.iktakademija.FinalProject.entities.enums.ERole;
 import com.iktakademija.FinalProject.entities.enums.EStatus;
 import com.iktakademija.FinalProject.repositories.AdminRepository;
@@ -44,7 +44,7 @@ public class AdminServiceImpl implements AdminService {
 	 ************************************************************/
 	
 	@Override
-	public AdminEntity createAdmin(NewUserDTO source) {		
+	public AdminEntity createAdmin(NewAdminDTO source) {		
 		Optional<RoleEntity> opr = roleRepository.findByRole(ERole.ROLE_ADMIN);
 		if (opr.isPresent() == false) return null;
 		RoleEntity role = opr.get();
@@ -53,12 +53,13 @@ public class AdminServiceImpl implements AdminService {
 		if (opp.isPresent() == false) return null;
 		PersonEntity person = opp.get();
 		
-		AdminEntity admin = new AdminEntity(source.getUsername(), Encryption.passwordEncode(source.getPassword()), person, role);		
+		AdminEntity admin = new AdminEntity(source.getUsername(), Encryption.passwordEncode(source.getPassword()), person, role);	
+		admin.setEmail(source.getEmail());
 		return adminRepository.save(admin);
 	}
 	
 	@Override
-	public StudentEntity createStudent(NewUserDTO source) {		
+	public StudentEntity createStudent(NewAdminDTO source) {		
 		Optional<RoleEntity> opr = roleRepository.findByRole(ERole.ROLE_STUDENT);
 		if (opr.isPresent() == false) return null;
 		RoleEntity role = opr.get();
@@ -66,8 +67,8 @@ public class AdminServiceImpl implements AdminService {
 		Optional<PersonEntity> opp = personRepository.findById(source.getPersonId());
 		if (opp.isPresent() == false) return null;
 		PersonEntity person = opp.get();
-		
-		return new StudentEntity(source.getUsername(), source.getPassword(), person, role);		
+		StudentEntity student = new StudentEntity(source.getUsername(), source.getPassword(), person, role);	
+		return student;
 	}
 	
 	@Override
@@ -114,7 +115,7 @@ public class AdminServiceImpl implements AdminService {
 	}	
 	
 	@Override
-	public AdminDTO setAdmin(Integer adminId, NewUserDTO newAdmin) {			
+	public AdminDTO setAdmin(Integer adminId, NewAdminDTO newAdmin) {			
 		Optional<AdminEntity> opa = adminRepository.findById(adminId);
 		if (opa.isPresent() == false) return null;
 		AdminEntity admin = opa.get();		
@@ -126,7 +127,8 @@ public class AdminServiceImpl implements AdminService {
 		
 		if (newAdmin.getPersonId() != null) admin.setPerson(person); // TODO Fix this
 		if (newAdmin.getUsername() != null) admin.setUsername(newAdmin.getUsername());
-
+		if (newAdmin.getEmail() != null) admin.setEmail(newAdmin.getEmail());
+		
 		admin = adminRepository.save(admin);
 		return this.createDTO(admin);		
 	}

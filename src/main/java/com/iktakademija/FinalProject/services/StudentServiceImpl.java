@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import com.iktakademija.FinalProject.entities.PersonEntity;
 import com.iktakademija.FinalProject.entities.RoleEntity;
 import com.iktakademija.FinalProject.entities.StudentEntity;
-import com.iktakademija.FinalProject.entities.dtos.NewUserDTO;
+import com.iktakademija.FinalProject.entities.dtos.NewStudentDTO;
 import com.iktakademija.FinalProject.entities.dtos.StudentDTO;
 import com.iktakademija.FinalProject.entities.enums.ERole;
 import com.iktakademija.FinalProject.entities.enums.EStatus;
@@ -41,7 +41,7 @@ public class StudentServiceImpl implements StudentService {
 	private StudentRepository studentRepository;
 	
 	@Override
-	public StudentEntity createStudent(NewUserDTO source) {
+	public StudentEntity createStudent(NewStudentDTO source) {
 		Optional<RoleEntity> opr = roleRepository.findByRole(ERole.ROLE_STUDENT);
 		if (opr.isPresent() == false) return null;
 		RoleEntity role = opr.get();
@@ -83,7 +83,7 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	@Override
-	public StudentDTO setStudent(Integer studentId, NewUserDTO newStudent) {
+	public StudentDTO setStudent(Integer studentId, NewStudentDTO newStudent) {
 		Optional<StudentEntity> opa = studentRepository.findById(studentId);
 		if (opa.isPresent() == false) return null;
 		StudentEntity student = opa.get();		

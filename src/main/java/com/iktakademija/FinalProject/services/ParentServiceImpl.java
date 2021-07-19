@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import com.iktakademija.FinalProject.entities.ParentEntity;
 import com.iktakademija.FinalProject.entities.PersonEntity;
 import com.iktakademija.FinalProject.entities.RoleEntity;
-import com.iktakademija.FinalProject.entities.dtos.NewUserDTO;
+import com.iktakademija.FinalProject.entities.dtos.NewParentDTO;
 import com.iktakademija.FinalProject.entities.dtos.ParentDTO;
 import com.iktakademija.FinalProject.entities.enums.ERole;
 import com.iktakademija.FinalProject.entities.enums.EStatus;
@@ -42,7 +42,7 @@ public class ParentServiceImpl implements ParentService {
 	private RoleRepository roleRepository;
 	
 	@Override
-	public ParentEntity createParent(NewUserDTO source) {
+	public ParentEntity createParent(NewParentDTO source) {
 		
 		Optional<RoleEntity> opr = roleRepository.findByRole(ERole.ROLE_PARENT);
 		if (opr.isPresent() == false) return null;
@@ -52,7 +52,9 @@ public class ParentServiceImpl implements ParentService {
 		if (opp.isPresent() == false) return null;
 		PersonEntity person = opp.get();
 		
-		return new ParentEntity(source.getUsername(), source.getPassword(), person, role);		
+		ParentEntity parent = new ParentEntity(source.getUsername(), source.getPassword(), person, role);	
+		parent.setEmail(source.getEmail());
+		return parent;
 	}
 	
 	public List<ParentDTO> getDTOList(){
@@ -126,7 +128,7 @@ public class ParentServiceImpl implements ParentService {
 	}
 	
 	@Override
-	public ParentDTO setParent(Integer parentId, NewUserDTO newParent) {
+	public ParentDTO setParent(Integer parentId, NewParentDTO newParent) {
 		Optional<ParentEntity> op1 = parentRepository.findById(parentId);
 		if (op1.isPresent() == false) return null;
 		ParentEntity parent = op1.get();		
@@ -138,7 +140,8 @@ public class ParentServiceImpl implements ParentService {
 		
 		if (newParent.getPersonId() != null) parent.setPerson(person); // TODO Fix this
 		if (newParent.getUsername() != null) parent.setUsername(newParent.getUsername());
-
+		if (newParent.getEmail() != null) parent.setEmail(newParent.getEmail());
+		
 		parent = parentRepository.save(parent);
 		return this.createDTO(parent);	
 	}	

@@ -16,7 +16,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.iktakademija.FinalProject.controllers.utils.RESTError;
 import com.iktakademija.FinalProject.controllers.utils.enums.ERESTErrorCodes;
 import com.iktakademija.FinalProject.entities.StudentEntity;
-import com.iktakademija.FinalProject.entities.dtos.NewUserDTO;
+import com.iktakademija.FinalProject.entities.dtos.NewStudentDTO;
 import com.iktakademija.FinalProject.entities.dtos.StudentDTO;
 import com.iktakademija.FinalProject.securities.Views;
 import com.iktakademija.FinalProject.services.StudentService;
@@ -52,7 +52,7 @@ public class StudentController {
 	// STU12
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(method = RequestMethod.PUT, path = "/admin/{id}")
-	public ResponseEntity<?> setStudent(@PathVariable(value = "id") Integer studentId, @RequestBody NewUserDTO newStudent) {
+	public ResponseEntity<?> setStudent(@PathVariable(value = "id") Integer studentId, @RequestBody NewStudentDTO newStudent) {
 		if (studentId == null || newStudent == null) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_PARAMETERS), HttpStatus.NOT_ACCEPTABLE);			
 		StudentDTO dto = studentService.setStudent(studentId, newStudent);
 		if (dto == null) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.NOT_FOUND), HttpStatus.NOT_ACCEPTABLE);
@@ -84,7 +84,7 @@ public class StudentController {
 	@Secured("ROLE_ADMIN")
 	@JsonView(value = Views.Admin.class)
 	@RequestMapping(method = RequestMethod.POST, path = "/admin")
-	public ResponseEntity<?> addStudent(@RequestBody NewUserDTO newUser) {
+	public ResponseEntity<?> addStudent(@RequestBody NewStudentDTO newUser) {
 
 		StudentEntity student = studentService.createStudent(newUser);
 		if (student == null ) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_PARAMETERS), HttpStatus.NOT_ACCEPTABLE);

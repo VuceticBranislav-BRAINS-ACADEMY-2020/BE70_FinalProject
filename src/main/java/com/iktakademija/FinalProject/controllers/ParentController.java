@@ -20,7 +20,7 @@ import com.iktakademija.FinalProject.controllers.utils.enums.ERESTErrorCodes;
 import com.iktakademija.FinalProject.entities.JoinTableStudentParent;
 import com.iktakademija.FinalProject.entities.ParentEntity;
 import com.iktakademija.FinalProject.entities.StudentEntity;
-import com.iktakademija.FinalProject.entities.dtos.NewUserDTO;
+import com.iktakademija.FinalProject.entities.dtos.NewParentDTO;
 import com.iktakademija.FinalProject.entities.dtos.ParentDTO;
 import com.iktakademija.FinalProject.repositories.JoinTableStudentParentRepository;
 import com.iktakademija.FinalProject.repositories.ParentRepository;
@@ -83,7 +83,7 @@ public class ParentController {
 	@Secured("ROLE_ADMIN")
 	@JsonView(value = Views.Admin.class)
 	@RequestMapping(method = RequestMethod.POST, path = "/admin")
-	public ResponseEntity<?> addParent(@RequestBody NewUserDTO newUser) {
+	public ResponseEntity<?> addParent(@RequestBody NewParentDTO newUser) {
 		ParentEntity user = parentService.createParent(newUser);
 		user = parentRepository.save(user);
 		return new ResponseEntity<ParentEntity>(user, HttpStatus.OK);
@@ -92,7 +92,7 @@ public class ParentController {
 	// PAR12
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(method = RequestMethod.PUT, path = "/admin/{id}")
-	public ResponseEntity<?> setParent(@PathVariable(value = "id") Integer parentId, @RequestBody NewUserDTO newParent) {
+	public ResponseEntity<?> setParent(@PathVariable(value = "id") Integer parentId, @RequestBody NewParentDTO newParent) {
 		if (parentId == null || newParent == null) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_PARAMETERS), HttpStatus.NOT_ACCEPTABLE);			
 		ParentDTO dto = parentService.setParent(parentId, newParent);
 		if (dto == null) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.NOT_FOUND), HttpStatus.NOT_ACCEPTABLE);
