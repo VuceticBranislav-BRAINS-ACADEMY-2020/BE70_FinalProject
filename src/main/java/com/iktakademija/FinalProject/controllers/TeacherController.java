@@ -85,11 +85,9 @@ public class TeacherController {
 	@JsonView(value = Views.Admin.class)
 	@RequestMapping(method = RequestMethod.POST, path = "/admin")
 	public ResponseEntity<?> addTeacher(@RequestBody NewTeacherDTO newUser) {
-
 		TeacherEntity user = teacherService.createTeacher(newUser);
 		if (user == null ) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_PARAMETERS), HttpStatus.NOT_ACCEPTABLE);
 		return new ResponseEntity<TeacherDTO>(teacherService.createDTO(user), HttpStatus.OK);
-
 	}
 	
 }

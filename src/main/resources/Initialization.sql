@@ -47,5 +47,28 @@ INSERT INTO `parent` (`email`, `id`) VALUES ('xxx@gmail.com', '37');
 # Parent-Strudent
 INSERT INTO student_parent (`id`, `parent`, `student`) VALUES ('40', '34', '36');
 
+# Classes
+INSERT INTO `clazz` (`id`, `name`, `status`, `version`, `year`) VALUES ('50', 'I', 'ACTIVE', '0', '2021');
+INSERT INTO `clazz` (`id`, `name`, `status`, `version`, `year`) VALUES ('51', 'II', 'ACTIVE', '0', '2021');
+INSERT INTO `clazz` (`id`, `name`, `status`, `version`, `year`) VALUES ('52', 'III', 'ACTIVE', '0', '2021');
+INSERT INTO `clazz` (`id`, `name`, `status`, `version`, `year`) VALUES ('53', 'IV', 'ACTIVE', '0', '2021');
+INSERT INTO `clazz` (`id`, `name`, `status`, `version`, `year`) VALUES ('54', 'V', 'ACTIVE', '0', '2021');
+INSERT INTO `clazz` (`id`, `name`, `status`, `version`, `year`) VALUES ('55', 'VI', 'ACTIVE', '0', '2021');
+INSERT INTO `clazz` (`id`, `name`, `status`, `version`, `year`) VALUES ('56', 'VII', 'ACTIVE', '0', '2021');
+INSERT INTO `clazz` (`id`, `name`, `status`, `version`, `year`) VALUES ('57', 'VIII', 'ACTIVE', '0', '2021');
+
+# Subjects
+INSERT INTO `subject` (`id`, `fond`, `name`, `status`, `version`) VALUES ('80', '10', 'Matematika', 'ACTIVE', '0');
+INSERT INTO `subject` (`id`, `fond`, `name`, `status`, `version`) VALUES ('81', '10', 'Srpski', 'ACTIVE', '0');
+INSERT INTO `subject` (`id`, `fond`, `name`, `status`, `version`) VALUES ('82', '8', 'Muzicko', 'ACTIVE', '0');
+INSERT INTO `subject` (`id`, `fond`, `name`, `status`, `version`) VALUES ('83', '4', 'Likovno', 'ACTIVE', '0');
+INSERT INTO `subject` (`id`, `fond`, `name`, `status`, `version`) VALUES ('84', '6', 'Istorija', 'ACTIVE', '0');
+INSERT INTO `subject` (`id`, `fond`, `name`, `status`, `version`) VALUES ('85', '8', 'Geografija', 'ACTIVE', '0');
+INSERT INTO `subject` (`id`, `fond`, `name`, `status`, `version`) VALUES ('86', '4', 'Hemija', 'ACTIVE', '0');
+INSERT INTO `subject` (`id`, `fond`, `name`, `status`, `version`) VALUES ('87', '8', 'Informatika', 'ACTIVE', '0');
+INSERT INTO `subject` (`id`, `fond`, `name`, `status`, `version`) VALUES ('88', '4', 'Fizicko', 'ACTIVE', '0');
+INSERT INTO `subject` (`id`, `fond`, `name`, `status`, `version`) VALUES ('89', '8', 'Tehnicko', 'ACTIVE', '0');
+
+
 # Hibernate sequence fixup
-UPDATE hibernate_sequence SET next_val = 50;
+UPDATE hibernate_sequence SET next_val = 200;

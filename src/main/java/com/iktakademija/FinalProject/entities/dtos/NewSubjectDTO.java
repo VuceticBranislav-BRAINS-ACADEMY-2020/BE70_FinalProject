@@ -1,61 +1,47 @@
 package com.iktakademija.FinalProject.entities.dtos;
 
+import javax.validation.constraints.NotBlank;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.iktakademija.FinalProject.entities.SubjectEntity;
-import com.iktakademija.FinalProject.entities.enums.EStatus;
 import com.iktakademija.FinalProject.securities.Views;
 
 /**
  * Subject DTO.
- * <BR>Provide all information related to {@link SubjectEntity}
+ * <BR>Provide all information needed for creating of new subject.
  * @see SubjectEntity
  * @author GM
  */
 @JsonView(value = Views.Admin.class)
-@JsonPropertyOrder(value =  {"id", "name", "fond", "version", "status"})
-public class SubjectDTO {
+@JsonPropertyOrder(value = {"name", "fond"})
+public class NewSubjectDTO {
 	
 	/************************************************************
 	 * Attributes
 	 ************************************************************/
 	
-	@JsonProperty(value = "ID")
-	private Integer id;	
-	
+	@NotBlank
 	@JsonProperty(value = "Name")
 	private String name;
 
+	@NotBlank
 	@JsonProperty(value = "Fond")
-	private Integer fond;
-	
-	@JsonProperty(value = "Version")
-	private Integer version;
-	
-	@JsonProperty(value = "Status")
-	private EStatus status;
+	private Integer fond;	
 	
 	/************************************************************
 	 * Constructors
 	 ************************************************************/
 
-	public SubjectDTO() {
+	public NewSubjectDTO() {
 		super();
 	}
 	
 	/************************************************************
 	 * Getters & Setters
 	 ************************************************************/
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
+	
 	public String getName() {
 		return name;
 	}
@@ -70,22 +56,6 @@ public class SubjectDTO {
 
 	public void setFond(Integer fond) {
 		this.fond = fond;
-	}
-
-	public Integer getVersion() {
-		return version;
-	}
-
-	public void setVersion(Integer version) {
-		this.version = version;
-	}
-
-	public EStatus getStatus() {
-		return status;
-	}
-
-	public void setStatus(EStatus status) {
-		this.status = status;
 	}
 
 }

@@ -33,9 +33,6 @@ public class SubjectEntity {
 	@Column
 	private Integer fond;
 
-	@Column
-	private String plan;
-
 	/************************************************************
 	 * Relation Attributes
 	 ************************************************************/
@@ -72,6 +69,13 @@ public class SubjectEntity {
 		super();
 	}
 
+	public SubjectEntity(String name, Integer fond) {
+		super();
+		this.name = name;
+		this.fond = fond;
+		this.status = EStatus.ACTIVE;
+	}
+
 	/************************************************************
 	 * Getters & Setters
 	 ************************************************************/
@@ -91,15 +95,7 @@ public class SubjectEntity {
 	public void setFond(Integer fond) {
 		this.fond = fond;
 	}
-
-	public String getPlan() {
-		return plan;
-	}
-
-	public void setPlan(String plan) {
-		this.plan = plan;
-	}
-
+	
 	public Integer getId() {
 		return id;
 	}
