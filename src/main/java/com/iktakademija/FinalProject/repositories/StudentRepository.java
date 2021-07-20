@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
+import com.iktakademija.FinalProject.entities.ParentEntity;
 import com.iktakademija.FinalProject.entities.StudentEntity;
 
 public interface StudentRepository extends CrudRepository<StudentEntity, Integer> {
@@ -17,4 +18,7 @@ public interface StudentRepository extends CrudRepository<StudentEntity, Integer
 
 	@Query(value = "FROM student AS s WHERE s.status<>'DELETED'")
 	List<StudentEntity> findAllUndeleted();
+	
+	@Query(value = "FROM student AS s WHERE s.id IN (SELECT student FROM student_parent WHERE parent = :ID)")
+	List<StudentEntity> findAllChildrens(@Param(value = "ID") ParentEntity parentID);
 }

@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(path = "/api/v1/subject")
-public class SubjectController {
-	
-	
+public class SubjectController {	
+
 }

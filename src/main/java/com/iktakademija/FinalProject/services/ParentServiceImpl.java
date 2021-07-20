@@ -12,12 +12,14 @@ import com.iktakademija.FinalProject.entities.PersonEntity;
 import com.iktakademija.FinalProject.entities.RoleEntity;
 import com.iktakademija.FinalProject.entities.dtos.NewParentDTO;
 import com.iktakademija.FinalProject.entities.dtos.ParentDTO;
+import com.iktakademija.FinalProject.entities.dtos.StudentDTO;
 import com.iktakademija.FinalProject.entities.enums.ERole;
 import com.iktakademija.FinalProject.entities.enums.EStatus;
 import com.iktakademija.FinalProject.repositories.JoinTableStudentParentRepository;
 import com.iktakademija.FinalProject.repositories.ParentRepository;
 import com.iktakademija.FinalProject.repositories.PersonRepository;
 import com.iktakademija.FinalProject.repositories.RoleRepository;
+import com.iktakademija.FinalProject.repositories.StudentRepository;
 import com.iktakademija.FinalProject.utils.Encryption;
 
 @Service
@@ -41,6 +43,12 @@ public class ParentServiceImpl implements ParentService {
 	@Autowired
 	private RoleRepository roleRepository;
 	
+	@Autowired
+	private StudentRepository studentRepository;
+	
+	@Autowired
+	private StudentService studentService;
+	
 	@Override
 	public ParentEntity createParent(NewParentDTO source) {
 		
@@ -57,16 +65,33 @@ public class ParentServiceImpl implements ParentService {
 		return parent;
 	}
 	
-	public List<ParentDTO> getDTOList(){
-		
+	@Override
+	public ParentDTO createDTO(ParentEntity source) {	
+		ParentDTO retVal = new ParentDTO();
+		if (source == null) return retVal;
+		retVal.setId(source.getId());
+		retVal.setUsername(source.getUsername());
+		retVal.setPerson(personService.createDTO(source.getPerson()));
+		retVal.setRole(roleService.createDTO(source.getRole()));
+		retVal.setVersion(source.getVersion());
+		retVal.setStatus(source.getStatus());
+		retVal.setEmail(source.getEmail());
+		retVal.setChilds(joinTableStudentParentRepository.findChildOfParent(source));
+		return retVal;			
+	}
+	
+	@Override
+	public List<ParentDTO> createDTOList(List<ParentEntity> source) {		
 		List<ParentDTO> list = new ArrayList<>();
-		
-		for (ParentEntity parent : parentRepository.findAll()) {
-			list.add(getDTOfromEntity(parent));
-		}
-		
+		for (ParentEntity parent : source) 
+			list.add(this.createDTO(parent));		
 		return list;
-	};	
+	}
+	
+	@Override
+	public List<ParentDTO> getDTOList() {	
+		return this.createDTOList(parentRepository.findAllUndeleted());
+	}
 	
 	public ParentDTO getParentDTO(Integer parentId){		
 		
@@ -113,21 +138,6 @@ public class ParentServiceImpl implements ParentService {
 	}	
 	
 	@Override
-	public ParentDTO createDTO(ParentEntity source) {		
-		ParentDTO retVal = new ParentDTO();
-		if (source == null) return retVal;
-		retVal.setId(source.getId());
-		retVal.setUsername(source.getUsername());
-		retVal.setPerson(personService.createDTO(source.getPerson()));
-		retVal.setRole(roleService.createDTO(source.getRole()));
-		retVal.setVersion(source.getVersion());
-		retVal.setStatus(source.getStatus());
-		retVal.setEmail(source.getEmail());
-		retVal.setChilds(joinTableStudentParentRepository.findChildOfParent(source));
-		return retVal;			
-	}
-	
-	@Override
 	public ParentDTO setParent(Integer parentId, NewParentDTO newParent) {
 		Optional<ParentEntity> op1 = parentRepository.findById(parentId);
 		if (op1.isPresent() == false) return null;
@@ -155,5 +165,61 @@ public class ParentServiceImpl implements ParentService {
 		parent = parentRepository.save(parent);
 		return this.createDTO(parent);		
 	}
+	
+	@Override
+	public List<StudentDTO> getAllChildrens(ParentEntity childId) {	
+		return studentService.createDTOList(studentRepository.findAllChildrens(childId));
+	}
+	
+//	@PersistenceContext()
+//	private EntityManager em;
+//	
+//	@SuppressWarnings("unchecked")
+//	@Override
+//	public List<AddressEntity> findAddressesByUserName(String name) {
+//		
+//		// create SQL to invoke
+//		// radi se sa objektima i pisu se nazivi polja iz klasa		
+//		String sql = "SELECT a FROM AddressEntity AS a LEFT JOIN FETCH a.users AS u WHERE u.name = :name";
+//		// mesto ON postoji FETCH koji je lista veza
+//		// parametrizovani se koriste proti injectiona i 
+//		
+//		// SELECT * 
+//		// FROM AddressEntity AS a INNER JOIN UserEntyty AS u ON a.id=u.addressID 
+//		// WHERE u.name = :name
+//		
+//		// invoke SQL
+//		Query query = em.createQuery(sql);		
+//		query.setParameter("name", name);
+//		
+//		List<AddressEntity> retVal = new ArrayList<AddressEntity>();
+//		retVal = query.getResultList();
+//		
+//		// handle the return value of the SQL statement
+//		
+//		
+//		return retVal;
+//	}
+	
+//	@Test
+//	public void whenUsingMultipleQueries_thenRetrieveSuccess() {
+//	    String jpql = "SELECT DISTINCT artist FROM Artist artist "
+//	      + "LEFT JOIN FETCH artist.songs ";
+//
+//	    List<Artist> artists = entityManager.createQuery(jpql, Artist.class)
+//	      .setHint(QueryHints.HINT_PASS_DISTINCT_THROUGH, false)
+//	      .getResultList();
+//
+//	    jpql = "SELECT DISTINCT artist FROM Artist artist "
+//	      + "LEFT JOIN FETCH artist.offers "
+//	      + "WHERE artist IN :artists ";
+//
+//	    artists = entityManager.createQuery(jpql, Artist.class)
+//	      .setParameter("artists", artists)
+//	      .setHint(QueryHints.HINT_PASS_DISTINCT_THROUGH, false)
+//	      .getResultList();
+//
+//	    assertEquals(2, artists.size());
+//	}
 	
 }

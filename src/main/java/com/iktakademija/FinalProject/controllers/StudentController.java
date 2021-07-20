@@ -1,6 +1,7 @@
 package com.iktakademija.FinalProject.controllers;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,7 +18,9 @@ import com.iktakademija.FinalProject.controllers.utils.RESTError;
 import com.iktakademija.FinalProject.controllers.utils.enums.ERESTErrorCodes;
 import com.iktakademija.FinalProject.entities.StudentEntity;
 import com.iktakademija.FinalProject.entities.dtos.NewStudentDTO;
+import com.iktakademija.FinalProject.entities.dtos.ParentDTO;
 import com.iktakademija.FinalProject.entities.dtos.StudentDTO;
+import com.iktakademija.FinalProject.repositories.StudentRepository;
 import com.iktakademija.FinalProject.securities.Views;
 import com.iktakademija.FinalProject.services.StudentService;
 
@@ -31,6 +34,9 @@ public class StudentController {
 	
 	@Autowired
 	private StudentService studentService;
+	
+	@Autowired
+	private StudentRepository studentRepository;
 	
 	// STU10
 	@Secured("ROLE_ADMIN")
@@ -91,4 +97,15 @@ public class StudentController {
 		return new ResponseEntity<StudentDTO>(studentService.createDTO(student), HttpStatus.OK);
 	}
 	
+	// STU14
+	@Secured("ROLE_ADMIN")
+	@JsonView(value = Views.Admin.class)
+	@RequestMapping(method = RequestMethod.GET, path = "/admin/getparents/{id}")
+	public ResponseEntity<?> getAllParentsForChild(@PathVariable(value = "id") Integer studentID) {		
+		Optional<StudentEntity> op = studentRepository.findById(studentID);
+		if (op.isPresent() == false) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.NOT_FOUND), HttpStatus.NOT_ACCEPTABLE);
+		StudentEntity students = op.get();		
+		List<ParentDTO> parent = studentService.getAllParents(students);		
+		return new ResponseEntity<List<ParentDTO>>(parent, HttpStatus.OK);			
+	}
 }

@@ -51,6 +51,11 @@ public class AdminController {
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(method = RequestMethod.GET, path = "")
 	public ResponseEntity<?> getAllAdmins() {
+		
+//		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//		String username = principal.toString();			
+//		return new ResponseEntity<String>("Logged as : " + username, HttpStatus.OK);
+		
 		return new ResponseEntity<List<AdminDTO>>(adminService.getDTOList(), HttpStatus.OK);
 	}
 	

@@ -22,6 +22,7 @@ import com.iktakademija.FinalProject.entities.ParentEntity;
 import com.iktakademija.FinalProject.entities.StudentEntity;
 import com.iktakademija.FinalProject.entities.dtos.NewParentDTO;
 import com.iktakademija.FinalProject.entities.dtos.ParentDTO;
+import com.iktakademija.FinalProject.entities.dtos.StudentDTO;
 import com.iktakademija.FinalProject.repositories.JoinTableStudentParentRepository;
 import com.iktakademija.FinalProject.repositories.ParentRepository;
 import com.iktakademija.FinalProject.repositories.StudentRepository;
@@ -129,5 +130,17 @@ public class ParentController {
 		join = joinTableStudentParentRepository.save(join);
 
 		return new ResponseEntity<ParentEntity>(parent, HttpStatus.OK);
+	}
+	
+	// PAR15
+	@Secured("ROLE_ADMIN")
+	@JsonView(value = Views.Admin.class)
+	@RequestMapping(method = RequestMethod.GET, path = "/admin/getchilds/{id}")
+	public ResponseEntity<?> getAllChildsForParent(@PathVariable(value = "id") Integer parentID) {		
+		Optional<ParentEntity> op = parentRepository.findById(parentID);
+		if (op.isPresent() == false) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.NOT_FOUND), HttpStatus.NOT_ACCEPTABLE);
+		ParentEntity parent = op.get();		
+		List<StudentDTO> students = parentService.getAllChildrens(parent);		
+		return new ResponseEntity<List<StudentDTO>>(students, HttpStatus.OK);			
 	}
 }

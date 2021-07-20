@@ -11,9 +11,11 @@ import com.iktakademija.FinalProject.entities.PersonEntity;
 import com.iktakademija.FinalProject.entities.RoleEntity;
 import com.iktakademija.FinalProject.entities.StudentEntity;
 import com.iktakademija.FinalProject.entities.dtos.NewStudentDTO;
+import com.iktakademija.FinalProject.entities.dtos.ParentDTO;
 import com.iktakademija.FinalProject.entities.dtos.StudentDTO;
 import com.iktakademija.FinalProject.entities.enums.ERole;
 import com.iktakademija.FinalProject.entities.enums.EStatus;
+import com.iktakademija.FinalProject.repositories.ParentRepository;
 import com.iktakademija.FinalProject.repositories.PersonRepository;
 import com.iktakademija.FinalProject.repositories.RoleRepository;
 import com.iktakademija.FinalProject.repositories.StudentRepository;
@@ -36,6 +38,12 @@ public class StudentServiceImpl implements StudentService {
 	
 	@Autowired
 	private PersonRepository personRepository;
+	
+	@Autowired
+	private ParentService parentService;
+	
+	@Autowired
+	private ParentRepository parentRepository;	
 	
 	@Autowired
 	private StudentRepository studentRepository;
@@ -66,13 +74,18 @@ public class StudentServiceImpl implements StudentService {
 		retVal.setClassgroup(groupService.createDTO(source.getClassgroup()));
 		return retVal;
 	}
-
+	
 	@Override
-	public List<StudentDTO> getDTOList() {
+	public List<StudentDTO> createDTOList(List<StudentEntity> source) {		
 		List<StudentDTO> list = new ArrayList<>();
-		for (StudentEntity student : studentRepository.findAllUndeleted()) 
+		for (StudentEntity student : source) 
 			list.add(this.createDTO(student));		
 		return list;
+	}
+	
+	@Override
+	public List<StudentDTO> getDTOList() {	
+		return this.createDTOList(studentRepository.findAllUndeleted());
 	}
 
 	@Override
@@ -109,5 +122,8 @@ public class StudentServiceImpl implements StudentService {
 		student = studentRepository.save(student);
 		return this.createDTO(student);	
 	}
-
+	
+	public List<ParentDTO> getAllParents(StudentEntity parentId) {	
+		return parentService.createDTOList(parentRepository.findAllParents(parentId));
+	}
 }
