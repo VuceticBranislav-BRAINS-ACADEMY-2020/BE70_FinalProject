@@ -1,5 +1,8 @@
 package com.iktakademija.FinalProject.entities;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -8,13 +11,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-@Entity(name = "student_class")
+@Entity(name = "student_group")
 @JsonIgnoreProperties({ "handler", "hibernateLazyInitializer" })
-public class JoinTableStudentClass {
+public class JoinTableStudentGroup {
 
 	/************************************************************
 	 * Attributes
@@ -25,19 +30,18 @@ public class JoinTableStudentClass {
 	 ************************************************************/
 	
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinColumn(name = "student")
-	@JsonBackReference(value = "Student_Class_1")
+	@JoinColumn(name = "idstudent")
+	@JsonBackReference(value = "Student_Group_1")
 	private StudentEntity student;
 	
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinColumn(name = "clazz")
-	@JsonBackReference(value = "Student_Class_2")
-	private ClassEntity clazz;
+	@JoinColumn(name = "idgroup")
+	@JsonBackReference(value = "Student_Group_2")
+	private GroupEntity group;
 	
-	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinColumn(name = "grade")
-	@JsonBackReference(value = "Student_Class_3")
-	private GradeEntity grade;
+	@OneToMany(mappedBy = "std_grp", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JsonManagedReference(value = "Student_Group_3")
+	private Set<GradeEntity> grade = new HashSet<>();
 	
 	/************************************************************
 	 * Shadow Attributes
@@ -51,14 +55,14 @@ public class JoinTableStudentClass {
 	 * Constructors
 	 ************************************************************/
 
-	public JoinTableStudentClass() {
+	public JoinTableStudentGroup() {
 		super();
 	}
 	
 	/************************************************************
 	 * Getters & Setters
 	 ************************************************************/
-	
+
 	public StudentEntity getStudent() {
 		return student;
 	}
@@ -67,14 +71,21 @@ public class JoinTableStudentClass {
 		this.student = student;
 	}
 
-	public ClassEntity getClazz() {
-		return clazz;
+	public GroupEntity getGroup() {
+		return group;
 	}
 
-	public void setClazz(ClassEntity clazz) {
-		this.clazz = clazz;
+	public void setGroup(GroupEntity group) {
+		this.group = group;
 	}
 
+	public Set<GradeEntity> getGrade() {
+		return grade;
+	}
+
+	public void setGrade(Set<GradeEntity> grade) {
+		this.grade = grade;
+	}
 
 	public Integer getId() {
 		return id;
@@ -82,14 +93,6 @@ public class JoinTableStudentClass {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public GradeEntity getGrade() {
-		return grade;
-	}
-
-	public void setGrade(GradeEntity grade) {
-		this.grade = grade;
 	}
 
 }

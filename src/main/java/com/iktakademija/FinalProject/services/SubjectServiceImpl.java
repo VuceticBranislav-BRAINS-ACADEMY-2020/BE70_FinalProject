@@ -24,7 +24,6 @@ public class SubjectServiceImpl implements SubjectService {
 		SubjectDTO retVal = new SubjectDTO();
 		if (source == null) return retVal;
 		retVal.setId(source.getId());
-		retVal.setFond(source.getFond());
 		retVal.setName(source.getName());
 		retVal.setVersion(source.getVersion());
 		retVal.setStatus(source.getStatus());
@@ -52,7 +51,6 @@ public class SubjectServiceImpl implements SubjectService {
 		if (op.isPresent() == false) return null;
 		SubjectEntity student = op.get();		
 		
-		if (newSubject.getFond() != null) student.setFond(newSubject.getFond());
 		if (newSubject.getName() != null) student.setName(newSubject.getName());
 
 		student = subjectRepository.save(student);
@@ -71,7 +69,7 @@ public class SubjectServiceImpl implements SubjectService {
 
 	@Override
 	public SubjectEntity createSubject(NewSubjectDTO source) {				
-		SubjectEntity teacher = new SubjectEntity(source.getName(), source.getFond());		
+		SubjectEntity teacher = new SubjectEntity(source.getName());		
 		return subjectRepository.save(teacher);	
 	}
 

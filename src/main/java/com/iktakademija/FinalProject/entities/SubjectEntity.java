@@ -30,9 +30,6 @@ public class SubjectEntity {
 	@Column(nullable = false)
 	private String name;
 
-	@Column
-	private Integer fond;
-
 	/************************************************************
 	 * Relation Attributes
 	 ************************************************************/
@@ -69,10 +66,9 @@ public class SubjectEntity {
 		super();
 	}
 
-	public SubjectEntity(String name, Integer fond) {
+	public SubjectEntity(String name) {
 		super();
 		this.name = name;
-		this.fond = fond;
 		this.status = EStatus.ACTIVE;
 	}
 
@@ -86,14 +82,6 @@ public class SubjectEntity {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public Integer getFond() {
-		return fond;
-	}
-
-	public void setFond(Integer fond) {
-		this.fond = fond;
 	}
 	
 	public Integer getId() {

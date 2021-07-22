@@ -59,7 +59,7 @@ public class PersonEntity {
 	 ************************************************************/
 
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinColumn(name = "address")
+	@JoinColumn(name = "idaddress")
 	@JsonBackReference(value = "Person_Address_1")
 	private AddressEntity address;
 	

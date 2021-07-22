@@ -41,10 +41,6 @@ public class ClassEntity {
 	@JsonManagedReference(value = "Subject_Class_1")
 	private Set<JoinTableSubjectClass> subject = new HashSet<>();
 	
-	@OneToMany(mappedBy = "clazz", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JsonManagedReference(value = "Student_Class_2")
-	private Set<JoinTableStudentClass> student = new HashSet<>();
-	
 	/************************************************************
 	 * Shadow Attributes
 	 ************************************************************/
@@ -110,14 +106,6 @@ public class ClassEntity {
 
 	public void setStatus(EStatus status) {
 		this.status = status;
-	}
-
-	public Set<JoinTableStudentClass> getStudent() {
-		return student;
-	}
-
-	public void setStudent(Set<JoinTableStudentClass> student) {
-		this.student = student;
 	}
 
 	public Set<JoinTableSubjectClass> getSubject() {

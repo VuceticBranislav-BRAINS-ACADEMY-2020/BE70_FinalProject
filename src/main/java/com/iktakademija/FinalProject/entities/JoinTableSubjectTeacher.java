@@ -1,5 +1,8 @@
 package com.iktakademija.FinalProject.entities;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -8,9 +11,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity(name = "subject_teacher")
 @JsonIgnoreProperties({ "handler", "hibernateLazyInitializer" })
@@ -25,19 +30,18 @@ public class JoinTableSubjectTeacher {
 	 ************************************************************/
 	
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinColumn(name = "teachers")
+	@JoinColumn(name = "idteachers")
 	@JsonBackReference(value = "Subject_Teacher_1")
 	private TeacherEntity teachers;
 	
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinColumn(name = "subjects")
+	@JoinColumn(name = "idsubjects")
 	@JsonBackReference(value = "Subject_Teacher_2")
 	private SubjectEntity subjects;
 	
-	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinColumn(name = "grade")
-	@JsonBackReference(value = "Subject_Teacher_3")
-	private GradeEntity grade;
+	@OneToMany(mappedBy = "sub_tch", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JsonManagedReference(value = "Subject_Teacher_3")
+	private Set<GradeEntity> grade = new HashSet<>();
 	
 	/************************************************************
 	 * Shadow Attributes
@@ -54,19 +58,11 @@ public class JoinTableSubjectTeacher {
 	public JoinTableSubjectTeacher() {
 		super();
 	}
-	
+
 	/************************************************************
 	 * Getters & Setters
 	 ************************************************************/
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
+	
 	public TeacherEntity getTeachers() {
 		return teachers;
 	}
@@ -83,12 +79,20 @@ public class JoinTableSubjectTeacher {
 		this.subjects = subjects;
 	}
 
-	public GradeEntity getGrade() {
+	public Set<GradeEntity> getGrade() {
 		return grade;
 	}
 
-	public void setGrade(GradeEntity grade) {
+	public void setGrade(Set<GradeEntity> grade) {
 		this.grade = grade;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 }

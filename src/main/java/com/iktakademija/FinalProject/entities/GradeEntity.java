@@ -1,8 +1,6 @@
 package com.iktakademija.FinalProject.entities;
 
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,11 +11,12 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Version;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.iktakademija.FinalProject.entities.enums.EGradeType;
 import com.iktakademija.FinalProject.entities.enums.EStage;
 import com.iktakademija.FinalProject.entities.enums.EStatus;
@@ -48,17 +47,20 @@ public class GradeEntity {
 	 * Relation Attributes
 	 ************************************************************/
 	
-	@OneToMany(mappedBy = "grade", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JsonManagedReference(value = "Subject_Class_3")
-	private Set<JoinTableSubjectClass> sub_cls = new HashSet<>();
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JoinColumn(name = "idsub_cls")
+	@JsonBackReference(value = "Subject_Class_3")
+	private JoinTableSubjectClass sub_cls;
 	
-	@OneToMany(mappedBy = "grade", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JsonManagedReference(value = "Student_Class_3")
-	private Set<JoinTableStudentClass> std_cls = new HashSet<>();
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JoinColumn(name = "idstd_grp")
+	@JsonBackReference(value = "Student_Group_3")
+	private JoinTableStudentGroup std_grp;
 	
-	@OneToMany(mappedBy = "grade", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JsonManagedReference(value = "Subject_Teacher_3")
-	private Set<JoinTableSubjectTeacher> sub_tch = new HashSet<>();
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JoinColumn(name = "idsub_tch")
+	@JsonBackReference(value = "Subject_Teacher_3")
+	private JoinTableSubjectTeacher sub_tch;
 
 	/************************************************************
 	 * Shadow Attributes
@@ -143,27 +145,27 @@ public class GradeEntity {
 		this.status = status;
 	}
 
-	public Set<JoinTableStudentClass> getStd_cls() {
-		return std_cls;
-	}
-
-	public void setStd_cls(Set<JoinTableStudentClass> std_cls) {
-		this.std_cls = std_cls;
-	}
-
-	public Set<JoinTableSubjectClass> getSub_cls() {
+	public JoinTableSubjectClass getSub_cls() {
 		return sub_cls;
 	}
 
-	public void setSub_cls(Set<JoinTableSubjectClass> sub_cls) {
+	public void setSub_cls(JoinTableSubjectClass sub_cls) {
 		this.sub_cls = sub_cls;
 	}
 
-	public Set<JoinTableSubjectTeacher> getSub_tch() {
+	public JoinTableStudentGroup getStd_grp() {
+		return std_grp;
+	}
+
+	public void setStd_grp(JoinTableStudentGroup std_grp) {
+		this.std_grp = std_grp;
+	}
+
+	public JoinTableSubjectTeacher getSub_tch() {
 		return sub_tch;
 	}
 
-	public void setSub_tch(Set<JoinTableSubjectTeacher> sub_tch) {
+	public void setSub_tch(JoinTableSubjectTeacher sub_tch) {
 		this.sub_tch = sub_tch;
 	}
 

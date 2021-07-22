@@ -33,14 +33,14 @@ public class StudentEntity extends UserEntity {
 	 ************************************************************/
 	
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinColumn(name = "classgroup")
+	@JoinColumn(name = "idclassgroup")
 	@JsonBackReference(value = "Student_Group_1")
 	private GroupEntity classgroup;
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "student", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JsonManagedReference(value = "Student_Class_1")
-	private Set<JoinTableStudentClass> clazz = new HashSet<>();
+	@JsonManagedReference(value = "Student_Group_1")
+	private Set<JoinTableStudentGroup> clazz = new HashSet<>();
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "student", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
@@ -76,12 +76,12 @@ public class StudentEntity extends UserEntity {
 	}
 
 	@JsonIgnore
-	public Set<JoinTableStudentClass> getClazz() {
+	public Set<JoinTableStudentGroup> getClazz() {
 		return clazz;
 	}
 	
 	@JsonIgnore
-	public void setClazz(Set<JoinTableStudentClass> clazz) {
+	public void setClazz(Set<JoinTableStudentGroup> clazz) {
 		this.clazz = clazz;
 	}
 	

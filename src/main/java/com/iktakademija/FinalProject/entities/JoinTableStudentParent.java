@@ -15,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity(name = "student_parent")
-@Table(name = "student_parent", uniqueConstraints = { @UniqueConstraint(columnNames = { "student", "parent" }) })
+@Table(name = "student_parent", uniqueConstraints = { @UniqueConstraint(columnNames = { "idstudent", "idparent" }) })
 @JsonIgnoreProperties({ "handler", "hibernateLazyInitializer" })
 public class JoinTableStudentParent {
 	
@@ -28,12 +28,12 @@ public class JoinTableStudentParent {
 	 ************************************************************/
 	
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinColumn(name = "student")
+	@JoinColumn(name = "idstudent")
 	@JsonBackReference(value = "Student_Parent_1")
 	private StudentEntity student;
 	
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinColumn(name = "parent")
+	@JoinColumn(name = "idparent")
 	@JsonBackReference(value = "Student_Parent_2")
 	private ParentEntity parent;
 	
