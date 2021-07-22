@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.persistence.Version;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -21,7 +22,8 @@ import com.iktakademija.FinalProject.entities.enums.EGradeType;
 import com.iktakademija.FinalProject.entities.enums.EStage;
 import com.iktakademija.FinalProject.entities.enums.EStatus;
 
-@Entity(name = "grade")
+@Entity
+@Table(name = "grades")
 @JsonIgnoreProperties({ "handler", "hibernateLazyInitializer" })
 public class GradeEntity {
 

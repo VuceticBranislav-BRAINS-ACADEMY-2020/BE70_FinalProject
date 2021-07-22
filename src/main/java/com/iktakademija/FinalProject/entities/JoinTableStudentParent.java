@@ -14,8 +14,8 @@ import javax.persistence.UniqueConstraint;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@Entity(name = "student_parent")
-@Table(name = "student_parent", uniqueConstraints = { @UniqueConstraint(columnNames = { "idstudent", "idparent" }) })
+@Entity
+@Table(name = "student_parents", uniqueConstraints = { @UniqueConstraint(columnNames = { "idstudent", "idparent" }) })
 @JsonIgnoreProperties({ "handler", "hibernateLazyInitializer" })
 public class JoinTableStudentParent {
 	

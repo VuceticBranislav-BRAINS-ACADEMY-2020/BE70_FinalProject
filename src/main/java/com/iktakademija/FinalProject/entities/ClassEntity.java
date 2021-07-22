@@ -13,13 +13,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.persistence.Version;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.iktakademija.FinalProject.entities.enums.EStatus;
 
-@Entity(name = "clazz")
+@Entity
+@Table(name = "classes")
 @JsonIgnoreProperties({ "handler", "hibernateLazyInitializer" })
 public class ClassEntity {
 

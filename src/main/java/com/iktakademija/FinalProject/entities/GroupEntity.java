@@ -16,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.persistence.Version;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -23,7 +24,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.iktakademija.FinalProject.entities.enums.EStatus;
 
-@Entity(name = "classgroup")
+@Entity
+@Table(name = "classgroups")
 @JsonIgnoreProperties({ "handler", "hibernateLazyInitializer" })
 public class GroupEntity {
 

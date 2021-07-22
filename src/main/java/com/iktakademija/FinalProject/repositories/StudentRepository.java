@@ -13,12 +13,12 @@ import com.iktakademija.FinalProject.entities.StudentEntity;
 public interface StudentRepository extends CrudRepository<StudentEntity, Integer> {
 
 	@Override
-	@Query(value = "FROM student AS s WHERE s.id=:id AND s.status<>'DELETED'")
+	@Query(value = "FROM StudentEntity AS s WHERE s.id=:id AND s.status<>'DELETED'")
 	Optional<StudentEntity> findById(@Param("id") Integer id);
 
-	@Query(value = "FROM student AS s WHERE s.status<>'DELETED'")
+	@Query(value = "FROM StudentEntity AS s WHERE s.status<>'DELETED'")
 	List<StudentEntity> findAllUndeleted();
 	
-	@Query(value = "FROM student AS s WHERE s.id IN (SELECT student FROM student_parent WHERE parent = :ID)")
+	@Query(value = "FROM StudentEntity AS s WHERE s.id IN (SELECT student FROM JoinTableStudentParent WHERE parent = :ID)")
 	List<StudentEntity> findAllChildrens(@Param(value = "ID") ParentEntity parentID);
 }

@@ -12,12 +12,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-@Entity(name = "student_group")
+@Entity
+@Table(name = "student_groups")
 @JsonIgnoreProperties({ "handler", "hibernateLazyInitializer" })
 public class JoinTableStudentGroup {
 

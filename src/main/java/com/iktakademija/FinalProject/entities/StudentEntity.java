@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -18,7 +19,8 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.iktakademija.FinalProject.securities.Views;
 
-@Entity(name = "student")
+@Entity
+@Table(name = "students")
 @JsonIgnoreProperties({ "handler", "hibernateLazyInitializer" })
 @PrimaryKeyJoinColumn(name = "id")
 @JsonView(value = {Views.Admin.class})

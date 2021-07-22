@@ -16,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.persistence.Version;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -29,7 +30,8 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.iktakademija.FinalProject.entities.enums.EStatus;
 import com.iktakademija.FinalProject.securities.Views;
 
-@Entity(name = "person")
+@Entity
+@Table(name = "persons")
 @JsonIgnoreProperties({ "handler", "hibernateLazyInitializer" })
 @JsonView(value = Views.Admin.class)
 public class PersonEntity {

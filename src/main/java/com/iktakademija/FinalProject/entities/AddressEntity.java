@@ -13,6 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.persistence.Version;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -22,7 +23,8 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.iktakademija.FinalProject.entities.enums.EStatus;
 import com.iktakademija.FinalProject.securities.Views;
 
-@Entity(name = "address")
+@Entity
+@Table(name = "addresses")
 @JsonIgnoreProperties({ "handler", "hibernateLazyInitializer" })
 @JsonView(value = {Views.Admin.class})
 public class AddressEntity {

@@ -12,9 +12,9 @@ import com.iktakademija.FinalProject.entities.SubjectEntity;
 public interface SubjectRepository extends CrudRepository<SubjectEntity, Integer> {
 
 	@Override
-	@Query(value = "FROM subject AS s WHERE s.id=:id AND s.status<>'DELETED'")
+	@Query(value = "FROM SubjectEntity AS s WHERE s.id=:id AND s.status<>'DELETED'")
 	Optional<SubjectEntity> findById(@Param("id") Integer id);
 
-	@Query(value = "FROM subject AS s WHERE s.status<>'DELETED'")
+	@Query(value = "FROM SubjectEntity AS s WHERE s.status<>'DELETED'")
 	List<SubjectEntity> findAllUndeleted();
 }

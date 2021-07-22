@@ -9,13 +9,15 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.iktakademija.FinalProject.securities.Views;
 
-@Entity(name = "parent")
+@Entity
+@Table(name = "parents")
 @JsonIgnoreProperties({ "handler", "hibernateLazyInitializer" })
 @PrimaryKeyJoinColumn(name = "id")
 @JsonView(value = {Views.Admin.class})

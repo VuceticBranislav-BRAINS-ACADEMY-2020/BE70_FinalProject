@@ -13,6 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.persistence.Version;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -20,7 +21,8 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.iktakademija.FinalProject.entities.enums.ERole;
 import com.iktakademija.FinalProject.entities.enums.EStatus;
 
-@Entity(name = "role")
+@Entity
+@Table(name = "roles")
 @JsonIgnoreProperties({ "handler", "hibernateLazyInitializer" })
 public class RoleEntity {
 
@@ -28,7 +30,7 @@ public class RoleEntity {
 	 * Attributes
 	 ************************************************************/
 
-	@Column(name = "role")
+	@Column(name = "rolename")
 	@Enumerated(value = EnumType.STRING)
 	private ERole role;
 

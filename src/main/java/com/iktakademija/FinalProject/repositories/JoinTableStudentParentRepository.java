@@ -12,10 +12,10 @@ import com.iktakademija.FinalProject.entities.StudentEntity;
 
 public interface JoinTableStudentParentRepository extends CrudRepository<JoinTableStudentParent, Integer> {
 
-	@Query(value = "SELECT id FROM parent AS p WHERE p.id IN (SELECT parent FROM student_parent WHERE student = :ID)")
+	@Query(value = "SELECT id FROM ParentEntity AS p WHERE p.id IN (SELECT parent FROM JoinTableStudentParent WHERE student = :ID)")
 	List<Integer> findParentOfChild(@Param(value = "ID") StudentEntity parentID);
 	
-	@Query(value = "SELECT id FROM student AS s WHERE s.id IN (SELECT student FROM student_parent WHERE parent = :ID)")
+	@Query(value = "SELECT id FROM StudentEntity AS s WHERE s.id IN (SELECT student FROM JoinTableStudentParent WHERE parent = :ID)")
 	List<Integer> findChildOfParent(@Param(value = "ID") ParentEntity childID);
 
 }
