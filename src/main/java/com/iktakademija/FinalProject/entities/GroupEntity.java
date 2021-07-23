@@ -49,13 +49,13 @@ public class GroupEntity {
 	@JsonBackReference(value = "Group_Class_1")
 	private ClassEntity clazz;
 	
-	@OneToMany(mappedBy = "classgroup", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JsonManagedReference(value = "Student_Group_1")
-	private Set<StudentEntity> students = new HashSet<>();
-	
 	@OneToMany(mappedBy = "group", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JsonManagedReference(value = "Student_Group_2")
 	private Set<JoinTableStudentGroup> student = new HashSet<>();
+	
+	@OneToMany(mappedBy = "group", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JsonManagedReference(value = "Student_Group_4")
+	private Set<JoinTableSubjectTeacher> teacher = new HashSet<>();
 	
 	/************************************************************
 	 * Shadow Attributes
@@ -108,14 +108,6 @@ public class GroupEntity {
 		this.clazz = clazz;
 	}
 
-	public Set<StudentEntity> getStudents() {
-		return students;
-	}
-
-	public void setStudents(Set<StudentEntity> students) {
-		this.students = students;
-	}
-
 	public Integer getId() {
 		return id;
 	}
@@ -146,6 +138,14 @@ public class GroupEntity {
 
 	public void setStudent(Set<JoinTableStudentGroup> student) {
 		this.student = student;
+	}
+
+	public Set<JoinTableSubjectTeacher> getTeacher() {
+		return teacher;
+	}
+
+	public void setTeacher(Set<JoinTableSubjectTeacher> teacher) {
+		this.teacher = teacher;
 	}
 	
 }

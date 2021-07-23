@@ -37,13 +37,18 @@ public class JoinTableSubjectTeacher {
 	private TeacherEntity teachers;
 	
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinColumn(name = "idsubjects")
+	@JoinColumn(name = "idsub_cls")
 	@JsonBackReference(value = "Subject_Teacher_2")
-	private SubjectEntity subjects;
+	private JoinTableSubjectClass sub_cls;
 	
 	@OneToMany(mappedBy = "sub_tch", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JsonManagedReference(value = "Subject_Teacher_3")
 	private Set<GradeEntity> grade = new HashSet<>();
+	
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JoinColumn(name = "idgroup")
+	@JsonBackReference(value = "Student_Group_4")
+	private GroupEntity group;
 	
 	/************************************************************
 	 * Shadow Attributes
@@ -73,12 +78,20 @@ public class JoinTableSubjectTeacher {
 		this.teachers = teachers;
 	}
 
-	public SubjectEntity getSubjects() {
-		return subjects;
+	public JoinTableSubjectClass getSub_cls() {
+		return sub_cls;
 	}
 
-	public void setSubjects(SubjectEntity subjects) {
-		this.subjects = subjects;
+	public void setSub_cls(JoinTableSubjectClass sub_cls) {
+		this.sub_cls = sub_cls;
+	}
+
+	public GroupEntity getGroup() {
+		return group;
+	}
+
+	public void setGroup(GroupEntity group) {
+		this.group = group;
 	}
 
 	public Set<GradeEntity> getGrade() {

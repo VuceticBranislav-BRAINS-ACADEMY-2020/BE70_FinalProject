@@ -14,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -21,7 +22,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.iktakademija.FinalProject.entities.enums.EStatus;
 
 @Entity
-@Table(name = "classes")
+@Table(name = "classes", uniqueConstraints = { @UniqueConstraint(columnNames = { "name", "year" }) })
 @JsonIgnoreProperties({ "handler", "hibernateLazyInitializer" })
 public class ClassEntity {
 

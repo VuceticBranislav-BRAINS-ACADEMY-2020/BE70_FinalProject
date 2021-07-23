@@ -6,13 +6,10 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -33,11 +30,6 @@ public class StudentEntity extends UserEntity {
 	/************************************************************
 	 * Relation Attributes
 	 ************************************************************/
-	
-	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinColumn(name = "idclassgroup")
-	@JsonBackReference(value = "Student_Group_1")
-	private GroupEntity classgroup;
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "student", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
@@ -68,14 +60,6 @@ public class StudentEntity extends UserEntity {
 	/************************************************************
 	 * Getters & Setters
 	 ************************************************************/
-	
-	public GroupEntity getClassgroup() {
-		return classgroup;
-	}
-
-	public void setClassgroup(GroupEntity classgroup) {
-		this.classgroup = classgroup;
-	}
 
 	@JsonIgnore
 	public Set<JoinTableStudentGroup> getClazz() {

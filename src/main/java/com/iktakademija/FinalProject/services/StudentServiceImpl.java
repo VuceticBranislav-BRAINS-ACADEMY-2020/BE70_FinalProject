@@ -29,9 +29,6 @@ public class StudentServiceImpl implements StudentService {
 
 	@Autowired
 	private RoleService roleService;
-
-	@Autowired
-	private GroupService groupService;
 	
 	@Autowired
 	private RoleRepository roleRepository;
@@ -71,7 +68,7 @@ public class StudentServiceImpl implements StudentService {
 		retVal.setRole(roleService.createDTO(source.getRole()));
 		retVal.setVersion(source.getVersion());
 		retVal.setStatus(source.getStatus());
-		retVal.setClassgroup(groupService.createDTO(source.getClassgroup()));
+//		retVal.setClassgroup(groupService.createDTO(source.getClassgroup()));
 		return retVal;
 	}
 	

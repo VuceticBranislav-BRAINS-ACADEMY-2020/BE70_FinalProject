@@ -16,7 +16,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.iktakademija.FinalProject.entities.enums.EGradeType;
 import com.iktakademija.FinalProject.entities.enums.EStage;
@@ -39,6 +44,7 @@ public class GradeEntity {
 	private Integer value;
 	
 	@Column
+	@DateTimeFormat(iso = ISO.DATE)
 	private LocalDate entered;
 	
 	@Column
@@ -48,11 +54,6 @@ public class GradeEntity {
 	/************************************************************
 	 * Relation Attributes
 	 ************************************************************/
-	
-	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinColumn(name = "idsub_cls")
-	@JsonBackReference(value = "Subject_Class_3")
-	private JoinTableSubjectClass sub_cls;
 	
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "idstd_grp")
@@ -106,11 +107,13 @@ public class GradeEntity {
 	public void setValue(Integer value) {
 		this.value = value;
 	}
-
+	
+	@JsonFormat(shape = Shape.STRING, pattern = "dd-MM-yyyy")
 	public LocalDate getEntered() {
 		return entered;
 	}
-
+	
+	@JsonFormat(shape = Shape.STRING, pattern = "dd-MM-yyyy")
 	public void setEntered(LocalDate entered) {
 		this.entered = entered;
 	}
@@ -145,14 +148,6 @@ public class GradeEntity {
 
 	public void setStatus(EStatus status) {
 		this.status = status;
-	}
-
-	public JoinTableSubjectClass getSub_cls() {
-		return sub_cls;
-	}
-
-	public void setSub_cls(JoinTableSubjectClass sub_cls) {
-		this.sub_cls = sub_cls;
 	}
 
 	public JoinTableStudentGroup getStd_grp() {

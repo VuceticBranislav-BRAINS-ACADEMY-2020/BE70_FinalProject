@@ -38,12 +38,7 @@ public class SubjectEntity {
 	
 	@OneToMany(mappedBy = "subject", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JsonManagedReference(value = "Subject_Class_2")
-	private Set<JoinTableSubjectClass> clazz = new HashSet<>();
-	
-	@OneToMany(mappedBy = "subjects", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JsonManagedReference(value = "Subject_Teacher_2")
-	private Set<JoinTableSubjectTeacher> teacher = new HashSet<>();
-	
+	private Set<JoinTableSubjectClass> clazz = new HashSet<>();	
 	
 	/************************************************************
 	 * Shadow Attributes
@@ -117,13 +112,5 @@ public class SubjectEntity {
 	public void setClazz(Set<JoinTableSubjectClass> clazz) {
 		this.clazz = clazz;
 	}
-
-	public Set<JoinTableSubjectTeacher> getTeacher() {
-		return teacher;
-	}
-
-	public void setTeacher(Set<JoinTableSubjectTeacher> teacher) {
-		this.teacher = teacher;
-	}
-
+	
 }
