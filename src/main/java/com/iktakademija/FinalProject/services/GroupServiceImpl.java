@@ -19,6 +19,6 @@ public class GroupServiceImpl implements GroupService {
 		retVal.setVersion(source.getVersion());
 		retVal.setStatus(source.getStatus());
 		return retVal;
-	}
-
+	}	
+	
 }

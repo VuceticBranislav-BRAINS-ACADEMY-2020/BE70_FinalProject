@@ -1,9 +1,13 @@
 package com.iktakademija.FinalProject.services;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.iktakademija.FinalProject.entities.RoleEntity;
 import com.iktakademija.FinalProject.entities.dtos.RoleDTO;
+import com.iktakademija.FinalProject.entities.enums.ERole;
 
 @Service
 public class RoleServiceImpl implements RoleService {
@@ -18,6 +22,23 @@ public class RoleServiceImpl implements RoleService {
 		retVal.setStatus( source.getStatus());
 		return retVal;
 		
+	}
+	
+	@Override
+	public List<ERole> getRoleFromStringList(List<String> list) {
+		
+		// Prepare rturn value
+		List<ERole> retVal = new ArrayList<ERole>();
+		
+		// Convert all string to roles
+		ERole role;
+		for (String string : list) {
+			role = ERole.valueOf(string);
+			if (role != null) {
+				retVal.add(null);
+			}
+		}
+		return retVal;
 	}
 	
 }

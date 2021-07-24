@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -16,6 +17,9 @@ import io.jsonwebtoken.SignatureAlgorithm;
 
 @Service
 public class LoginServiceImpl implements LoginService {
+		
+	@Autowired
+	RoleService roleService;
 	
 	@Value("${spring.security.secret-key}")
 	private String securityKey;
@@ -23,6 +27,10 @@ public class LoginServiceImpl implements LoginService {
 	@Value("${spring.security.token-duration}")
 	private Integer tokenDuration;
 	
+	/**
+	 * Provide JWT token for given user.<BR>
+	 * Token subject is username provided and it will expire based on time in application.configuration file. 
+	 */
 	public String getJWTToken(UserEntity userEntity) {
 		// Generate list of authorities
 		List<GrantedAuthority> grantedAuthority = AuthorityUtils

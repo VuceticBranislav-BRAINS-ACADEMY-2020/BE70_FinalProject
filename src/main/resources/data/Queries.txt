@@ -1,0 +1,17 @@
+
+# MySQL queries
+
+# Find student's group
+SELECT idgroup FROM student_groups WHERE idstudent = 436;
+
+# Find all teachers and subject_class for given student ID
+SELECT * FROM subject_teachers WHERE idgroup IN (SELECT idgroup FROM student_groups WHERE idstudent = 436);
+
+# Find all subject_class for given student ID
+SELECT * FROM subject_classes WHERE id IN (SELECT idsub_cls FROM subject_teachers WHERE idgroup IN (SELECT idgroup FROM student_groups WHERE idstudent = 436));
+
+# Find all subjects for given student ID
+SELECT * FROM subjects WHERE id IN (SELECT idsubject FROM subject_classes WHERE id IN (SELECT idsub_cls FROM subject_teachers WHERE idgroup IN (SELECT idgroup FROM student_groups WHERE idstudent = 436)));
+
+# Find student, subject and teacher relations
+SELECT a.idstudent, b.idteachers, c.idsubject FROM student_groups AS a INNER JOIN subject_teachers AS b ON a.idgroup=b.idgroup INNER JOIN subject_classes AS c ON b.idsub_cls=c.id WHERE a.idstudent = 436;

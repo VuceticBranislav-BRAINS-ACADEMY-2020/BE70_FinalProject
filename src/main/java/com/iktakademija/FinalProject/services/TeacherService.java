@@ -13,4 +13,6 @@ public interface TeacherService {
 	TeacherDTO setTeacher(Integer teacherId, NewTeacherDTO newTeacher);
 	TeacherDTO removeTeacher(Integer teacherId);
 	TeacherEntity createTeacher(NewTeacherDTO source);
+	
+	boolean doStudentListenSubjectFromTeeacherGroup(Integer student, Integer subject, Integer teacher, Integer group);
 }
