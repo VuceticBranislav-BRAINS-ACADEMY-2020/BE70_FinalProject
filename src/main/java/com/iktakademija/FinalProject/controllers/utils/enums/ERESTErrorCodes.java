@@ -10,6 +10,7 @@ package com.iktakademija.FinalProject.controllers.utils.enums;
  * <BR> 112 - Item with provided credentials already exists in data base. 
  * <BR> 150 - Role do not exist or invalide. 
  * <BR> 200 - Teacher not authorised to give grade in name of another teacher.
+ * <BR> 201 - Access not allowed.
  */
 public enum ERESTErrorCodes {
 
@@ -44,7 +45,11 @@ public enum ERESTErrorCodes {
 	/**
 	 * Code: 200<BR>Message: "Teacher not authorised to give grade in name of another teacher."
 	 */
-	TEACHER_CANT_GRADE (200, "Teacher not authorised to give grade in name of another teacher.");
+	TEACHER_CANT_GRADE (200, "Teacher not authorised to give grade in name of another teacher."),
+	/**
+	 * Code: 201<BR>Message: "Access not allowed."
+	 */
+	ACCESS_NOT_ALLOWED (201, "Access not allowed.");
 	
 	ERESTErrorCodes(int value, String message) {
 		this.value = value;

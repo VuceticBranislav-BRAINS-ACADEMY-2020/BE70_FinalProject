@@ -10,12 +10,12 @@ import org.springframework.stereotype.Service;
 import com.iktakademija.FinalProject.entities.ParentEntity;
 import com.iktakademija.FinalProject.entities.PersonEntity;
 import com.iktakademija.FinalProject.entities.RoleEntity;
+import com.iktakademija.FinalProject.entities.StudentEntity;
 import com.iktakademija.FinalProject.entities.dtos.NewParentDTO;
 import com.iktakademija.FinalProject.entities.dtos.ParentDTO;
 import com.iktakademija.FinalProject.entities.dtos.StudentDTO;
 import com.iktakademija.FinalProject.entities.enums.ERole;
 import com.iktakademija.FinalProject.entities.enums.EStatus;
-import com.iktakademija.FinalProject.repositories.JoinTableStudentParentRepository;
 import com.iktakademija.FinalProject.repositories.ParentRepository;
 import com.iktakademija.FinalProject.repositories.PersonRepository;
 import com.iktakademija.FinalProject.repositories.RoleRepository;
@@ -24,12 +24,9 @@ import com.iktakademija.FinalProject.utils.Encryption;
 
 @Service
 public class ParentServiceImpl implements ParentService {
-	
+
 	@Autowired
-	private JoinTableStudentParentRepository joinTableStudentParentRepository;
-	
-	@Autowired
-	private ParentRepository parentRepository;
+	private ParentRepository parentRepository;	
 	
 	@Autowired
 	private PersonService personService;
@@ -75,8 +72,9 @@ public class ParentServiceImpl implements ParentService {
 		retVal.setRole(roleService.createDTO(source.getRole()));
 		retVal.setVersion(source.getVersion());
 		retVal.setStatus(source.getStatus());
-		retVal.setEmail(source.getEmail());
-		retVal.setChilds(joinTableStudentParentRepository.findChildOfParent(source));
+		retVal.setEmail(source.getEmail());			
+		List<StudentEntity> list = parentRepository.findAllChildrens(source);
+		retVal.setChilds(studentService.createDTOList(list));
 		return retVal;			
 	}
 	
@@ -130,8 +128,8 @@ public class ParentServiceImpl implements ParentService {
 		}
 		
 		if (source.getId() != null) {
-			List<Integer> asd = joinTableStudentParentRepository.findChildOfParent(source);
-			dto.setChilds(asd);	
+			List<StudentEntity> list = parentRepository.findAllChildrens(source);
+			dto.setChilds(studentService.createDTOList(list));	
 		}	
 		
 		return dto;

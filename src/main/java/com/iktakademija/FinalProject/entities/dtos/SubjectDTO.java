@@ -13,7 +13,7 @@ import com.iktakademija.FinalProject.securities.Views;
  * @see SubjectEntity
  * @author GM
  */
-@JsonView(value = Views.Admin.class)
+@JsonView(value = Views.Student.class)
 @JsonPropertyOrder(value =  {"id", "name", "fond", "version", "status"})
 public class SubjectDTO {
 	
@@ -21,15 +21,18 @@ public class SubjectDTO {
 	 * Attributes
 	 ************************************************************/
 	
+	@JsonView(value = Views.Teacher.class)
 	@JsonProperty(value = "ID")
 	private Integer id;	
 	
 	@JsonProperty(value = "Name")
 	private String name;
 
+	@JsonView(value = Views.Teacher.class)
 	@JsonProperty(value = "Fond")
 	private Integer fond;
 	
+	@JsonView(value = Views.Admin.class)
 	@JsonProperty(value = "Version")
 	private Integer version;
 	

@@ -3,36 +3,24 @@ package com.iktakademija.FinalProject.services;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.iktakademija.FinalProject.entities.GroupEntity;
-import com.iktakademija.FinalProject.entities.JoinTableSubjectTeacher;
 import com.iktakademija.FinalProject.entities.PersonEntity;
 import com.iktakademija.FinalProject.entities.RoleEntity;
 import com.iktakademija.FinalProject.entities.StudentEntity;
 import com.iktakademija.FinalProject.entities.SubjectEntity;
 import com.iktakademija.FinalProject.entities.TeacherEntity;
-import com.iktakademija.FinalProject.entities.dtos.NewGradeDTO;
 import com.iktakademija.FinalProject.entities.dtos.NewTeacherDTO;
 import com.iktakademija.FinalProject.entities.dtos.TeacherDTO;
 import com.iktakademija.FinalProject.entities.enums.ERole;
 import com.iktakademija.FinalProject.entities.enums.EStatus;
 import com.iktakademija.FinalProject.repositories.GroupRepository;
-import com.iktakademija.FinalProject.repositories.JoinTableSubjectTeacherRepository;
 import com.iktakademija.FinalProject.repositories.PersonRepository;
 import com.iktakademija.FinalProject.repositories.RoleRepository;
 import com.iktakademija.FinalProject.repositories.StudentRepository;
@@ -66,9 +54,6 @@ public class TeacherServiceImpl implements TeacherService {
 	
 	@Autowired
 	private SubjectRepository subjectRepository;	
-	
-	@Autowired
-	private JoinTableSubjectTeacherRepository joinTableSubjectTeacherRepository;
 	
 	@Override
 	public TeacherEntity createTeacher(NewTeacherDTO source) {		
@@ -168,6 +153,19 @@ public class TeacherServiceImpl implements TeacherService {
 		
 		return false;
 	}
+	
+//	@Override
+//	public List<GradeDTO> findAllGradesForStudentsAndSubjects(TeacherEntity teacher) {
+//		
+//		teacher.ge
+////		Optional<TeacherEntity> op = teacherRepository.findById(teacherId);
+////		if (op.isPresent() == false) return null;
+////		TeacherEntity teacher = op.get();		
+////		teacher.setStatus(EStatus.DELETED);			
+////		teacher = teacherRepository.save(teacher);
+////		return this.createDTO(teacher);	
+//		return null;
+//	}
 	
 //	@PersistenceContext
 //	private EntityManager entityManager;	

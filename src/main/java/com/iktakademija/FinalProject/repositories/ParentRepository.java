@@ -21,4 +21,7 @@ public interface ParentRepository extends CrudRepository<ParentEntity, Integer> 
 	
 	@Query(value = "FROM ParentEntity AS p WHERE p.id IN (SELECT parent FROM JoinTableStudentParent WHERE student = :ID)")
 	List<ParentEntity> findAllParents(@Param(value = "ID") StudentEntity childID);
+	
+	@Query(value = "FROM StudentEntity AS s WHERE s.id IN (SELECT student FROM JoinTableStudentParent WHERE parent = :ID)")
+	List<StudentEntity> findAllChildrens(@Param(value = "ID") ParentEntity parentID);
 }

@@ -15,4 +15,5 @@ public interface TeacherService {
 	TeacherEntity createTeacher(NewTeacherDTO source);
 	
 	boolean doStudentListenSubjectFromTeeacherGroup(Integer student, Integer subject, Integer teacher, Integer group);
+//	List<GradeDTO> findAllGradesForStudentsAndSubjects(TeacherEntity teacher);
 }

@@ -3,6 +3,7 @@ package com.iktakademija.FinalProject.controllers;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.event.Level;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,13 +21,17 @@ import com.iktakademija.FinalProject.controllers.utils.enums.ERESTErrorCodes;
 import com.iktakademija.FinalProject.entities.JoinTableStudentParent;
 import com.iktakademija.FinalProject.entities.ParentEntity;
 import com.iktakademija.FinalProject.entities.StudentEntity;
+import com.iktakademija.FinalProject.entities.UserEntity;
 import com.iktakademija.FinalProject.entities.dtos.NewParentDTO;
 import com.iktakademija.FinalProject.entities.dtos.ParentDTO;
 import com.iktakademija.FinalProject.entities.dtos.StudentDTO;
+import com.iktakademija.FinalProject.entities.enums.EStatus;
 import com.iktakademija.FinalProject.repositories.JoinTableStudentParentRepository;
 import com.iktakademija.FinalProject.repositories.ParentRepository;
 import com.iktakademija.FinalProject.repositories.StudentRepository;
 import com.iktakademija.FinalProject.securities.Views;
+import com.iktakademija.FinalProject.services.LoggingService;
+import com.iktakademija.FinalProject.services.LoginService;
 import com.iktakademija.FinalProject.services.ParentService;
 
 /**
@@ -48,6 +53,12 @@ public class ParentController {
 	
 	@Autowired
 	private JoinTableStudentParentRepository joinTableStudentParentRepository;
+	
+	@Autowired
+	private LoginService loginService;
+	
+	@Autowired
+	private LoggingService loggingService;
 	
 	// PAR10
 	@Secured("ROLE_ADMIN")
@@ -143,4 +154,46 @@ public class ParentController {
 		List<StudentDTO> students = parentService.getAllChildrens(parent);		
 		return new ResponseEntity<List<StudentDTO>>(students, HttpStatus.OK);			
 	}
+	
+	/**
+	 * Parent preview general informations.<BR> 
+	 * Postman code: <B>PAR20</B>
+	 */
+	@Secured("ROLE_PARENT")
+	@JsonView(value = Views.Parent.class)
+	@RequestMapping(method = RequestMethod.GET, path = "/getinfo")
+	public ResponseEntity<?> getParentInfo() {		
+		
+		// Logging and retriving user informations
+		UserEntity user = loginService.getUser();
+		loggingService.getRoleAndLogg(user, Level.INFO);	
+		loggingService.loggMessage("Method: ParentController.getParentInfo", Level.INFO);	
+		
+		// Find out is student valid
+		boolean isValid = false;
+		ParentEntity parent = null;
+		if (user instanceof ParentEntity) {
+			parent = (ParentEntity) user;
+			if (parent.getStatus().equals(EStatus.ACTIVE)) {
+				isValid = true;
+			}
+		}	
+		
+		// Logg validation status of student and exit if invalid
+		if (isValid) {
+			loggingService.loggMessage("Authorized to access.", Level.INFO);
+		}
+		else {
+			loggingService.loggMessage("NOT Authorized to access.", Level.WARN);
+			loggingService.loggOutMessage(HttpStatus.OK.toString(), Level.INFO);
+			return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.ACCESS_NOT_ALLOWED), HttpStatus.BAD_REQUEST);	
+		}		
+		
+		// Grant informations to valid user
+		loggingService.loggMessage("Request granted.", Level.INFO);
+		loggingService.loggOutMessage(HttpStatus.OK.toString(), Level.INFO);
+		ParentDTO dto = parentService.createDTO(parent);	
+		return new ResponseEntity<ParentDTO>(dto, HttpStatus.OK);	
+	}	
+	
 }

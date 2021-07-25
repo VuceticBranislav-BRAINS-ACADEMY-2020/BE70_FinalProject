@@ -1,7 +1,9 @@
 package com.iktakademija.FinalProject.controllers;
 
+import java.time.LocalDate;
 import java.util.List;
 
+import org.slf4j.event.Level;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,10 +18,16 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.iktakademija.FinalProject.controllers.utils.RESTError;
 import com.iktakademija.FinalProject.controllers.utils.enums.ERESTErrorCodes;
 import com.iktakademija.FinalProject.entities.AdminEntity;
+import com.iktakademija.FinalProject.entities.UserEntity;
 import com.iktakademija.FinalProject.entities.dtos.AdminDTO;
+import com.iktakademija.FinalProject.entities.dtos.EmailObject;
 import com.iktakademija.FinalProject.entities.dtos.NewAdminDTO;
+import com.iktakademija.FinalProject.entities.enums.EStatus;
 import com.iktakademija.FinalProject.securities.Views;
 import com.iktakademija.FinalProject.services.AdminService;
+import com.iktakademija.FinalProject.services.EmailService;
+import com.iktakademija.FinalProject.services.LoggingService;
+import com.iktakademija.FinalProject.services.LoginService;
 
 /**
  * Admin endpoint.
@@ -35,6 +43,15 @@ public class AdminController {
 	
 	@Autowired
 	private AdminService adminService;
+	
+	@Autowired
+	private LoginService loginService;
+	
+	@Autowired
+	private LoggingService loggingService;
+	
+	@Autowired
+	private EmailService emailService;	
 	
 	/**
 	 * Returns all admins from data base. 
@@ -110,6 +127,53 @@ public class AdminController {
 		if (user == null ) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_PARAMETERS), HttpStatus.NOT_ACCEPTABLE);
 		return new ResponseEntity<AdminDTO>(adminService.createDTO(user), HttpStatus.OK);
 	
-	}
+	}	
+	
+	@Secured("ROLE_ADMIN")
+	@JsonView(value = Views.Admin.class)
+	@RequestMapping(method = RequestMethod.POST, path = "/sendlogfile")
+	public ResponseEntity<?> sendLogFile() {		
+		
+		// Logging and retriving user informations
+		UserEntity user = loginService.getUser();
+		loggingService.getRoleAndLogg(user, Level.INFO);	
+		loggingService.loggMessage("Method: AdminController.sendLogFile", Level.INFO);	
+		
+		// Find out is admin valid
+		boolean isValid = false;
+		AdminEntity admin = null;
+		if (user instanceof AdminEntity) {
+			admin = (AdminEntity) user;
+			if (admin.getStatus().equals(EStatus.ACTIVE)) isValid = true;
+		}	
+		
+		// Logg validation status of student and exit if invalid
+		if (isValid) {
+			loggingService.loggMessage("Authorized to send log file.", Level.INFO);
+		}
+		else {
+			loggingService.loggMessage("NOT Authorized to send log file", Level.WARN);
+			loggingService.loggOutMessage(HttpStatus.OK.toString(), Level.INFO);
+			return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.ACCESS_NOT_ALLOWED), HttpStatus.BAD_REQUEST);	
+		}		
+
+		// Send mail with attachment
+		EmailObject object = new EmailObject();
+		object.setTo(admin.getEmail());
+		// TODO Remove. Overrided for test
+		object.setTo("vucetic985@Gmail.com");		
+		object.setSubject("Log file " + LocalDate.now());
+		
+		try {
+			emailService.sendMessageWithAttachment(object, "logs/logging.log");
+			loggingService.loggMessage("Grade added successfully.", Level.INFO);
+		} catch (Exception e) {
+			loggingService.loggMessage("Grade adding fail.", Level.ERROR);
+			loggingService.loggOutMessage(HttpStatus.BAD_REQUEST.toString(), Level.INFO);
+			return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.SOMETHING_WRONG), HttpStatus.BAD_REQUEST);
+		}
+		loggingService.loggOutMessage(HttpStatus.OK.toString(), Level.INFO);
+		return new ResponseEntity<String>("Log file sent.", HttpStatus.OK);	
+	}	
 	
 }

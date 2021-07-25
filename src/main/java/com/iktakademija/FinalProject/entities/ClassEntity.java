@@ -19,11 +19,14 @@ import javax.persistence.Version;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonView;
 import com.iktakademija.FinalProject.entities.enums.EStatus;
+import com.iktakademija.FinalProject.securities.Views;
 
 @Entity
 @Table(name = "classes", uniqueConstraints = { @UniqueConstraint(columnNames = { "name", "year" }) })
 @JsonIgnoreProperties({ "handler", "hibernateLazyInitializer" })
+@JsonView(value = Views.Student.class)
 public class ClassEntity {
 
 	/************************************************************
@@ -52,7 +55,8 @@ public class ClassEntity {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 
-	@Version
+	@Version	
+	@JsonView(value = Views.Admin.class)	
 	private Integer version;
 
 	@Column

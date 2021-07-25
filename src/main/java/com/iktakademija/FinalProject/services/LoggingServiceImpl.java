@@ -1,15 +1,9 @@
 package com.iktakademija.FinalProject.services;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.event.Level;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -81,27 +75,8 @@ public class LoggingServiceImpl implements LoggingService {
 	 * Post message to logger before leaving controler.<BR>
 	 * Should be used at exit from controller method.
 	 */
-	public void loggOutMessage(String message, Level lvl) {					
-		// Get authentication holder
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		
-		// Get username an role list
-		String username = null;	
-		String roleList = null;
-		List<String> roles = null;
-		if ((authentication instanceof AnonymousAuthenticationToken) == false) {
-			username = authentication.getName();
-			roles = authentication.getAuthorities().stream().map(r -> r.getAuthority()).collect(Collectors.toList());
-			
-			// Convert role list to one string
-			if(roles != null)
-				roleList = roles.stream().map(n -> String.valueOf(n)).collect(Collectors.joining("-", "{", "}"));
-		}
-		
-		// Logg message
-		if (message == null) 
-			logg(String.format(" <<< %s %s leave endpoint.", username, roleList), lvl);		
-		logg(String.format(" <<< %s %s leave endpoint with message: %s.", username, roleList, message), lvl);
+	public void loggOutMessage(String message, Level lvl) {						
+		logg(String.format(" <<< Leave endpoint with message: %s.", message), lvl);
 	}
 	
 	

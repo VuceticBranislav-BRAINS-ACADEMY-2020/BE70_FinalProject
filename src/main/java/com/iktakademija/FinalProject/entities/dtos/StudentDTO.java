@@ -1,5 +1,7 @@
 package com.iktakademija.FinalProject.entities.dtos;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -13,8 +15,8 @@ import com.iktakademija.FinalProject.securities.Views;
  * @see StudentEntity
  * @author GM
  */
-@JsonView(value = Views.Admin.class)
-@JsonPropertyOrder(value =  {"id", "username", "person", "roleId", "version", "status", "classgroup"})
+@JsonView(value = Views.Student.class)
+@JsonPropertyOrder(value =  {"id", "username", "person", "roleId", "version", "status", "grades"})
 public class StudentDTO {
 	
 	/************************************************************
@@ -29,18 +31,20 @@ public class StudentDTO {
 	
 	@JsonProperty(value = "Person")
 	private PersonDTO person;	
-
+	
+	@JsonView(value = Views.Admin.class)
 	@JsonProperty(value = "Role")
 	private RoleDTO role;	
 	
+	@JsonView(value = Views.Admin.class)
 	@JsonProperty(value = "Version")
 	private Integer version;
 	
 	@JsonProperty(value = "Status")
 	private EStatus status;
 	
-	@JsonProperty(value = "Class")
-	private GroupDTO classgroup;
+	@JsonProperty(value = "Grades")
+	private List<GradeDTO> grades;
 	
 	/************************************************************
 	 * Constructors
@@ -98,12 +102,12 @@ public class StudentDTO {
 		this.status = status;
 	}
 
-	public GroupDTO getClassgroup() {
-		return classgroup;
+	public List<GradeDTO> getGrades() {
+		return grades;
 	}
 
-	public void setClassgroup(GroupDTO classgroup) {
-		this.classgroup = classgroup;
+	public void setGrades(List<GradeDTO> grades) {
+		this.grades = grades;
 	}
 
 	public void setUsername(String username) {

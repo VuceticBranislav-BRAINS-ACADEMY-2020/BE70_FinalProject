@@ -1,10 +1,26 @@
 package com.iktakademija.FinalProject.repositories;
 
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 
 import com.iktakademija.FinalProject.entities.GradeEntity;
+import com.iktakademija.FinalProject.entities.StudentEntity;
 
 public interface GradeRepository extends CrudRepository<GradeEntity, Integer> {
 
+	//SELECT * FROM db_finalproject.grades as a inner join student_groups as b  on a.idstd_grp = b.id where b.idstudent = 407;
+	@Query(value = "FROM GradeEntity AS a INNER JOIN FETCH a.std_grp AS b WHERE b.student = :student")
+	List<GradeEntity> findAllGradesForStudent(@Param("student") StudentEntity student);
 
+	@Override
+	@Query(value = "FROM GradeEntity AS g WHERE g.id = :id AND g.status <> 'DELETED'")
+	Optional<GradeEntity> findById(@Param("id") Integer id);
+
+	@Query(value = "FROM GradeEntity AS g WHERE g.status <> 'DELETED'")
+	List<GradeEntity> findAllUndeleted();
+		
 }

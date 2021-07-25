@@ -3,7 +3,6 @@ package com.iktakademija.FinalProject.entities.dtos;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonView;
-import com.iktakademija.FinalProject.entities.ClassEntity;
 import com.iktakademija.FinalProject.entities.GroupEntity;
 import com.iktakademija.FinalProject.entities.TeacherEntity;
 import com.iktakademija.FinalProject.entities.enums.EStatus;
@@ -15,7 +14,7 @@ import com.iktakademija.FinalProject.securities.Views;
  * @see GroupEntity
  * @author GM
  */
-@JsonView(value = Views.Admin.class)
+@JsonView(value = Views.Student.class)
 @JsonPropertyOrder(value =  {"id", "letter", "homeClassMaster", "clazz", "version", "status"})
 public class GroupDTO {
 	
@@ -23,6 +22,7 @@ public class GroupDTO {
 	 * Attributes
 	 ************************************************************/
 	
+	@JsonView(value = Views.Teacher.class)
 	@JsonProperty(value = "ID")
 	private Integer id;	
 	
@@ -33,8 +33,9 @@ public class GroupDTO {
 	private TeacherEntity homeClassMaster;
 	
 	@JsonProperty(value = "Class")
-	private ClassEntity clazz;
+	private ClassDTO clazz;
 	
+	@JsonView(value = Views.Admin.class)
 	@JsonProperty(value = "Version")
 	private Integer version;
 	
@@ -77,11 +78,11 @@ public class GroupDTO {
 		this.homeClassMaster = homeClassMaster;
 	}
 
-	public ClassEntity getClazz() {
+	public ClassDTO getClazz() {
 		return clazz;
 	}
 
-	public void setClazz(ClassEntity clazz) {
+	public void setClazz(ClassDTO clazz) {
 		this.clazz = clazz;
 	}
 

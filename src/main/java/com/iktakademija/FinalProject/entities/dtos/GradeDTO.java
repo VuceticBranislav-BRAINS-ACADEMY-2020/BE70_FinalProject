@@ -17,14 +17,15 @@ import com.iktakademija.FinalProject.securities.Views;
  * @see ClassEntity
  * @author GM
  */
-@JsonView(value = Views.Admin.class)
-@JsonPropertyOrder(value =  {"id", "type", "value", "entered", "stage", "version", "status"})
+@JsonView(value = Views.Student.class)
+@JsonPropertyOrder(value =  {"id", "type", "value", "entered", "stage", "version", "status", "groupName", "teacherName", "subjectName"})
 public class GradeDTO {
 	
 	/************************************************************
 	 * Attributes
 	 ************************************************************/
 	
+	@JsonView(value = Views.Teacher.class)
 	@JsonProperty(value = "ID")
 	private Integer id;	
 	
@@ -40,12 +41,22 @@ public class GradeDTO {
 	@JsonProperty(value = "Stage")
 	private EStage stage;	
 	
+	@JsonView(value = Views.Admin.class)
 	@JsonProperty(value = "Version")
 	private Integer version;
 	
 	@JsonProperty(value = "Status")
-	private EStatus status;
+	private EStatus status;	
+	
+	@JsonProperty(value = "Group")
+	private String groupName;
 
+	@JsonProperty(value = "Teacher")
+	private String teacherName;
+	
+	@JsonProperty(value = "Subject")
+	private String subjectName;
+	
 	/************************************************************
 	 * Constructors
 	 ************************************************************/
@@ -112,6 +123,30 @@ public class GradeDTO {
 
 	public void setStatus(EStatus status) {
 		this.status = status;
-	}	
+	}
+
+	public String getGroupName() {
+		return groupName;
+	}
+
+	public void setGroupName(String groupName) {
+		this.groupName = groupName;
+	}
+
+	public String getTeacherName() {
+		return teacherName;
+	}
+
+	public void setTeacherName(String teacherName) {
+		this.teacherName = teacherName;
+	}
+
+	public String getSubjectName() {
+		return subjectName;
+	}
+
+	public void setSubjectName(String subjectName) {
+		this.subjectName = subjectName;
+	}
 
 }

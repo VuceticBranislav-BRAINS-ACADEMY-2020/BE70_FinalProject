@@ -14,13 +14,13 @@ import com.iktakademija.FinalProject.securities.Views;
  * @author GM
  */
 @JsonPropertyOrder(value =  {"id", "city", "street", "number", "apartment", "version", "status"})
-@JsonView(value = Views.Admin.class)
+@JsonView(value = Views.Student.class)
 public class AddressDTO {
 	
 	/************************************************************
 	 * Attributes
 	 ************************************************************/
-	
+
 	@JsonProperty(value = "ID")
 	private Integer id;	
 	
@@ -36,9 +36,11 @@ public class AddressDTO {
 	@JsonProperty(value = "Apartment")
 	private String apartment;	
 	
+	@JsonView(value = Views.Admin.class)
 	@JsonProperty(value = "Version")
 	private Integer version;
 	
+	@JsonView(value = Views.Admin.class)
 	@JsonProperty(value = "Status")
 	private EStatus status;
 	

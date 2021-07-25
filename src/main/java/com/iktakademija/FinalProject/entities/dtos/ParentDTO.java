@@ -15,7 +15,7 @@ import com.iktakademija.FinalProject.securities.Views;
  * @see ParentEntity
  * @author GM
  */
-@JsonView(value = Views.Admin.class)
+@JsonView(value = Views.Parent.class)
 @JsonPropertyOrder(value =  {"id", "username", "person", "roleId", "version", "status", "email", "childs"})
 public class ParentDTO {
 	
@@ -31,10 +31,12 @@ public class ParentDTO {
 	
 	@JsonProperty(value = "Person")
 	private PersonDTO person;	
-
+	
+	@JsonView(value = Views.Admin.class)
 	@JsonProperty(value = "Role")
 	private RoleDTO role;	
 	
+	@JsonView(value = Views.Admin.class)
 	@JsonProperty(value = "Version")
 	private Integer version;
 	
@@ -45,7 +47,7 @@ public class ParentDTO {
 	private String email;
 	
 	@JsonProperty(value = "ID Childs")
-	private List<Integer> childs;
+	private List<StudentDTO> childs;
 	
 	/************************************************************
 	 * Constructors
@@ -110,12 +112,12 @@ public class ParentDTO {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
-	public List<Integer> getChilds() {
+	
+	public List<StudentDTO> getChilds() {
 		return childs;
 	}
 
-	public void setChilds(List<Integer> childs) {
+	public void setChilds(List<StudentDTO> childs) {
 		this.childs = childs;
 	}
 

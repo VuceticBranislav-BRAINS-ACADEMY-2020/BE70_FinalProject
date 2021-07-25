@@ -1,0 +1,1650 @@
+{
+	"info": {
+		"_postman_id": "db136f31-ef27-4f3b-8dea-87579f4c0f11",
+		"name": "FinalProject",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"item": [
+				{
+					"name": "LOG01 - Admin login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);\r",
+									"var token = jsonData.token;\r",
+									"var token = token.replace('Bearer ','');\r",
+									"postman.setEnvironmentVariable(\"AuthToken_Admin\", token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{LocalHost}}/login",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LOG02 - Teacher login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);\r",
+									"var token = jsonData.token;\r",
+									"var token = token.replace('Bearer ','');\r",
+									"postman.setEnvironmentVariable(\"AuthToken_Admin\", token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "frensefMopsob",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{LocalHost}}/login",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LOG03 - Student login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);\r",
+									"var token = jsonData.token;\r",
+									"var token = token.replace('Bearer ','');\r",
+									"postman.setEnvironmentVariable(\"AuthToken_Admin\", token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "Fioratti",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{LocalHost}}/login",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LOG04 - Parent login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);\r",
+									"var token = jsonData.token;\r",
+									"var token = token.replace('Bearer ','');\r",
+									"postman.setEnvironmentVariable(\"AuthToken_Admin\", token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "potamolog",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{LocalHost}}/login",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "ADM01 - addAdmin",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Username\": \"Admin 01\",\r\n    \"Password\": \"pass\",\r\n    \"ID Person\": \"25\",\r\n    \"eMail\": \"new2email@email.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/admin",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ADM02 - sendLogFile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/admin/sendlogfile",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"admin",
+								"sendlogfile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ADM10 - getAllAdmins",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/admin",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ADM11 - getAdminById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/admin/30",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"admin",
+								"30"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ADM12 - setAdmin",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Username\": \"Admin 01\",\r\n    \"Password\": \"pass\",\r\n    \"ID Person\": \"24\",\r\n    \"eMail\": \"newemail@email.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/admin/30",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"admin",
+								"30"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ADM13 - removeAdmin",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/admin/30",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"admin",
+								"30"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Parent",
+			"item": [
+				{
+					"name": "PAR01 - addParent",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Username\": \"Parent 01\",\r\n    \"Password\": \"pass\",\r\n    \"ID Person\": \"50\",\r\n    \"eMail\": \"parent@home.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/parent/admin",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"parent",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PAR10 - getAllParents",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/parent",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"parent"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PAR11 - getParentById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/parent/34",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"parent",
+								"34"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PAR12 - setParent",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Username\": \"Parent 01\",\r\n    \"Password\": \"pass\",\r\n    \"ID Person\": \"24\",\r\n    \"eMail\": \"opaopaopa@email.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/parent/admin/34",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"parent",
+								"admin",
+								"34"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PAR13 - removeParent",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/parent/admin/34",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"parent",
+								"admin",
+								"34"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PAR14 - addChild",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/parent/admin/child/?parent=37&child=33",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"parent",
+								"admin",
+								"child",
+								""
+							],
+							"query": [
+								{
+									"key": "parent",
+									"value": "37"
+								},
+								{
+									"key": "child",
+									"value": "33"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PAR15 - getAllChildsForParent",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/parent/admin/getchilds/34",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"parent",
+								"admin",
+								"getchilds",
+								"34"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PAR20 - getParentInfo",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/parent/getinfo",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"parent",
+								"getinfo"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Teacher",
+			"item": [
+				{
+					"name": "TEA01 - addTeacher",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Username\": \"Teacher 01\",\r\n    \"Password\": \"pass\",\r\n    \"ID Person\": \"22\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/teacher/admin",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"teacher",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TEA10 - getAllTeachers",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/teacher/admin",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"teacher",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TEA11 - getTeachersById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/teacher/admin/31",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"teacher",
+								"admin",
+								"31"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TEA12 - setTeacher",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Username\": \"Admin 015\",\r\n    \"Password\": \"pass\",\r\n    \"ID Person\": \"24\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/teacher/admin/31",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"teacher",
+								"admin",
+								"31"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TEA13 - removeTeacher",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/teacher/admin/31",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"teacher",
+								"admin",
+								"31"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Student",
+			"item": [
+				{
+					"name": "STU01 - addStudent",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Username\": \"Student 01\",\r\n    \"Password\": \"pass\",\r\n    \"ID Person\": \"25\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/student/admin",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"student",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "STU10 - getAllStudents",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/student/admin",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"student",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "STU11 - getStudentsById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/student/admin/33",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"student",
+								"admin",
+								"33"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "STU12 - setStudent",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Username\": \"Student 01\",\r\n    \"Password\": \"pass\",\r\n    \"ID Person\": \"22\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/student/admin/33",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"student",
+								"admin",
+								"33"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "STU13 - removeStudent",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/student/admin/36",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"student",
+								"admin",
+								"36"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "STU14 - getAllParentsForStudent",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/student/admin/getparents/36",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"student",
+								"admin",
+								"getparents",
+								"36"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "STU20 - getStudentInfo",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/student/getinfo",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"student",
+								"getinfo"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Address",
+			"item": [
+				{
+					"name": "ADR01 - addAddress",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"City\": \"New York\",\r\n    \"Stresst\": \"Bleecker Street\",\r\n    \"Number\": \"177a\",\r\n    \"Apartment\": null\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/address/admin",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"address",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ADR10 - getAllAddresses",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/address/admin",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"address",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ADR11 - getAdressesById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/address/admin/15",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"address",
+								"admin",
+								"15"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ADR12 - setAddress",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"City\": \"New York222\",\r\n    \"Stresst\": \"Bleecker Street222\",\r\n    \"Number\": \"222\",\r\n    \"Apartment\": \"2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/address/admin/15",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"address",
+								"admin",
+								"15"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ADR13 - removeAdresses",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/address/admin/14",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"address",
+								"admin",
+								"14"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Person",
+			"item": [
+				{
+					"name": "PER01 - addPerson",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"First Name\": \"Petar\",\r\n    \"Last Name\": \"Petrovic\",\r\n    \"JMBG\": \"15102000315316\",\r\n    \"Phone Number\": \"063636363\",\r\n    \"Birth Date\": \"15-10-2000\",\r\n    \"ID Address\": \"11\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/person/admin",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"person",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PER10 - getAllPersons",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/person/admin",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"person",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PER11 - getPersonById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/person/admin/21",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"person",
+								"admin",
+								"21"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PER12 - setPerson",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"First Name\": \"Petar2\",\r\n    \"Last Name\": \"Petrovic2\",\r\n    \"JMBG\": \"15102000310000\",\r\n    \"Phone Number\": \"063636300\",\r\n    \"Birth Date\": \"15-10-2011\",\r\n    \"ID Address\": \"11\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/person/admin/26",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"person",
+								"admin",
+								"26"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PER13 - removePerson",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/person/admin/26",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"person",
+								"admin",
+								"26"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Subject",
+			"item": [
+				{
+					"name": "SUB01 - addSubject",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Name\": \"Biologija\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/subject/admin",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"subject",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SUB10 - getAllSubjects",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/subject/admin",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"subject",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SUB11 - getSubjectById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/subject/admin/80",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"subject",
+								"admin",
+								"80"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SUB12 - setSubject",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Name\": \"Matish\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/subject/admin/80",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"subject",
+								"admin",
+								"80"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SUB13 - removeSubject",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/subject/admin/89",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"subject",
+								"admin",
+								"89"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Grade",
+			"item": [
+				{
+					"name": "GRD10 - addGrade",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Type\": \"WRITTEN\",\r\n    \"Value\": \"1\",\r\n    \"Stage\": \"FIRST\",\r\n    \"ID Student\": \"436\",\r\n    \"ID Teacher\": \"484\",\r\n    \"ID Group\": \"612\",\r\n    \"ID Subject\": \"107\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/grade/add",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"grade",
+								"add"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "test",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{AuthToken_Admin}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{LocalHost}}/{{ApiVersion}}/teacher/test",
+					"host": [
+						"{{LocalHost}}"
+					],
+					"path": [
+						"{{ApiVersion}}",
+						"teacher",
+						"test"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

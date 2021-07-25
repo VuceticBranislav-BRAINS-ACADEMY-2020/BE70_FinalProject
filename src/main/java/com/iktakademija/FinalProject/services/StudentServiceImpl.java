@@ -7,14 +7,17 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.iktakademija.FinalProject.entities.GradeEntity;
 import com.iktakademija.FinalProject.entities.PersonEntity;
 import com.iktakademija.FinalProject.entities.RoleEntity;
 import com.iktakademija.FinalProject.entities.StudentEntity;
+import com.iktakademija.FinalProject.entities.dtos.GradeDTO;
 import com.iktakademija.FinalProject.entities.dtos.NewStudentDTO;
 import com.iktakademija.FinalProject.entities.dtos.ParentDTO;
 import com.iktakademija.FinalProject.entities.dtos.StudentDTO;
 import com.iktakademija.FinalProject.entities.enums.ERole;
 import com.iktakademija.FinalProject.entities.enums.EStatus;
+import com.iktakademija.FinalProject.repositories.GradeRepository;
 import com.iktakademija.FinalProject.repositories.ParentRepository;
 import com.iktakademija.FinalProject.repositories.PersonRepository;
 import com.iktakademija.FinalProject.repositories.RoleRepository;
@@ -45,6 +48,12 @@ public class StudentServiceImpl implements StudentService {
 	@Autowired
 	private StudentRepository studentRepository;
 	
+	@Autowired
+	private GradeRepository gradeRepository;
+	
+	@Autowired
+	private GradeService gradeService;
+		
 	@Override
 	public StudentEntity createStudent(NewStudentDTO source) {
 		Optional<RoleEntity> opr = roleRepository.findByRole(ERole.ROLE_STUDENT);
@@ -68,7 +77,7 @@ public class StudentServiceImpl implements StudentService {
 		retVal.setRole(roleService.createDTO(source.getRole()));
 		retVal.setVersion(source.getVersion());
 		retVal.setStatus(source.getStatus());
-//		retVal.setClassgroup(groupService.createDTO(source.getClassgroup()));
+		retVal.setGrades(getAllGradesForStudent(source));
 		return retVal;
 	}
 	
@@ -122,5 +131,13 @@ public class StudentServiceImpl implements StudentService {
 	
 	public List<ParentDTO> getAllParents(StudentEntity parentId) {	
 		return parentService.createDTOList(parentRepository.findAllParents(parentId));
+	}
+	
+	private List<GradeDTO> getAllGradesForStudent(StudentEntity source) {
+		
+		List<GradeEntity> list = gradeRepository.findAllGradesForStudent(source);
+		List<GradeDTO> retVal = gradeService.createDTOList(list);
+		
+		return retVal; 
 	}
 }

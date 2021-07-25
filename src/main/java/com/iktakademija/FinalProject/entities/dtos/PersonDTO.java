@@ -17,7 +17,7 @@ import com.iktakademija.FinalProject.securities.Views;
  * @see PersonEntity
  * @author GM
  */
-@JsonView(value = Views.Admin.class)
+@JsonView(value = Views.Student.class)
 @JsonPropertyOrder(value =  {"id", "firstname", "lastname", "jmbg", "mphone", "birthdate", "address", "version", "status"})
 public class PersonDTO {
 	
@@ -47,9 +47,11 @@ public class PersonDTO {
 	@JsonProperty(value = "Address")
 	private AddressDTO address;
 	
+	@JsonView(value = Views.Admin.class)
 	@JsonProperty(value = "Version")
 	private Integer version;
 	
+	@JsonView(value = Views.Admin.class)
 	@JsonProperty(value = "Status")
 	private EStatus status;		
 	

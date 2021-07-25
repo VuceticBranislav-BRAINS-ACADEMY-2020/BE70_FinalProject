@@ -1,14 +1,9 @@
 package com.iktakademija.FinalProject.controllers;
 
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 import javax.validation.Valid;
 
 import org.slf4j.event.Level;
@@ -27,16 +22,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.iktakademija.FinalProject.controllers.utils.RESTError;
 import com.iktakademija.FinalProject.controllers.utils.enums.ERESTErrorCodes;
-import com.iktakademija.FinalProject.entities.ClassEntity;
 import com.iktakademija.FinalProject.entities.GradeEntity;
 import com.iktakademija.FinalProject.entities.GroupEntity;
 import com.iktakademija.FinalProject.entities.JoinTableStudentGroup;
 import com.iktakademija.FinalProject.entities.JoinTableSubjectClass;
 import com.iktakademija.FinalProject.entities.JoinTableSubjectTeacher;
+import com.iktakademija.FinalProject.entities.ParentEntity;
 import com.iktakademija.FinalProject.entities.StudentEntity;
 import com.iktakademija.FinalProject.entities.SubjectEntity;
 import com.iktakademija.FinalProject.entities.TeacherEntity;
 import com.iktakademija.FinalProject.entities.UserEntity;
+import com.iktakademija.FinalProject.entities.dtos.EmailObject;
 import com.iktakademija.FinalProject.entities.dtos.NewGradeDTO;
 import com.iktakademija.FinalProject.entities.enums.ERole;
 import com.iktakademija.FinalProject.entities.enums.EStatus;
@@ -46,9 +42,12 @@ import com.iktakademija.FinalProject.repositories.GroupRepository;
 import com.iktakademija.FinalProject.repositories.JoinTableStudentGroupRepository;
 import com.iktakademija.FinalProject.repositories.JoinTableSubjectClassRepository;
 import com.iktakademija.FinalProject.repositories.JoinTableSubjectTeacherRepository;
+import com.iktakademija.FinalProject.repositories.ParentRepository;
 import com.iktakademija.FinalProject.repositories.StudentRepository;
 import com.iktakademija.FinalProject.repositories.SubjectRepository;
 import com.iktakademija.FinalProject.repositories.TeacherRepository;
+import com.iktakademija.FinalProject.services.EmailService;
+import com.iktakademija.FinalProject.services.GradeService;
 import com.iktakademija.FinalProject.services.LoggingService;
 import com.iktakademija.FinalProject.services.LoginService;
 
@@ -78,6 +77,9 @@ public class GradeController {
 	private GroupRepository groupRepository;
 	
 	@Autowired
+	private GradeService gradeService;
+	
+	@Autowired
 	private JoinTableStudentGroupRepository joinTableStudentGroupRepository;		
 	
 	@Autowired
@@ -89,6 +91,12 @@ public class GradeController {
 	@Autowired
 	private GradeRepository gradeRepository;
 	
+	@Autowired
+	private EmailService emailService;	
+	
+	@Autowired
+	private ParentRepository parentRepository;	
+		
 	@InitBinder
 	protected void initBinder(final WebDataBinder binder) {
 		binder.addValidators(newGradeDTOValidator);
@@ -158,10 +166,27 @@ public class GradeController {
 			grade.setStatus(EStatus.ACTIVE);
 			gradeRepository.save(grade);
 			
+			// Prepare and send mail
+			EmailObject object = new EmailObject();
+			
+			List<ParentEntity> parents = parentRepository.findAllParents(student);
+			if (parents.isEmpty()) {
+				loggingService.loggMessage("No parents found to send eMail.", Level.ERROR);
+			} else {
+				object.setTo(parents.get(0).getEmail());
+				// TODO Remove. Overrided for test
+				object.setTo("vucetic985@Gmail.com");
+
+				object.setSubject(String.format("Grade report. Teacher %s %s granted gradefrom %s to %s %s",
+						teacher.getPerson().getFirstname(), teacher.getPerson().getLastname(), subject.getName(),
+						student.getPerson().getFirstname(), student.getPerson().getLastname()));
+				emailService.sendTemplateMessage(object, gradeService.createDTO(grade));
+			}	
 			loggingService.loggMessage(String.format("Grade (%s) granted to student (%s) from teacher (%s) on subject (%s).", grade.getId(), subject.getId(), teacher.getId(), subject.getId()), Level.INFO);
 			loggingService.loggMessage("Grade added successfully.", Level.INFO);		
 		} catch (Exception e) {
 			loggingService.loggMessage("Grade adding fail.", Level.ERROR);
+			loggingService.loggOutMessage(HttpStatus.BAD_REQUEST.toString(), Level.INFO);
 			return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.SOMETHING_WRONG), HttpStatus.BAD_REQUEST);
 		} 
 		loggingService.loggOutMessage(HttpStatus.OK.toString(), Level.INFO);	
