@@ -30,4 +30,5 @@ public interface TeacherRepository extends CrudRepository<TeacherEntity, Integer
 	
 	@Query(value = "FROM TeacherEntity AS t WHERE t.username = :username AND t.status <> 'DELETED'")
 	Optional<TeacherEntity> findByUsername(@Param("username") String username);
+	
 }

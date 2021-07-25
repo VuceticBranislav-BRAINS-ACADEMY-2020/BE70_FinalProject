@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 
 import com.iktakademija.FinalProject.entities.GradeEntity;
 import com.iktakademija.FinalProject.entities.StudentEntity;
+import com.iktakademija.FinalProject.entities.TeacherEntity;
 
 public interface GradeRepository extends CrudRepository<GradeEntity, Integer> {
 
@@ -23,4 +24,8 @@ public interface GradeRepository extends CrudRepository<GradeEntity, Integer> {
 	@Query(value = "FROM GradeEntity AS g WHERE g.status <> 'DELETED'")
 	List<GradeEntity> findAllUndeleted();
 		
+	@Query(value = "FROM GradeEntity AS a LEFT JOIN JoinTableStudentGroup AS b ON a.std_grp = b.id "
+			+ "INNER JOIN JoinTableSubjectTeacher AS c ON a.sub_tch = c.id "
+			+ "WHERE b.group = c.group AND a.status <> 'DELETED'")
+	List<GradeEntity> findAllGradesForStudentsAndSubjects(@Param("teacher") TeacherEntity teacher);
 }

@@ -3,6 +3,7 @@ package com.iktakademija.FinalProject.services;
 import java.util.List;
 
 import com.iktakademija.FinalProject.entities.TeacherEntity;
+import com.iktakademija.FinalProject.entities.dtos.GradeDTO;
 import com.iktakademija.FinalProject.entities.dtos.NewTeacherDTO;
 import com.iktakademija.FinalProject.entities.dtos.TeacherDTO;
 
@@ -15,5 +16,5 @@ public interface TeacherService {
 	TeacherEntity createTeacher(NewTeacherDTO source);
 	
 	boolean doStudentListenSubjectFromTeeacherGroup(Integer student, Integer subject, Integer teacher, Integer group);
-//	List<GradeDTO> findAllGradesForStudentsAndSubjects(TeacherEntity teacher);
+	List<GradeDTO> findAllGradesForStudentsAndSubjects(TeacherEntity teacher);
 }

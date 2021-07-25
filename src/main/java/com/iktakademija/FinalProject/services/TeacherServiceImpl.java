@@ -10,16 +10,19 @@ import javax.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.iktakademija.FinalProject.entities.GradeEntity;
 import com.iktakademija.FinalProject.entities.GroupEntity;
 import com.iktakademija.FinalProject.entities.PersonEntity;
 import com.iktakademija.FinalProject.entities.RoleEntity;
 import com.iktakademija.FinalProject.entities.StudentEntity;
 import com.iktakademija.FinalProject.entities.SubjectEntity;
 import com.iktakademija.FinalProject.entities.TeacherEntity;
+import com.iktakademija.FinalProject.entities.dtos.GradeDTO;
 import com.iktakademija.FinalProject.entities.dtos.NewTeacherDTO;
 import com.iktakademija.FinalProject.entities.dtos.TeacherDTO;
 import com.iktakademija.FinalProject.entities.enums.ERole;
 import com.iktakademija.FinalProject.entities.enums.EStatus;
+import com.iktakademija.FinalProject.repositories.GradeRepository;
 import com.iktakademija.FinalProject.repositories.GroupRepository;
 import com.iktakademija.FinalProject.repositories.PersonRepository;
 import com.iktakademija.FinalProject.repositories.RoleRepository;
@@ -54,6 +57,12 @@ public class TeacherServiceImpl implements TeacherService {
 	
 	@Autowired
 	private SubjectRepository subjectRepository;	
+	
+	@Autowired
+	private GradeRepository gradeRepository;
+	
+	@Autowired
+	private GradeService gradeService;	
 	
 	@Override
 	public TeacherEntity createTeacher(NewTeacherDTO source) {		
@@ -154,18 +163,14 @@ public class TeacherServiceImpl implements TeacherService {
 		return false;
 	}
 	
-//	@Override
-//	public List<GradeDTO> findAllGradesForStudentsAndSubjects(TeacherEntity teacher) {
-//		
-//		teacher.ge
-////		Optional<TeacherEntity> op = teacherRepository.findById(teacherId);
-////		if (op.isPresent() == false) return null;
-////		TeacherEntity teacher = op.get();		
-////		teacher.setStatus(EStatus.DELETED);			
-////		teacher = teacherRepository.save(teacher);
-////		return this.createDTO(teacher);	
-//		return null;
-//	}
+	@Override
+	public List<GradeDTO> findAllGradesForStudentsAndSubjects(TeacherEntity teacher) {
+		
+		List<GradeEntity> list = gradeRepository.findAllGradesForStudentsAndSubjects(teacher);
+		List<GradeDTO> retVal = gradeService.createDTOList(list);
+		return retVal;
+		
+	}
 	
 //	@PersistenceContext
 //	private EntityManager entityManager;	
