@@ -1,5 +1,6 @@
 package com.iktakademija.FinalProject.controllers;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -29,21 +30,34 @@ import com.iktakademija.FinalProject.controllers.utils.enums.ERESTErrorCodes;
 import com.iktakademija.FinalProject.entities.ClassEntity;
 import com.iktakademija.FinalProject.entities.GradeEntity;
 import com.iktakademija.FinalProject.entities.GroupEntity;
+import com.iktakademija.FinalProject.entities.JoinTableStudentGroup;
 import com.iktakademija.FinalProject.entities.JoinTableSubjectClass;
+import com.iktakademija.FinalProject.entities.JoinTableSubjectTeacher;
 import com.iktakademija.FinalProject.entities.StudentEntity;
 import com.iktakademija.FinalProject.entities.SubjectEntity;
 import com.iktakademija.FinalProject.entities.TeacherEntity;
+import com.iktakademija.FinalProject.entities.UserEntity;
 import com.iktakademija.FinalProject.entities.dtos.NewGradeDTO;
+import com.iktakademija.FinalProject.entities.enums.ERole;
+import com.iktakademija.FinalProject.entities.enums.EStatus;
 import com.iktakademija.FinalProject.exceptions.NewGradeDTOValidator;
+import com.iktakademija.FinalProject.repositories.GradeRepository;
 import com.iktakademija.FinalProject.repositories.GroupRepository;
+import com.iktakademija.FinalProject.repositories.JoinTableStudentGroupRepository;
+import com.iktakademija.FinalProject.repositories.JoinTableSubjectClassRepository;
+import com.iktakademija.FinalProject.repositories.JoinTableSubjectTeacherRepository;
 import com.iktakademija.FinalProject.repositories.StudentRepository;
 import com.iktakademija.FinalProject.repositories.SubjectRepository;
 import com.iktakademija.FinalProject.repositories.TeacherRepository;
 import com.iktakademija.FinalProject.services.LoggingService;
+import com.iktakademija.FinalProject.services.LoginService;
 
 @RestController
 @RequestMapping(path = "/api/v1/grade")
 public class GradeController {
+	
+	@Autowired
+	private LoginService loginService;
 	
 	@Autowired
 	private LoggingService loggingService;
@@ -63,6 +77,18 @@ public class GradeController {
 	@Autowired
 	private GroupRepository groupRepository;
 	
+	@Autowired
+	private JoinTableStudentGroupRepository joinTableStudentGroupRepository;		
+	
+	@Autowired
+	private JoinTableSubjectTeacherRepository joinTableSubjectTeacherRepository;
+	
+	@Autowired
+	private JoinTableSubjectClassRepository joinTableSubjectClassRepository;
+	
+	@Autowired
+	private GradeRepository gradeRepository;
+	
 	@InitBinder
 	protected void initBinder(final WebDataBinder binder) {
 		binder.addValidators(newGradeDTOValidator);
@@ -72,6 +98,15 @@ public class GradeController {
 		return result.getAllErrors().stream().map(ObjectError::getDefaultMessage).collect(Collectors.joining("\n"));
 	}	
 	
+	/**
+	 * Grant grade to student. Teacher must be login with right credentials.<BR>
+	 * Teacher can not add grade in another teacher name but admin can.<BR>
+	 * Validation must be meet befor granting.<BR>
+	 * 
+	 * @param newGrade hold all data nessesery to grant grade
+	 * @param result contains {@link BindingResult} data
+	 * @return {@link HttpStatus.OK} if grade is granted.
+	 */
 	// GRD10
 	@Secured(value = {"ROLE_ADMIN", "ROLE_TEACHER"})
 	@RequestMapping(method = RequestMethod.POST, path = "/add")
@@ -80,46 +115,57 @@ public class GradeController {
 		if (result.hasErrors())
 			return new ResponseEntity<>(createErrorMessage(result), HttpStatus.BAD_REQUEST);
 		
-		// Logging and retriving user role.
-		loggingService.getRoleAndLogg(Level.INFO);	
+		// Logging and retriving user.
+		UserEntity user = loginService.getUser();
+		loggingService.getRoleAndLogg(user, Level.INFO);	
 		loggingService.loggMessage("Method: GradeController.addGrade()", Level.INFO);
-		
+		loggingService.loggMessage(newGrade.toString(), Level.INFO);		
+			
+		// Determinate if teacher can add grade and print message
+		boolean canAdd = user.getRole().getRole().equals(ERole.ROLE_TEACHER);
+		if (canAdd) {
+			if (user.getId().equals(newGrade.getIdTeacher())) {
+				loggingService.loggMessage("Authorized to grant grade.", Level.INFO);
+			}
+			else {
+				loggingService.loggMessage("NOT Authorized to grant grade.", Level.WARN);
+				loggingService.loggOutMessage(HttpStatus.OK.toString(), Level.INFO);
+				return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.TEACHER_CANT_GRADE), HttpStatus.BAD_REQUEST);	
+			}			
+		} else
+			loggingService.loggMessage("Administration mode.", Level.INFO);
+			
 		// Validation should do magic
-		// Find teacher by ID. 
 		TeacherEntity teacher = teacherRepository.findById(newGrade.getIdTeacher()).get();
 		StudentEntity student = studentRepository.findById(newGrade.getIdStudent()).get();
 		SubjectEntity subject = subjectRepository.findById(newGrade.getIdSubject()).get();
-		GroupEntity group = groupRepository.findById(newGrade.getIdGroup()).get();
-		
-//		Optional<TeacherEntity> op1 = teacherRepository.findById(newGrade.getIdTeacher());
-//		if (op1.isPresent() == false) new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.NOT_FOUND), HttpStatus.OK);
-//		TeacherEntity teacher = op1.get();
-		
-		
-		// Check is student in same goup a
-		
-		loggingService.loggMessage(newGrade.toString(), Level.INFO);
-		
-		loggingService.loggOutMessage(HttpStatus.OK.toString(), Level.INFO);
-		return new ResponseEntity<>(HttpStatus.OK);		
+		GroupEntity   group   = groupRepository.findById(newGrade.getIdGroup()).get();
 
+		// Should be valid because of validation steps
+		JoinTableStudentGroup studentGroup = joinTableStudentGroupRepository.findByStudentAndGroup(student, group);		
+		JoinTableSubjectClass subjectClass = joinTableSubjectClassRepository.findByClazzAndSubject(group.getClazz(), subject);
+		JoinTableSubjectTeacher subjectTeacher = joinTableSubjectTeacherRepository.findByTeachersAndSubclsAndGroup(teacher, subjectClass, group);
+		
+		// All is clear, grant grade.
+		try {
+			GradeEntity grade = new GradeEntity();
+			grade.setEntered(LocalDate.now());
+			grade.setStage(newGrade.getStage());
+			grade.setStd_grp(studentGroup);
+			grade.setSub_tch(subjectTeacher);
+			grade.setType(newGrade.getType());
+			grade.setValue(newGrade.getValue());
+			grade.setStatus(EStatus.ACTIVE);
+			gradeRepository.save(grade);
+			
+			loggingService.loggMessage(String.format("Grade (%s) granted to student (%s) from teacher (%s) on subject (%s).", grade.getId(), subject.getId(), teacher.getId(), subject.getId()), Level.INFO);
+			loggingService.loggMessage("Grade added successfully.", Level.INFO);		
+		} catch (Exception e) {
+			loggingService.loggMessage("Grade adding fail.", Level.ERROR);
+			return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.SOMETHING_WRONG), HttpStatus.BAD_REQUEST);
+		} 
+		loggingService.loggOutMessage(HttpStatus.OK.toString(), Level.INFO);	
+		return new ResponseEntity<>(HttpStatus.OK);		
 	}
-	
-//	@ResponseStatus(HttpStatus.BAD_REQUEST)
-//	@ExceptionHandler(MethodArgumentNotValidException.class)
-//	public Map<String, String> handleValidationExceptions(MethodArgumentNotValidException ex) {
-//		Map<String, String> errors = new HashMap<>();
-//		ex.getBindingResult().getAllErrors().forEach((error) -> {
-//			String fieldName = ((FieldError) error).getField();
-//			String errorMessage = error.getDefaultMessage();
-//			errors.put(fieldName, errorMessage);
-//		});
-//		return errors;
-//		// samo jedan kluc ima jedan message
-//		// za domaci da podrzi vise gresaka
-//		// uraditi sa respons entity ubacivanjem Map<String, String>
-//	}
-//		// Primer koriscenja validatora direktno
-//		userCustomValidator.validate(newUser, result);		
-	
+
 }

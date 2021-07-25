@@ -30,7 +30,7 @@ public class RoleEntity {
 	 * Attributes
 	 ************************************************************/
 
-	@Column(name = "rolename", unique = true)
+	@Column(name = "rolename", unique = true, nullable = false)
 	@Enumerated(value = EnumType.STRING)
 	private ERole role;
 

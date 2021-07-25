@@ -20,7 +20,7 @@ public class AdminEntity extends UserEntity {
 	 * Attributes
 	 ************************************************************/
 
-	@Column
+	@Column(nullable = false)
 	private String email;
 
 	/************************************************************

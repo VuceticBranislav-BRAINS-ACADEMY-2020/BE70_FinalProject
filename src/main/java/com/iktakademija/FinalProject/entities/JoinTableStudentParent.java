@@ -28,12 +28,12 @@ public class JoinTableStudentParent {
 	 ************************************************************/
 	
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinColumn(name = "idstudent")
+	@JoinColumn(name = "idstudent", nullable = false)
 	@JsonBackReference(value = "Student_Parent_1")
 	private StudentEntity student;
 	
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinColumn(name = "idparent")
+	@JoinColumn(name = "idparent", nullable = false)
 	@JsonBackReference(value = "Student_Parent_2")
 	private ParentEntity parent;
 	

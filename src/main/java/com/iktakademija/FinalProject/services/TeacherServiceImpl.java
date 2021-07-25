@@ -146,11 +146,6 @@ public class TeacherServiceImpl implements TeacherService {
 	@Override
 	public boolean doStudentListenSubjectFromTeeacherGroup(Integer student, Integer subject, Integer teacher, Integer group) {
 		
-		// Find all groups that teacher teach
-//		TypedQuery<GroupEntity> query1 = entityManager.createQuery(
-//		  "SELECT * FROM subject_teachers as e WHERE e.idgroup = 612;" , GroupEntity.class);
-//		List<ClassEntity> aaaaa = query.getResultList();
-		
 		Optional<StudentEntity> op1 = studentRepository.findById(student); 
 		if (op1.isPresent() == false ) return false;
 		StudentEntity student1 = op1.get();	
@@ -172,21 +167,6 @@ public class TeacherServiceImpl implements TeacherService {
 		}
 		
 		return false;
-		
-//		// Get groups that teacher teachs
-//		List<JoinTableSubjectTeacher> list = joinTableSubjectTeacherRepository.findAllByGroup(group); 
-//		List<GroupEntity> groups = list.stream().map(g -> g.getGroup()).collect(Collectors.toList());
-		
-		// Get student
-
-		
-		
-		
-		// Get students in 
-//		List<JoinTableSubjectTeacher> list = joinTableSubjectTeacherRepository.findByTeachers(teacher);
-//		List<GroupEntity> groups = list.stream().map(group -> group.getGroup()).collect(Collectors.toList());
-//		return groups;
-		
 	}
 	
 //	@PersistenceContext
@@ -202,18 +182,4 @@ public class TeacherServiceImpl implements TeacherService {
 //	String sql = "SELECT a FROM AddressEntity AS a LEFT JOIN FETCH a.users AS u WHERE u.name = :name";
 //	// mesto ON postoji FETCH koji je lista veza
 		
-	
-//	@Override
-//	public List<GroupEntity> findAllGroups(TeacherEntity teacher) {
-//		List<JoinTableSubjectTeacher> list = joinTableSubjectTeacherRepository.findByTeachers(teacher);
-//		List<GroupEntity> groups = list.stream().map(group -> group.getGroup()).collect(Collectors.toList());
-//		return groups;
-//	}
-//	
-//	public List<StudentEntity> findAllStudents(TeacherEntity teacher) {
-//		
-//		
-//		return null;
-//	}
-
 }

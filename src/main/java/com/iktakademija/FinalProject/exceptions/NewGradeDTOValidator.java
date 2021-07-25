@@ -6,6 +6,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 import com.iktakademija.FinalProject.entities.dtos.NewGradeDTO;
+import com.iktakademija.FinalProject.repositories.GroupRepository;
 import com.iktakademija.FinalProject.repositories.StudentRepository;
 import com.iktakademija.FinalProject.repositories.SubjectRepository;
 import com.iktakademija.FinalProject.repositories.TeacherRepository;
@@ -26,6 +27,9 @@ public class NewGradeDTOValidator implements Validator {
 	@Autowired
 	private TeacherService teacherService;
 	
+	@Autowired
+	private GroupRepository groupRepository;
+		
 	@Override
 	public boolean supports(Class<?> clazz) {
 		return NewGradeDTO.class.equals(clazz);
@@ -65,6 +69,16 @@ public class NewGradeDTOValidator implements Validator {
 			}
 		}
 		
+		// Check is ID Group valide
+		if (groupRepository.findById(dto.getIdGroup()).isPresent() == false) {
+			if (errorMessages == null) {
+				errorMessages = "Invalid Group ID.";
+			} else {
+				errorMessages = errorMessages +"\nInvalid Group ID.";
+			}
+		}
+		
+		// Check relations
 		if (teacherService.doStudentListenSubjectFromTeeacherGroup(dto.getIdStudent(), dto.getIdSubject(), dto.getIdTeacher(), dto.getIdGroup()) == false) {
 			if (errorMessages == null) {
 				errorMessages = "Invalid ID combination. Grade can not be added.";

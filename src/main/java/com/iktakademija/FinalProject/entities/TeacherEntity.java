@@ -11,7 +11,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -35,7 +34,7 @@ public class TeacherEntity extends UserEntity {
 	@OneToOne(mappedBy = "homeClassMaster", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	private GroupEntity homeClassMaster;
 	
-	@JsonIgnore
+//	@JsonIgnore
 	@OneToMany(mappedBy = "teachers", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JsonManagedReference(value = "Subject_Teacher_1")
 	private Set<JoinTableSubjectTeacher> subject = new HashSet<>();
@@ -65,12 +64,12 @@ public class TeacherEntity extends UserEntity {
 		this.homeClassMaster = homeClassMaster;
 	}
 	
-	@JsonIgnore
+//	@JsonIgnore
 	public Set<JoinTableSubjectTeacher> getSubject() {
 		return subject;
 	}
 
-	@JsonIgnore
+//	@JsonIgnore
 	public void setSubject(Set<JoinTableSubjectTeacher> subject) {
 		this.subject = subject;
 	}

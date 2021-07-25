@@ -20,4 +20,7 @@ public interface AdminRepository extends CrudRepository<AdminEntity, Integer> {
 	
 	@Query(value = "FROM AdminEntity AS a WHERE a.status<>'DELETED'")
 	List<AdminEntity> findAllUndeleted();
+	
+	@Query(value = "FROM AdminEntity AS a WHERE a.username = :username AND a.status <> 'DELETED'")
+	Optional<AdminEntity> findByUsername(@Param("username") String username);
 }

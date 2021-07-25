@@ -42,12 +42,12 @@ public class UserEntity {
 	 ************************************************************/
 
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinColumn(name = "idperson")
+	@JoinColumn(name = "idperson", nullable = false)
 	@JsonBackReference(value = "User_Person_1")
 	private PersonEntity person;
 	
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinColumn(name = "idrole")
+	@JoinColumn(name = "idrole", nullable = false)
 	@JsonBackReference(value = "Role_User_1")
 	private RoleEntity role;
 

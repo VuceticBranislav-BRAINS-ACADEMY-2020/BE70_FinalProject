@@ -33,7 +33,7 @@ public class GroupEntity {
 	 * Attributes
 	 ************************************************************/
 	
-	@Column
+	@Column(nullable = false)
 	private String letter;		
 
 	/************************************************************
@@ -41,11 +41,11 @@ public class GroupEntity {
 	 ************************************************************/
 	
 	@OneToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinColumn(name = "idhometeacher")
+	@JoinColumn(name = "idhometeacher", nullable = false)
 	private TeacherEntity homeClassMaster;
 	
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinColumn(name = "idclass")
+	@JoinColumn(name = "idclass", nullable = false)
 	@JsonBackReference(value = "Group_Class_1")
 	private ClassEntity clazz;
 	

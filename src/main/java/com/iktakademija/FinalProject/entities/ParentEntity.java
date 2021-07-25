@@ -27,7 +27,7 @@ public class ParentEntity extends UserEntity {
 	 * Attributes
 	 ************************************************************/
 
-	@Column
+	@Column(nullable = false)
 	private String email;
 
 	/************************************************************

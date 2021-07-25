@@ -1,5 +1,7 @@
 package com.iktakademija.FinalProject.controllers;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,8 +40,11 @@ public class LoginController {
 	 */
 	@RequestMapping(method = RequestMethod.POST, path = "/login")
 	public ResponseEntity<?> login(@RequestParam String username, @RequestParam String password){
-		// Find user by username		
-		UserEntity userEntity = userRepository.findByUsername(username);	
+		// Find user by username	
+		Optional<UserEntity> op = userRepository.findByUsername(username);
+		if (op.isPresent() == false) new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+		UserEntity userEntity = op.get();
+		
 		// Check password
 		if (userEntity != null && Encryption.validatePassword(password, userEntity.getPassword())) {			
 			String token = loginService.getJWTToken(userEntity); // Provide token	

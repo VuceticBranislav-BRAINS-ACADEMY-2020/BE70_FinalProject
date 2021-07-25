@@ -23,7 +23,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -40,19 +39,19 @@ public class PersonEntity {
 	 * Attributes
 	 ************************************************************/
 
-	@Column
+	@Column(nullable = false)
 	private String firstname;
 	
-	@Column
+	@Column(nullable = false)
 	private String lastname;
 	
 	@Column(nullable = false, unique = true)
 	private String jmbg;
 	
-	@Column
+	@Column(nullable = false)
 	private String mphone;
 	
-	@Column
+	@Column(nullable = false)
 	@DateTimeFormat(iso = ISO.DATE)
 	private LocalDate birthdate;
 
@@ -61,11 +60,11 @@ public class PersonEntity {
 	 ************************************************************/
 
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinColumn(name = "idaddress")
+	@JoinColumn(name = "idaddress", nullable = false)
 	@JsonBackReference(value = "Person_Address_1")
 	private AddressEntity address;
 	
-	@JsonIgnore
+//	@JsonIgnore
 	@OneToMany(mappedBy = "person", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JsonManagedReference(value = "User_Person_1")
 	private Set<UserEntity> users = new HashSet<>();
@@ -145,12 +144,12 @@ public class PersonEntity {
 		this.address = address;
 	}
 	
-	@JsonIgnore
+//	@JsonIgnore
 	public Set<UserEntity> getUsers() {
 		return users;
 	}
 	
-	@JsonIgnore
+//	@JsonIgnore
 	public void setUsers(Set<UserEntity> users) {
 		this.users = users;
 	}

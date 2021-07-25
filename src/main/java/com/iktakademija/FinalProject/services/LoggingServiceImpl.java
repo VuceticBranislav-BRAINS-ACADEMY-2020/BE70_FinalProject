@@ -13,6 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.iktakademija.FinalProject.entities.UserEntity;
 import com.iktakademija.FinalProject.entities.enums.ERole;
 
 /**
@@ -36,32 +37,45 @@ public class LoggingServiceImpl implements LoggingService {
 	 * Method must be called inside method marked with @RequestMapping.<BR>
 	 * No safety mechanism are provided so use it on your own peril.
 	 * 
-	 * @return Return list of {@link ERole} for user currently triggering endpoint.
+	 * Note: Only one role is allowed per user.
+	 * 
+	 * @return Return {@link ERole} for user currently triggering endpoint.
 	 */
 	@Override
-	public List<ERole> getRoleAndLogg(Level lvl) {			
+	public ERole getRoleAndLogg(UserEntity user, Level lvl) {			
 		// Get current request resource path and query parameters
 		String path = ServletUriComponentsBuilder.fromCurrentRequest().scheme(null).host(null).build().toUriString();
-		
-		// Get authentication holder
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		
-		// Get username
-		String username = null;	
-		String roleList = null;
-		List<String> roles = null;
-		if ((authentication instanceof AnonymousAuthenticationToken) == false) {
-			username = authentication.getName();
-			roles = authentication.getAuthorities().stream().map(r -> r.getAuthority()).collect(Collectors.toList());
-			roleList = roles.stream().map(n -> String.valueOf(n)).collect(Collectors.joining("-", "{", "}"));
-		}
-		
+				
 		// Logg message
-		logg(String.format(" >>> %s %s access to endpoint %s.", username, roleList,  path), lvl);
+		logg(String.format(" >>> %s {%s} access to endpoint %s.", user.getUsername(), user.getRole().getRole().toString(), path), lvl);
 
 		// Return 		
-		return roleService.getRoleFromStringList(roles);
+		return user.getRole().getRole();
 	}
+//	@Override
+//	public List<ERole> getRoleAndLogg(Level lvl) {			
+//		// Get current request resource path and query parameters
+//		String path = ServletUriComponentsBuilder.fromCurrentRequest().scheme(null).host(null).build().toUriString();
+//		
+//		// Get authentication holder
+//		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//		
+//		// Get username
+//		String username = null;	
+//		String roleList = null;
+//		List<String> roles = null;
+//		if ((authentication instanceof AnonymousAuthenticationToken) == false) {
+//			username = authentication.getName();
+//			roles = authentication.getAuthorities().stream().map(r -> r.getAuthority()).collect(Collectors.toList());
+//			roleList = roles.stream().map(n -> String.valueOf(n)).collect(Collectors.joining("-", "{", "}"));
+//		}
+//		
+//		// Logg message
+//		logg(String.format(" >>> %s %s access to endpoint %s.", username, roleList,  path), lvl);
+//
+//		// Return 		
+//		return roleService.getRoleFromStringList(roles);
+//	}
 	
 	/**
 	 * Post message to logger before leaving controler.<BR>

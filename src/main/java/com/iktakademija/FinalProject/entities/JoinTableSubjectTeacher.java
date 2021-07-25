@@ -13,13 +13,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
-@Table(name = "subject_teachers")
+@Table(name = "subject_teachers", uniqueConstraints = { @UniqueConstraint(columnNames = { "idteachers", "idgroup", "idsub_cls"}) })
 @JsonIgnoreProperties({ "handler", "hibernateLazyInitializer" })
 public class JoinTableSubjectTeacher {
 	
@@ -32,12 +33,12 @@ public class JoinTableSubjectTeacher {
 	 ************************************************************/
 	
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinColumn(name = "idteachers")
+	@JoinColumn(name = "idteachers", nullable = false)
 	@JsonBackReference(value = "Subject_Teacher_1")
 	private TeacherEntity teachers;
 	
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinColumn(name = "idsub_cls")
+	@JoinColumn(name = "idsub_cls", nullable = false)
 	@JsonBackReference(value = "Subject_Teacher_2")
 	private JoinTableSubjectClass sub_cls;
 	
@@ -46,7 +47,7 @@ public class JoinTableSubjectTeacher {
 	private Set<GradeEntity> grade = new HashSet<>();
 	
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinColumn(name = "idgroup")
+	@JoinColumn(name = "idgroup", nullable = false)
 	@JsonBackReference(value = "Student_Group_4")
 	private GroupEntity group;
 	

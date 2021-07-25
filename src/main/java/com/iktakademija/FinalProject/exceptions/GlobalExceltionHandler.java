@@ -26,7 +26,7 @@ public class GlobalExceltionHandler {// extends ResponseEntityExceptionHandler {
 
 	@ExceptionHandler(value = DataIntegrityViolationException.class)
 	public ResponseEntity<?> handleAccessDeniedException(HttpServletRequest req, DataIntegrityViolationException e) {
-		return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.ALREADY_EXISTS), HttpStatus.NOT_ACCEPTABLE);
+		return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.NONE), HttpStatus.I_AM_A_TEAPOT);
 	}
     
 //	// Global exception interceptor

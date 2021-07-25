@@ -36,18 +36,18 @@ public class GradeEntity {
 	 * Attributes
 	 ************************************************************/
 	
-	@Column
+	@Column(nullable = false)
 	@Enumerated(value = EnumType.STRING)
 	private EGradeType type;
 	
 	@Column(nullable = false)
 	private Integer value;
 	
-	@Column
+	@Column(nullable = false)
 	@DateTimeFormat(iso = ISO.DATE)
 	private LocalDate entered;
 	
-	@Column
+	@Column(nullable = false)
 	@Enumerated(value = EnumType.STRING)
 	private EStage stage;
 
@@ -56,12 +56,12 @@ public class GradeEntity {
 	 ************************************************************/
 	
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinColumn(name = "idstd_grp")
+	@JoinColumn(name = "idstd_grp", nullable = false)
 	@JsonBackReference(value = "Student_Group_3")
 	private JoinTableStudentGroup std_grp;
 	
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinColumn(name = "idsub_tch")
+	@JoinColumn(name = "idsub_tch", nullable = false)
 	@JsonBackReference(value = "Subject_Teacher_3")
 	private JoinTableSubjectTeacher sub_tch;
 

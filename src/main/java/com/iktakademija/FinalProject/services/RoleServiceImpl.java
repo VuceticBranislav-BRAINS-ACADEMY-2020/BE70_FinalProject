@@ -41,4 +41,10 @@ public class RoleServiceImpl implements RoleService {
 		return retVal;
 	}
 	
+	@Override
+	public ERole getRoleFromString(String role) {
+
+		return ERole.valueOf(role);
+	}
+	
 }
