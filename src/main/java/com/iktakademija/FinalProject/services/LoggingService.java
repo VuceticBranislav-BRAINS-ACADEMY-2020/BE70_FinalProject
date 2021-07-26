@@ -25,10 +25,37 @@ public interface LoggingService {
 	 * Method must be called inside method marked with @RequestMapping.<BR>
 	 * No safety mechanism are provided so use it on your own peril.
 	 * 
-	 * Note: Only one role is allowed per user.
+	 * Note: Only one role is allo@Override
+	wed per user.
 	 * 
 	 * @return Return {@link ERole} for user currently triggering endpoint.
 	 */
 	ERole getRoleAndLogg(UserEntity user, Level lvl);
+
+	/**
+	 * Get current request resource path and query parameters.
+	 * @return String that represent endpoint resource path.
+	 */
+	String getCurrentURL();	
+	
+	/**
+	 *  Log enter to token granting endpoint.
+	 *  
+	 * @param username that request token
+	 * @param lvl represent {@link Level}
+	 */
+	public void getLoggAccessToken(String username, Level lvl);
+
+	/**
+	 * Post two message inside controler.<BR>
+	 * Should be used after entering message and before leaving message.
+	 */
+	void loggTwoMessage(String message1, String message2, Level lvl);
+
+	/**
+	 * Post two message to logger before leaving controler.<BR>
+	 * Should be used at exit from controller method.
+	 */
+	void loggTwoOutMessage(String message1, String message2, Level lvl);
 	
 }

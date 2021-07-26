@@ -1,19 +1,32 @@
 package com.iktakademija.FinalProject.entities.dtos;
 
 public class EmailObject {
-	private String to;
+	
+	/************************************************************
+	 * Attributes
+	 ************************************************************/
+	
+	private String[] to;
 	private String subject;
 	private String text;
-
+	
+	/************************************************************
+	 * Constructors
+	 ************************************************************/
+	
 	public EmailObject() {
 		super();
 	}
-
-	public String getTo() {
+	
+	/************************************************************
+	 * Getters & Setters
+	 ************************************************************/
+	
+	public String[] getTo() {
 		return to;
 	}
 
-	public void setTo(String to) {
+	public void setTo(String[] to) {
 		this.to = to;
 	}
 

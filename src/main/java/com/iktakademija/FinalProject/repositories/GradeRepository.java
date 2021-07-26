@@ -21,11 +21,14 @@ public interface GradeRepository extends CrudRepository<GradeEntity, Integer> {
 	@Query(value = "FROM GradeEntity AS g WHERE g.id = :id AND g.status <> 'DELETED'")
 	Optional<GradeEntity> findById(@Param("id") Integer id);
 
+	@Query(value = "FROM GradeEntity AS g WHERE g.id = :id")
+	Optional<GradeEntity> findByIdIgnoreState(@Param("id") Integer id);
+	
 	@Query(value = "FROM GradeEntity AS g WHERE g.status <> 'DELETED'")
 	List<GradeEntity> findAllUndeleted();
 		
 	@Query(value = "FROM GradeEntity AS a LEFT JOIN JoinTableStudentGroup AS b ON a.std_grp = b.id "
 			+ "INNER JOIN JoinTableSubjectTeacher AS c ON a.sub_tch = c.id "
-			+ "WHERE b.group = c.group AND a.status <> 'DELETED'")
+			+ "WHERE b.group = c.group AND a.status <> 'DELETED' AND c.teachers = :teacher")
 	List<GradeEntity> findAllGradesForStudentsAndSubjects(@Param("teacher") TeacherEntity teacher);
 }

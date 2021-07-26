@@ -2,9 +2,8 @@ package com.iktakademija.FinalProject.controllers;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
-
-import javax.validation.Valid;
 
 import org.slf4j.event.Level;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,11 +12,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.iktakademija.FinalProject.controllers.utils.RESTError;
@@ -32,6 +30,7 @@ import com.iktakademija.FinalProject.entities.StudentEntity;
 import com.iktakademija.FinalProject.entities.SubjectEntity;
 import com.iktakademija.FinalProject.entities.TeacherEntity;
 import com.iktakademija.FinalProject.entities.UserEntity;
+import com.iktakademija.FinalProject.entities.dtos.ChangeGradeDTO;
 import com.iktakademija.FinalProject.entities.dtos.EmailObject;
 import com.iktakademija.FinalProject.entities.dtos.NewGradeDTO;
 import com.iktakademija.FinalProject.entities.enums.ERole;
@@ -97,10 +96,10 @@ public class GradeController {
 	@Autowired
 	private ParentRepository parentRepository;	
 		
-	@InitBinder
-	protected void initBinder(final WebDataBinder binder) {
-		binder.addValidators(newGradeDTOValidator);
-	}
+//	@InitBinder
+//	protected void initBinder(final WebDataBinder binder) {
+//		binder.addValidators(newGradeDTOValidator);
+//	}
 	
 	private String createErrorMessage(BindingResult result) {
 		return result.getAllErrors().stream().map(ObjectError::getDefaultMessage).collect(Collectors.joining("\n"));
@@ -116,39 +115,39 @@ public class GradeController {
 	 * @return {@link HttpStatus.OK} if grade is granted.
 	 */
 	// GRD10
-	@Secured(value = {"ROLE_ADMIN", "ROLE_TEACHER"})
-	@RequestMapping(method = RequestMethod.POST, path = "/add")
-	public ResponseEntity<?> addGrade(@Valid @RequestBody NewGradeDTO newGrade, BindingResult result) {						
-		
+	@Secured({"ROLE_ADMIN", "ROLE_TEACHER"})
+	@RequestMapping(method = RequestMethod.POST, path = "")
+	public ResponseEntity<?> addGrade(@RequestBody NewGradeDTO newGrade, BindingResult result) {						
+
+		// Primer koriscenja validatora direktno
+		newGradeDTOValidator.validate(newGrade, result);
 		if (result.hasErrors())
 			return new ResponseEntity<>(createErrorMessage(result), HttpStatus.BAD_REQUEST);
 		
 		// Logging and retriving user.
 		UserEntity user = loginService.getUser();
 		loggingService.getRoleAndLogg(user, Level.INFO);	
-		loggingService.loggMessage("Method: GradeController.addGrade()", Level.INFO);
-		loggingService.loggMessage(newGrade.toString(), Level.INFO);		
-			
-		// Determinate if teacher can add grade and print message
-		boolean canAdd = user.getRole().getRole().equals(ERole.ROLE_TEACHER);
-		if (canAdd) {
-			if (user.getId().equals(newGrade.getIdTeacher())) {
-				loggingService.loggMessage("Authorized to grant grade.", Level.INFO);
-			}
-			else {
-				loggingService.loggMessage("NOT Authorized to grant grade.", Level.WARN);
-				loggingService.loggOutMessage(HttpStatus.OK.toString(), Level.INFO);
-				return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.TEACHER_CANT_GRADE), HttpStatus.BAD_REQUEST);	
-			}			
-		} else
-			loggingService.loggMessage("Administration mode.", Level.INFO);
+		loggingService.loggTwoMessage("Method: GradeController.addGrade()", newGrade.toString(), Level.INFO);	
 			
 		// Validation should do magic
 		TeacherEntity teacher = teacherRepository.findById(newGrade.getIdTeacher()).get();
 		StudentEntity student = studentRepository.findById(newGrade.getIdStudent()).get();
 		SubjectEntity subject = subjectRepository.findById(newGrade.getIdSubject()).get();
-		GroupEntity   group   = groupRepository.findById(newGrade.getIdGroup()).get();
-
+		GroupEntity   group   = groupRepository.findById(newGrade.getIdGroup()).get();	
+		
+		// Determinate if teacher can add grade and print message
+		boolean canAdd = user.getRole().getRole().equals(ERole.ROLE_TEACHER);
+		if (canAdd) {
+			if (user.getId().equals(newGrade.getIdTeacher()) && teacher.getStatus().equals(EStatus.ACTIVE)) {
+				loggingService.loggMessage("Authorized to grant grade.", Level.INFO);
+			}
+			else {
+				loggingService.loggTwoOutMessage("NOT Authorized to grant grade.", HttpStatus.BAD_REQUEST.toString(), Level.INFO);
+				return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.TEACHER_CANT_GRADE), HttpStatus.BAD_REQUEST);	
+			}			
+		} else
+			loggingService.loggMessage("Administration mode.", Level.INFO);
+			
 		// Should be valid because of validation steps
 		JoinTableStudentGroup studentGroup = joinTableStudentGroupRepository.findByStudentAndGroup(student, group);		
 		JoinTableSubjectClass subjectClass = joinTableSubjectClassRepository.findByClazzAndSubject(group.getClazz(), subject);
@@ -173,24 +172,169 @@ public class GradeController {
 			if (parents.isEmpty()) {
 				loggingService.loggMessage("No parents found to send eMail.", Level.ERROR);
 			} else {
-				object.setTo(parents.get(0).getEmail());
-				// TODO Remove. Overrided for test
-				object.setTo("vucetic985@Gmail.com");
+				
+				// Get all mails from parents list
+				List<String> emails = parents.stream().map(n -> n.getEmail()).collect(Collectors.toList());				
+				object.setTo(emailService.emailDeture(emails.toArray(new String[0])));
 
-				object.setSubject(String.format("Grade report. Teacher %s %s granted gradefrom %s to %s %s",
+				object.setSubject(String.format("Grade report. Teacher %s %s granted grade from %s to %s %s",
 						teacher.getPerson().getFirstname(), teacher.getPerson().getLastname(), subject.getName(),
 						student.getPerson().getFirstname(), student.getPerson().getLastname()));
 				emailService.sendTemplateMessage(object, gradeService.createDTO(grade));
 			}	
-			loggingService.loggMessage(String.format("Grade (%s) granted to student (%s) from teacher (%s) on subject (%s).", grade.getId(), subject.getId(), teacher.getId(), subject.getId()), Level.INFO);
-			loggingService.loggMessage("Grade added successfully.", Level.INFO);		
+			loggingService.loggTwoMessage(String.format("Grade (%s) granted to student (%s) from teacher (%s) on subject (%s).", grade.getId(), student.getId(), teacher.getId(), subject.getId()), "Grade added successfully.", Level.INFO);	
 		} catch (Exception e) {
-			loggingService.loggMessage("Grade adding fail.", Level.ERROR);
-			loggingService.loggOutMessage(HttpStatus.BAD_REQUEST.toString(), Level.INFO);
+			loggingService.loggTwoOutMessage("Grade adding fail.", HttpStatus.BAD_REQUEST.toString(), Level.INFO);
 			return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.SOMETHING_WRONG), HttpStatus.BAD_REQUEST);
 		} 
 		loggingService.loggOutMessage(HttpStatus.OK.toString(), Level.INFO);	
 		return new ResponseEntity<>(HttpStatus.OK);		
 	}
 
+	
+	/**
+	 * Change existing grade.
+	 * 
+	 * @param newGrade hold all data nessesery to change grade
+	 * @return {@link HttpStatus.OK} if grade is changed.
+	 */
+	// GRD11
+	@Secured({"ROLE_ADMIN", "ROLE_TEACHER"})	
+	@RequestMapping(method = RequestMethod.PUT, path = "")
+	public ResponseEntity<?> changeGrade( @RequestBody ChangeGradeDTO newGrade) {			
+		
+		// Logging and retriving user.
+		UserEntity user = loginService.getUser();
+		loggingService.getRoleAndLogg(user, Level.INFO);	
+		loggingService.loggTwoMessage("Method: GradeController.changeGrade()", newGrade.toString(), Level.INFO);	
+			
+		// Is grade valid. Can be ACTIVE or DELETED
+		Optional<GradeEntity> op = gradeRepository.findByIdIgnoreState(newGrade.getId());
+		if (op.isPresent() == false ) {
+			loggingService.loggTwoOutMessage("Grade ID not found in database.", HttpStatus.OK.toString(), Level.INFO);
+			return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.NO_SUCH_GRADE), HttpStatus.BAD_REQUEST);
+		}
+		GradeEntity grade = op.get();
+		
+		// Determinate if teacher can add grade and print message
+		boolean isTeacher = user.getRole().getRole().equals(ERole.ROLE_TEACHER);
+		if (isTeacher) {
+			if (user.getId().equals(grade.getSub_tch().getTeachers().getId()) && grade.getSub_tch().getTeachers().getStatus().equals(EStatus.ACTIVE)) {
+				loggingService.loggMessage("Authorized to grant grade.", Level.INFO);
+			}
+			else {
+				loggingService.loggTwoOutMessage("NOT Authorized to grant grade.", HttpStatus.BAD_REQUEST.toString(), Level.INFO);
+				return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.TEACHER_CANT_GRADE), HttpStatus.BAD_REQUEST);	
+			}			
+		} else
+			loggingService.loggMessage("Administration mode.", Level.INFO);			
+		
+		// All is clear, grant grade.
+		try {
+			grade.setEntered(LocalDate.now());
+			grade.setStage(newGrade.getStage());
+			grade.setType(newGrade.getType());
+			grade.setValue(newGrade.getValue());
+			grade.setStatus(newGrade.getState());
+			gradeRepository.save(grade);
+			
+			// Prepare and send mail
+			EmailObject object = new EmailObject();
+			
+			List<ParentEntity> parents = parentRepository.findAllParents(grade.getStd_grp().getStudent());
+			if (parents.isEmpty()) {
+				loggingService.loggMessage("No parents found to send eMail.", Level.ERROR);
+			} else {
+
+			// Get all mails from parents list
+			List<String> emails = parents.stream().map(n -> n.getEmail()).collect(Collectors.toList());				
+			object.setTo(emailService.emailDeture(emails.toArray(new String[0])));
+
+				object.setSubject(String.format("Grade report. Teacher %s %s changed grade from %s to %s %s",
+						grade.getSub_tch().getTeachers().getPerson().getFirstname(), 
+						grade.getSub_tch().getTeachers().getPerson().getLastname(), 
+						grade.getSub_tch().getSub_cls().getSubject().getName(),
+						grade.getStd_grp().getStudent().getPerson().getFirstname(), 
+						grade.getStd_grp().getStudent().getPerson().getLastname()));
+				emailService.sendTemplateMessage(object, gradeService.createDTO(grade));
+			}	
+			loggingService.loggTwoMessage(String.format("Grade (%s) changed for student (%s) from teacher (%s) on subject (%s).", grade.getId(), grade.getStd_grp().getStudent().getId(), grade.getSub_tch().getTeachers().getId(), grade.getSub_tch().getSub_cls().getSubject().getId()), "Grade changed successfully.", Level.INFO);	
+		} catch (Exception e) {
+			loggingService.loggTwoOutMessage("Grade changing fail.", HttpStatus.BAD_REQUEST.toString(), Level.INFO);
+			return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.SOMETHING_WRONG), HttpStatus.BAD_REQUEST);
+		} 
+		loggingService.loggOutMessage(HttpStatus.OK.toString(), Level.INFO);	
+		return new ResponseEntity<>(HttpStatus.OK);		
+	}
+	
+	/**
+	 * Delete grade.
+	 * 
+	 * @return {@link HttpStatus.OK} if grade is deleted.
+	 */
+	// GRD13
+	@Secured({"ROLE_ADMIN", "ROLE_TEACHER"})	
+	@RequestMapping(method = RequestMethod.DELETE, path = "")
+	public ResponseEntity<?> deleteGrade(@RequestParam Integer id) {			
+		
+		// Logging and retriving user.
+		UserEntity user = loginService.getUser();
+		loggingService.getRoleAndLogg(user, Level.INFO);	
+		loggingService.loggMessage("Method: GradeController.deleteGrade()", Level.INFO);	
+			
+		// Is grade valid. Can be ACTIVE or DELETED
+		Optional<GradeEntity> op = gradeRepository.findByIdIgnoreState(id);
+		if (op.isPresent() == false ) {
+			loggingService.loggTwoOutMessage("Grade ID not found in database.", HttpStatus.OK.toString(), Level.INFO);
+			return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.NO_SUCH_GRADE), HttpStatus.BAD_REQUEST);
+		}
+		GradeEntity grade = op.get();
+		
+		// Determinate if teacher can add grade and print message
+		boolean isTeacher = user.getRole().getRole().equals(ERole.ROLE_TEACHER);
+		if (isTeacher) {
+			if (user.getId().equals(grade.getSub_tch().getTeachers().getId()) && grade.getSub_tch().getTeachers().getStatus().equals(EStatus.ACTIVE)) {
+				loggingService.loggMessage("Authorized to delete grade.", Level.INFO);
+			}
+			else {
+				loggingService.loggTwoOutMessage("NOT Authorized to delete grade.", HttpStatus.BAD_REQUEST.toString(), Level.INFO);
+				return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.TEACHER_CANT_GRADE), HttpStatus.BAD_REQUEST);	
+			}			
+		} else
+			loggingService.loggMessage("Administration mode.", Level.INFO);			
+		
+		// All is clear, grant grade.
+		try {
+			grade.setEntered(LocalDate.now());
+			grade.setStatus(EStatus.DELETED);
+			gradeRepository.save(grade);
+			
+			// Prepare and send mail
+			EmailObject object = new EmailObject();
+			
+			List<ParentEntity> parents = parentRepository.findAllParents(grade.getStd_grp().getStudent());
+			if (parents.isEmpty()) {
+				loggingService.loggMessage("No parents found to send eMail.", Level.ERROR);
+			} else {
+
+			// Get all mails from parents list
+			List<String> emails = parents.stream().map(n -> n.getEmail()).collect(Collectors.toList());				
+			object.setTo(emailService.emailDeture(emails.toArray(new String[0])));
+
+				object.setSubject(String.format("Grade report. Teacher %s %s delete grade from %s to %s %s",
+						grade.getSub_tch().getTeachers().getPerson().getFirstname(), 
+						grade.getSub_tch().getTeachers().getPerson().getLastname(), 
+						grade.getSub_tch().getSub_cls().getSubject().getName(),
+						grade.getStd_grp().getStudent().getPerson().getFirstname(), 
+						grade.getStd_grp().getStudent().getPerson().getLastname()));
+				emailService.sendTemplateMessage(object, gradeService.createDTO(grade));
+			}	
+			loggingService.loggTwoMessage(String.format("Grade (%s) deleted for student (%s) from teacher (%s) on subject (%s).", grade.getId(), grade.getStd_grp().getStudent().getId(), grade.getSub_tch().getTeachers().getId(), grade.getSub_tch().getSub_cls().getSubject().getId()), "Grade changed successfully.", Level.INFO);	
+		} catch (Exception e) {
+			loggingService.loggTwoOutMessage("Grade changing fail.", HttpStatus.BAD_REQUEST.toString(), Level.INFO);
+			return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.SOMETHING_WRONG), HttpStatus.BAD_REQUEST);
+		} 
+		loggingService.loggOutMessage(HttpStatus.OK.toString(), Level.INFO);	
+		return new ResponseEntity<>(HttpStatus.OK);		
+	}
 }

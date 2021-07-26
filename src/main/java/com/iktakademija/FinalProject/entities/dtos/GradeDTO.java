@@ -18,7 +18,7 @@ import com.iktakademija.FinalProject.securities.Views;
  * @author GM
  */
 @JsonView(value = Views.Student.class)
-@JsonPropertyOrder(value =  {"id", "type", "value", "entered", "stage", "version", "status", "groupName", "teacherName", "subjectName"})
+@JsonPropertyOrder(value =  {"id", "type", "value", "entered", "stage", "version", "status", "groupName", "teacherName", "subjectName", "studentName"})
 public class GradeDTO {
 	
 	/************************************************************
@@ -56,6 +56,9 @@ public class GradeDTO {
 	
 	@JsonProperty(value = "Subject")
 	private String subjectName;
+	
+	@JsonProperty(value = "Student")
+	private String studentName;
 	
 	/************************************************************
 	 * Constructors
@@ -147,6 +150,14 @@ public class GradeDTO {
 
 	public void setSubjectName(String subjectName) {
 		this.subjectName = subjectName;
+	}
+
+	public String getStudentName() {
+		return studentName;
+	}
+
+	public void setStudentName(String studentName) {
+		this.studentName = studentName;
 	}
 
 }

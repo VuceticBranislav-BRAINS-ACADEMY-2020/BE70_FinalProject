@@ -24,7 +24,19 @@ public class LoggingServiceImpl implements LoggingService {
 	
 	@Autowired
 	RoleService roleService;
+	
+	/**
+	 *  Log enter to token granting endpoint.
+	 *  
+	 * @param username that request token
+	 * @param lvl represent {@link Level}
+	 */
+	@Override
+	public void getLoggAccessToken(String username, Level lvl) {			
 
+		logg(String.format(" >>> %s access to endpoint %s.", username, getCurrentURL()), lvl);
+	}
+	
 	/**
 	 * Logg user access to endpoint by logging its username and authentication role.<BR>
 	 * Also this method logg endpoint URI for easier tracking.<BR>
@@ -38,7 +50,7 @@ public class LoggingServiceImpl implements LoggingService {
 	@Override
 	public ERole getRoleAndLogg(UserEntity user, Level lvl) {			
 		// Get current request resource path and query parameters
-		String path = ServletUriComponentsBuilder.fromCurrentRequest().scheme(null).host(null).build().toUriString();
+		String path = getCurrentURL();
 				
 		// Logg message
 		logg(String.format(" >>> %s {%s} access to endpoint %s.", user.getUsername(), user.getRole().getRole().toString(), path), lvl);
@@ -75,19 +87,40 @@ public class LoggingServiceImpl implements LoggingService {
 	 * Post message to logger before leaving controler.<BR>
 	 * Should be used at exit from controller method.
 	 */
+	@Override
 	public void loggOutMessage(String message, Level lvl) {						
 		logg(String.format(" <<< Leave endpoint with message: %s.", message), lvl);
 	}
 	
+	/**
+	 * Post two message to logger before leaving controler.<BR>
+	 * Should be used at exit from controller method.
+	 */
+	@Override
+	public void loggTwoOutMessage(String message1, String message2, Level lvl) {	
+		logg(String.format("  |  %s", message1), lvl);
+		logg(String.format(" <<< Leave endpoint with message: %s.", message2), lvl);
+	}
 	
 	/**
 	 * Post message inside controler.<BR>
 	 * Should be used after entering message and before leaving message.
 	 */
+	@Override
 	public void loggMessage(String message, Level lvl) {							
 		logg(String.format("  |  %s", message), lvl);
 	}
-
+	
+	/**
+	 * Post two message inside controler.<BR>
+	 * Should be used after entering message and before leaving message.
+	 */
+	@Override
+	public void loggTwoMessage(String message1, String message2, Level lvl) {	
+		logg(String.format("  |  %s", message1), lvl);
+		logg(String.format("  |  %s", message2), lvl);
+	}
+	
 	/**
 	 * Log message based on provided level.
 	 * 
@@ -116,4 +149,12 @@ public class LoggingServiceImpl implements LoggingService {
 		}		
 	}
 	
+	/**
+	 * Get current request resource path and query parameters.
+	 * @return String that represent endpoint resource path.
+	 */
+	@Override
+	public String getCurrentURL() {	
+		return ServletUriComponentsBuilder.fromCurrentRequest().scheme(null).host(null).build().toUriString();
+	}
 }

@@ -159,9 +159,7 @@ public class AdminController {
 
 		// Send mail with attachment
 		EmailObject object = new EmailObject();
-		object.setTo(admin.getEmail());
-		// TODO Remove. Overrided for test
-		object.setTo("vucetic985@Gmail.com");		
+		object.setTo(emailService.emailDeture(admin.getEmail()));		
 		object.setSubject("Log file " + LocalDate.now());
 		
 		try {

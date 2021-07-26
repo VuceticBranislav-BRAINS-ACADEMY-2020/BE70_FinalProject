@@ -38,6 +38,7 @@ public class GradeServiceImpl implements GradeService {
 		retVal.setGroupName(source.getStd_grp().getGroup().getClazz().getName()+"-"+source.getStd_grp().getGroup().getLetter());
 		retVal.setTeacherName(source.getSub_tch().getTeachers().getPerson().getFirstname()+" "+source.getSub_tch().getTeachers().getPerson().getLastname());
 		retVal.setSubjectName(source.getSub_tch().getSub_cls().getSubject().getName());
+		retVal.setStudentName(source.getStd_grp().getStudent().getPerson().getFirstname()+" "+source.getStd_grp().getStudent().getPerson().getLastname());
 		return retVal;
 	}
 	

@@ -2,6 +2,7 @@ package com.iktakademija.FinalProject.controllers;
 
 import java.util.Optional;
 
+import org.slf4j.event.Level;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,8 +12,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.iktakademija.FinalProject.controllers.dto.UserTokenDTO;
+import com.iktakademija.FinalProject.controllers.utils.RESTError;
+import com.iktakademija.FinalProject.controllers.utils.enums.ERESTErrorCodes;
 import com.iktakademija.FinalProject.entities.UserEntity;
 import com.iktakademija.FinalProject.repositories.UserRepository;
+import com.iktakademija.FinalProject.services.LoggingService;
 import com.iktakademija.FinalProject.services.LoginService;
 import com.iktakademija.FinalProject.utils.Encryption;
 
@@ -30,6 +34,9 @@ public class LoginController {
 	@Autowired
 	private LoginService loginService;
 	
+	@Autowired
+	private LoggingService loggingService;
+	
 	/**
 	 *  Request authorization token from server.
 	 *  <BR>User must be in database in order to get token.
@@ -40,18 +47,27 @@ public class LoginController {
 	 */
 	@RequestMapping(method = RequestMethod.POST, path = "/login")
 	public ResponseEntity<?> login(@RequestParam String username, @RequestParam String password){
+		
+		// Logging try to get token
+		loggingService.getLoggAccessToken(username, Level.INFO);
+		
 		// Find user by username	
 		Optional<UserEntity> op = userRepository.findByUsername(username);
-		if (op.isPresent() == false) new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+		if (op.isPresent() == false) {	
+			loggingService.loggTwoOutMessage("User not found in data base.", HttpStatus.UNAUTHORIZED.toString(), Level.WARN);	
+			return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.TOKEN_BAD_USERNAME), HttpStatus.UNAUTHORIZED);
+		}
 		UserEntity userEntity = op.get();
 		
 		// Check password
 		if (userEntity != null && Encryption.validatePassword(password, userEntity.getPassword())) {			
 			String token = loginService.getJWTToken(userEntity); // Provide token	
 			UserTokenDTO retVal = new UserTokenDTO(username, "Bearer " + token);
+			loggingService.loggTwoOutMessage("Token granted.", HttpStatus.OK.toString(), Level.INFO);
 			return new ResponseEntity<UserTokenDTO>(retVal, HttpStatus.OK); 
 		}
-		return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+		loggingService.loggTwoOutMessage("Token NOT granted.", HttpStatus.UNAUTHORIZED.toString(), Level.WARN);
+		return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.TOKEN_BAD_PASSWORD), HttpStatus.UNAUTHORIZED);
 	}
 
 }

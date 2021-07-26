@@ -6,6 +6,7 @@ import java.time.format.DateTimeFormatter;
 import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -19,6 +20,9 @@ public class EmailServiceImpl implements EmailService {
 
 	@Autowired
 	private JavaMailSender mailSender;
+	
+	@Value("${spring.mail.deture}")
+	private String deturedEmail;
 	
 	@Override
 	public void sendTemplateMessage(EmailObject object, GradeDTO dto) throws Exception {
@@ -59,7 +63,6 @@ public class EmailServiceImpl implements EmailService {
 				dto.getStatus().toString());
 		helper.setText(text, true);
 		mailSender.send(mail);
-
 	}
 
 	@Override
@@ -73,7 +76,31 @@ public class EmailServiceImpl implements EmailService {
 		helper.setText("Log file from: " + pathToAttachment);
 		helper.addAttachment(file.getFilename(), file);
 		this.mailSender.send(mimeMessage);
-
 	}
 
+	@Override
+	public String[] emailDeture(String[] email) {
+		
+		if (deturedEmail == "") return email;
+		
+		String[] retVal = new String[1];
+		retVal[0] = deturedEmail;
+		return retVal;		
+		
+	}
+	
+	@Override
+	public String[] emailDeture(String email) {
+		
+		String[] retVal = new String[1];
+		if (deturedEmail == "") {
+			retVal[0] = email;
+			return retVal;
+		}		
+		
+		retVal[0] = deturedEmail;
+		return retVal;		
+		
+	}
+	
 }
