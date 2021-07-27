@@ -57,7 +57,7 @@ public class ParentServiceImpl implements ParentService {
 		if (opp.isPresent() == false) return null;
 		PersonEntity person = opp.get();
 		
-		ParentEntity parent = new ParentEntity(source.getUsername(), source.getPassword(), person, role);	
+		ParentEntity parent = new ParentEntity(source.getUsername(), Encryption.passwordEncode(source.getPassword()), person, role);	
 		parent.setEmail(source.getEmail());
 		return parent;
 	}

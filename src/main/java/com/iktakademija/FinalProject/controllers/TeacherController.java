@@ -1,6 +1,9 @@
 package com.iktakademija.FinalProject.controllers;
 
 import java.util.List;
+import java.util.Optional;
+
+import javax.validation.Valid;
 
 import org.slf4j.event.Level;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonView;
@@ -22,10 +26,12 @@ import com.iktakademija.FinalProject.entities.dtos.GradeDTO;
 import com.iktakademija.FinalProject.entities.dtos.NewTeacherDTO;
 import com.iktakademija.FinalProject.entities.dtos.TeacherDTO;
 import com.iktakademija.FinalProject.entities.enums.EStatus;
+import com.iktakademija.FinalProject.repositories.TeacherRepository;
 import com.iktakademija.FinalProject.securities.Views;
 import com.iktakademija.FinalProject.services.LoggingService;
 import com.iktakademija.FinalProject.services.LoginService;
 import com.iktakademija.FinalProject.services.TeacherService;
+import com.iktakademija.FinalProject.services.UserService;
 
 /**
  * Teacher controller.<BR>
@@ -44,10 +50,15 @@ public class TeacherController {
 	@Autowired
 	private LoggingService loggingService;
 
+	@Autowired
+	private TeacherRepository teacherRepository;
+
+	@Autowired
+	private UserService userService;
+
 	/**
 	 * REST endpoint that returns all teachers from data base. Method always return
 	 * {@link HttpStatus.OK} if there is no internal error.<BR>
-	 * <BR>
 	 * 
 	 * Postman code: <B>TEA10</B>
 	 * 
@@ -74,7 +85,6 @@ public class TeacherController {
 	/**
 	 * REST endpoint that returns teacher from data base by id. Method always return
 	 * {@link HttpStatus.OK} if there is no internal error.<BR>
-	 * <BR>
 	 * 
 	 * Postman code: <B>TEA11</B>
 	 * 
@@ -110,7 +120,6 @@ public class TeacherController {
 	/**
 	 * Add new teacher to database. If there is no internal error method return
 	 * {@link HttpStatus.OK}.<BR>
-	 * <BR>
 	 * 
 	 * Postman code: <B>TEA01</B>
 	 * 
@@ -119,7 +128,7 @@ public class TeacherController {
 	@Secured("ROLE_ADMIN")
 	@JsonView(value = Views.Admin.class)
 	@RequestMapping(method = RequestMethod.POST, path = "/admin")
-	public ResponseEntity<?> addTeacher(@RequestBody NewTeacherDTO newUser) {
+	public ResponseEntity<?> addTeacher(@Valid @RequestBody NewTeacherDTO newUser) {
 
 		// Logging and retriving user.
 		UserEntity user = loginService.getUser();
@@ -255,6 +264,44 @@ public class TeacherController {
 		List<GradeDTO> dto = teacherService.findAllGradesForStudentsAndSubjects(teacher);
 
 		return new ResponseEntity<List<GradeDTO>>(dto, HttpStatus.OK);
+	}
+
+	/**
+	 * Change password.<BR>
+	 * Postman code: <B>TEA30</B>
+	 */
+	@Secured("ROLE_TEACHER")
+	@JsonView(value = Views.Teacher.class)
+	@RequestMapping(method = RequestMethod.PUT, path = "/changecredentials")
+	public ResponseEntity<?> changeUsernamAndPassword(@RequestParam("user") String newUsername,
+			@RequestParam("pass") String newPassword) {
+
+		// Logging and retriving user.
+		UserEntity user = loginService.getUser();
+		loggingService.loggAndGetUser(user, Level.INFO);
+		loggingService.loggMessage("Method: TeacherController.changeUsernamAndPassword()", Level.INFO);
+
+		// Check id
+		Optional<TeacherEntity> op = teacherRepository.findById(user.getId());
+		if (op.isPresent() == false) {
+			loggingService.loggTwoOutMessage("Invalid id.", HttpStatus.BAD_REQUEST.toString(), Level.INFO);
+			return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_PARAMETERS),
+					HttpStatus.BAD_REQUEST);
+		}
+		TeacherEntity teacher = op.get();
+
+		// Check is password and username successful
+		if (userService.changeUsernameAndPasswor(teacher, newUsername, newPassword) == false) {
+			loggingService.loggTwoOutMessage("Password or username can not be changed.",
+					HttpStatus.BAD_REQUEST.toString(), Level.INFO);
+			return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_PARAMETERS),
+					HttpStatus.BAD_REQUEST);
+		}
+		;
+
+		// Log results and make respons
+		loggingService.loggOutMessage(HttpStatus.OK.toString(), Level.INFO);
+		return new ResponseEntity<TeacherDTO>(teacherService.createDTO(teacher), HttpStatus.OK);
 	}
 
 }

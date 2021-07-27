@@ -13,7 +13,7 @@ import com.iktakademija.FinalProject.entities.StudentEntity;
 public interface ParentRepository extends CrudRepository<ParentEntity, Integer> {
 	
 	@Override
-	@Query(value = "FROM ParentEntity AS p WHERE p.id = :id AND p.status <> 'DELETED'")
+	@Query(value = "FROM ParentEntity AS p WHERE p.id = :id")
 	Optional<ParentEntity> findById(@Param("id") Integer id);
 	
 	@Query(value = "FROM ParentEntity AS p WHERE p.status <> 'DELETED'")

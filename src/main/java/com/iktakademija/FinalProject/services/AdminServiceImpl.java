@@ -67,7 +67,7 @@ public class AdminServiceImpl implements AdminService {
 		Optional<PersonEntity> opp = personRepository.findById(source.getPersonId());
 		if (opp.isPresent() == false) return null;
 		PersonEntity person = opp.get();
-		StudentEntity student = new StudentEntity(source.getUsername(), source.getPassword(), person, role);	
+		StudentEntity student = new StudentEntity(source.getUsername(), Encryption.passwordEncode(source.getPassword()), person, role);	
 		return student;
 	}
 	
@@ -81,6 +81,7 @@ public class AdminServiceImpl implements AdminService {
 		retVal.setRole(roleService.createDTO(source.getRole()));
 		retVal.setVersion(source.getVersion());
 		retVal.setStatus(source.getStatus());
+		retVal.setEmail(source.getEmail());
 		return retVal;
 	}	
 	

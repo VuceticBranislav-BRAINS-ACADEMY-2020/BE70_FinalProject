@@ -21,9 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.iktakademija.FinalProject.controllers.utils.RESTError;
 import com.iktakademija.FinalProject.controllers.utils.enums.ERESTErrorCodes;
-import com.iktakademija.FinalProject.entities.UserEntity;
 import com.iktakademija.FinalProject.services.LoggingService;
-import com.iktakademija.FinalProject.services.LoginService;
 
 @ResponseBody
 @ControllerAdvice

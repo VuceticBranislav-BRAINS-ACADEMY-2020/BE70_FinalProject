@@ -2,6 +2,8 @@ package com.iktakademija.FinalProject.controllers;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.slf4j.event.Level;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -45,7 +47,6 @@ public class AddressController {
 	/**
 	 * REST endpoint that returns all addresses from data base. Method always return
 	 * {@link HttpStatus.OK} if there is no internal error.<BR>
-	 * <BR>
 	 * 
 	 * Postman code: <B>ADR10</B>
 	 * 
@@ -61,7 +62,7 @@ public class AddressController {
 		loggingService.loggAndGetUser(user, Level.INFO);
 		loggingService.loggMessage("Method: AddressController.getAllAddresses()", Level.INFO);
 
-		// Get list of all users
+		// Get list of all addresses
 		List<AddressDTO> retVal = addressService.getDTOList();
 
 		// Log results and make respons
@@ -72,7 +73,6 @@ public class AddressController {
 	/**
 	 * REST endpoint that return addresses by id. Method always return
 	 * {@link HttpStatus.OK} if there is no internal error.<BR>
-	 * <BR>
 	 * 
 	 * Postman code: <B>ADR11</B>
 	 * 
@@ -118,7 +118,7 @@ public class AddressController {
 	@Secured("ROLE_ADMIN")
 	@JsonView(value = Views.Admin.class)
 	@RequestMapping(method = RequestMethod.POST, path = "/admin")
-	public ResponseEntity<?> addAddress(@RequestBody NewAddressDTO newAddress) {
+	public ResponseEntity<?> addAddress(@Valid @RequestBody NewAddressDTO newAddress) {
 
 		// Logging and retriving user.
 		UserEntity user = loginService.getUser();
@@ -155,12 +155,15 @@ public class AddressController {
 		loggingService.loggAndGetUser(user, Level.INFO);
 		loggingService.loggMessage("Method: AddressController.setAddresses()", Level.INFO);
 
+		// Check id and new address data
 		if (addressId == null || newAddress == null) {
 			loggingService.loggTwoOutMessage("Invalid address id or new address data.",
 					HttpStatus.BAD_REQUEST.toString(), Level.INFO);
 			return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_PARAMETERS),
 					HttpStatus.BAD_REQUEST);
 		}
+		
+		// Retrive address DTO by id
 		AddressDTO dto = addressService.setAddress(addressId, newAddress);
 		if (dto == null) {
 			loggingService.loggTwoOutMessage("Address not found. Nothing changed.", HttpStatus.BAD_REQUEST.toString(),

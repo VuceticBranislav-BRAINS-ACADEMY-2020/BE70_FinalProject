@@ -32,10 +32,10 @@ public class UserEntity {
 	 ************************************************************/
 
 	@Column(nullable = false)
-	private String password;
+	protected String password;
 	
 	@Column(nullable = false, unique = true)
-	private String username;
+	protected String username;
 
 	/************************************************************
 	 * Relation Attributes
@@ -44,12 +44,12 @@ public class UserEntity {
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "idperson", nullable = false)
 	@JsonBackReference(value = "User_Person_1")
-	private PersonEntity person;
+	protected PersonEntity person;
 	
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "idrole", nullable = false)
 	@JsonBackReference(value = "Role_User_1")
-	private RoleEntity role;
+	protected RoleEntity role;
 
 	/************************************************************
 	 * Shadow Attributes
@@ -57,14 +57,14 @@ public class UserEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
+	protected Integer id;
 
 	@Version
-	private Integer version;
+	protected Integer version;
 
 	@Column
 	@Enumerated(value = EnumType.STRING)
-	private EStatus status;
+	protected EStatus status;
 
 	/************************************************************
 	 * Constructors

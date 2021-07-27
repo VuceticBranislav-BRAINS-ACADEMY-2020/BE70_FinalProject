@@ -33,6 +33,7 @@ import com.iktakademija.FinalProject.securities.Views;
 import com.iktakademija.FinalProject.services.LoggingService;
 import com.iktakademija.FinalProject.services.LoginService;
 import com.iktakademija.FinalProject.services.ParentService;
+import com.iktakademija.FinalProject.services.UserService;
 
 /**
  * Parent endpoint.
@@ -59,6 +60,9 @@ public class ParentController {
 	
 	@Autowired
 	private LoggingService loggingService;
+	
+	@Autowired
+	private UserService userService;
 	
 	// PAR10
 	@Secured("ROLE_ADMIN")
@@ -98,7 +102,7 @@ public class ParentController {
 	public ResponseEntity<?> addParent(@RequestBody NewParentDTO newUser) {
 		ParentEntity user = parentService.createParent(newUser);
 		user = parentRepository.save(user);
-		return new ResponseEntity<ParentEntity>(user, HttpStatus.OK);
+		return new ResponseEntity<ParentDTO>(parentService.createDTO(user), HttpStatus.OK);
 	}
 	
 	// PAR12
@@ -140,7 +144,7 @@ public class ParentController {
 		JoinTableStudentParent join = new JoinTableStudentParent(parent, student);
 		join = joinTableStudentParentRepository.save(join);
 
-		return new ResponseEntity<ParentEntity>(parent, HttpStatus.OK);
+		return new ResponseEntity<ParentDTO>(parentService.createDTO(parent), HttpStatus.OK);
 	}
 	
 	// PAR15
@@ -195,5 +199,43 @@ public class ParentController {
 		ParentDTO dto = parentService.createDTO(parent);	
 		return new ResponseEntity<ParentDTO>(dto, HttpStatus.OK);	
 	}	
+	
+	/**
+	 * Change password.<BR>
+	 * Postman code: <B>PAR30</B>
+	 */
+	@Secured("ROLE_PARENT")
+	@JsonView(value = Views.Parent.class)
+	@RequestMapping(method = RequestMethod.PUT, path = "/changecredentials")
+	public ResponseEntity<?> changeUsernamAndPassword(@RequestParam("user") String newUsername,
+			@RequestParam("pass") String newPassword) {
+
+		// Logging and retriving user.
+		UserEntity user = loginService.getUser();
+		loggingService.loggAndGetUser(user, Level.INFO);
+		loggingService.loggMessage("Method: ParentController.changeUsernamAndPassword()", Level.INFO);
+
+		// Check id
+		Optional<ParentEntity> op = parentRepository.findById(user.getId());
+		if (op.isPresent() == false) {
+			loggingService.loggTwoOutMessage("Invalid id.", HttpStatus.BAD_REQUEST.toString(), Level.INFO);
+			return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_PARAMETERS),
+					HttpStatus.BAD_REQUEST);
+		}
+		ParentEntity parent = op.get();
+
+		// Check is password and username successful
+		if (userService.changeUsernameAndPasswor(parent, newUsername, newPassword) == false) {
+			loggingService.loggTwoOutMessage("Password or username can not be changed.",
+					HttpStatus.BAD_REQUEST.toString(), Level.INFO);
+			return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_PARAMETERS),
+					HttpStatus.BAD_REQUEST);
+		}
+		;
+
+		// Log results and make respons
+		loggingService.loggOutMessage(HttpStatus.OK.toString(), Level.INFO);
+		return new ResponseEntity<ParentDTO>(parentService.createDTO(parent), HttpStatus.OK);
+	}
 	
 }

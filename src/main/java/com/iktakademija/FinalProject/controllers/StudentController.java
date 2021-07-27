@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonView;
@@ -28,6 +29,7 @@ import com.iktakademija.FinalProject.securities.Views;
 import com.iktakademija.FinalProject.services.LoggingService;
 import com.iktakademija.FinalProject.services.LoginService;
 import com.iktakademija.FinalProject.services.StudentService;
+import com.iktakademija.FinalProject.services.UserService;
 
 /**
  * Student endpoint.
@@ -49,20 +51,65 @@ public class StudentController {
 	@Autowired
 	private LoggingService loggingService;
 	
-	// STU10
+	@Autowired
+	private UserService userService;
+	
+	/**
+	 * REST endpoint that returns all students from data base. Method always return
+	 * {@link HttpStatus.OK} if there is no internal error.<BR>
+	 * 
+	 * Postman code: <B>STU10</B>
+	 * 
+	 * @return set of {@link StudentDTO} from database or empty set if nothing to
+	 *         return.
+	 */
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(method = RequestMethod.GET, path = "/admin")
 	public ResponseEntity<?> getAllStudents() {
-		return new ResponseEntity<List<StudentDTO>>(studentService.getDTOList(), HttpStatus.OK);
+		
+		// Logging and retriving user.
+		UserEntity user = loginService.getUser();
+		loggingService.loggAndGetUser(user, Level.INFO);
+		loggingService.loggMessage("Method: StudentController.getAllStudents()", Level.INFO);
+		
+		// Get list of all students
+		List<StudentDTO> retVal = studentService.getDTOList();
+		
+		// Log results and make respons
+		loggingService.loggOutMessage(HttpStatus.OK.toString(), Level.INFO);
+		return new ResponseEntity<List<StudentDTO>>(retVal, HttpStatus.OK);
+		
 	}
 	
-	// STU11
+	/**
+	 * REST endpoint that return students by id. Method always return
+	 * {@link HttpStatus.OK} if there is no internal error.<BR>
+	 * 
+	 * Postman code: <B>STU11</B>
+	 * 
+	 * @return {@link StudentDTO} from database or empty set if nothing to return.
+	 */
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(method = RequestMethod.GET, path = "/admin/{id}")
 	public ResponseEntity<?> getStudentById(@PathVariable(value = "id") Integer studentId) {
-		if (studentId == null) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_PARAMETERS), HttpStatus.BAD_REQUEST);		
+		
+		// Logging and retriving user.
+		UserEntity user = loginService.getUser();
+		loggingService.loggAndGetUser(user, Level.INFO);
+		loggingService.loggMessage("Method: AddressController.getAddressesById()", Level.INFO);
+		
+		if (studentId == null) {
+			return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_PARAMETERS), HttpStatus.BAD_REQUEST);		
+		}
+		
 		StudentDTO dto = studentService.getStudentDTO(studentId);
-		if (dto == null) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.NOT_FOUND), HttpStatus.NOT_ACCEPTABLE);		
+		if (dto == null) {
+			loggingService.loggTwoOutMessage("Student not found.", HttpStatus.BAD_REQUEST.toString(), Level.INFO);
+			return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.NOT_FOUND), HttpStatus.NOT_ACCEPTABLE);		
+		}
+		
+		// Log results and make respons
+		loggingService.loggOutMessage(HttpStatus.OK.toString(), Level.INFO);
 		return new ResponseEntity<StudentDTO>(dto, HttpStatus.OK);	
 	}
 	
@@ -160,5 +207,43 @@ public class StudentController {
 		StudentDTO dto = studentService.createDTO(student);		
 		return new ResponseEntity<StudentDTO>(dto, HttpStatus.OK);	
 	}	
+	
+	/**
+	 * Change password.<BR>
+	 * Postman code: <B>STU30</B>
+	 */
+	@Secured("ROLE_STUDENT")
+	@JsonView(value = Views.Student.class)
+	@RequestMapping(method = RequestMethod.PUT, path = "/changecredentials")
+	public ResponseEntity<?> changeUsernamAndPassword(@RequestParam("user") String newUsername,
+			@RequestParam("pass") String newPassword) {
 
+		// Logging and retriving user.
+		UserEntity user = loginService.getUser();
+		loggingService.loggAndGetUser(user, Level.INFO);
+		loggingService.loggMessage("Method: StudentController.changeUsernamAndPassword()", Level.INFO);
+
+		// Check id
+		Optional<StudentEntity> op = studentRepository.findById(user.getId());
+		if (op.isPresent() == false) {
+			loggingService.loggTwoOutMessage("Invalid id.", HttpStatus.BAD_REQUEST.toString(), Level.INFO);
+			return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_PARAMETERS),
+					HttpStatus.BAD_REQUEST);
+		}
+		StudentEntity student = op.get();
+
+		// Check is password and username successful
+		if (userService.changeUsernameAndPasswor(student, newUsername, newPassword) == false) {
+			loggingService.loggTwoOutMessage("Password or username can not be changed.",
+					HttpStatus.BAD_REQUEST.toString(), Level.INFO);
+			return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_PARAMETERS),
+					HttpStatus.BAD_REQUEST);
+		}
+		;
+
+		// Log results and make respons
+		loggingService.loggOutMessage(HttpStatus.OK.toString(), Level.INFO);
+		return new ResponseEntity<StudentDTO>(studentService.createDTO(student), HttpStatus.OK);
+	}
+	
 }
