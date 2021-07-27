@@ -7,6 +7,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.event.Level;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,14 +21,24 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.iktakademija.FinalProject.controllers.utils.RESTError;
 import com.iktakademija.FinalProject.controllers.utils.enums.ERESTErrorCodes;
+import com.iktakademija.FinalProject.entities.UserEntity;
+import com.iktakademija.FinalProject.services.LoggingService;
+import com.iktakademija.FinalProject.services.LoginService;
 
 @ResponseBody
 @ControllerAdvice
 public class GlobalExceltionHandler {// extends ResponseEntityExceptionHandler {
-
+	
+	@Autowired
+	private LoggingService loggingService;
+	
 	@ExceptionHandler(value = DataIntegrityViolationException.class)
 	public ResponseEntity<?> handleAccessDeniedException(HttpServletRequest req, DataIntegrityViolationException e) {
-		return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.NONE), HttpStatus.I_AM_A_TEAPOT);
+
+		loggingService.loggMessageWithoutHeader(" >>> ERROR Handler", Level.ERROR);	
+		loggingService.loggMessage(ERESTErrorCodes.NONE.toString(), Level.ERROR);
+		loggingService.loggMessageWithoutHeader(" <<< -------------", Level.ERROR);	
+		return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.NONE), HttpStatus.BAD_REQUEST);
 	}
     
 //	// Global exception interceptor
@@ -41,6 +53,7 @@ public class GlobalExceltionHandler {// extends ResponseEntityExceptionHandler {
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<?> handleValidationExceptions(MethodArgumentNotValidException ex) {
 
+		loggingService.loggMessageWithoutHeader(" >>> ERROR Handler", Level.ERROR);	
 		// Initialize map
 		Map<String, List<String>> errors = new HashMap<>();
 
@@ -54,6 +67,8 @@ public class GlobalExceltionHandler {// extends ResponseEntityExceptionHandler {
 				errors.put(err.getField(), list);
 			}
 		}
+		
+		loggingService.loggMessageWithoutHeader(" <<< -------------", Level.ERROR);	
 		return new ResponseEntity<Map<String, List<String>>>(errors, HttpStatus.BAD_REQUEST);
 	}
 

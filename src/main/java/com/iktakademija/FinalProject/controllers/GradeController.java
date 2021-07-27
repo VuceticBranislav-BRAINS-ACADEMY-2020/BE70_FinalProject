@@ -126,7 +126,7 @@ public class GradeController {
 		
 		// Logging and retriving user.
 		UserEntity user = loginService.getUser();
-		loggingService.getRoleAndLogg(user, Level.INFO);	
+		loggingService.loggAndGetUser(user, Level.INFO);	
 		loggingService.loggTwoMessage("Method: GradeController.addGrade()", newGrade.toString(), Level.INFO);	
 			
 		// Validation should do magic
@@ -205,7 +205,7 @@ public class GradeController {
 		
 		// Logging and retriving user.
 		UserEntity user = loginService.getUser();
-		loggingService.getRoleAndLogg(user, Level.INFO);	
+		loggingService.loggAndGetUser(user, Level.INFO);	
 		loggingService.loggTwoMessage("Method: GradeController.changeGrade()", newGrade.toString(), Level.INFO);	
 			
 		// Is grade valid. Can be ACTIVE or DELETED
@@ -279,7 +279,7 @@ public class GradeController {
 		
 		// Logging and retriving user.
 		UserEntity user = loginService.getUser();
-		loggingService.getRoleAndLogg(user, Level.INFO);	
+		loggingService.loggAndGetUser(user, Level.INFO);	
 		loggingService.loggMessage("Method: GradeController.deleteGrade()", Level.INFO);	
 			
 		// Is grade valid. Can be ACTIVE or DELETED

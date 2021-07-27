@@ -166,7 +166,7 @@ public class ParentController {
 		
 		// Logging and retriving user informations
 		UserEntity user = loginService.getUser();
-		loggingService.getRoleAndLogg(user, Level.INFO);	
+		loggingService.loggAndGetUser(user, Level.INFO);	
 		loggingService.loggMessage("Method: ParentController.getParentInfo", Level.INFO);	
 		
 		// Find out is student valid

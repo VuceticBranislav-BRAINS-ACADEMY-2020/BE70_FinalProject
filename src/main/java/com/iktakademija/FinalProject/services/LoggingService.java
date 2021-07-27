@@ -30,7 +30,7 @@ public interface LoggingService {
 	 * 
 	 * @return Return {@link ERole} for user currently triggering endpoint.
 	 */
-	ERole getRoleAndLogg(UserEntity user, Level lvl);
+	ERole loggAndGetUser(UserEntity user, Level lvl);
 
 	/**
 	 * Get current request resource path and query parameters.
@@ -57,5 +57,10 @@ public interface LoggingService {
 	 * Should be used at exit from controller method.
 	 */
 	void loggTwoOutMessage(String message1, String message2, Level lvl);
+
+	/**
+	 * Post message inside controler without header.<BR>
+	 */
+	void loggMessageWithoutHeader(String message, Level lvl);
 	
 }

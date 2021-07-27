@@ -42,7 +42,7 @@ public class AddressEntity {
 	@Column(nullable = false)
 	private String number;
 
-	@Column(nullable = false)
+	@Column()
 	private String apartment;
 
 	/************************************************************

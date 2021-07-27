@@ -48,7 +48,7 @@ public class LoggingServiceImpl implements LoggingService {
 	 * @return Return {@link ERole} for user currently triggering endpoint.
 	 */
 	@Override
-	public ERole getRoleAndLogg(UserEntity user, Level lvl) {			
+	public ERole loggAndGetUser(UserEntity user, Level lvl) {			
 		// Get current request resource path and query parameters
 		String path = getCurrentURL();
 				
@@ -109,6 +109,14 @@ public class LoggingServiceImpl implements LoggingService {
 	@Override
 	public void loggMessage(String message, Level lvl) {							
 		logg(String.format("  |  %s", message), lvl);
+	}
+	
+	/**
+	 * Post message inside controler without header.<BR>
+	 */
+	@Override
+	public void loggMessageWithoutHeader(String message, Level lvl) {							
+		logg(String.format("%s", message), lvl);
 	}
 	
 	/**

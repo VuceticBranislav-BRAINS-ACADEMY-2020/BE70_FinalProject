@@ -6,16 +6,17 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.iktakademija.FinalProject.entities.AdminEntity;
+import com.iktakademija.FinalProject.entities.enums.EStatus;
 import com.iktakademija.FinalProject.securities.Views;
 
 /**
- * Administration DTO.
+ * Teacher DTO.
  * <BR>Provide all information needed for creating of new user.
  * @see AdminEntity
  * @author GM
  */
 @JsonView(value = Views.Admin.class)
-@JsonPropertyOrder(value = {"username", "password", "person"})
+@JsonPropertyOrder(value = {"username", "password", "person", "status"})
 public class NewTeacherDTO {
 	
 	/************************************************************
@@ -33,6 +34,9 @@ public class NewTeacherDTO {
 	@NotBlank
 	@JsonProperty(value = "ID Person")
 	private Integer personId;	
+	
+	@JsonProperty(value = "Status")
+	private EStatus status;	
 	
 	/************************************************************
 	 * Constructors
@@ -68,6 +72,14 @@ public class NewTeacherDTO {
 
 	public void setPersonId(Integer personId) {
 		this.personId = personId;
+	}
+
+	public EStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(EStatus status) {
+		this.status = status;
 	}
 
 }

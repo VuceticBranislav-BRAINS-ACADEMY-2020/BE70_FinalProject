@@ -136,7 +136,7 @@ public class AdminController {
 		
 		// Logging and retriving user informations
 		UserEntity user = loginService.getUser();
-		loggingService.getRoleAndLogg(user, Level.INFO);	
+		loggingService.loggAndGetUser(user, Level.INFO);	
 		loggingService.loggMessage("Method: AdminController.sendLogFile", Level.INFO);	
 		
 		// Find out is admin valid

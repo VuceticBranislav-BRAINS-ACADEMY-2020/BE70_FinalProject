@@ -28,7 +28,7 @@ public class AddressServiceImpl implements AddressService {
 		address.setStreet(source.getStreet());
 		address.setNumber(source.getNumber());
 		address.setApartment(source.getApartment());
-		address.setStatus(EStatus.ACTIVE);
+		address.setStatus(source.getStatus());
 		
 		// Exit if already exists
 		if (this.isAlreadyPresent(address)) return null;	
@@ -51,30 +51,44 @@ public class AddressServiceImpl implements AddressService {
 		return retVal;		
 	}
 
+	/**
+	 * Return list of DTOs from all adresses in base
+	 */
 	@Override
 	public List<AddressDTO> getDTOList() {
 		List<AddressDTO> list = new ArrayList<>();
-		for (AddressEntity parent : addressRepository.findAllUndeleted()) 
-			list.add(this.createDTO(parent));		
+		for (AddressEntity address : addressRepository.findAll())
+			list.add(this.createDTO(address));
 		return list;
 	}
 
+	/**
+	 * Get address DTO from address id.
+	 * Returns null if no such address in database.
+	 */
 	@Override
 	public AddressDTO getAddressDTO(Integer addressId) {
 		Optional<AddressEntity> op = addressRepository.findById(addressId);
-		if (op.isPresent() == false) return null;
+		if (op.isPresent() == false)
+			return null;
 		return this.createDTO(op.get());
 	}	
 	
 	@Override
 	public AddressDTO setAddress(Integer addressId, NewAddressDTO newAddress) {			
+		
+		// Find address by id
 		Optional<AddressEntity> op = addressRepository.findById(addressId);
 		if (op.isPresent() == false) return null;
-		AddressEntity address = op.get();			
+		AddressEntity address = op.get();	
+		
+		// Change address
 		if (newAddress.getCity() != null) address.setCity(newAddress.getCity());
 		if (newAddress.getStreet() != null) address.setStreet(newAddress.getStreet());
 		if (newAddress.getNumber() != null) address.setNumber(newAddress.getNumber());
 		if (newAddress.getApartment() != null) address.setApartment(newAddress.getApartment());	
+		
+		// Save and return DTO
 		address = addressRepository.save(address);			
 		return this.createDTO(address);		
 	}

@@ -6,16 +6,17 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.iktakademija.FinalProject.entities.AddressEntity;
+import com.iktakademija.FinalProject.entities.enums.EStatus;
 import com.iktakademija.FinalProject.securities.Views;
 
 /**
  * Address DTO. <BR>
- * Provide all information needed for creating of new address.
+ * Provide all information needed for creating or change new address.
  * 
  * @see AddressEntity
  * @author GM
  */
-@JsonPropertyOrder(value = { "city", "street", "number", "apartment" })
+@JsonPropertyOrder(value = { "city", "street", "number", "apartment", "status" })
 @JsonView(value = Views.Admin.class)
 public class NewAddressDTO {
 
@@ -37,6 +38,9 @@ public class NewAddressDTO {
 
 	@JsonProperty(value = "Apartment")
 	private String apartment;
+	
+	@JsonProperty(value = "Status")
+	private EStatus status;
 
 	/************************************************************
 	 * Constructors
@@ -80,6 +84,14 @@ public class NewAddressDTO {
 
 	public void setApartment(String apartment) {
 		this.apartment = apartment;
+	}
+
+	public EStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(EStatus status) {
+		this.status = status;
 	}
 
 }

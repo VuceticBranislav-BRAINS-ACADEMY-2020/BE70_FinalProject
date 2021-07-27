@@ -108,20 +108,25 @@ public class TeacherServiceImpl implements TeacherService {
 
 	@Override
 	public TeacherDTO setTeacher(Integer teacherId, NewTeacherDTO newTeacher) {
-		Optional<TeacherEntity> opa = teacherRepository.findById(teacherId);
-		if (opa.isPresent() == false) return null;
-		TeacherEntity teacher = opa.get();		
+		
+		// Find teacher by id
+		Optional<TeacherEntity> op1 = teacherRepository.findById(teacherId);
+		if (op1.isPresent() == false) return null;
+		TeacherEntity teacher = op1.get();		
+		
+		// Find person
+		Optional<PersonEntity> op2 = personRepository.findById(newTeacher.getPersonId());
+		if (op2.isPresent() == false) return null;
+		PersonEntity person = op2.get();	
+		
+		// Change teacher
+		if (newTeacher.getPersonId() != null) teacher.setPerson(person);
+		if (newTeacher.getUsername() != null) teacher.setUsername(newTeacher.getUsername());			
 		if (newTeacher.getPassword() != null) teacher.setPassword(Encryption.passwordEncode(newTeacher.getPassword()));
 		
-		Optional<PersonEntity> opp = personRepository.findById(newTeacher.getPersonId());
-		if (opp.isPresent() == false) return null;
-		PersonEntity person = opp.get();	
-		
-		if (newTeacher.getPersonId() != null) teacher.setPerson(person); // TODO Fix this
-		if (newTeacher.getUsername() != null) teacher.setUsername(newTeacher.getUsername());
-
+		// Save and return DTO
 		teacher = teacherRepository.save(teacher);
-		return this.createDTO(teacher);
+		return this.createDTO(teacher);		
 	}
 
 	@Override
