@@ -33,10 +33,10 @@ public class GlobalExceltionHandler {// extends ResponseEntityExceptionHandler {
 	@ExceptionHandler(value = DataIntegrityViolationException.class)
 	public ResponseEntity<?> handleAccessDeniedException(HttpServletRequest req, DataIntegrityViolationException e) {
 
-		loggingService.loggMessageWithoutHeader(" >>> ERROR Handler", Level.ERROR);	
-		loggingService.loggMessage(ERESTErrorCodes.NONE.toString(), Level.ERROR);
+		loggingService.loggMessageWithoutHeader(" >>> ERROR: DataIntegrityViolationException", Level.ERROR);	
+		loggingService.loggMessage(ERESTErrorCodes.CONSTRAINT_INVALID.toString(), Level.ERROR);
 		loggingService.loggMessageWithoutHeader(" <<< -------------", Level.ERROR);	
-		return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.NONE), HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.CONSTRAINT_INVALID), HttpStatus.BAD_REQUEST);
 	}
     
 //	// Global exception interceptor

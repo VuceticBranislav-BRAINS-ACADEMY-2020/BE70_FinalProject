@@ -14,8 +14,6 @@ import com.iktakademija.FinalProject.entities.TeacherEntity;
 
 public interface TeacherRepository extends CrudRepository<TeacherEntity, Integer> {
 
-	@Override
-	@Query(value = "FROM TeacherEntity AS t WHERE t.id = :id AND t.status <> 'DELETED'")
 	Optional<TeacherEntity> findById(@Param("id") Integer id);
 
 	@Query(value = "FROM TeacherEntity AS t WHERE t.status <> 'DELETED'")

@@ -14,6 +14,7 @@ package com.iktakademija.FinalProject.controllers.utils.enums;
  * <BR> 200 - Teacher not authorised to give grade in name of another teacher.
  * <BR> 201 - Access not allowed.
  * <BR> 202 - Grade ID can not be found in database.
+ * <BR> 900 - Database constrains prevent operation. Check constrains.
  */
 public enum ERESTErrorCodes {
 
@@ -64,7 +65,11 @@ public enum ERESTErrorCodes {
 	/**
 	 * Code: 202<BR>Message: "Grade ID can not be found in database."
 	 */
-	NO_SUCH_GRADE (202, "Grade ID can not be found in database.");	
+	NO_SUCH_GRADE      (202, "Grade ID can not be found in database."),
+	/**
+	 * Code: 900<BR>Message: "Database constrains prevent operation. Check constrains."
+	 */
+	CONSTRAINT_INVALID (900, "Database constrains prevent operation. Check constrains.");	
 	
 	ERESTErrorCodes(int value, String message) {
 		this.value = value;

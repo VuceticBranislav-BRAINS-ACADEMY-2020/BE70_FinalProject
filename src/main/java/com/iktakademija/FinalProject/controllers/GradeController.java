@@ -180,7 +180,7 @@ public class GradeController {
 				object.setSubject(String.format("Grade report. Teacher %s %s granted grade from %s to %s %s",
 						teacher.getPerson().getFirstname(), teacher.getPerson().getLastname(), subject.getName(),
 						student.getPerson().getFirstname(), student.getPerson().getLastname()));
-				emailService.sendTemplateMessage(object, gradeService.createDTO(grade));
+//				emailService.sendTemplateMessage(object, gradeService.createDTO(grade));                   // TODO Uncomment this
 			}	
 			loggingService.loggTwoMessage(String.format("Grade (%s) granted to student (%s) from teacher (%s) on subject (%s).", grade.getId(), student.getId(), teacher.getId(), subject.getId()), "Grade added successfully.", Level.INFO);	
 		} catch (Exception e) {
@@ -256,7 +256,7 @@ public class GradeController {
 						grade.getSub_tch().getSub_cls().getSubject().getName(),
 						grade.getStd_grp().getStudent().getPerson().getFirstname(), 
 						grade.getStd_grp().getStudent().getPerson().getLastname()));
-				emailService.sendTemplateMessage(object, gradeService.createDTO(grade));
+//				emailService.sendTemplateMessage(object, gradeService.createDTO(grade));               // TODO Uncomment this
 			}	
 			loggingService.loggTwoMessage(String.format("Grade (%s) changed for student (%s) from teacher (%s) on subject (%s).", grade.getId(), grade.getStd_grp().getStudent().getId(), grade.getSub_tch().getTeachers().getId(), grade.getSub_tch().getSub_cls().getSubject().getId()), "Grade changed successfully.", Level.INFO);	
 		} catch (Exception e) {
@@ -327,7 +327,7 @@ public class GradeController {
 						grade.getSub_tch().getSub_cls().getSubject().getName(),
 						grade.getStd_grp().getStudent().getPerson().getFirstname(), 
 						grade.getStd_grp().getStudent().getPerson().getLastname()));
-				emailService.sendTemplateMessage(object, gradeService.createDTO(grade));
+//				emailService.sendTemplateMessage(object, gradeService.createDTO(grade));                  // TODO Uncomment this
 			}	
 			loggingService.loggTwoMessage(String.format("Grade (%s) deleted for student (%s) from teacher (%s) on subject (%s).", grade.getId(), grade.getStd_grp().getStudent().getId(), grade.getSub_tch().getTeachers().getId(), grade.getSub_tch().getSub_cls().getSubject().getId()), "Grade changed successfully.", Level.INFO);	
 		} catch (Exception e) {

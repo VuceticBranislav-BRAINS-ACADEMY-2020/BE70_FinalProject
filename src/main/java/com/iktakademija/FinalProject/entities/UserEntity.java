@@ -14,6 +14,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -21,7 +22,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.iktakademija.FinalProject.entities.enums.EStatus;
 
 @Entity
-@Table(name = "users")
+@Table(name = "users", uniqueConstraints = { @UniqueConstraint(columnNames = { "idperson", "idrole"}) })
 @JsonIgnoreProperties({ "handler", "hibernateLazyInitializer" })
 @Inheritance(strategy = InheritanceType.JOINED)
 //@JsonView(value = {Views.Admin.class})

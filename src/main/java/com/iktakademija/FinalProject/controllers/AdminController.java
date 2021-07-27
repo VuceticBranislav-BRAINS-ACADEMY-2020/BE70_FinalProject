@@ -3,8 +3,6 @@ package com.iktakademija.FinalProject.controllers;
 import java.time.LocalDate;
 import java.util.List;
 
-import javax.validation.Valid;
-
 import org.slf4j.event.Level;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -123,7 +121,7 @@ public class AdminController {
 	@Secured("ROLE_ADMIN")
 	@JsonView(value = Views.Admin.class)
 	@RequestMapping(method = RequestMethod.POST, path = "")
-	public ResponseEntity<?> addAdmin(@Valid @RequestBody NewAdminDTO newUser) {	
+	public ResponseEntity<?> addAdmin(@RequestBody NewAdminDTO newUser) {	
 		
 		AdminEntity user = adminService.createAdmin(newUser);
 		if (user == null ) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_PARAMETERS), HttpStatus.NOT_ACCEPTABLE);
@@ -165,7 +163,7 @@ public class AdminController {
 		object.setSubject("Log file " + LocalDate.now());
 		
 		try {
-			emailService.sendMessageWithAttachment(object, "logs/logging.log");
+//			emailService.sendMessageWithAttachment(object, "logs/logging.log");    // TODO Uncomment this
 			loggingService.loggMessage("Grade added successfully.", Level.INFO);
 		} catch (Exception e) {
 			loggingService.loggMessage("Grade adding fail.", Level.ERROR);

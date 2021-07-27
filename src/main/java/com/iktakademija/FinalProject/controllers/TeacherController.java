@@ -3,8 +3,6 @@ package com.iktakademija.FinalProject.controllers;
 import java.util.List;
 import java.util.Optional;
 
-import javax.validation.Valid;
-
 import org.slf4j.event.Level;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -128,7 +126,7 @@ public class TeacherController {
 	@Secured("ROLE_ADMIN")
 	@JsonView(value = Views.Admin.class)
 	@RequestMapping(method = RequestMethod.POST, path = "/admin")
-	public ResponseEntity<?> addTeacher(@Valid @RequestBody NewTeacherDTO newUser) {
+	public ResponseEntity<?> addTeacher(@RequestBody NewTeacherDTO newUser) {
 
 		// Logging and retriving user.
 		UserEntity user = loginService.getUser();
@@ -273,7 +271,7 @@ public class TeacherController {
 	@Secured("ROLE_TEACHER")
 	@JsonView(value = Views.Teacher.class)
 	@RequestMapping(method = RequestMethod.PUT, path = "/changecredentials")
-	public ResponseEntity<?> changeUsernamAndPassword(@RequestParam("user") String newUsername,
+	public ResponseEntity<?> changeUsernameAndPassword(@RequestParam("user") String newUsername,
 			@RequestParam("pass") String newPassword) {
 
 		// Logging and retriving user.

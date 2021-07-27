@@ -1,5 +1,7 @@
 package com.iktakademija.FinalProject.entities.dtos;
 
+import javax.validation.constraints.NotBlank;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -9,55 +11,41 @@ import com.iktakademija.FinalProject.securities.Views;
 
 /**
  * Class DTO.
- * <BR>Provide all information related to {@link ClassEntity}.
+ * <BR>Provide all information needed for creating of new class.
  * @see ClassEntity
  * @author GM
  */
-@JsonView(value = Views.Student.class)
-@JsonPropertyOrder(value =  {"id", "name", "year", "version", "status"})
-public class ClassDTO {
+@JsonView(value = Views.Admin.class)
+@JsonPropertyOrder(value = {"name", "year", "status"})
+public class NewClassDTO {
 	
 	/************************************************************
 	 * Attributes
 	 ************************************************************/
-	
-	@JsonView(value = Views.Teacher.class)
-	@JsonProperty(value = "ID")
-	private Integer id;	
-	
+
+	@NotBlank
 	@JsonProperty(value = "Name")
 	private String name;
 	
+	@NotBlank
 	@JsonProperty(value = "Year")
 	private Integer year;
 	
-	@JsonView(value = Views.Admin.class)
-	@JsonProperty(value = "Version")
-	private Integer version;
-	
 	@JsonProperty(value = "Status")
 	private EStatus status;
-
+	
 	/************************************************************
 	 * Constructors
 	 ************************************************************/
 
-	public ClassDTO() {
+	public NewClassDTO() {
 		super();
 	}
 	
 	/************************************************************
 	 * Getters & Setters
 	 ************************************************************/
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
+	
 	public String getName() {
 		return name;
 	}
@@ -74,20 +62,12 @@ public class ClassDTO {
 		this.year = year;
 	}
 
-	public Integer getVersion() {
-		return version;
-	}
-
-	public void setVersion(Integer version) {
-		this.version = version;
-	}
-
 	public EStatus getStatus() {
 		return status;
 	}
 
 	public void setStatus(EStatus status) {
 		this.status = status;
-	}		
-
+	}
+	
 }

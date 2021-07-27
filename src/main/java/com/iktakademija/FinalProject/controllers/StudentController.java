@@ -215,7 +215,7 @@ public class StudentController {
 	@Secured("ROLE_STUDENT")
 	@JsonView(value = Views.Student.class)
 	@RequestMapping(method = RequestMethod.PUT, path = "/changecredentials")
-	public ResponseEntity<?> changeUsernamAndPassword(@RequestParam("user") String newUsername,
+	public ResponseEntity<?> changeUsernameAndPassword(@RequestParam("user") String newUsername,
 			@RequestParam("pass") String newPassword) {
 
 		// Logging and retriving user.
