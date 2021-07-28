@@ -2,6 +2,8 @@ package com.iktakademija.FinalProject.controllers;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -84,7 +86,7 @@ public class PersonController {
 	@Secured("ROLE_ADMIN")
 	@JsonView(value = Views.Admin.class)
 	@RequestMapping(method = RequestMethod.POST, path = "/admin")
-	public ResponseEntity<?> addPerson(@RequestBody NewPersonDTO newPerson) {	
+	public ResponseEntity<?> addPerson(@Valid @RequestBody NewPersonDTO newPerson) {	
 		
 		PersonEntity person = personService.createPerson(newPerson);	
 		if (person == null ) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_PARAMETERS), HttpStatus.NOT_ACCEPTABLE);

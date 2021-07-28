@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.iktakademija.FinalProject.entities.AdminEntity;
 import com.iktakademija.FinalProject.entities.enums.EStatus;
 import com.iktakademija.FinalProject.securities.Views;
+import com.sun.istack.NotNull;
 
 /**
  * Teacher DTO.
@@ -23,15 +24,15 @@ public class NewTeacherDTO {
 	 * Attributes
 	 ************************************************************/
 	
-	@NotBlank
+	@NotBlank(message = "Can not be blank or null.")
 	@JsonProperty(value = "Username")
 	private String username;
 
-	@NotBlank
+	@NotBlank(message = "Can not be blank or null.")
 	@JsonProperty(value = "Password")
 	private String password;
 
-	@NotBlank
+	@NotNull
 	@JsonProperty(value = "ID Person")
 	private Integer personId;	
 	

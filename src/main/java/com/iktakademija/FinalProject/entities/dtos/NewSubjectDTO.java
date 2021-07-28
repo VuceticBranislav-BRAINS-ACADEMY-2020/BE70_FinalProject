@@ -22,7 +22,7 @@ public class NewSubjectDTO {
 	 * Attributes
 	 ************************************************************/
 	
-	@NotBlank
+	@NotBlank(message = "Can not be blank or null.")
 	@JsonProperty(value = "Name")
 	private String name;
 	

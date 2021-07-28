@@ -3,6 +3,8 @@ package com.iktakademija.FinalProject.controllers;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.slf4j.event.Level;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -99,7 +101,7 @@ public class ParentController {
 	@Secured("ROLE_ADMIN")
 	@JsonView(value = Views.Admin.class)
 	@RequestMapping(method = RequestMethod.POST, path = "/admin")
-	public ResponseEntity<?> addParent(@RequestBody NewParentDTO newUser) {
+	public ResponseEntity<?> addParent(@Valid @RequestBody NewParentDTO newUser) {
 		ParentEntity user = parentService.createParent(newUser);
 		user = parentRepository.save(user);
 		return new ResponseEntity<ParentDTO>(parentService.createDTO(user), HttpStatus.OK);

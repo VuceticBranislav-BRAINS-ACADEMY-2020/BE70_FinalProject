@@ -3,6 +3,8 @@ package com.iktakademija.FinalProject.controllers;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.slf4j.event.Level;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -148,7 +150,7 @@ public class StudentController {
 	@Secured("ROLE_ADMIN")
 	@JsonView(value = Views.Admin.class)
 	@RequestMapping(method = RequestMethod.POST, path = "/admin")
-	public ResponseEntity<?> addStudent(@RequestBody NewStudentDTO newUser) {
+	public ResponseEntity<?> addStudent(@Valid @RequestBody NewStudentDTO newUser) {
 
 		StudentEntity student = studentService.createStudent(newUser);
 		if (student == null ) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_PARAMETERS), HttpStatus.BAD_REQUEST);

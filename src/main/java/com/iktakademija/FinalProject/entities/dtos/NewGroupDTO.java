@@ -1,66 +1,72 @@
 package com.iktakademija.FinalProject.entities.dtos;
 
-import javax.validation.constraints.NotBlank;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonView;
-import com.iktakademija.FinalProject.entities.ClassEntity;
+import com.iktakademija.FinalProject.entities.GroupEntity;
 import com.iktakademija.FinalProject.entities.enums.EStatus;
 import com.iktakademija.FinalProject.securities.Views;
-import com.sun.istack.NotNull;
 
 /**
- * Class DTO.
- * <BR>Provide all information needed for creating of new class.
- * @see ClassEntity
+ * Group DTO.
+ * <BR>Provide all information related to {@link GroupEntity}.
+ * @see GroupEntity
  * @author GM
  */
-@JsonView(value = Views.Admin.class)
-@JsonPropertyOrder(value = {"name", "year", "status"})
-public class NewClassDTO {
+@JsonView(value = Views.Student.class)
+@JsonPropertyOrder(value =  {"letter", "homeClassMaster", "clazz", "status"})
+public class NewGroupDTO {
 	
 	/************************************************************
 	 * Attributes
 	 ************************************************************/
-
-	@NotBlank(message = "Can not be blank or null.")
-	@JsonProperty(value = "Name")
-	private String name;
 	
-	@NotNull
-	@JsonProperty(value = "Year")
-	private Integer year;
+	@JsonProperty(value = "Class Mark")
+	private String letter;	
+
+	@JsonProperty(value = "ID Homeclass Teacher")
+	private Integer homeClassMaster;
+	
+	@JsonProperty(value = "ID Class")
+	private Integer clazz;
 	
 	@JsonProperty(value = "Status")
 	private EStatus status;
-	
+
 	/************************************************************
 	 * Constructors
 	 ************************************************************/
 
-	public NewClassDTO() {
+	public NewGroupDTO() {
 		super();
 	}
-	
+
 	/************************************************************
 	 * Getters & Setters
 	 ************************************************************/
-	
-	public String getName() {
-		return name;
+
+	public String getLetter() {
+		return letter;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setLetter(String letter) {
+		this.letter = letter;
 	}
 
-	public Integer getYear() {
-		return year;
+	public Integer getHomeClassMaster() {
+		return homeClassMaster;
 	}
 
-	public void setYear(Integer year) {
-		this.year = year;
+	public void setHomeClassMaster(Integer homeClassMaster) {
+		this.homeClassMaster = homeClassMaster;
+	}
+
+	public Integer getClazz() {
+		return clazz;
+	}
+
+	public void setClazz(Integer clazz) {
+		this.clazz = clazz;
 	}
 
 	public EStatus getStatus() {
@@ -70,5 +76,5 @@ public class NewClassDTO {
 	public void setStatus(EStatus status) {
 		this.status = status;
 	}
-	
+
 }

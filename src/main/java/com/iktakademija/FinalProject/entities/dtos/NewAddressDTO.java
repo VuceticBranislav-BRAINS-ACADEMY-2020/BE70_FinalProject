@@ -24,15 +24,15 @@ public class NewAddressDTO {
 	 * Attributes
 	 ************************************************************/
 	
-	@NotBlank
+	@NotBlank(message = "Can not be blank or null.")
 	@JsonProperty(value = "City")
 	private String city;
 	
-	@NotBlank
+	@NotBlank(message = "Can not be blank or null.")
 	@JsonProperty(value = "Stresst")
 	private String street;
 	
-	@NotBlank
+	@NotBlank(message = "Can not be blank or null.")
 	@JsonProperty(value = "Number")
 	private String number;
 

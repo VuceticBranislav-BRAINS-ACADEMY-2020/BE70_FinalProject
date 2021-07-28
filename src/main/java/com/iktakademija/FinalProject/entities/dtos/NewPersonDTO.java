@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.iktakademija.FinalProject.entities.PersonEntity;
 import com.iktakademija.FinalProject.securities.Views;
+import com.sun.istack.NotNull;
 
 /**
  * Person DTO.
@@ -26,27 +27,27 @@ public class NewPersonDTO {
 	 * Attributes
 	 ************************************************************/
 
-	@NotBlank
+	@NotBlank(message = "Can not be blank or null.")
 	@JsonProperty(value = "First Name")
 	private String firstname;
 	
-	@NotBlank
+	@NotBlank(message = "Can not be blank or null.")
 	@JsonProperty(value = "Last Name")
 	private String lastname;
 	
-	@NotBlank
+	@NotBlank(message = "Can not be blank or null.")
 	@JsonProperty(value = "JMBG")
 	private String jmbg;	
 	
 	@JsonProperty(value = "Phone Number")
 	private String mphone;	
 
-	@NotBlank
+	@NotBlank(message = "Can not be blank or null.")
 	@JsonFormat(shape = Shape.STRING, pattern = "dd-MM-yyyy")
 	@JsonProperty(value = "Birth Date")
 	private LocalDate birthdate;
 
-	@NotBlank
+	@NotNull
 	@JsonProperty(value = "ID Address")
 	private Integer address;
 	

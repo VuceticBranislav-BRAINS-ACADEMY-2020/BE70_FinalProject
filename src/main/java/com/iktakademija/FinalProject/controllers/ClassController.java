@@ -2,6 +2,8 @@ package com.iktakademija.FinalProject.controllers;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.slf4j.event.Level;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -114,7 +116,7 @@ public class ClassController {
 	@Secured("ROLE_ADMIN")
 	@JsonView(value = Views.Admin.class)
 	@RequestMapping(method = RequestMethod.POST, path = "/admin")
-	public ResponseEntity<?> addClass(@RequestBody NewClassDTO newClass) {
+	public ResponseEntity<?> addClass(@Valid @RequestBody NewClassDTO newClass) {
 
 		// Logging and retriving user.
 		UserEntity user = loginService.getUser();

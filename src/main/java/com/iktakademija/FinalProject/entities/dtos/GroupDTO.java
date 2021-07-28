@@ -4,41 +4,41 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.iktakademija.FinalProject.entities.GroupEntity;
-import com.iktakademija.FinalProject.entities.TeacherEntity;
 import com.iktakademija.FinalProject.entities.enums.EStatus;
 import com.iktakademija.FinalProject.securities.Views;
 
 /**
- * Group DTO.
- * <BR>Provide all information related to {@link GroupEntity}.
+ * Group DTO. <BR>
+ * Provide all information related to {@link GroupEntity}.
+ * 
  * @see GroupEntity
  * @author GM
  */
 @JsonView(value = Views.Student.class)
-@JsonPropertyOrder(value =  {"id", "letter", "homeClassMaster", "clazz", "version", "status"})
+@JsonPropertyOrder(value = { "id", "letter", "homeClassMaster", "clazz", "version", "status" })
 public class GroupDTO {
-	
+
 	/************************************************************
 	 * Attributes
 	 ************************************************************/
-	
+
 	@JsonView(value = Views.Teacher.class)
 	@JsonProperty(value = "ID")
-	private Integer id;	
-	
+	private Integer id;
+
 	@JsonProperty(value = "Class Mark")
-	private String letter;	
+	private String letter;
 
 	@JsonProperty(value = "Homeclass Teacher")
-	private TeacherEntity homeClassMaster;
-	
+	private TeacherDTO homeClassMaster;
+
 	@JsonProperty(value = "Class")
 	private ClassDTO clazz;
-	
+
 	@JsonView(value = Views.Admin.class)
 	@JsonProperty(value = "Version")
 	private Integer version;
-	
+
 	@JsonProperty(value = "Status")
 	private EStatus status;
 
@@ -70,14 +70,6 @@ public class GroupDTO {
 		this.letter = letter;
 	}
 
-	public TeacherEntity getHomeClassMaster() {
-		return homeClassMaster;
-	}
-
-	public void setHomeClassMaster(TeacherEntity homeClassMaster) {
-		this.homeClassMaster = homeClassMaster;
-	}
-
 	public ClassDTO getClazz() {
 		return clazz;
 	}
@@ -94,12 +86,20 @@ public class GroupDTO {
 		this.version = version;
 	}
 
+	public TeacherDTO getHomeClassMaster() {
+		return homeClassMaster;
+	}
+
+	public void setHomeClassMaster(TeacherDTO homeClassMaster) {
+		this.homeClassMaster = homeClassMaster;
+	}
+
 	public EStatus getStatus() {
 		return status;
 	}
 
 	public void setStatus(EStatus status) {
 		this.status = status;
-	}		
+	}
 
 }

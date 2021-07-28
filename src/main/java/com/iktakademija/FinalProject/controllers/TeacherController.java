@@ -3,6 +3,8 @@ package com.iktakademija.FinalProject.controllers;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.slf4j.event.Level;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -126,14 +128,14 @@ public class TeacherController {
 	@Secured("ROLE_ADMIN")
 	@JsonView(value = Views.Admin.class)
 	@RequestMapping(method = RequestMethod.POST, path = "/admin")
-	public ResponseEntity<?> addTeacher(@RequestBody NewTeacherDTO newUser) {
+	public ResponseEntity<?> addTeacher(@Valid @RequestBody NewTeacherDTO newTeacher) {
 
 		// Logging and retriving user.
 		UserEntity user = loginService.getUser();
 		loggingService.loggAndGetUser(user, Level.INFO);
 		loggingService.loggMessage("Method: TeacherController.addTeacher()", Level.INFO);
 
-		TeacherEntity teacher = teacherService.createTeacher(newUser);
+		TeacherEntity teacher = teacherService.createTeacher(newTeacher);
 		if (teacher == null) {
 			loggingService.loggTwoOutMessage("Teacher can not be added. Invalid data provided.",
 					HttpStatus.BAD_REQUEST.toString(), Level.INFO);

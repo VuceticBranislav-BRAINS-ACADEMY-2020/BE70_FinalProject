@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.iktakademija.FinalProject.entities.AdminEntity;
 import com.iktakademija.FinalProject.securities.Views;
+import com.sun.istack.NotNull;
 
 /**
  * Administration DTO.
@@ -22,19 +23,19 @@ public class NewAdminDTO {
 	 * Attributes
 	 ************************************************************/
 	
-	@NotBlank
+	@NotBlank(message = "Can not be blank or null.")
 	@JsonProperty(value = "Username")
 	private String username;
 
-	@NotBlank
+	@NotBlank(message = "Can not be blank or null.")
 	@JsonProperty(value = "Password")
 	private String password;
 
-	@NotBlank
+	@NotNull
 	@JsonProperty(value = "ID Person")
 	private Integer personId;	
 	
-	@NotBlank
+	@NotBlank(message = "Can not be blank or null.")
 	@JsonProperty(value = "eMail")
 	private String email;
 	
