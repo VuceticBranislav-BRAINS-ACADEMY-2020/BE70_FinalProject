@@ -41,9 +41,9 @@ public class PersonController {
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(method = RequestMethod.GET, path = "/admin/{id}")
 	public ResponseEntity<?> getPersonById(@PathVariable(value = "id") Integer personId) {
-		if (personId == null) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_PARAMETERS), HttpStatus.NOT_ACCEPTABLE);		
+		if (personId == null) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_PARAMETERS), HttpStatus.BAD_REQUEST);		
 		PersonDTO dto = personService.getPersonDTO(personId);
-		if (dto == null) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.NOT_FOUND), HttpStatus.NOT_ACCEPTABLE);		
+		if (dto == null) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.NOT_FOUND), HttpStatus.BAD_REQUEST);		
 		return new ResponseEntity<PersonDTO>(dto, HttpStatus.OK);	
 	}
 	
@@ -51,7 +51,7 @@ public class PersonController {
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(method = RequestMethod.PUT, path = "/admin/{id}")
 	public ResponseEntity<?> setPerson(@PathVariable(value = "id") Integer personId, @RequestBody NewPersonDTO newPerson) {
-		if (personId == null || newPerson == null) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_PARAMETERS), HttpStatus.NOT_ACCEPTABLE);			
+		if (personId == null || newPerson == null) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_PARAMETERS), HttpStatus.BAD_REQUEST);			
 		PersonDTO dto = personService.setPerson(personId, newPerson);
 		if (dto == null) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.NOT_FOUND), HttpStatus.NOT_ACCEPTABLE);
 		return new ResponseEntity<PersonDTO>(dto, HttpStatus.OK);	
@@ -61,9 +61,9 @@ public class PersonController {
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(method = RequestMethod.DELETE, path = "/admin/{id}")
 	public ResponseEntity<?> removePerson(@PathVariable(value = "id") Integer personId) {
-		if (personId == null) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_PARAMETERS), HttpStatus.NOT_ACCEPTABLE);			
+		if (personId == null) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_PARAMETERS), HttpStatus.BAD_REQUEST);			
 		PersonDTO dto = personService.removePerson(personId);
-		if (dto == null) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.NOT_FOUND), HttpStatus.NOT_ACCEPTABLE);
+		if (dto == null) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.NOT_FOUND), HttpStatus.BAD_REQUEST);
 		return new ResponseEntity<PersonDTO>(dto, HttpStatus.OK);	
 	}
 
@@ -79,7 +79,7 @@ public class PersonController {
 	 * Path inside controller: <B>"/admin/person"</B><BR>
 	 * Allowed for <B>Admin</B><BR>
 	 * Error status messages: <B>none</B><BR>
-	 * Postman identification tag: <B>ADM03</B>
+	 * Postman identification tag: <B>PER01</B>
 	 * @return Added person if there is no errors.
 	 * @see AdminController
 	 */
@@ -89,7 +89,7 @@ public class PersonController {
 	public ResponseEntity<?> addPerson(@Valid @RequestBody NewPersonDTO newPerson) {	
 		
 		PersonEntity person = personService.createPerson(newPerson);	
-		if (person == null ) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_PARAMETERS), HttpStatus.NOT_ACCEPTABLE);
+		if (person == null ) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_PARAMETERS), HttpStatus.BAD_REQUEST);
 		return new ResponseEntity<PersonEntity>(person, HttpStatus.OK);
 	}
 	

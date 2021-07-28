@@ -2,6 +2,7 @@ package com.iktakademija.FinalProject.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,6 +41,13 @@ public class GradeServiceImpl implements GradeService {
 		retVal.setSubjectName(source.getSub_tch().getSub_cls().getSubject().getName());
 		retVal.setStudentName(source.getStd_grp().getStudent().getPerson().getFirstname()+" "+source.getStd_grp().getStudent().getPerson().getLastname());
 		return retVal;
+	}
+	
+	@Override
+	public GradeDTO getGradeDTO(Integer gradeId) {
+		Optional<GradeEntity> op = gradeRepository.findById(gradeId);
+		if (op.isPresent() == false) return null;
+		return this.createDTO(op.get());
 	}
 	
 	@Override

@@ -82,9 +82,9 @@ public class AdminController {
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(method = RequestMethod.GET, path = "/{id}")
 	public ResponseEntity<?> getAdminById(@PathVariable(value = "id") Integer adminId) {
-		if (adminId == null) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_PARAMETERS), HttpStatus.NOT_ACCEPTABLE);		
+		if (adminId == null) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_PARAMETERS), HttpStatus.BAD_REQUEST);		
 		AdminDTO dto = adminService.getAdminDTO(adminId);
-		if (dto == null) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.NOT_FOUND), HttpStatus.NOT_ACCEPTABLE);		
+		if (dto == null) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.NOT_FOUND), HttpStatus.BAD_REQUEST);		
 		return new ResponseEntity<AdminDTO>(dto, HttpStatus.OK);	
 	}
 	
@@ -92,9 +92,9 @@ public class AdminController {
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(method = RequestMethod.PUT, path = "/{id}")
 	public ResponseEntity<?> setAdmin(@PathVariable(value = "id") Integer adminId, @RequestBody NewAdminDTO newAdmin) {
-		if (adminId == null || newAdmin == null) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_PARAMETERS), HttpStatus.NOT_ACCEPTABLE);			
+		if (adminId == null || newAdmin == null) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_PARAMETERS), HttpStatus.BAD_REQUEST);			
 		AdminDTO dto = adminService.setAdmin(adminId, newAdmin);
-		if (dto == null) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.NOT_FOUND), HttpStatus.NOT_ACCEPTABLE);
+		if (dto == null) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.NOT_FOUND), HttpStatus.BAD_REQUEST);
 		return new ResponseEntity<AdminDTO>(dto, HttpStatus.OK);	
 	}
 	
@@ -102,9 +102,9 @@ public class AdminController {
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(method = RequestMethod.DELETE, path = "/{id}")
 	public ResponseEntity<?> removeAdresses(@PathVariable(value = "id") Integer adminId) {
-		if (adminId == null) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_PARAMETERS), HttpStatus.NOT_ACCEPTABLE);			
+		if (adminId == null) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_PARAMETERS), HttpStatus.BAD_REQUEST);			
 		AdminDTO dto = adminService.removeAdmin(adminId);
-		if (dto == null) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.NOT_FOUND), HttpStatus.NOT_ACCEPTABLE);
+		if (dto == null) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.NOT_FOUND), HttpStatus.BAD_REQUEST);
 		return new ResponseEntity<AdminDTO>(dto, HttpStatus.OK);	
 	}
 	
@@ -126,11 +126,12 @@ public class AdminController {
 	public ResponseEntity<?> addAdmin(@Valid @RequestBody NewAdminDTO newUser) {	
 		
 		AdminEntity user = adminService.createAdmin(newUser);
-		if (user == null ) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_PARAMETERS), HttpStatus.NOT_ACCEPTABLE);
+		if (user == null ) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_PARAMETERS), HttpStatus.BAD_REQUEST);
 		return new ResponseEntity<AdminDTO>(adminService.createDTO(user), HttpStatus.OK);
 	
 	}	
 	
+	//AMD02
 	@Secured("ROLE_ADMIN")
 	@JsonView(value = Views.Admin.class)
 	@RequestMapping(method = RequestMethod.POST, path = "/sendlogfile")
@@ -165,7 +166,7 @@ public class AdminController {
 		object.setSubject("Log file " + LocalDate.now());
 		
 		try {
-//			emailService.sendMessageWithAttachment(object, "logs/logging.log");    // TODO Uncomment this
+			emailService.sendMessageWithAttachment(object, "logs/logging.log");   
 			loggingService.loggMessage("Grade added successfully.", Level.INFO);
 		} catch (Exception e) {
 			loggingService.loggMessage("Grade adding fail.", Level.ERROR);

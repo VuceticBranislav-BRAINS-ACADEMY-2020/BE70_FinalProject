@@ -25,7 +25,8 @@ public class ClassServiceImpl implements ClassService {
 		clazz.setName(source.getName());
 		clazz.setStatus(source.getStatus());
 		clazz.setYear(source.getYear());
-		return classRepository.save(clazz);	
+		clazz = classRepository.save(clazz);	
+		return clazz;	
 	}	
 	
 	@Override

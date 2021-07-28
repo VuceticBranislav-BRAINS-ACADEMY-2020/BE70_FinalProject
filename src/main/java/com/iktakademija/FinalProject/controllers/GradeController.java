@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -32,6 +33,7 @@ import com.iktakademija.FinalProject.entities.TeacherEntity;
 import com.iktakademija.FinalProject.entities.UserEntity;
 import com.iktakademija.FinalProject.entities.dtos.ChangeGradeDTO;
 import com.iktakademija.FinalProject.entities.dtos.EmailObject;
+import com.iktakademija.FinalProject.entities.dtos.GradeDTO;
 import com.iktakademija.FinalProject.entities.dtos.NewGradeDTO;
 import com.iktakademija.FinalProject.entities.enums.ERole;
 import com.iktakademija.FinalProject.entities.enums.EStatus;
@@ -101,6 +103,67 @@ public class GradeController {
 //		binder.addValidators(newGradeDTOValidator);
 //	}
 	
+	/**
+	 * REST endpoint that returns all grades from data base. Method always return
+	 * {@link HttpStatus.OK} if there is no internal error.<BR>
+	 * 
+	 * Postman code: <B>GRD10</B>
+	 * 
+	 * @return set of {@link GradeDTO} from database or empty set if nothing to
+	 *         return.
+	 */
+	@Secured("ROLE_ADMIN")
+	@RequestMapping(method = RequestMethod.GET, path = "/admin")
+	public ResponseEntity<?> getAllGrades() {
+
+		// Logging and retriving user.
+		UserEntity user = loginService.getUser();
+		loggingService.loggAndGetUser(user, Level.INFO);
+		loggingService.loggMessage("Method: GradeController.getAllGrades()", Level.INFO);
+
+		// Get list of all users
+		List<GradeDTO> retVal = gradeService.getDTOList();
+
+		// Log results and make respons
+		loggingService.loggOutMessage(HttpStatus.OK.toString(), Level.INFO);
+		return new ResponseEntity<List<GradeDTO>>(retVal, HttpStatus.OK);
+	}
+	
+	/**
+	 * REST endpoint that returns grade from data base by id. Method always return
+	 * {@link HttpStatus.OK} if there is no internal error.<BR>
+	 * 
+	 * Postman code: <B>GRD11</B>
+	 * 
+	 * @return {@link GradeDTO} from database or empty set if nothing to return.
+	 */
+	@Secured("ROLE_ADMIN")
+	@RequestMapping(method = RequestMethod.GET, path = "/admin/{id}")
+	public ResponseEntity<?> getGradeById(@PathVariable(value = "id") Integer gradeId) {
+
+		// Logging and retriving user.
+		UserEntity user = loginService.getUser();
+		loggingService.loggAndGetUser(user, Level.INFO);
+		loggingService.loggMessage("Method: TeacherController.getTeacherById()", Level.INFO);
+
+		// Check teacher id
+		if (gradeId == null) {
+			loggingService.loggTwoOutMessage("Invalid grade id.", HttpStatus.BAD_REQUEST.toString(), Level.INFO);
+			return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_PARAMETERS),
+					HttpStatus.BAD_REQUEST);
+		}
+
+		GradeDTO dto = gradeService.getGradeDTO(gradeId);
+		if (dto == null) {
+			loggingService.loggTwoOutMessage("Teacher not found.", HttpStatus.BAD_REQUEST.toString(), Level.INFO);
+			return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.NOT_FOUND), HttpStatus.BAD_REQUEST);
+		}
+
+		// Log results and make respons
+		loggingService.loggOutMessage(HttpStatus.OK.toString(), Level.INFO);
+		return new ResponseEntity<GradeDTO>(dto, HttpStatus.OK);
+	}
+	
 	private String createErrorMessage(BindingResult result) {
 		return result.getAllErrors().stream().map(ObjectError::getDefaultMessage).collect(Collectors.joining("\n"));
 	}	
@@ -114,7 +177,7 @@ public class GradeController {
 	 * @param result contains {@link BindingResult} data
 	 * @return {@link HttpStatus.OK} if grade is granted.
 	 */
-	// GRD10
+	// GRD01
 	@Secured({"ROLE_ADMIN", "ROLE_TEACHER"})
 	@RequestMapping(method = RequestMethod.POST, path = "")
 	public ResponseEntity<?> addGrade(@RequestBody NewGradeDTO newGrade, BindingResult result) {						
@@ -180,7 +243,7 @@ public class GradeController {
 				object.setSubject(String.format("Grade report. Teacher %s %s granted grade from %s to %s %s",
 						teacher.getPerson().getFirstname(), teacher.getPerson().getLastname(), subject.getName(),
 						student.getPerson().getFirstname(), student.getPerson().getLastname()));
-//				emailService.sendTemplateMessage(object, gradeService.createDTO(grade));                   // TODO Uncomment this
+				emailService.sendTemplateMessage(object, gradeService.createDTO(grade));
 			}	
 			loggingService.loggTwoMessage(String.format("Grade (%s) granted to student (%s) from teacher (%s) on subject (%s).", grade.getId(), student.getId(), teacher.getId(), subject.getId()), "Grade added successfully.", Level.INFO);	
 		} catch (Exception e) {
@@ -198,7 +261,7 @@ public class GradeController {
 	 * @param newGrade hold all data nessesery to change grade
 	 * @return {@link HttpStatus.OK} if grade is changed.
 	 */
-	// GRD11
+	// GRD12
 	@Secured({"ROLE_ADMIN", "ROLE_TEACHER"})	
 	@RequestMapping(method = RequestMethod.PUT, path = "")
 	public ResponseEntity<?> changeGrade( @RequestBody ChangeGradeDTO newGrade) {			
@@ -256,7 +319,7 @@ public class GradeController {
 						grade.getSub_tch().getSub_cls().getSubject().getName(),
 						grade.getStd_grp().getStudent().getPerson().getFirstname(), 
 						grade.getStd_grp().getStudent().getPerson().getLastname()));
-//				emailService.sendTemplateMessage(object, gradeService.createDTO(grade));               // TODO Uncomment this
+				emailService.sendTemplateMessage(object, gradeService.createDTO(grade));      
 			}	
 			loggingService.loggTwoMessage(String.format("Grade (%s) changed for student (%s) from teacher (%s) on subject (%s).", grade.getId(), grade.getStd_grp().getStudent().getId(), grade.getSub_tch().getTeachers().getId(), grade.getSub_tch().getSub_cls().getSubject().getId()), "Grade changed successfully.", Level.INFO);	
 		} catch (Exception e) {
@@ -327,7 +390,7 @@ public class GradeController {
 						grade.getSub_tch().getSub_cls().getSubject().getName(),
 						grade.getStd_grp().getStudent().getPerson().getFirstname(), 
 						grade.getStd_grp().getStudent().getPerson().getLastname()));
-//				emailService.sendTemplateMessage(object, gradeService.createDTO(grade));                  // TODO Uncomment this
+				emailService.sendTemplateMessage(object, gradeService.createDTO(grade));            
 			}	
 			loggingService.loggTwoMessage(String.format("Grade (%s) deleted for student (%s) from teacher (%s) on subject (%s).", grade.getId(), grade.getStd_grp().getStudent().getId(), grade.getSub_tch().getTeachers().getId(), grade.getSub_tch().getSub_cls().getSubject().getId()), "Grade changed successfully.", Level.INFO);	
 		} catch (Exception e) {

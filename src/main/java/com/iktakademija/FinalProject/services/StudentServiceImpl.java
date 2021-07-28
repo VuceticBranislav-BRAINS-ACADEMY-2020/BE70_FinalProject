@@ -65,7 +65,8 @@ public class StudentServiceImpl implements StudentService {
 		PersonEntity person = opp.get();
 		
 		StudentEntity student = new StudentEntity(source.getUsername(), Encryption.passwordEncode(source.getPassword()), person, role);		
-		return studentRepository.save(student);	
+		student = studentRepository.save(student);	
+		return student;
 	}
 	
 	@Override

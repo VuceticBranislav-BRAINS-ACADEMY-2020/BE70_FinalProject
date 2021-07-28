@@ -11,8 +11,6 @@ import com.iktakademija.FinalProject.entities.PersonEntity;
 
 public interface PersonRepository extends CrudRepository<PersonEntity, Integer> {
 
-	@Override
-	@Query(value = "FROM PersonEntity AS p WHERE p.id=:id AND p.status<>'DELETED'")
 	Optional<PersonEntity> findById(@Param("id") Integer id);
 	
 	@Query(value = "FROM PersonEntity AS p WHERE p.status<>'DELETED'")

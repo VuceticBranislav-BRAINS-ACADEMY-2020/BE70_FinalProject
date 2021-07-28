@@ -59,6 +59,8 @@ public class ParentServiceImpl implements ParentService {
 		
 		ParentEntity parent = new ParentEntity(source.getUsername(), Encryption.passwordEncode(source.getPassword()), person, role);	
 		parent.setEmail(source.getEmail());
+		
+		parent = parentRepository.save(parent);	
 		return parent;
 	}
 	

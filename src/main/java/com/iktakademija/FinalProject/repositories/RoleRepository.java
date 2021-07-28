@@ -11,7 +11,6 @@ import com.iktakademija.FinalProject.entities.enums.ERole;
 
 public interface RoleRepository extends CrudRepository<RoleEntity, Integer> {
 	
-	@Override
 	public Optional<RoleEntity> findById(Integer id);
 	
 	// Return ERole enumeration from RoleEntity for given Id

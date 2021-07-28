@@ -17,8 +17,6 @@ public interface GradeRepository extends CrudRepository<GradeEntity, Integer> {
 	@Query(value = "FROM GradeEntity AS a INNER JOIN FETCH a.std_grp AS b WHERE b.student = :student")
 	List<GradeEntity> findAllGradesForStudent(@Param("student") StudentEntity student);
 
-	@Override
-	@Query(value = "FROM GradeEntity AS g WHERE g.id = :id AND g.status <> 'DELETED'")
 	Optional<GradeEntity> findById(@Param("id") Integer id);
 
 	@Query(value = "FROM GradeEntity AS g WHERE g.id = :id")

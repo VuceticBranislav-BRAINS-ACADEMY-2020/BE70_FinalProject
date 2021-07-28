@@ -55,7 +55,8 @@ public class GroupServiceImpl implements GroupService {
 		group.setLetter(source.getLetter());
 		group.setStatus(source.getStatus());
 
-		return groupRepository.save(group);
+		group = groupRepository.save(group);
+		return group;
 	}
 
 	@Override

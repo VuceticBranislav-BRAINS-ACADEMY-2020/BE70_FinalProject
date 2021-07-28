@@ -79,9 +79,9 @@ public class ParentController {
 	@JsonView(value = Views.Admin.class)
 	@RequestMapping(method = RequestMethod.GET, path = "/{id}")
 	public ResponseEntity<?> getParentsById(@PathVariable(value = "id") Integer parentID) {	
-		if (parentID == null) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_PARAMETERS), HttpStatus.NOT_ACCEPTABLE);		
+		if (parentID == null) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_PARAMETERS), HttpStatus.BAD_REQUEST);		
 		ParentDTO dto = parentService.getParentDTO(parentID);
-		if (dto == null) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.NOT_FOUND), HttpStatus.NOT_ACCEPTABLE);
+		if (dto == null) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.NOT_FOUND), HttpStatus.BAD_REQUEST);
 		
 		return new ResponseEntity<ParentDTO>(dto , HttpStatus.OK);		
 	}
@@ -111,9 +111,9 @@ public class ParentController {
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(method = RequestMethod.PUT, path = "/admin/{id}")
 	public ResponseEntity<?> setParent(@PathVariable(value = "id") Integer parentId, @RequestBody NewParentDTO newParent) {
-		if (parentId == null || newParent == null) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_PARAMETERS), HttpStatus.NOT_ACCEPTABLE);			
+		if (parentId == null || newParent == null) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_PARAMETERS), HttpStatus.BAD_REQUEST);			
 		ParentDTO dto = parentService.setParent(parentId, newParent);
-		if (dto == null) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.NOT_FOUND), HttpStatus.NOT_ACCEPTABLE);
+		if (dto == null) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.NOT_FOUND), HttpStatus.BAD_REQUEST);
 		return new ResponseEntity<ParentDTO>(dto, HttpStatus.OK);	
 	}
 	
@@ -121,9 +121,9 @@ public class ParentController {
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(method = RequestMethod.DELETE, path = "/admin/{id}")
 	public ResponseEntity<?> removeParent(@PathVariable(value = "id") Integer parentId) {
-		if (parentId == null) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_PARAMETERS), HttpStatus.NOT_ACCEPTABLE);			
+		if (parentId == null) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_PARAMETERS), HttpStatus.BAD_REQUEST);			
 		ParentDTO dto = parentService.removeParent(parentId);
-		if (dto == null) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.NOT_FOUND), HttpStatus.NOT_ACCEPTABLE);
+		if (dto == null) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.NOT_FOUND), HttpStatus.BAD_REQUEST);
 		return new ResponseEntity<ParentDTO>(dto, HttpStatus.OK);	
 	}
 	
@@ -132,14 +132,18 @@ public class ParentController {
 	@JsonView(value = Views.Admin.class)
 	@RequestMapping(method = RequestMethod.PUT, path = "/admin/child")
 	public ResponseEntity<?> addChild(@RequestParam("parent") Integer parentID, @RequestParam("child") Integer childID) {
-		if (parentID == null || childID == null) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_PARAMETERS), HttpStatus.NOT_ACCEPTABLE);
+		if (parentID == null || childID == null) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_PARAMETERS), HttpStatus.BAD_REQUEST);
 		
 		Optional<ParentEntity> opp = parentRepository.findById(parentID);
-		if (opp.isPresent() == false) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.NOT_FOUND), HttpStatus.NOT_ACCEPTABLE);
+		if (opp.isPresent() == false) {
+			return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.NOT_FOUND), HttpStatus.BAD_REQUEST);
+		}
 		ParentEntity parent = opp.get();
 		
 		Optional<StudentEntity> ops = studentRepository.findById(childID);
-		if (ops.isPresent() == false) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.NOT_FOUND), HttpStatus.NOT_ACCEPTABLE);
+		if (ops.isPresent() == false) {
+			return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.NOT_FOUND), HttpStatus.BAD_REQUEST);
+		}
 		StudentEntity student = ops.get();		
 		
 		
@@ -155,7 +159,7 @@ public class ParentController {
 	@RequestMapping(method = RequestMethod.GET, path = "/admin/getchilds/{id}")
 	public ResponseEntity<?> getAllChildsForParent(@PathVariable(value = "id") Integer parentID) {		
 		Optional<ParentEntity> op = parentRepository.findById(parentID);
-		if (op.isPresent() == false) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.NOT_FOUND), HttpStatus.NOT_ACCEPTABLE);
+		if (op.isPresent() == false) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.NOT_FOUND), HttpStatus.BAD_REQUEST);
 		ParentEntity parent = op.get();		
 		List<StudentDTO> students = parentService.getAllChildrens(parent);		
 		return new ResponseEntity<List<StudentDTO>>(students, HttpStatus.OK);			

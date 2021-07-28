@@ -3,6 +3,7 @@ package com.iktakademija.FinalProject.entities.dtos;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -41,19 +42,19 @@ public class NewGradeDTO {
 	@JsonProperty(value = "Stage")
 	private EStage stage;	
 
-	@NotNull(message = "Student with given ID do not exists. Pleas enter valid student ID.")
+	@Positive(message = "Student with given ID do not exists. Pleas enter valid student ID.")
 	@JsonProperty(value = "ID Student")
 	private Integer idStudent;
 	
-	@NotNull(message = "Teacher with given ID do not exists. Pleas enter valid teacher ID.")
+	@Positive(message = "Teacher with given ID do not exists. Pleas enter valid teacher ID.")
 	@JsonProperty(value = "ID Teacher")
 	private Integer idTeacher;
 	
-	@NotNull(message = "Subject with given ID do not exists. Pleas enter valid subject ID.")
+	@Positive(message = "Subject with given ID do not exists. Pleas enter valid subject ID.")
 	@JsonProperty(value = "ID Subject")
 	private Integer idSubject;	
 	
-	@NotNull(message = "Group with given ID do not exists. Pleas enter valid group ID.")
+	@Positive(message = "Group with given ID do not exists. Pleas enter valid group ID.")
 	@JsonProperty(value = "ID Group")
 	private Integer idGroup;
 	

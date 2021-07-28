@@ -1,6 +1,7 @@
 package com.iktakademija.FinalProject.repositories;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -18,4 +19,9 @@ public interface JoinTableStudentParentRepository extends CrudRepository<JoinTab
 	@Query(value = "SELECT id FROM StudentEntity AS s WHERE s.id IN (SELECT student FROM JoinTableStudentParent WHERE parent = :ID)")
 	List<Integer> findChildOfParent(@Param(value = "ID") ParentEntity childID);
 
+	@Override
+	List<JoinTableStudentParent> findAll();
+	
+	@Override
+	Optional<JoinTableStudentParent> findById(Integer id);
 }

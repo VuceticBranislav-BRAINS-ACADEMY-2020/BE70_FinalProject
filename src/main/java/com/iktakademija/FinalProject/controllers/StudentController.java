@@ -107,7 +107,7 @@ public class StudentController {
 		StudentDTO dto = studentService.getStudentDTO(studentId);
 		if (dto == null) {
 			loggingService.loggTwoOutMessage("Student not found.", HttpStatus.BAD_REQUEST.toString(), Level.INFO);
-			return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.NOT_FOUND), HttpStatus.NOT_ACCEPTABLE);		
+			return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.NOT_FOUND), HttpStatus.BAD_REQUEST);		
 		}
 		
 		// Log results and make respons
@@ -121,7 +121,7 @@ public class StudentController {
 	public ResponseEntity<?> setStudent(@PathVariable(value = "id") Integer studentId, @RequestBody NewStudentDTO newStudent) {
 		if (studentId == null || newStudent == null) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_PARAMETERS), HttpStatus.BAD_REQUEST);			
 		StudentDTO dto = studentService.setStudent(studentId, newStudent);
-		if (dto == null) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.NOT_FOUND), HttpStatus.NOT_ACCEPTABLE);
+		if (dto == null) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.NOT_FOUND), HttpStatus.BAD_REQUEST);
 		return new ResponseEntity<StudentDTO>(dto, HttpStatus.OK);	
 	}
 	
@@ -131,7 +131,7 @@ public class StudentController {
 	public ResponseEntity<?> removeStudent(@PathVariable(value = "id") Integer studentId) {
 		if (studentId == null) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_PARAMETERS), HttpStatus.BAD_REQUEST);			
 		StudentDTO dto = studentService.removeStudent(studentId);
-		if (dto == null) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.NOT_FOUND), HttpStatus.NOT_ACCEPTABLE);
+		if (dto == null) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.NOT_FOUND), HttpStatus.BAD_REQUEST);
 		return new ResponseEntity<StudentDTO>(dto, HttpStatus.OK);	
 	}
 	

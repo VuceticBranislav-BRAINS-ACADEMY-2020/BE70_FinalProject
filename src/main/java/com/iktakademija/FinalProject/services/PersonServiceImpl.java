@@ -45,8 +45,7 @@ public class PersonServiceImpl implements PersonService {
 		person.setMphone(source.getMphone());
 		person.setStatus(EStatus.ACTIVE);
 		
-		person = personRepository.save(person);
-		
+		person = personRepository.save(person);		
 		return person;
 	}	
 	

@@ -12,8 +12,6 @@ import com.iktakademija.FinalProject.entities.StudentEntity;
 
 public interface StudentRepository extends CrudRepository<StudentEntity, Integer> {
 
-	@Override
-	@Query(value = "FROM StudentEntity AS s WHERE s.id = :id")
 	Optional<StudentEntity> findById(@Param("id") Integer id);
 	
 	@Query(value = "FROM StudentEntity AS s WHERE s.status <> 'DELETED'")

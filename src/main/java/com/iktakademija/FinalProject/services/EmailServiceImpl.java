@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 
 import javax.mail.internet.MimeMessage;
 
+import org.slf4j.event.Level;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
@@ -21,11 +22,24 @@ public class EmailServiceImpl implements EmailService {
 	@Autowired
 	private JavaMailSender mailSender;
 	
+	@Autowired
+	private LoggingService loggingService;
+	
 	@Value("${spring.mail.deture}")
 	private String deturedEmail;
+
+	@Value("${spring.mail.send}")
+	private boolean sendEmail;
 	
 	@Override
 	public void sendTemplateMessage(EmailObject object, GradeDTO dto) throws Exception {
+		
+		if (sendEmail == false) {
+			loggingService.loggMessageWithoutHeader(" >>> Email sending", Level.INFO);
+			loggingService.loggMessageWithoutHeader("  |  Email sending disabled.", Level.INFO);
+			loggingService.loggMessageWithoutHeader(" >>> -------------", Level.INFO);
+			return;
+		}
 		
 		MimeMessage mail = mailSender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(mail, true);
@@ -68,6 +82,13 @@ public class EmailServiceImpl implements EmailService {
 	@Override
 	public void sendMessageWithAttachment(EmailObject object, String pathToAttachment) throws Exception {
 
+		if (sendEmail == false) {
+			loggingService.loggMessageWithoutHeader(" >>> Email sending", Level.INFO);
+			loggingService.loggMessageWithoutHeader("  |  Email sending disabled.", Level.INFO);
+			loggingService.loggMessageWithoutHeader(" >>> -------------", Level.INFO);
+			return;
+		}
+		
 		MimeMessage mimeMessage = mailSender.createMimeMessage();
 		FileSystemResource file = new FileSystemResource(new File(pathToAttachment));
 		MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);

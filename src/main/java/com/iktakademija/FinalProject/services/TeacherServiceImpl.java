@@ -75,7 +75,8 @@ public class TeacherServiceImpl implements TeacherService {
 		PersonEntity person = opp.get();
 		
 		TeacherEntity teacher = new TeacherEntity(source.getUsername(), Encryption.passwordEncode(source.getPassword()), person, role);		
-		return teacherRepository.save(teacher);	
+		teacher = teacherRepository.save(teacher);	
+		return teacher;	
 	}	
 	
 	@Override

@@ -1,5 +1,8 @@
 package com.iktakademija.FinalProject.entities.dtos;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Positive;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -21,12 +24,15 @@ public class NewGroupDTO {
 	 * Attributes
 	 ************************************************************/
 	
+	@NotEmpty(message = "Class mark can not be empty.")
 	@JsonProperty(value = "Class Mark")
 	private String letter;	
 
+	@Positive(message = "Must not be positiv index number.")
 	@JsonProperty(value = "ID Homeclass Teacher")
 	private Integer homeClassMaster;
 	
+	@Positive(message = "Must not be positiv index number.")
 	@JsonProperty(value = "ID Class")
 	private Integer clazz;
 	

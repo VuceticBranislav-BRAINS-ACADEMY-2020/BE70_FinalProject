@@ -1,6 +1,7 @@
 package com.iktakademija.FinalProject.entities.dtos;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -8,7 +9,6 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.iktakademija.FinalProject.entities.ClassEntity;
 import com.iktakademija.FinalProject.entities.enums.EStatus;
 import com.iktakademija.FinalProject.securities.Views;
-import com.sun.istack.NotNull;
 
 /**
  * Class DTO.
@@ -28,7 +28,7 @@ public class NewClassDTO {
 	@JsonProperty(value = "Name")
 	private String name;
 	
-	@NotNull
+	@NotNull(message = "Must not be null.")
 	@JsonProperty(value = "Year")
 	private Integer year;
 	

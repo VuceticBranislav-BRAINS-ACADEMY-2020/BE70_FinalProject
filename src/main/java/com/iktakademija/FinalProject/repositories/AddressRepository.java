@@ -12,8 +12,6 @@ import com.iktakademija.FinalProject.entities.AddressEntity;
 
 public interface AddressRepository extends CrudRepository<AddressEntity, Integer> {
 	
-	@Override
-	@Query(value = "FROM AddressEntity AS a WHERE a.id = :id")
 	Optional<AddressEntity> findById(@Param("id") Integer id);
 	 
 	@Override

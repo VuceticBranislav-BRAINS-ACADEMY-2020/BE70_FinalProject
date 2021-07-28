@@ -69,8 +69,9 @@ public class SubjectServiceImpl implements SubjectService {
 
 	@Override
 	public SubjectEntity createSubject(NewSubjectDTO source) {				
-		SubjectEntity teacher = new SubjectEntity(source.getName());		
-		return subjectRepository.save(teacher);	
+		SubjectEntity subject = new SubjectEntity(source.getName());	
+		subject = subjectRepository.save(subject);
+		return subject;	
 	}
 
 }
