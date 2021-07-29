@@ -43,12 +43,12 @@ public class JoinTableStudentParentServiceImpl implements JoinTableStudentParent
 			return null;
 		StudentEntity student = op2.get();
 
-		JoinTableStudentParent address = new JoinTableStudentParent();
-		address.setParent(parent);
-		address.setStudent(student);
+		JoinTableStudentParent entity = new JoinTableStudentParent();
+		entity.setParent(parent);
+		entity.setStudent(student);
 
-		address = joinTableStudentParentRepository.save(address);
-		return address;
+		entity = joinTableStudentParentRepository.save(entity);
+		return entity;
 	}
 
 	@Override
@@ -112,7 +112,6 @@ public class JoinTableStudentParentServiceImpl implements JoinTableStudentParent
 		joinTableStudentParentRepository.delete(entity);
 		return this.createDTO(entity);
 	}
-
 	
 	@Override
 	public List<JoinTableStudentParentDTO> getDTOList() {

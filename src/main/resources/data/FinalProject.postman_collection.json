@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "db136f31-ef27-4f3b-8dea-87579f4c0f11",
+		"_postman_id": "ad51e4e8-968e-4fe6-a024-dc01e22774db",
 		"name": "FinalProject",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -214,7 +214,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"Username\": \"Admin 01\",\r\n    \"Password\": \"pass\",\r\n    \"ID Person\": \"25\",\r\n    \"eMail\": \"new2email@email.com\"\r\n}",
+							"raw": "{\r\n    \"Username\": \"Admin 01\",\r\n    \"Password\": \"pass\",\r\n    \"ID Person\": 300,\r\n    \"eMail\": \"new2email@email.com\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -572,7 +572,7 @@
 						"method": "PUT",
 						"header": [],
 						"url": {
-							"raw": "{{LocalHost}}/{{ApiVersion}}/parent/admin/child/?parent=37&child=33",
+							"raw": "{{LocalHost}}/{{ApiVersion}}/parent/admin/child/?parent=472&child=435",
 							"host": [
 								"{{LocalHost}}"
 							],
@@ -586,11 +586,11 @@
 							"query": [
 								{
 									"key": "parent",
-									"value": "37"
+									"value": "472"
 								},
 								{
 									"key": "child",
-									"value": "33"
+									"value": "435"
 								}
 							]
 						}
@@ -652,6 +652,50 @@
 								"{{ApiVersion}}",
 								"parent",
 								"getinfo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PAR30 - changeUsernameAndPassword",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "user",
+									"value": "user 17",
+									"type": "text"
+								},
+								{
+									"key": "pass",
+									"value": "1717",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/parent/changecredentials",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"parent",
+								"changecredentials"
 							]
 						}
 					},
@@ -823,6 +867,421 @@
 								"teacher",
 								"admin",
 								"31"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TEA20 - getAllGrades",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/teacher/getallgrades",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"teacher",
+								"getallgrades"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TEA30 - changeUsernameAndPassword",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "user",
+									"value": "user 17",
+									"type": "text"
+								},
+								{
+									"key": "pass",
+									"value": "1717",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/teacher/changecredentials",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"teacher",
+								"changecredentials"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Group",
+			"item": [
+				{
+					"name": "GRP01 - addGroup",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Class Mark\": \"IX\",\r\n    \"ID Homeclass Teacher\": 488,\r\n    \"ID Class\": 25,\r\n    \"Status\": \"DELETED\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/group/admin",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"group",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GRP10 - getAllGroups",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/group/admin",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"group",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GRP11 - getGroupById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/group/admin/600",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"group",
+								"admin",
+								"600"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GRP12 - setGroup",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Class Mark\": \"IX\",\r\n    \"ID Homeclass Teacher\": 485,\r\n    \"ID Class\": 25,\r\n    \"Status\": \"ACTIVE\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/group/admin/600",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"group",
+								"admin",
+								"600"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GRP13 - removeGroup",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/group/admin/606",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"group",
+								"admin",
+								"606"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Class",
+			"item": [
+				{
+					"name": "CLS01 - addClass",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Name\": \"IX\",\r\n    \"Year\": 2023,\r\n    \"Status\": \"ACTIVE\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/class/admin",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"class",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CLS10 - getAllClasses",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/class/admin",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"class",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CLS11 - getClassesById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/class/admin/10",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"class",
+								"admin",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CLS12 - setClass",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Name\": \"1\",\r\n    \"Year\": 2030,\r\n    \"Status\": \"ACTIVE\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/class/admin/10",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"class",
+								"admin",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CLS13 - removeClass",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/class/admin/10",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"class",
+								"admin",
+								"10"
 							]
 						}
 					},
@@ -1058,6 +1517,50 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "STU30 - changeUsernameAndPassword",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "user",
+									"value": "user 17",
+									"type": "text"
+								},
+								{
+									"key": "pass",
+									"value": "1717",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/student/changecredentials",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"student",
+								"changecredentials"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -1081,7 +1584,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"City\": \"New York\",\r\n    \"Stresst\": \"Bleecker Street\",\r\n    \"Number\": \"177a\",\r\n    \"Apartment\": null\r\n}",
+							"raw": "{\r\n    \"City\": \"New York\",\r\n    \"Stresst\": \"Bleecker Street\",\r\n    \"Number\": \"177c\",\r\n    \"Apartment\": null,\r\n    \"Status\": \"ACTIVE\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1147,7 +1650,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{LocalHost}}/{{ApiVersion}}/address/admin/15",
+							"raw": "{{LocalHost}}/{{ApiVersion}}/address/admin/201",
 							"host": [
 								"{{LocalHost}}"
 							],
@@ -1155,7 +1658,7 @@
 								"{{ApiVersion}}",
 								"address",
 								"admin",
-								"15"
+								"201"
 							]
 						}
 					},
@@ -1178,7 +1681,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"City\": \"New York222\",\r\n    \"Stresst\": \"Bleecker Street222\",\r\n    \"Number\": \"222\",\r\n    \"Apartment\": \"2\"\r\n}",
+							"raw": "{\r\n    \"City\": \"New York222\",\r\n    \"Stresst\": \"Bleecker Street222\",\r\n    \"Number\": \"222\",\r\n    \"Apartment\": 2,\r\n    \"Status\": \"ACTIVE\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1186,7 +1689,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{LocalHost}}/{{ApiVersion}}/address/admin/15",
+							"raw": "{{LocalHost}}/{{ApiVersion}}/address/admin/2057",
 							"host": [
 								"{{LocalHost}}"
 							],
@@ -1194,7 +1697,7 @@
 								"{{ApiVersion}}",
 								"address",
 								"admin",
-								"15"
+								"2057"
 							]
 						}
 					},
@@ -1216,7 +1719,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{LocalHost}}/{{ApiVersion}}/address/admin/14",
+							"raw": "{{LocalHost}}/{{ApiVersion}}/address/admin/2058",
 							"host": [
 								"{{LocalHost}}"
 							],
@@ -1224,7 +1727,7 @@
 								"{{ApiVersion}}",
 								"address",
 								"admin",
-								"14"
+								"2058"
 							]
 						}
 					},
@@ -1252,7 +1755,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"First Name\": \"Petar\",\r\n    \"Last Name\": \"Petrovic\",\r\n    \"JMBG\": \"15102000315316\",\r\n    \"Phone Number\": \"063636363\",\r\n    \"Birth Date\": \"15-10-2000\",\r\n    \"ID Address\": \"11\"\r\n}",
+							"raw": "{\r\n    \"First Name\": \"Petar\",\r\n    \"Last Name\": \"Petrovic\",\r\n    \"JMBG\": \"1510985315316\",\r\n    \"Phone Number\": \"063/636-363\",\r\n    \"Birth Date\": \"15-10-2000\",\r\n    \"ID Address\": \"200\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1318,7 +1821,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{LocalHost}}/{{ApiVersion}}/person/admin/21",
+							"raw": "{{LocalHost}}/{{ApiVersion}}/person/admin/300",
 							"host": [
 								"{{LocalHost}}"
 							],
@@ -1326,7 +1829,7 @@
 								"{{ApiVersion}}",
 								"person",
 								"admin",
-								"21"
+								"300"
 							]
 						}
 					},
@@ -1578,7 +2081,7 @@
 			"name": "Grade",
 			"item": [
 				{
-					"name": "GRD10 - addGrade",
+					"name": "GRD01 - addGrade",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -1602,14 +2105,143 @@
 							}
 						},
 						"url": {
-							"raw": "{{LocalHost}}/{{ApiVersion}}/grade/add",
+							"raw": "{{LocalHost}}/{{ApiVersion}}/grade",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"grade"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GRD10 - getAllGrade",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/grade/admin",
 							"host": [
 								"{{LocalHost}}"
 							],
 							"path": [
 								"{{ApiVersion}}",
 								"grade",
-								"add"
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GRD11 - getGradeById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/grade/admin/1100",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"grade",
+								"admin",
+								"1100"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GRD12 - changeGrade",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ID\": \"2000\",\r\n    \"Type\": \"EXAM\",\r\n    \"Value\": \"4\",\r\n    \"Stage\": \"SECOND\",\r\n    \"State\": \"DELETED\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/grade",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"grade"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GRD13 - deleteGrade",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/grade?id=2020",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"grade"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "2020"
+								}
 							]
 						}
 					},
@@ -1618,33 +2250,668 @@
 			]
 		},
 		{
-			"name": "test",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{AuthToken_Admin}}",
-							"type": "string"
+			"name": "JT_StudentGroup",
+			"item": [
+				{
+					"name": "JGC01 - getEntityById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ID Student\": 435,\r\n    \"ID Group\": 609\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/jtgc",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"jtgc"
+							]
 						}
-					]
+					},
+					"response": []
 				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{LocalHost}}/{{ApiVersion}}/teacher/test",
-					"host": [
-						"{{LocalHost}}"
-					],
-					"path": [
-						"{{ApiVersion}}",
-						"teacher",
-						"test"
-					]
+				{
+					"name": "JGC10 - getAllEntities",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/jtgc",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"jtgc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "JGC11 - getEntityById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/jtgc/1000",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"jtgc",
+								"1000"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "JGC12 - setEntity",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ID Student\": 435,\r\n    \"ID Group\": 610\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/jtgc/1034",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"jtgc",
+								"1034"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "JGC13 - removeEntity",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/jtgc/1033",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"jtgc",
+								"1033"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
+		},
+		{
+			"name": "JT_StudentParent",
+			"item": [
+				{
+					"name": "JSP01 - getEntityById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ID Student\": 435,\r\n    \"ID Parent\": 471\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/jtsp",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"jtsp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "JSP10 - getAllEntities",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/jtsp",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"jtsp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "JSP11 - getEntityById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/jtsp/700",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"jtsp",
+								"700"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "JSP12 - setEntity",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ID Student\": 436,\r\n    \"ID Parent\": 472\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/jtsp/735",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"jtsp",
+								"735"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "JSP13 - removeEntity",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/jtsp/730",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"jtsp",
+								"730"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "JT_SubjectClass",
+			"item": [
+				{
+					"name": "JSC01 - getEntityById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ID Subject\": 110,\r\n    \"ID Class\": 21,\r\n    \"Fond\": 5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/jtsc",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"jtsc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "JSC10 - getAllEntities",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/jtsc",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"jtsc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "JSC11 - getEntityById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/jtsc/900",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"jtsc",
+								"900"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "JSC12 - setEntity",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ID Subject\": 111,\r\n    \"ID Class\": 23,\r\n    \"Fond\": 5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/jtsc/955",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"jtsc",
+								"955"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "JSC13 - removeEntity",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/jtsc/2051",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"jtsc",
+								"2051"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "JT_SubjectTeacher",
+			"item": [
+				{
+					"name": "JST01 - getEntityById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ID Group\": 615,\r\n    \"ID Teacher\": 481,\r\n    \"ID Subject Class\": 960\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/jtst",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"jtst"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "JST10 - getAllEntities",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/jtst",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"jtst"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "JST11 - getEntityById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/jtst/800",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"jtst",
+								"800"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "JST12 - setEntity",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ID Group\": 615,\r\n    \"ID Teacher\": 481,\r\n    \"ID Subject Class\": 960\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/jtst/2000",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"jtst",
+								"2000"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "JST13 - removeEntity",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/jtst/830",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"jtst",
+								"830"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }

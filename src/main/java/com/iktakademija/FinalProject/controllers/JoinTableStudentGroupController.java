@@ -18,17 +18,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.iktakademija.FinalProject.controllers.utils.RESTError;
 import com.iktakademija.FinalProject.controllers.utils.enums.ERESTErrorCodes;
-import com.iktakademija.FinalProject.entities.JoinTableStudentParent;
+import com.iktakademija.FinalProject.entities.JoinTableStudentGroup;
 import com.iktakademija.FinalProject.entities.UserEntity;
-import com.iktakademija.FinalProject.entities.dtos.JoinTableStudentParentDTO;
-import com.iktakademija.FinalProject.repositories.JoinTableStudentParentRepository;
-import com.iktakademija.FinalProject.services.JoinTableStudentParentService;
+import com.iktakademija.FinalProject.entities.dtos.JoinTableStudentGroupDTO;
+import com.iktakademija.FinalProject.repositories.JoinTableStudentGroupRepository;
+import com.iktakademija.FinalProject.services.JoinTableStudentGroupService;
 import com.iktakademija.FinalProject.services.LoggingService;
 import com.iktakademija.FinalProject.services.LoginService;
 
 @RestController
-@RequestMapping(path = "/api/v1/jtsp")
-public class JoinTableStudentParentController {
+@RequestMapping(path = "/api/v1/jtgc")
+public class JoinTableStudentGroupController {
 
 	@Autowired
 	private LoginService loginService;
@@ -37,14 +37,14 @@ public class JoinTableStudentParentController {
 	private LoggingService loggingService;
 
 	@Autowired
-	private JoinTableStudentParentRepository joinTableStudentParentRepository;
+	private JoinTableStudentGroupRepository joinTableStudentGroupRepository;
 
 	@Autowired
-	private JoinTableStudentParentService joinTableStudentParentService;
+	private JoinTableStudentGroupService joinTableStudentGroupService;
 
 	/**
 	 * Endpoint to get all join table entities.<BR>
-	 * Postman code: <B>JSP10</B>
+	 * Postman code: <B>JGC10</B>
 	 */
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(method = RequestMethod.GET, path = "")
@@ -53,19 +53,19 @@ public class JoinTableStudentParentController {
 		// Logging and retriving user.
 		UserEntity user = loginService.getUser();
 		loggingService.loggAndGetUser(user, Level.INFO);
-		loggingService.loggMessage("Method: JoinTableStudentParentController.getAllEntities()", Level.INFO);
+		loggingService.loggMessage("Method: JoinTableStudentGroupController.getAllEntities()", Level.INFO);
 
 		// Get all entity
-		List<JoinTableStudentParentDTO> retVal = joinTableStudentParentService.getDTOList();
+		List<JoinTableStudentGroupDTO> retVal = joinTableStudentGroupService.getDTOList();
 
 		// Log results and make respons
 		loggingService.loggOutMessage(HttpStatus.OK.toString(), Level.INFO);
-		return new ResponseEntity<List<JoinTableStudentParentDTO>>(retVal, HttpStatus.OK);
+		return new ResponseEntity<List<JoinTableStudentGroupDTO>>(retVal, HttpStatus.OK);
 	}
 
 	/**
 	 * Endpoint to get join table entity by id.<BR>
-	 * Postman code: <B>JSP11</B>
+	 * Postman code: <B>JGC11</B>
 	 */
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(method = RequestMethod.GET, path = "/{id}")
@@ -74,7 +74,7 @@ public class JoinTableStudentParentController {
 		// Logging and retriving user.
 		UserEntity user = loginService.getUser();
 		loggingService.loggAndGetUser(user, Level.INFO);
-		loggingService.loggMessage("Method: JoinTableStudentParentController.getEntity()", Level.INFO);
+		loggingService.loggMessage("Method: JoinTableStudentGroupController.getEntity()", Level.INFO);
 
 		// Check id
 		if (Id == null) {
@@ -84,7 +84,7 @@ public class JoinTableStudentParentController {
 		}
 
 		// Get entity
-		Optional<JoinTableStudentParent> dto = joinTableStudentParentRepository.findById(Id);
+		Optional<JoinTableStudentGroup> dto = joinTableStudentGroupRepository.findById(Id);
 		if (dto == null) {
 			loggingService.loggTwoOutMessage("Entity not found.", HttpStatus.BAD_REQUEST.toString(), Level.INFO);
 			return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.NOT_FOUND), HttpStatus.BAD_REQUEST);
@@ -92,24 +92,24 @@ public class JoinTableStudentParentController {
 
 		// Log results and make respons
 		loggingService.loggOutMessage(HttpStatus.OK.toString(), Level.INFO);
-		JoinTableStudentParentDTO retVal = joinTableStudentParentService.createDTO(dto.get());
-		return new ResponseEntity<JoinTableStudentParentDTO>(retVal, HttpStatus.OK);
+		JoinTableStudentGroupDTO retVal = joinTableStudentGroupService.createDTO(dto.get());
+		return new ResponseEntity<JoinTableStudentGroupDTO>(retVal, HttpStatus.OK);
 	}
 
 	/**
 	 * Endpoint to create table entity.<BR>
-	 * Postman code: <B>JSP01</B>
+	 * Postman code: <B>JGC01</B>
 	 */
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(method = RequestMethod.POST, path = "")
-	public ResponseEntity<?> createEntity(@Valid @RequestBody JoinTableStudentParentDTO entity) {
+	public ResponseEntity<?> createEntity(@Valid @RequestBody JoinTableStudentGroupDTO entity) {
 
 		// Logging and retriving user.
 		UserEntity user = loginService.getUser();
 		loggingService.loggAndGetUser(user, Level.INFO);
-		loggingService.loggMessage("Method: JoinTableStudentParentController.createEntity()", Level.INFO);
+		loggingService.loggMessage("Method: JoinTableStudentGroupController.createEntity()", Level.INFO);
 
-		JoinTableStudentParent retVal = joinTableStudentParentService.createEntity(entity);
+		JoinTableStudentGroup retVal = joinTableStudentGroupService.createEntity(entity);
 		if (retVal == null) {
 			loggingService.loggTwoOutMessage("Join can not be added. Invalid data provided.",
 					HttpStatus.BAD_REQUEST.toString(), Level.INFO);
@@ -119,25 +119,26 @@ public class JoinTableStudentParentController {
 
 		// Log results and make respons
 		loggingService.loggOutMessage(HttpStatus.OK.toString(), Level.INFO);
-		return new ResponseEntity<JoinTableStudentParentDTO>(joinTableStudentParentService.createDTO(retVal), HttpStatus.OK);
+		return new ResponseEntity<JoinTableStudentGroupDTO>(joinTableStudentGroupService.createDTO(retVal),
+				HttpStatus.OK);
 	}
 
 	/**
 	 * Endpoint to change table entity.<BR>
-	 * Postman code: <B>JSP12</B>
+	 * Postman code: <B>JGC12</B>
 	 */
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(method = RequestMethod.PUT, path = "/{id}")
 	public ResponseEntity<?> setEntity(@PathVariable(value = "id") Integer id,
-			@RequestBody JoinTableStudentParentDTO entity) {
+			@RequestBody JoinTableStudentGroupDTO entity) {
 
 		// Logging and retriving user.
 		UserEntity user = loginService.getUser();
 		loggingService.loggAndGetUser(user, Level.INFO);
-		loggingService.loggMessage("Method: JoinTableStudentParentController.setEntity()", Level.INFO);
+		loggingService.loggMessage("Method: JoinTableStudentGroupController.setEntity()", Level.INFO);
 
 		// Retrive DTO and change
-		JoinTableStudentParentDTO retVal = joinTableStudentParentService.setEntity(id, entity);
+		JoinTableStudentGroupDTO retVal = joinTableStudentGroupService.setEntity(id, entity);
 		if (retVal == null) {
 			loggingService.loggTwoOutMessage("Address not found. Nothing changed.", HttpStatus.BAD_REQUEST.toString(),
 					Level.INFO);
@@ -146,12 +147,12 @@ public class JoinTableStudentParentController {
 
 		// Log results and make respons
 		loggingService.loggOutMessage(HttpStatus.OK.toString(), Level.INFO);
-		return new ResponseEntity<JoinTableStudentParentDTO>(retVal, HttpStatus.OK);
+		return new ResponseEntity<JoinTableStudentGroupDTO>(retVal, HttpStatus.OK);
 	}
 
 	/**
 	 * Endpoint to delete table entity.<BR>
-	 * Postman code: <B>JSP13</B>
+	 * Postman code: <B>JGC13</B>
 	 */
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(method = RequestMethod.DELETE, path = "/{id}")
@@ -160,7 +161,7 @@ public class JoinTableStudentParentController {
 		// Logging and retriving user.
 		UserEntity user = loginService.getUser();
 		loggingService.loggAndGetUser(user, Level.INFO);
-		loggingService.loggMessage("Method: JoinTableStudentParentController.removeEntity()", Level.INFO);
+		loggingService.loggMessage("Method: JoinTableStudentGroupController.removeEntity()", Level.INFO);
 
 		if (id == null) {
 			loggingService.loggTwoOutMessage("Invalid address id.", HttpStatus.BAD_REQUEST.toString(), Level.INFO);
@@ -168,7 +169,7 @@ public class JoinTableStudentParentController {
 					HttpStatus.BAD_REQUEST);
 		}
 
-		JoinTableStudentParentDTO retVal = joinTableStudentParentService.removeEntity(id);
+		JoinTableStudentGroupDTO retVal = joinTableStudentGroupService.removeEntity(id);
 		if (retVal == null) {
 			loggingService.loggTwoOutMessage("Address not found. Nothing changed.", HttpStatus.BAD_REQUEST.toString(),
 					Level.INFO);
@@ -177,6 +178,6 @@ public class JoinTableStudentParentController {
 
 		// Log results and make respons
 		loggingService.loggOutMessage(HttpStatus.OK.toString(), Level.INFO);
-		return new ResponseEntity<JoinTableStudentParentDTO>(retVal, HttpStatus.OK);
+		return new ResponseEntity<JoinTableStudentGroupDTO>(retVal, HttpStatus.OK);
 	}
 }
