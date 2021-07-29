@@ -1,7 +1,5 @@
 package com.iktakademija.FinalProject.entities.dtos;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
@@ -34,7 +32,7 @@ public class NewStudentDTO {
 	@JsonProperty(value = "Password")
 	private String password;
 
-	@Positive(message = "Must not be positiv index number.")
+	@Positive(message = "Must be positiv index number.")
 	@JsonProperty(value = "ID Person")
 	private Integer personId;	
 	

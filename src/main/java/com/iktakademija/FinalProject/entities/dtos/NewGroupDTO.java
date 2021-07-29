@@ -28,11 +28,11 @@ public class NewGroupDTO {
 	@JsonProperty(value = "Class Mark")
 	private String letter;	
 
-	@Positive(message = "Must not be positiv index number.")
+	@Positive(message = "Must be positiv index number.")
 	@JsonProperty(value = "ID Homeclass Teacher")
 	private Integer homeClassMaster;
 	
-	@Positive(message = "Must not be positiv index number.")
+	@Positive(message = "Must be positiv index number.")
 	@JsonProperty(value = "ID Class")
 	private Integer clazz;
 	

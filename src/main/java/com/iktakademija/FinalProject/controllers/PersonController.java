@@ -89,7 +89,9 @@ public class PersonController {
 	public ResponseEntity<?> addPerson(@Valid @RequestBody NewPersonDTO newPerson) {	
 		
 		PersonEntity person = personService.createPerson(newPerson);	
-		if (person == null ) return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_PARAMETERS), HttpStatus.BAD_REQUEST);
+		if (person == null ) {
+			return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_PARAMETERS), HttpStatus.BAD_REQUEST);
+		}
 		return new ResponseEntity<PersonEntity>(person, HttpStatus.OK);
 	}
 	

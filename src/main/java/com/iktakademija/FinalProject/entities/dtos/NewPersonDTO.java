@@ -3,7 +3,6 @@ package com.iktakademija.FinalProject.entities.dtos;
 import java.time.LocalDate;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Positive;
@@ -38,7 +37,7 @@ public class NewPersonDTO {
 	@JsonProperty(value = "Last Name")
 	private String lastname;
 	
-	@Pattern(regexp = "^(0[1-9]|[12][0-9]|3[01])(0[1-9]|1[012])(9[0-9][0-9]|1[012])[0-9]{6}$", message = "Provide a valid JMBG.")
+	@Pattern(regexp = "^(0[1-9]|[12][0-9]|3[01])(0[1-9]|1[012])[0-9]{9}$", message = "Provide a valid JMBG.")
 	@JsonProperty(value = "JMBG")
 	private String jmbg;	
 	
@@ -46,12 +45,12 @@ public class NewPersonDTO {
 	@JsonProperty(value = "Phone Number")
 	private String mphone;	
 
-	@Past(message = "Can not be date in past.")
+	@Past(message = "Can not be date in future.")
 	@JsonFormat(shape = Shape.STRING, pattern = "dd-MM-yyyy")
 	@JsonProperty(value = "Birth Date")
 	private LocalDate birthdate;
 
-	@Positive(message = "Must not be positiv index number.")
+	@Positive(message = "Must be positiv index number.")
 	@JsonProperty(value = "ID Address")
 	private Integer address;
 	
