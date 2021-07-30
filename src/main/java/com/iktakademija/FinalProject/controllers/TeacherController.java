@@ -56,7 +56,7 @@ public class TeacherController {
 	private TeacherService teacherService;
 	@Autowired
 	private LoginService loginService;
-	
+
 	@Autowired
 	private LoggingService loggingService;
 
@@ -65,19 +65,19 @@ public class TeacherController {
 
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private JoinTableSubjectTeacherService joinTableSubjectTeacherService;
-	
+
 	@Autowired
 	private SubjectService subjectService;
-	
+
 	@Autowired
 	private GradeService gradeService;
-	
+
 	@Autowired
 	private GroupRepository groupRepository;
-	
+
 	/**
 	 * REST endpoint that returns all teachers from data base. Method always return
 	 * {@link HttpStatus.OK} if there is no internal error.<BR>
@@ -325,10 +325,9 @@ public class TeacherController {
 		loggingService.loggOutMessage(HttpStatus.OK.toString(), Level.INFO);
 		return new ResponseEntity<TeacherDTO>(teacherService.createDTO(teacher), HttpStatus.OK);
 	}
-	
+
 	/**
-	 * Add teacher to subject. 
-	 * Postman code: <B>TEA15</B>
+	 * Add teacher to subject. Postman code: <B>TEA15</B>
 	 */
 	@Secured("ROLE_ADMIN")
 	@JsonView(value = Views.Admin.class)
@@ -341,9 +340,12 @@ public class TeacherController {
 		loggingService.loggAndGetUser(user, Level.INFO);
 		loggingService.loggMessage("Method: TeacherController.addTeacherToSubjectByClass()", Level.INFO);
 
-		JoinTableSubjectTeacher item = joinTableSubjectTeacherService.addTeacherToSubjectByGroup(teacherid, subjectid, groupid);
+		JoinTableSubjectTeacher item = joinTableSubjectTeacherService.addTeacherToSubjectByGroup(teacherid, subjectid,
+				groupid);
 		if (item == null) {
-			loggingService.loggTwoOutMessage(String.format("Teacher [%s] on subject [%s] can not be added to group [%s]. Invalid data provided.", teacherid, subjectid, groupid),
+			loggingService.loggTwoOutMessage(
+					String.format("Teacher [%s] on subject [%s] can not be added to group [%s]. Invalid data provided.",
+							teacherid, subjectid, groupid),
 					HttpStatus.BAD_REQUEST.toString(), Level.INFO);
 			return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_PARAMETERS),
 					HttpStatus.BAD_REQUEST);
@@ -351,9 +353,10 @@ public class TeacherController {
 
 		// Log results and make respons
 		loggingService.loggOutMessage(HttpStatus.OK.toString(), Level.INFO);
-		return new ResponseEntity<JoinTableSubjectTeacherDTO>(joinTableSubjectTeacherService.createDTO(item), HttpStatus.OK);
+		return new ResponseEntity<JoinTableSubjectTeacherDTO>(joinTableSubjectTeacherService.createDTO(item),
+				HttpStatus.OK);
 	}
-	
+
 	/**
 	 * Return all subjects of teacher.
 	 * 
@@ -385,7 +388,7 @@ public class TeacherController {
 		loggingService.loggOutMessage(HttpStatus.OK.toString(), Level.INFO);
 		return new ResponseEntity<List<SubjectDTO>>(subjectService.createDTOList(dto), HttpStatus.OK);
 	}
-	
+
 	/**
 	 * Filter all grades
 	 * 
@@ -394,13 +397,13 @@ public class TeacherController {
 	@Secured("ROLE_TEACHER")
 	@JsonView(value = Views.Student.class)
 	@RequestMapping(method = RequestMethod.GET, path = "/search")
-	public ResponseEntity<?> searchAll(@RequestParam(name = "ClassMaster") Boolean classmaster, 
-			@RequestParam(required = false, name = "StudentId") Integer studentId, 
-			@RequestParam(required = false, name = "SubjectId") Integer subjectId, 
+	public ResponseEntity<?> searchAll(@RequestParam(name = "ClassMaster") Boolean classmaster,
+			@RequestParam(required = false, name = "StudentId") Integer studentId,
+			@RequestParam(required = false, name = "SubjectId") Integer subjectId,
 			@RequestParam(required = false, name = "GroupId") Integer groupId,
-			@RequestParam(required = false, name = "ClassId") Integer classId, 
+			@RequestParam(required = false, name = "ClassId") Integer classId,
 			@RequestParam(required = false, name = "Stage") EStage stage) {
-		
+
 		// Logging and retriving user.
 		UserEntity user = loginService.getUser();
 		loggingService.loggAndGetUser(user, Level.INFO);
@@ -414,22 +417,22 @@ public class TeacherController {
 					HttpStatus.BAD_REQUEST);
 		}
 		TeacherEntity teacher = op.get();
-		
+
 		// Get list of all users on page
 		List<GradeDTO> retVal = null;
 		if (classmaster) {
 			Optional<GroupEntity> op1 = groupRepository.findByHomeClassMaster(teacher);
 			if (op1.isPresent() == false) {
-				loggingService.loggTwoOutMessage("Teacher is not class master", HttpStatus.BAD_REQUEST.toString(), Level.INFO);
+				loggingService.loggTwoOutMessage("Teacher is not class master", HttpStatus.BAD_REQUEST.toString(),
+						Level.INFO);
 				return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_TEACHER),
 						HttpStatus.BAD_REQUEST);
 			}
 			List<GradeEntity> list = gradeService.getFiltered(null, null, null, op1.get().getId(), classId, stage);
 			retVal = gradeService.createDTOList(list);
-		}
-		else
-		{
-			List<GradeEntity> list = gradeService.getFiltered(studentId, subjectId, teacher.getId(), groupId, classId, stage);
+		} else {
+			List<GradeEntity> list = gradeService.getFiltered(studentId, subjectId, teacher.getId(), groupId, classId,
+					stage);
 			retVal = gradeService.createDTOList(list);
 		}
 

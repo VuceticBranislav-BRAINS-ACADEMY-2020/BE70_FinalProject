@@ -35,18 +35,18 @@ public class GradeEntity {
 	/************************************************************
 	 * Attributes
 	 ************************************************************/
-	
+
 	@Column(nullable = false)
 	@Enumerated(value = EnumType.STRING)
 	private EGradeType type;
-	
+
 	@Column(nullable = false)
 	private Integer value;
-	
+
 	@Column(nullable = false)
 	@DateTimeFormat(iso = ISO.DATE)
 	private LocalDate entered;
-	
+
 	@Column(nullable = false)
 	@Enumerated(value = EnumType.STRING)
 	private EStage stage;
@@ -54,12 +54,12 @@ public class GradeEntity {
 	/************************************************************
 	 * Relation Attributes
 	 ************************************************************/
-	
+
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "idstd_grp", nullable = false)
 	@JsonBackReference(value = "Student_Group_3")
 	private JoinTableStudentGroup std_grp;
-	
+
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "idsub_tch", nullable = false)
 	@JsonBackReference(value = "Subject_Teacher_3")
@@ -91,7 +91,7 @@ public class GradeEntity {
 	/************************************************************
 	 * Getters & Setters
 	 ************************************************************/
-	
+
 	public EGradeType getType() {
 		return type;
 	}
@@ -107,12 +107,12 @@ public class GradeEntity {
 	public void setValue(Integer value) {
 		this.value = value;
 	}
-	
+
 	@JsonFormat(shape = Shape.STRING, pattern = "dd-MM-yyyy")
 	public LocalDate getEntered() {
 		return entered;
 	}
-	
+
 	@JsonFormat(shape = Shape.STRING, pattern = "dd-MM-yyyy")
 	public void setEntered(LocalDate entered) {
 		this.entered = entered;

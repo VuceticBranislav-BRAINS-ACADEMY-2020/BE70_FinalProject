@@ -27,12 +27,12 @@ public class JoinTableStudentGroupDTO {
 	@NotNull(message = "Must not be null.")
 	@JsonProperty(value = "ID")
 	private Integer id;
-	
+
 	@NotNull(message = "Must not be null.")
 	@Positive(message = "Must be positiv index number.")
 	@JsonProperty(value = "ID Student")
 	private Integer student;
-	
+
 	@NotNull(message = "Must not be null.")
 	@Positive(message = "Must be positiv index number.")
 	@JsonProperty(value = "ID Group")

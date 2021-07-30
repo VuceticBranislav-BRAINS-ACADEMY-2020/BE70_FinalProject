@@ -12,61 +12,63 @@ import com.iktakademija.FinalProject.entities.enums.EStatus;
 import com.iktakademija.FinalProject.securities.Views;
 
 /**
- * Person DTO.
- * <BR>Provide all information related to {@link PersonEntity}.
+ * Person DTO. <BR>
+ * Provide all information related to {@link PersonEntity}.
+ * 
  * @see PersonEntity
  * @author GM
  */
 @JsonView(value = Views.Student.class)
-@JsonPropertyOrder(value =  {"id", "firstname", "lastname", "jmbg", "mphone", "birthdate", "address", "version", "status"})
+@JsonPropertyOrder(value = { "id", "firstname", "lastname", "jmbg", "mphone", "birthdate", "address", "version",
+		"status" })
 public class PersonDTO {
-	
+
 	/************************************************************
 	 * Attributes
 	 ************************************************************/
-	
+
 	@JsonProperty(value = "ID")
-	private Integer id;		
+	private Integer id;
 
 	@JsonProperty(value = "First Name")
 	private String firstname;
-	
+
 	@JsonProperty(value = "Last Name")
 	private String lastname;
-	
+
 	@JsonProperty(value = "JMBG")
 	private String jmbg;
-	
+
 	@JsonProperty(value = "Phone Number")
 	private String mphone;
-	
+
 	@JsonProperty(value = "Birth Date")
 	@JsonFormat(shape = Shape.STRING, pattern = "dd-MM-yyyy")
 	private LocalDate birthdate;
 
 	@JsonProperty(value = "Address")
 	private AddressDTO address;
-	
+
 	@JsonView(value = Views.Admin.class)
 	@JsonProperty(value = "Version")
 	private Integer version;
-	
+
 	@JsonView(value = Views.Admin.class)
 	@JsonProperty(value = "Status")
-	private EStatus status;		
-	
+	private EStatus status;
+
 	/************************************************************
 	 * Constructors
 	 ************************************************************/
 
 	public PersonDTO() {
 		super();
-	}	
+	}
 
 	/************************************************************
 	 * Getters & Setters
 	 ************************************************************/
-	
+
 	public Integer getId() {
 		return id;
 	}
@@ -137,6 +139,6 @@ public class PersonDTO {
 
 	public void setStatus(EStatus status) {
 		this.status = status;
-	}	
+	}
 
 }

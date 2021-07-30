@@ -14,24 +14,25 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserRepository userRepository;
-	
+
 	@Override
-	public boolean changeUsernameAndPasswor(UserEntity user, String username, String pass) {	
-		
-		// Check is username unused		
+	public boolean changeUsernameAndPasswor(UserEntity user, String username, String pass) {
+
+		// Check is username unused
 		Optional<UserEntity> op = userRepository.findByUsername(username);
-		if (op.isPresent() == true) return false;
-		
+		if (op.isPresent() == true)
+			return false;
+
 		// Generate password
 		String password = Encryption.passwordEncode(pass);
-		
+
 		// Set username and password
 		user.setPassword(password);
-		user.setUsername(username);	
-		
+		user.setUsername(username);
+
 		// Save user in database
-		userRepository.save(user);	
+		userRepository.save(user);
 		return true;
-	}	
-		
+	}
+
 }

@@ -18,17 +18,18 @@ public interface TeacherRepository extends CrudRepository<TeacherEntity, Integer
 
 	@Query(value = "FROM TeacherEntity AS t WHERE t.status <> 'DELETED'")
 	List<TeacherEntity> findAllUndeleted();
-	
+
 	@Query(value = "SELECT count(a) FROM JoinTableStudentGroup AS a INNER JOIN JoinTableSubjectTeacher AS b ON a.group=b.group "
 			+ "INNER JOIN JoinTableSubjectClass AS c ON b.sub_cls=c.id INNER JOIN GroupEntity AS d ON c.clazz = d.clazz "
 			+ "WHERE d.id = a.group AND a.student = :studentID and b.group = :groupID and b.teachers = :teacherID and c.subject = :subjectID")
-	Integer findStudenstThatListenSubjectFromTeeacher(
-			@Param("studentID") StudentEntity studentID, @Param("subjectID") SubjectEntity subjectID, 
-			@Param("teacherID") TeacherEntity teacherID, @Param("groupID") GroupEntity groupID);		
-	
+	Integer findStudenstThatListenSubjectFromTeeacher(@Param("studentID") StudentEntity studentID,
+			@Param("subjectID") SubjectEntity subjectID, @Param("teacherID") TeacherEntity teacherID,
+			@Param("groupID") GroupEntity groupID);
+
 	@Query(value = "FROM TeacherEntity AS t WHERE t.username = :username AND t.status <> 'DELETED'")
 	Optional<TeacherEntity> findByUsername(@Param("username") String username);
-	
+
 	List<TeacherEntity> findAllById(Integer id);
+
 	List<TeacherEntity> findAll();
 }

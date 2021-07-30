@@ -13,19 +13,20 @@ import com.iktakademija.FinalProject.entities.enums.EStatus;
 import com.iktakademija.FinalProject.securities.Views;
 
 /**
- * Teacher DTO.
- * <BR>Provide all information needed for creating of new user.
+ * Teacher DTO. <BR>
+ * Provide all information needed for creating of new user.
+ * 
  * @see AdminEntity
  * @author GM
  */
 @JsonView(value = Views.Admin.class)
-@JsonPropertyOrder(value = {"username", "password", "person", "status"})
+@JsonPropertyOrder(value = { "username", "password", "person", "status" })
 public class NewTeacherDTO {
-	
+
 	/************************************************************
 	 * Attributes
 	 ************************************************************/
-	
+
 	@NotNull(message = "Must not be null.")
 	@Size(min = 5, max = 10, message = "Username must be between {min} and {max} characters long.")
 	@JsonProperty(value = "Username")
@@ -39,11 +40,11 @@ public class NewTeacherDTO {
 	@NotNull(message = "Must not be null.")
 	@Positive(message = "Must be positiv index number.")
 	@JsonProperty(value = "ID Person")
-	private Integer personId;	
-	
+	private Integer personId;
+
 	@JsonProperty(value = "Status")
-	private EStatus status;	
-	
+	private EStatus status;
+
 	/************************************************************
 	 * Constructors
 	 ************************************************************/
@@ -51,7 +52,7 @@ public class NewTeacherDTO {
 	public NewTeacherDTO() {
 		super();
 	}
-	
+
 	/************************************************************
 	 * Getters & Setters
 	 ************************************************************/

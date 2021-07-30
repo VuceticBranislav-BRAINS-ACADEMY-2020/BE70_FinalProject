@@ -29,19 +29,19 @@ import com.iktakademija.FinalProject.utils.RESTError;
 @ResponseBody
 @ControllerAdvice
 public class GlobalExceltionHandler extends ResponseEntityExceptionHandler {
-	
+
 	@Autowired
 	private LoggingService loggingService;
-	
+
 	@ExceptionHandler(value = DataIntegrityViolationException.class)
 	public ResponseEntity<?> handleAccessDeniedException(HttpServletRequest req, DataIntegrityViolationException e) {
 
-		loggingService.loggMessageWithoutHeader(" >>> ERROR: DataIntegrityViolationException", Level.ERROR);	
+		loggingService.loggMessageWithoutHeader(" >>> ERROR: DataIntegrityViolationException", Level.ERROR);
 		loggingService.loggMessage(ERESTErrorCodes.CONSTRAINT_INVALID.toString(), Level.ERROR);
-		loggingService.loggMessageWithoutHeader(" <<< -------------", Level.ERROR);	
+		loggingService.loggMessageWithoutHeader(" <<< -------------", Level.ERROR);
 		return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.CONSTRAINT_INVALID), HttpStatus.BAD_REQUEST);
 	}
-    
+
 	// Global exception interceptor
 	@ExceptionHandler(value = { Error.class })
 	public void handleConflict(Error e) {
@@ -50,12 +50,12 @@ public class GlobalExceltionHandler extends ResponseEntityExceptionHandler {
 		e.printStackTrace();
 		logger.error("=============================================");
 	}
-	
-	@Override
-	protected ResponseEntity<Object> handleMethodArgumentNotValid(
-			MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
 
-		loggingService.loggMessageWithoutHeader(" >>> ERROR Handler", Level.ERROR);	
+	@Override
+	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
+			HttpHeaders headers, HttpStatus status, WebRequest request) {
+
+		loggingService.loggMessageWithoutHeader(" >>> ERROR Handler", Level.ERROR);
 		// Initialize map
 		Map<String, List<String>> errors = new HashMap<>();
 
@@ -67,10 +67,10 @@ public class GlobalExceltionHandler extends ResponseEntityExceptionHandler {
 				ArrayList<String> list = new ArrayList<>();
 				list.add(objectError.getDefaultMessage());
 				errors.put(err.getField(), list);
-				loggingService.loggMessage(err.getField() +" : "+objectError.getDefaultMessage(), Level.ERROR);
+				loggingService.loggMessage(err.getField() + " : " + objectError.getDefaultMessage(), Level.ERROR);
 			}
-		}		
-		loggingService.loggMessageWithoutHeader(" <<< -------------", Level.ERROR);	
+		}
+		loggingService.loggMessageWithoutHeader(" <<< -------------", Level.ERROR);
 		return new ResponseEntity<Object>(errors, HttpStatus.BAD_REQUEST);
 	}
 

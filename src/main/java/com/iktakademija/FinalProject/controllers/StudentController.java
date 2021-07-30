@@ -67,13 +67,13 @@ public class StudentController {
 
 	@Autowired
 	private ParentRepository parentRepository;
-	
+
 	@Autowired
 	private ParentService parentService;
 
 	@Autowired
 	private JoinTableStudentParentRepository joinTableStudentParentRepository;
-	
+
 	@Autowired
 	private GradeService gradeService;
 
@@ -270,7 +270,7 @@ public class StudentController {
 		join = joinTableStudentParentRepository.save(join);
 
 		List<ParentEntity> list = parentRepository.findAllParents(student);
-		
+
 		return new ResponseEntity<List<ParentDTO>>(parentService.createDTOList(list), HttpStatus.OK);
 	}
 
@@ -310,7 +310,7 @@ public class StudentController {
 		loggingService.loggOutMessage(HttpStatus.OK.toString(), Level.INFO);
 		return new ResponseEntity<StudentDTO>(studentService.createDTO(student), HttpStatus.OK);
 	}
-	
+
 	/**
 	 * Filter all grades
 	 * 
@@ -319,12 +319,12 @@ public class StudentController {
 	@Secured("ROLE_STUDENT")
 	@JsonView(value = Views.Student.class)
 	@RequestMapping(method = RequestMethod.GET, path = "/search")
-	public ResponseEntity<?> searchAll(@RequestParam(required = false, name = "SubjectId") Integer subjectId, 
-			@RequestParam(required = false, name = "TeacherId") Integer teacherId, 
+	public ResponseEntity<?> searchAll(@RequestParam(required = false, name = "SubjectId") Integer subjectId,
+			@RequestParam(required = false, name = "TeacherId") Integer teacherId,
 			@RequestParam(required = false, name = "GroupId") Integer groupId,
-			@RequestParam(required = false, name = "ClassId") Integer classId, 
+			@RequestParam(required = false, name = "ClassId") Integer classId,
 			@RequestParam(required = false, name = "Stage") EStage stage) {
-		
+
 		// Logging and retriving user.
 		UserEntity user = loginService.getUser();
 		loggingService.loggAndGetUser(user, Level.INFO);
@@ -338,9 +338,10 @@ public class StudentController {
 					HttpStatus.BAD_REQUEST);
 		}
 		StudentEntity student = op.get();
-		
+
 		// Get list of all users on page
-		List<GradeEntity> list = gradeService.getFiltered(student.getId(), subjectId, teacherId, groupId, classId, stage);
+		List<GradeEntity> list = gradeService.getFiltered(student.getId(), subjectId, teacherId, groupId, classId,
+				stage);
 		List<GradeDTO> retVal = gradeService.createDTOList(list);
 
 		// Log results and make respons

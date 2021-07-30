@@ -26,8 +26,8 @@ public class JoinTableSubjectClassDTO {
 
 	@NotNull(message = "Must not be null.")
 	@JsonProperty(value = "ID")
-	private Integer id;	
-	
+	private Integer id;
+
 	@NotNull(message = "Must not be null.")
 	@Positive(message = "Must be positiv index number.")
 	@JsonProperty(value = "ID Subject")

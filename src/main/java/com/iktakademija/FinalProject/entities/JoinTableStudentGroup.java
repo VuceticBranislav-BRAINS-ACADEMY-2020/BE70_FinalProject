@@ -20,7 +20,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
-@Table(name = "student_groups", uniqueConstraints = { @UniqueConstraint(columnNames = { "idstudent", "idgroup"}) })
+@Table(name = "student_groups", uniqueConstraints = { @UniqueConstraint(columnNames = { "idstudent", "idgroup" }) })
 @JsonIgnoreProperties({ "handler", "hibernateLazyInitializer" })
 public class JoinTableStudentGroup {
 
@@ -31,21 +31,21 @@ public class JoinTableStudentGroup {
 	/************************************************************
 	 * Relation Attributes
 	 ************************************************************/
-	
+
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "idstudent", nullable = false)
 	@JsonBackReference(value = "Student_Group_1")
 	private StudentEntity student;
-	
+
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "idgroup", nullable = false)
 	@JsonBackReference(value = "Student_Group_2")
 	private GroupEntity group;
-	
+
 	@OneToMany(mappedBy = "std_grp", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JsonManagedReference(value = "Student_Group_3")
 	private Set<GradeEntity> grade = new HashSet<>();
-	
+
 	/************************************************************
 	 * Shadow Attributes
 	 ************************************************************/
@@ -53,7 +53,7 @@ public class JoinTableStudentGroup {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-	
+
 	/************************************************************
 	 * Constructors
 	 ************************************************************/
@@ -61,7 +61,7 @@ public class JoinTableStudentGroup {
 	public JoinTableStudentGroup() {
 		super();
 	}
-	
+
 	/************************************************************
 	 * Getters & Setters
 	 ************************************************************/

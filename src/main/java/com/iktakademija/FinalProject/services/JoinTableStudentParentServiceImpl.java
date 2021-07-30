@@ -74,12 +74,12 @@ public class JoinTableStudentParentServiceImpl implements JoinTableStudentParent
 
 	@Override
 	public JoinTableStudentParentDTO setEntity(Integer id, JoinTableStudentParentDTO newEntity) {
-		
+
 		Optional<JoinTableStudentParent> op = joinTableStudentParentRepository.findById(id);
 		if (op.isPresent() == false)
 			return null;
 		JoinTableStudentParent entity = op.get();
-		
+
 		Optional<ParentEntity> op1 = parentRepository.findById(newEntity.getParent());
 		if (op1.isPresent() == false)
 			return null;
@@ -89,7 +89,7 @@ public class JoinTableStudentParentServiceImpl implements JoinTableStudentParent
 		if (op2.isPresent() == false)
 			return null;
 		StudentEntity student = op2.get();
-		
+
 		// Change entity
 		if (newEntity.getParent() != null)
 			entity.setParent(parent);
@@ -103,22 +103,22 @@ public class JoinTableStudentParentServiceImpl implements JoinTableStudentParent
 
 	@Override
 	public JoinTableStudentParentDTO removeEntity(Integer id) {
-		
+
 		Optional<JoinTableStudentParent> op = joinTableStudentParentRepository.findById(id);
 		if (op.isPresent() == false)
 			return null;
 		JoinTableStudentParent entity = op.get();
-		
+
 		joinTableStudentParentRepository.delete(entity);
 		return this.createDTO(entity);
 	}
-	
+
 	@Override
 	public List<JoinTableStudentParentDTO> getDTOList() {
 		List<JoinTableStudentParentDTO> list = new ArrayList<>();
 		for (JoinTableStudentParent entity : joinTableStudentParentRepository.findAll())
 			list.add(this.createDTO(entity));
 		return list;
-	}	
+	}
 
 }

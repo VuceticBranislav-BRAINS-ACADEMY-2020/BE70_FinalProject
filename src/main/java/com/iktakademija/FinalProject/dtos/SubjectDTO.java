@@ -8,33 +8,34 @@ import com.iktakademija.FinalProject.entities.enums.EStatus;
 import com.iktakademija.FinalProject.securities.Views;
 
 /**
- * Subject DTO.
- * <BR>Provide all information related to {@link SubjectEntity}
+ * Subject DTO. <BR>
+ * Provide all information related to {@link SubjectEntity}
+ * 
  * @see SubjectEntity
  * @author GM
  */
 @JsonView(value = Views.Student.class)
-@JsonPropertyOrder(value =  {"id", "name", "version", "status"})
+@JsonPropertyOrder(value = { "id", "name", "version", "status" })
 public class SubjectDTO {
-	
+
 	/************************************************************
 	 * Attributes
 	 ************************************************************/
-	
+
 	@JsonView(value = Views.Teacher.class)
 	@JsonProperty(value = "ID")
-	private Integer id;	
-	
+	private Integer id;
+
 	@JsonProperty(value = "Name")
 	private String name;
-	
+
 	@JsonView(value = Views.Admin.class)
 	@JsonProperty(value = "Version")
 	private Integer version;
-	
+
 	@JsonProperty(value = "Status")
 	private EStatus status;
-	
+
 	/************************************************************
 	 * Constructors
 	 ************************************************************/
@@ -42,7 +43,7 @@ public class SubjectDTO {
 	public SubjectDTO() {
 		super();
 	}
-	
+
 	/************************************************************
 	 * Getters & Setters
 	 ************************************************************/

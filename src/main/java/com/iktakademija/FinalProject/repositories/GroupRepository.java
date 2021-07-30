@@ -15,9 +15,10 @@ public interface GroupRepository extends CrudRepository<GroupEntity, Integer> {
 
 	@Query(value = "FROM GroupEntity AS t WHERE t.status <> 'DELETED'")
 	List<GroupEntity> findAllUndeleted();
-	
+
 	List<GroupEntity> findAllById(Integer id);
+
 	List<GroupEntity> findAll();
-	
+
 	Optional<GroupEntity> findByHomeClassMaster(TeacherEntity homeClassMaster);
 }

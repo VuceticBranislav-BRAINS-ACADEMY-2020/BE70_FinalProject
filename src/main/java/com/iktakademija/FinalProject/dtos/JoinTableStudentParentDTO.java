@@ -17,35 +17,35 @@ import com.iktakademija.FinalProject.securities.Views;
  * @author GM
  */
 @JsonView(value = Views.Admin.class)
-@JsonPropertyOrder(value = {"id", "student", "parent" })
+@JsonPropertyOrder(value = { "id", "student", "parent" })
 public class JoinTableStudentParentDTO {
-	
+
 	/************************************************************
 	 * Attributes
 	 ************************************************************/
-	
+
 	@NotNull(message = "Must not be null.")
 	@JsonProperty(value = "ID")
-	private Integer id;	
-	
+	private Integer id;
+
 	@NotNull(message = "Must not be null.")
 	@Positive(message = "Must be positiv index number.")
 	@JsonProperty(value = "ID Student")
 	private Integer student;
-	
+
 	@NotNull(message = "Must not be null.")
 	@Positive(message = "Must be positiv index number.")
 	@JsonProperty(value = "ID Parent")
-	private Integer parent;	
-	
+	private Integer parent;
+
 	/************************************************************
 	 * Constructors
 	 ************************************************************/
 
 	public JoinTableStudentParentDTO() {
 		super();
-	}	
-	
+	}
+
 	/************************************************************
 	 * Getters & Setters
 	 ************************************************************/
@@ -73,5 +73,5 @@ public class JoinTableStudentParentDTO {
 	public void setParent(Integer parent) {
 		this.parent = parent;
 	}
-	
+
 }

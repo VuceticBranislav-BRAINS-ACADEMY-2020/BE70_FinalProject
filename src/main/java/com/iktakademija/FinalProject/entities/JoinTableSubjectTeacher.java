@@ -20,10 +20,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
-@Table(name = "subject_teachers", uniqueConstraints = { @UniqueConstraint(columnNames = { "idteachers", "idgroup", "idsub_cls"}) })
+@Table(name = "subject_teachers", uniqueConstraints = {
+		@UniqueConstraint(columnNames = { "idteachers", "idgroup", "idsub_cls" }) })
 @JsonIgnoreProperties({ "handler", "hibernateLazyInitializer" })
 public class JoinTableSubjectTeacher {
-	
+
 	/************************************************************
 	 * Attributes
 	 ************************************************************/
@@ -31,26 +32,26 @@ public class JoinTableSubjectTeacher {
 	/************************************************************
 	 * Relation Attributes
 	 ************************************************************/
-	
+
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "idteachers", nullable = false)
 	@JsonBackReference(value = "Subject_Teacher_1")
 	private TeacherEntity teachers;
-	
+
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "idsub_cls", nullable = false)
 	@JsonBackReference(value = "Subject_Teacher_2")
 	private JoinTableSubjectClass sub_cls;
-	
+
 	@OneToMany(mappedBy = "sub_tch", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JsonManagedReference(value = "Subject_Teacher_3")
 	private Set<GradeEntity> grade = new HashSet<>();
-	
+
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "idgroup", nullable = false)
 	@JsonBackReference(value = "Student_Group_4")
 	private GroupEntity group;
-	
+
 	/************************************************************
 	 * Shadow Attributes
 	 ************************************************************/
@@ -58,7 +59,7 @@ public class JoinTableSubjectTeacher {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-	
+
 	/************************************************************
 	 * Constructors
 	 ************************************************************/
@@ -70,7 +71,7 @@ public class JoinTableSubjectTeacher {
 	/************************************************************
 	 * Getters & Setters
 	 ************************************************************/
-	
+
 	public TeacherEntity getTeachers() {
 		return teachers;
 	}

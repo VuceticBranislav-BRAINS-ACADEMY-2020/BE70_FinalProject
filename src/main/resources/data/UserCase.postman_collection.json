@@ -1,0 +1,5211 @@
+{
+	"info": {
+		"_postman_id": "af38998b-1687-4382-a2af-5fc896f603f0",
+		"name": "UserCase",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "LogIn",
+			"item": [
+				{
+					"name": "LOG01 - Admin login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);\r",
+									"var token = jsonData.token;\r",
+									"var token = token.replace('Bearer ','');\r",
+									"postman.setEnvironmentVariable(\"AuthToken_Admin\", token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{LocalHost}}/login",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LOG02 - Teacher login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);\r",
+									"var token = jsonData.token;\r",
+									"var token = token.replace('Bearer ','');\r",
+									"postman.setEnvironmentVariable(\"AuthToken_Admin\", token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "Teacher 01",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "pass",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{LocalHost}}/login",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LOG03 - Student login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);\r",
+									"var token = jsonData.token;\r",
+									"var token = token.replace('Bearer ','');\r",
+									"postman.setEnvironmentVariable(\"AuthToken_Admin\", token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "Student 01",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "pass",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{LocalHost}}/login",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LOG04 - Parent login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);\r",
+									"var token = jsonData.token;\r",
+									"var token = token.replace('Bearer ','');\r",
+									"postman.setEnvironmentVariable(\"AuthToken_Admin\", token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "Parent 01",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "pass",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{LocalHost}}/login",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "CreateAddresses",
+			"item": [
+				{
+					"name": "ADR01 - addAddress 1",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"City\": \"1 - New York\",\r\n    \"Stresst\": \"Bleecker Street\",\r\n    \"Number\": \"177c\",\r\n    \"Apartment\": null,\r\n    \"Status\": \"ACTIVE\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/address/admin",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"address",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ADR01 - addAddress 2",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"City\": \"2 - New York\",\r\n    \"Stresst\": \"Bleecker Street\",\r\n    \"Number\": \"177c\",\r\n    \"Apartment\": null,\r\n    \"Status\": \"ACTIVE\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/address/admin",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"address",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ADR01 - addAddress 3",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"City\": \"3 - New York\",\r\n    \"Stresst\": \"Bleecker Street\",\r\n    \"Number\": \"177c\",\r\n    \"Apartment\": null,\r\n    \"Status\": \"ACTIVE\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/address/admin",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"address",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ADR01 - addAddress 4",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"City\": \"4 - New York\",\r\n    \"Stresst\": \"Bleecker Street\",\r\n    \"Number\": \"177c\",\r\n    \"Apartment\": null,\r\n    \"Status\": \"ACTIVE\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/address/admin",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"address",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ADR01 - addAddress 5",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"City\": \"5 - New York\",\r\n    \"Stresst\": \"Bleecker Street\",\r\n    \"Number\": \"177c\",\r\n    \"Apartment\": null,\r\n    \"Status\": \"ACTIVE\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/address/admin",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"address",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ADR01 - addAddress 6",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"City\": \"6 - New York\",\r\n    \"Stresst\": \"Bleecker Street\",\r\n    \"Number\": \"177c\",\r\n    \"Apartment\": null,\r\n    \"Status\": \"ACTIVE\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/address/admin",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"address",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ADR01 - addAddress 7",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"City\": \"7 - New York\",\r\n    \"Stresst\": \"Bleecker Street\",\r\n    \"Number\": \"177c\",\r\n    \"Apartment\": null,\r\n    \"Status\": \"ACTIVE\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/address/admin",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"address",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ADR01 - addAddress 8",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"City\": \"8 - New York\",\r\n    \"Stresst\": \"Bleecker Street\",\r\n    \"Number\": \"177c\",\r\n    \"Apartment\": null,\r\n    \"Status\": \"ACTIVE\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/address/admin",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"address",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ADR01 - addAddress 9",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"City\": \"9 - New York\",\r\n    \"Stresst\": \"Bleecker Street\",\r\n    \"Number\": \"177c\",\r\n    \"Apartment\": null,\r\n    \"Status\": \"ACTIVE\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/address/admin",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"address",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ADR01 - addAddress 10",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"City\": \"10 - New York\",\r\n    \"Stresst\": \"Bleecker Street\",\r\n    \"Number\": \"177c\",\r\n    \"Apartment\": null,\r\n    \"Status\": \"ACTIVE\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/address/admin",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"address",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ADR10 - getAllAddresses",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/address/admin",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"address",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Create 10 Strudents",
+			"item": [
+				{
+					"name": "Student 1",
+					"item": [
+						{
+							"name": "PER01 - addPerson",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{AuthToken_Admin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"First Name\": \"1 - Petar\",\r\n    \"Last Name\": \"Petrovic\",\r\n    \"JMBG\": \"1510000315316\",\r\n    \"Phone Number\": \"063/636-363\",\r\n    \"Birth Date\": \"15-10-2000\",\r\n    \"ID Address\": \"2000\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{LocalHost}}/{{ApiVersion}}/person/admin",
+									"host": [
+										"{{LocalHost}}"
+									],
+									"path": [
+										"{{ApiVersion}}",
+										"person",
+										"admin"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "STU01 - addStudent",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{AuthToken_Admin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Username\": \"Student 01\",\r\n    \"Password\": \"pass\",\r\n    \"ID Person\": \"2010\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{LocalHost}}/{{ApiVersion}}/student/admin",
+									"host": [
+										"{{LocalHost}}"
+									],
+									"path": [
+										"{{ApiVersion}}",
+										"student",
+										"admin"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Student 2",
+					"item": [
+						{
+							"name": "PER01 - addPerson",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{AuthToken_Admin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"First Name\": \"2 - Petar\",\r\n    \"Last Name\": \"Petrovic\",\r\n    \"JMBG\": \"1510000315317\",\r\n    \"Phone Number\": \"063/636-363\",\r\n    \"Birth Date\": \"15-10-2000\",\r\n    \"ID Address\": \"2001\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{LocalHost}}/{{ApiVersion}}/person/admin",
+									"host": [
+										"{{LocalHost}}"
+									],
+									"path": [
+										"{{ApiVersion}}",
+										"person",
+										"admin"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "STU01 - addStudent",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{AuthToken_Admin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Username\": \"Student 02\",\r\n    \"Password\": \"pass\",\r\n    \"ID Person\": \"2011\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{LocalHost}}/{{ApiVersion}}/student/admin",
+									"host": [
+										"{{LocalHost}}"
+									],
+									"path": [
+										"{{ApiVersion}}",
+										"student",
+										"admin"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Student 3",
+					"item": [
+						{
+							"name": "PER01 - addPerson",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{AuthToken_Admin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"First Name\": \"3 - Petar\",\r\n    \"Last Name\": \"Petrovic\",\r\n    \"JMBG\": \"1510000315318\",\r\n    \"Phone Number\": \"063/636-363\",\r\n    \"Birth Date\": \"15-10-2000\",\r\n    \"ID Address\": \"2002\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{LocalHost}}/{{ApiVersion}}/person/admin",
+									"host": [
+										"{{LocalHost}}"
+									],
+									"path": [
+										"{{ApiVersion}}",
+										"person",
+										"admin"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "STU01 - addStudent",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{AuthToken_Admin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Username\": \"Student 03\",\r\n    \"Password\": \"pass\",\r\n    \"ID Person\": \"2012\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{LocalHost}}/{{ApiVersion}}/student/admin",
+									"host": [
+										"{{LocalHost}}"
+									],
+									"path": [
+										"{{ApiVersion}}",
+										"student",
+										"admin"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Student 4",
+					"item": [
+						{
+							"name": "PER01 - addPerson",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{AuthToken_Admin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"First Name\": \"4 - Petar\",\r\n    \"Last Name\": \"Petrovic\",\r\n    \"JMBG\": \"1510000315319\",\r\n    \"Phone Number\": \"063/636-363\",\r\n    \"Birth Date\": \"15-10-2000\",\r\n    \"ID Address\": \"2003\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{LocalHost}}/{{ApiVersion}}/person/admin",
+									"host": [
+										"{{LocalHost}}"
+									],
+									"path": [
+										"{{ApiVersion}}",
+										"person",
+										"admin"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "STU01 - addStudent",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{AuthToken_Admin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Username\": \"Student 04\",\r\n    \"Password\": \"pass\",\r\n    \"ID Person\": \"2013\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{LocalHost}}/{{ApiVersion}}/student/admin",
+									"host": [
+										"{{LocalHost}}"
+									],
+									"path": [
+										"{{ApiVersion}}",
+										"student",
+										"admin"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Student 5",
+					"item": [
+						{
+							"name": "PER01 - addPerson",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{AuthToken_Admin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"First Name\": \"5 - Petar\",\r\n    \"Last Name\": \"Petrovic\",\r\n    \"JMBG\": \"1510000315320\",\r\n    \"Phone Number\": \"063/636-363\",\r\n    \"Birth Date\": \"15-10-2000\",\r\n    \"ID Address\": \"2004\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{LocalHost}}/{{ApiVersion}}/person/admin",
+									"host": [
+										"{{LocalHost}}"
+									],
+									"path": [
+										"{{ApiVersion}}",
+										"person",
+										"admin"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "STU01 - addStudent",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{AuthToken_Admin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Username\": \"Student 05\",\r\n    \"Password\": \"pass\",\r\n    \"ID Person\": \"2014\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{LocalHost}}/{{ApiVersion}}/student/admin",
+									"host": [
+										"{{LocalHost}}"
+									],
+									"path": [
+										"{{ApiVersion}}",
+										"student",
+										"admin"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Student 6",
+					"item": [
+						{
+							"name": "PER01 - addPerson",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{AuthToken_Admin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"First Name\": \"6 - Petar\",\r\n    \"Last Name\": \"Petrovic\",\r\n    \"JMBG\": \"1510000315321\",\r\n    \"Phone Number\": \"063/636-363\",\r\n    \"Birth Date\": \"15-10-2000\",\r\n    \"ID Address\": \"2005\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{LocalHost}}/{{ApiVersion}}/person/admin",
+									"host": [
+										"{{LocalHost}}"
+									],
+									"path": [
+										"{{ApiVersion}}",
+										"person",
+										"admin"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "STU01 - addStudent",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{AuthToken_Admin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Username\": \"Student 06\",\r\n    \"Password\": \"pass\",\r\n    \"ID Person\": \"2015\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{LocalHost}}/{{ApiVersion}}/student/admin",
+									"host": [
+										"{{LocalHost}}"
+									],
+									"path": [
+										"{{ApiVersion}}",
+										"student",
+										"admin"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Student 7",
+					"item": [
+						{
+							"name": "PER01 - addPerson",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{AuthToken_Admin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"First Name\": \"7 - Petar\",\r\n    \"Last Name\": \"Petrovic\",\r\n    \"JMBG\": \"1510000315322\",\r\n    \"Phone Number\": \"063/636-363\",\r\n    \"Birth Date\": \"15-10-2000\",\r\n    \"ID Address\": \"2006\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{LocalHost}}/{{ApiVersion}}/person/admin",
+									"host": [
+										"{{LocalHost}}"
+									],
+									"path": [
+										"{{ApiVersion}}",
+										"person",
+										"admin"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "STU01 - addStudent",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{AuthToken_Admin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Username\": \"Student 07\",\r\n    \"Password\": \"pass\",\r\n    \"ID Person\": \"2016\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{LocalHost}}/{{ApiVersion}}/student/admin",
+									"host": [
+										"{{LocalHost}}"
+									],
+									"path": [
+										"{{ApiVersion}}",
+										"student",
+										"admin"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Student 8",
+					"item": [
+						{
+							"name": "PER01 - addPerson",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{AuthToken_Admin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"First Name\": \"8 - Petar\",\r\n    \"Last Name\": \"Petrovic\",\r\n    \"JMBG\": \"1510000315323\",\r\n    \"Phone Number\": \"063/636-363\",\r\n    \"Birth Date\": \"15-10-2000\",\r\n    \"ID Address\": \"2007\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{LocalHost}}/{{ApiVersion}}/person/admin",
+									"host": [
+										"{{LocalHost}}"
+									],
+									"path": [
+										"{{ApiVersion}}",
+										"person",
+										"admin"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "STU01 - addStudent",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{AuthToken_Admin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Username\": \"Student 08\",\r\n    \"Password\": \"pass\",\r\n    \"ID Person\": \"2017\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{LocalHost}}/{{ApiVersion}}/student/admin",
+									"host": [
+										"{{LocalHost}}"
+									],
+									"path": [
+										"{{ApiVersion}}",
+										"student",
+										"admin"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Student 9",
+					"item": [
+						{
+							"name": "PER01 - addPerson",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{AuthToken_Admin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"First Name\": \"9 - Petar\",\r\n    \"Last Name\": \"Petrovic\",\r\n    \"JMBG\": \"1510000315324\",\r\n    \"Phone Number\": \"063/636-363\",\r\n    \"Birth Date\": \"15-10-2000\",\r\n    \"ID Address\": \"2008\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{LocalHost}}/{{ApiVersion}}/person/admin",
+									"host": [
+										"{{LocalHost}}"
+									],
+									"path": [
+										"{{ApiVersion}}",
+										"person",
+										"admin"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "STU01 - addStudent",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{AuthToken_Admin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Username\": \"Student 09\",\r\n    \"Password\": \"pass\",\r\n    \"ID Person\": \"2018\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{LocalHost}}/{{ApiVersion}}/student/admin",
+									"host": [
+										"{{LocalHost}}"
+									],
+									"path": [
+										"{{ApiVersion}}",
+										"student",
+										"admin"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Student 10",
+					"item": [
+						{
+							"name": "PER01 - addPerson",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{AuthToken_Admin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"First Name\": \"10 - Petar\",\r\n    \"Last Name\": \"Petrovic\",\r\n    \"JMBG\": \"1510000315325\",\r\n    \"Phone Number\": \"063/636-363\",\r\n    \"Birth Date\": \"15-10-2000\",\r\n    \"ID Address\": \"2009\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{LocalHost}}/{{ApiVersion}}/person/admin",
+									"host": [
+										"{{LocalHost}}"
+									],
+									"path": [
+										"{{ApiVersion}}",
+										"person",
+										"admin"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "STU01 - addStudent",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{AuthToken_Admin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Username\": \"Student 10\",\r\n    \"Password\": \"pass\",\r\n    \"ID Person\": \"2019\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{LocalHost}}/{{ApiVersion}}/student/admin",
+									"host": [
+										"{{LocalHost}}"
+									],
+									"path": [
+										"{{ApiVersion}}",
+										"student",
+										"admin"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "PER10 - getAllPersons",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/person/admin",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"person",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "STU10 - getAllStudents",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/student/admin",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"student",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Create 10 Persons",
+			"item": [
+				{
+					"name": "PER01 - addPerson 1T",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"First Name\": \"1 - Milorad\",\r\n    \"Last Name\": \"Petrovic\",\r\n    \"JMBG\": \"1510000315111\",\r\n    \"Phone Number\": \"063/636-363\",\r\n    \"Birth Date\": \"15-10-2000\",\r\n    \"ID Address\": \"2000\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/person/admin",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"person",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PER01 - addPerson 2T",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"First Name\": \"2 - Milorad\",\r\n    \"Last Name\": \"Petrovic\",\r\n    \"JMBG\": \"1510000315112\",\r\n    \"Phone Number\": \"063/636-363\",\r\n    \"Birth Date\": \"15-10-2000\",\r\n    \"ID Address\": \"2001\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/person/admin",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"person",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PER01 - addPerson 3T",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"First Name\": \"3 - Milorad\",\r\n    \"Last Name\": \"Petrovic\",\r\n    \"JMBG\": \"1510000315113\",\r\n    \"Phone Number\": \"063/636-363\",\r\n    \"Birth Date\": \"15-10-2000\",\r\n    \"ID Address\": \"2002\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/person/admin",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"person",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PER01 - addPerson 4TP",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"First Name\": \"4 - Milorad\",\r\n    \"Last Name\": \"Petrovic\",\r\n    \"JMBG\": \"1510000315114\",\r\n    \"Phone Number\": \"063/636-363\",\r\n    \"Birth Date\": \"15-10-2000\",\r\n    \"ID Address\": \"2003\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/person/admin",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"person",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PER01 - addPerson 5P",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"First Name\": \"5 - Milorad\",\r\n    \"Last Name\": \"Petrovic\",\r\n    \"JMBG\": \"1510000315115\",\r\n    \"Phone Number\": \"063/636-363\",\r\n    \"Birth Date\": \"15-10-2000\",\r\n    \"ID Address\": \"2004\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/person/admin",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"person",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PER01 - addPerson 6P",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"First Name\": \"6 - Milorad\",\r\n    \"Last Name\": \"Petrovic\",\r\n    \"JMBG\": \"1510000315116\",\r\n    \"Phone Number\": \"063/636-363\",\r\n    \"Birth Date\": \"15-10-2000\",\r\n    \"ID Address\": \"2005\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/person/admin",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"person",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PER01 - addPerson 7P",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"First Name\": \"7 - Milorad\",\r\n    \"Last Name\": \"Petrovic\",\r\n    \"JMBG\": \"1510000315117\",\r\n    \"Phone Number\": \"063/636-363\",\r\n    \"Birth Date\": \"15-10-2000\",\r\n    \"ID Address\": \"2006\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/person/admin",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"person",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PER01 - addPerson 8",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"First Name\": \"8 - Milorad\",\r\n    \"Last Name\": \"Petrovic\",\r\n    \"JMBG\": \"1510000315118\",\r\n    \"Phone Number\": \"063/636-363\",\r\n    \"Birth Date\": \"15-10-2000\",\r\n    \"ID Address\": \"2007\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/person/admin",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"person",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PER01 - addPerson 9",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"First Name\": \"9 - Milorad\",\r\n    \"Last Name\": \"Petrovic\",\r\n    \"JMBG\": \"1510000315119\",\r\n    \"Phone Number\": \"063/636-363\",\r\n    \"Birth Date\": \"15-10-2000\",\r\n    \"ID Address\": \"2008\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/person/admin",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"person",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PER01 - addPerson 10",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"First Name\": \"10 - Milorad\",\r\n    \"Last Name\": \"Petrovic\",\r\n    \"JMBG\": \"1510000315120\",\r\n    \"Phone Number\": \"063/636-363\",\r\n    \"Birth Date\": \"15-10-2000\",\r\n    \"ID Address\": \"2009\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/person/admin",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"person",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PER10 - getAllPersons",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/person/admin",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"person",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Create 5 Teachers",
+			"item": [
+				{
+					"name": "TEA01 - addTeacher 1",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Username\": \"Teacher 01\",\r\n    \"Password\": \"pass\",\r\n    \"ID Person\": \"300\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/teacher/admin",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"teacher",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TEA01 - addTeacher 2",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Username\": \"Teacher 02\",\r\n    \"Password\": \"pass\",\r\n    \"ID Person\": \"2030\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/teacher/admin",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"teacher",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TEA01 - addTeacher 3",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Username\": \"Teacher 03\",\r\n    \"Password\": \"pass\",\r\n    \"ID Person\": \"2031\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/teacher/admin",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"teacher",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TEA01 - addTeacher 4",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Username\": \"Teacher 04\",\r\n    \"Password\": \"pass\",\r\n    \"ID Person\": \"2032\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/teacher/admin",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"teacher",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TEA01 - addTeacher 5",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Username\": \"Teacher 05\",\r\n    \"Password\": \"pass\",\r\n    \"ID Person\": \"2033\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/teacher/admin",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"teacher",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TEA10 - getAllTeachers",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/teacher/admin",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"teacher",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Create 5 Parent",
+			"item": [
+				{
+					"name": "PAR01 - addParent 1",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Username\": \"Parent 01\",\r\n    \"Password\": \"pass\",\r\n    \"ID Person\": \"300\",\r\n    \"eMail\": \"parent@home.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/parent/admin",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"parent",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PAR01 - addParent 2",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Username\": \"Parent 02\",\r\n    \"Password\": \"pass\",\r\n    \"ID Person\": \"2033\",\r\n    \"eMail\": \"parent@home.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/parent/admin",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"parent",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PAR01 - addParent 3",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Username\": \"Parent 03\",\r\n    \"Password\": \"pass\",\r\n    \"ID Person\": \"2034\",\r\n    \"eMail\": \"parent@home.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/parent/admin",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"parent",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PAR01 - addParent 4",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Username\": \"Parent 04\",\r\n    \"Password\": \"pass\",\r\n    \"ID Person\": \"2035\",\r\n    \"eMail\": \"parent@home.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/parent/admin",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"parent",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PAR01 - addParent 5",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Username\": \"Parent 05\",\r\n    \"Password\": \"pass\",\r\n    \"ID Person\": \"2036\",\r\n    \"eMail\": \"parent@home.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/parent/admin",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"parent",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PAR10 - getAllParents",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/parent",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"parent"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "JoinStudents&Parents",
+			"item": [
+				{
+					"name": "STU10 - getAllStudents",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/student/admin",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"student",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PAR10 - getAllParents",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/parent",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"parent"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "STU15 - addParent 1",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/student/admin/parent/?child=2020&parent=2045",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"student",
+								"admin",
+								"parent",
+								""
+							],
+							"query": [
+								{
+									"key": "child",
+									"value": "2020"
+								},
+								{
+									"key": "parent",
+									"value": "2045"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "STU15 - addParent 2",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/student/admin/parent/?child=2021&parent=2046",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"student",
+								"admin",
+								"parent",
+								""
+							],
+							"query": [
+								{
+									"key": "child",
+									"value": "2021"
+								},
+								{
+									"key": "parent",
+									"value": "2046"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "STU15 - addParent 3",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/student/admin/parent/?child=2022&parent=2047",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"student",
+								"admin",
+								"parent",
+								""
+							],
+							"query": [
+								{
+									"key": "child",
+									"value": "2022"
+								},
+								{
+									"key": "parent",
+									"value": "2047"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "STU15 - addParent 4",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/student/admin/parent/?child=2023&parent=2048",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"student",
+								"admin",
+								"parent",
+								""
+							],
+							"query": [
+								{
+									"key": "child",
+									"value": "2023"
+								},
+								{
+									"key": "parent",
+									"value": "2048"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "STU15 - addParent 5",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/student/admin/parent/?child=2024&parent=2049",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"student",
+								"admin",
+								"parent",
+								""
+							],
+							"query": [
+								{
+									"key": "child",
+									"value": "2024"
+								},
+								{
+									"key": "parent",
+									"value": "2049"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PAR14 - addChild 1",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/parent/admin/child/?parent=2045&child=2025",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"parent",
+								"admin",
+								"child",
+								""
+							],
+							"query": [
+								{
+									"key": "parent",
+									"value": "2045"
+								},
+								{
+									"key": "child",
+									"value": "2025"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PAR14 - addChild 2",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/parent/admin/child/?parent=2046&child=2026",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"parent",
+								"admin",
+								"child",
+								""
+							],
+							"query": [
+								{
+									"key": "parent",
+									"value": "2046"
+								},
+								{
+									"key": "child",
+									"value": "2026"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PAR14 - addChild 3",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/parent/admin/child/?parent=2047&child=2027",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"parent",
+								"admin",
+								"child",
+								""
+							],
+							"query": [
+								{
+									"key": "parent",
+									"value": "2047"
+								},
+								{
+									"key": "child",
+									"value": "2027"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PAR14 - addChild 4",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/parent/admin/child/?parent=2048&child=2028",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"parent",
+								"admin",
+								"child",
+								""
+							],
+							"query": [
+								{
+									"key": "parent",
+									"value": "2048"
+								},
+								{
+									"key": "child",
+									"value": "2028"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PAR14 - addChild 5",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/parent/admin/child/?parent=2045&child=2029",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"parent",
+								"admin",
+								"child",
+								""
+							],
+							"query": [
+								{
+									"key": "parent",
+									"value": "2045"
+								},
+								{
+									"key": "child",
+									"value": "2029"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "JSP10 - getAllEntities",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/jtsp",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"jtsp"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Create 2 Classes",
+			"item": [
+				{
+					"name": "CLS01 - addClass 1",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Name\": \"V\",\r\n    \"Year\": 2021,\r\n    \"Status\": \"ACTIVE\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/class/admin",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"class",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CLS01 - addClass 2",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Name\": \"VI\",\r\n    \"Year\": 2021,\r\n    \"Status\": \"ACTIVE\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/class/admin",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"class",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CLS10 - getAllClasses",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/class/admin",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"class",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Create 4 Groups",
+			"item": [
+				{
+					"name": "GRP01 - addGroup 1",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Class Mark\": \"a\",\r\n    \"ID Homeclass Teacher\": 2041,\r\n    \"ID Class\": 2060,\r\n    \"Status\": \"ACTIVE\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/group/admin",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"group",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GRP01 - addGroup 2",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Class Mark\": \"b\",\r\n    \"ID Homeclass Teacher\": 2042,\r\n    \"ID Class\": 2060,\r\n    \"Status\": \"ACTIVE\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/group/admin",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"group",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GRP01 - addGroup 3",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Class Mark\": \"a\",\r\n    \"ID Homeclass Teacher\": 2043,\r\n    \"ID Class\": 2061,\r\n    \"Status\": \"ACTIVE\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/group/admin",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"group",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GRP01 - addGroup 4",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Class Mark\": \"b\",\r\n    \"ID Homeclass Teacher\": 2044,\r\n    \"ID Class\": 2061,\r\n    \"Status\": \"ACTIVE\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/group/admin",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"group",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GRP10 - getAllGroups",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/group/admin",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"group",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Create 4 Subjects",
+			"item": [
+				{
+					"name": "SUB01 - addSubject 1",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Name\": \"Matematika\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/subject/admin",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"subject",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SUB01 - addSubject 2",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Name\": \"Srpski jezik\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/subject/admin",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"subject",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SUB01 - addSubject 3",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Name\": \"Biologija\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/subject/admin",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"subject",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SUB01 - addSubject 4",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Name\": \"Geografiju\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/subject/admin",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"subject",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SUB10 - getAllSubjects",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/subject/admin",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"subject",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "addSubjestsToClasses",
+			"item": [
+				{
+					"name": "CLS14 - addSubjectToClass 5.1",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/class/admin/2060/2066/6",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"class",
+								"admin",
+								"2060",
+								"2066",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CLS14 - addSubjectToClass 5.2",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/class/admin/2060/2067/6",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"class",
+								"admin",
+								"2060",
+								"2067",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CLS14 - addSubjectToClass 5.3",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/class/admin/2060/2068/4",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"class",
+								"admin",
+								"2060",
+								"2068",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CLS14 - addSubjectToClass 6.1",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/class/admin/2061/2066/6",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"class",
+								"admin",
+								"2061",
+								"2066",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CLS14 - addSubjectToClass 6.2",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/class/admin/2061/2067/6",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"class",
+								"admin",
+								"2061",
+								"2067",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CLS14 - addSubjectToClass 6.3",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/class/admin/2061/2068/4",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"class",
+								"admin",
+								"2061",
+								"2068",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CLS14 - addSubjectToClass 6.4",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/class/admin/2061/2069/4",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"class",
+								"admin",
+								"2061",
+								"2069",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "JSC10 - getAllEntities",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/jtsc",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"jtsc"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "addTeacherToSubjectByGroupe",
+			"item": [
+				{
+					"name": "TEA15 - addTeacherToSubjectByClass 1",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/teacher/admin/2041/2066/2062",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"teacher",
+								"admin",
+								"2041",
+								"2066",
+								"2062"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TEA15 - addTeacherToSubjectByClass 2",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/teacher/admin/2041/2066/2063",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"teacher",
+								"admin",
+								"2041",
+								"2066",
+								"2063"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TEA15 - addTeacherToSubjectByClass 3",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/teacher/admin/2041/2066/2064",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"teacher",
+								"admin",
+								"2041",
+								"2066",
+								"2064"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TEA15 - addTeacherToSubjectByClass 4",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/teacher/admin/2041/2066/2065",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"teacher",
+								"admin",
+								"2041",
+								"2066",
+								"2065"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TEA15 - addTeacherToSubjectByClass 5",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/teacher/admin/2042/2067/2062",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"teacher",
+								"admin",
+								"2042",
+								"2067",
+								"2062"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TEA15 - addTeacherToSubjectByClass 6",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/teacher/admin/2042/2067/2063",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"teacher",
+								"admin",
+								"2042",
+								"2067",
+								"2063"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TEA15 - addTeacherToSubjectByClass 7",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/teacher/admin/2042/2067/2064",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"teacher",
+								"admin",
+								"2042",
+								"2067",
+								"2064"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TEA15 - addTeacherToSubjectByClass 8",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/teacher/admin/2042/2067/2065",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"teacher",
+								"admin",
+								"2042",
+								"2067",
+								"2065"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TEA15 - addTeacherToSubjectByClass 9",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/teacher/admin/2043/2068/2062",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"teacher",
+								"admin",
+								"2043",
+								"2068",
+								"2062"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TEA15 - addTeacherToSubjectByClass 10",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/teacher/admin/2043/2068/2063",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"teacher",
+								"admin",
+								"2043",
+								"2068",
+								"2063"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TEA15 - addTeacherToSubjectByClass 11",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/teacher/admin/2043/2068/2064",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"teacher",
+								"admin",
+								"2043",
+								"2068",
+								"2064"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TEA15 - addTeacherToSubjectByClass 12",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/teacher/admin/2043/2068/2065",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"teacher",
+								"admin",
+								"2043",
+								"2068",
+								"2065"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TEA15 - addTeacherToSubjectByClass 13",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/teacher/admin/2044/2069/2064",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"teacher",
+								"admin",
+								"2044",
+								"2069",
+								"2064"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TEA15 - addTeacherToSubjectByClass 14",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/teacher/admin/2044/2069/2065",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"teacher",
+								"admin",
+								"2044",
+								"2069",
+								"2065"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "JST10 - getAllEntities",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/jtst",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"jtst"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "JSC10 - getAllEntities",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/jtsc",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"jtsc"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "addStudentsToGroup",
+			"item": [
+				{
+					"name": "GRP14 - addStudentToGroup 1",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/group/admin/2062/2020",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"group",
+								"admin",
+								"2062",
+								"2020"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GRP14 - addStudentToGroup 2",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/group/admin/2062/2021",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"group",
+								"admin",
+								"2062",
+								"2021"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GRP14 - addStudentToGroup 3",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/group/admin/2062/2022",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"group",
+								"admin",
+								"2062",
+								"2022"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GRP14 - addStudentToGroup 4",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/group/admin/2062/2023",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"group",
+								"admin",
+								"2062",
+								"2023"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GRP14 - addStudentToGroup 5",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/group/admin/2062/2024",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"group",
+								"admin",
+								"2062",
+								"2024"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GRP14 - addStudentToGroup 6",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/group/admin/2063/2025",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"group",
+								"admin",
+								"2063",
+								"2025"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GRP14 - addStudentToGroup 7",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/group/admin/2063/2026",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"group",
+								"admin",
+								"2063",
+								"2026"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GRP14 - addStudentToGroup 8",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/group/admin/2064/2027",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"group",
+								"admin",
+								"2064",
+								"2027"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GRP14 - addStudentToGroup 9",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/group/admin/2064/2028",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"group",
+								"admin",
+								"2064",
+								"2028"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GRP14 - addStudentToGroup 10",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/group/admin/2065/2029",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"group",
+								"admin",
+								"2065",
+								"2029"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "JGC10 - getAllEntities",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/jtgc",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"jtgc"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "addGrades",
+			"item": [
+				{
+					"name": "LOG02 - Teacher login 02",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);\r",
+									"var token = jsonData.token;\r",
+									"var token = token.replace('Bearer ','');\r",
+									"postman.setEnvironmentVariable(\"AuthToken_Admin\", token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "Teacher 02",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "pass",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{LocalHost}}/login",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GRD01 - addGrade 2.1",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Type\": \"WRITTEN\",\r\n    \"Value\": \"3\",\r\n    \"Stage\": \"FIRST\",\r\n    \"ID Student\": \"2020\",\r\n    \"ID Teacher\": \"2041\",\r\n    \"ID Group\": \"2062\",\r\n    \"ID Subject\": \"2066\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/grade",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"grade"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GRD01 - addGrade 2.2",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Type\": \"WRITTEN\",\r\n    \"Value\": \"4\",\r\n    \"Stage\": \"FIRST\",\r\n    \"ID Student\": \"2020\",\r\n    \"ID Teacher\": \"2041\",\r\n    \"ID Group\": \"2062\",\r\n    \"ID Subject\": \"2066\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/grade",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"grade"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GRD01 - addGrade 2.3",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Type\": \"WRITTEN\",\r\n    \"Value\": \"4\",\r\n    \"Stage\": \"FIRST\",\r\n    \"ID Student\": \"2021\",\r\n    \"ID Teacher\": \"2041\",\r\n    \"ID Group\": \"2062\",\r\n    \"ID Subject\": \"2066\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/grade",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"grade"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GRD01 - addGrade 2.4",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Type\": \"WRITTEN\",\r\n    \"Value\": \"2\",\r\n    \"Stage\": \"FIRST\",\r\n    \"ID Student\": \"2021\",\r\n    \"ID Teacher\": \"2041\",\r\n    \"ID Group\": \"2062\",\r\n    \"ID Subject\": \"2066\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/grade",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"grade"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GRD01 - addGrade 2.5",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Type\": \"WRITTEN\",\r\n    \"Value\": \"5\",\r\n    \"Stage\": \"FIRST\",\r\n    \"ID Student\": \"2027\",\r\n    \"ID Teacher\": \"2041\",\r\n    \"ID Group\": \"2064\",\r\n    \"ID Subject\": \"2066\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/grade",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"grade"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GRD01 - addGrade 2.6",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Type\": \"WRITTEN\",\r\n    \"Value\": \"4\",\r\n    \"Stage\": \"FIRST\",\r\n    \"ID Student\": \"2027\",\r\n    \"ID Teacher\": \"2041\",\r\n    \"ID Group\": \"2064\",\r\n    \"ID Subject\": \"2066\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/grade",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"grade"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GRD01 - addGrade 2.7",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Type\": \"WRITTEN\",\r\n    \"Value\": \"1\",\r\n    \"Stage\": \"FIRST\",\r\n    \"ID Student\": \"2028\",\r\n    \"ID Teacher\": \"2041\",\r\n    \"ID Group\": \"2064\",\r\n    \"ID Subject\": \"2066\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/grade",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"grade"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GRD01 - addGrade 2.8",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Type\": \"WRITTEN\",\r\n    \"Value\": \"3\",\r\n    \"Stage\": \"FIRST\",\r\n    \"ID Student\": \"2028\",\r\n    \"ID Teacher\": \"2041\",\r\n    \"ID Group\": \"2064\",\r\n    \"ID Subject\": \"2066\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/grade",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"grade"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LOG02 - Teacher login 03",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);\r",
+									"var token = jsonData.token;\r",
+									"var token = token.replace('Bearer ','');\r",
+									"postman.setEnvironmentVariable(\"AuthToken_Admin\", token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "Teacher 03",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "pass",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{LocalHost}}/login",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GRD01 - addGrade 3.1",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Type\": \"WRITTEN\",\r\n    \"Value\": \"3\",\r\n    \"Stage\": \"FIRST\",\r\n    \"ID Student\": \"2020\",\r\n    \"ID Teacher\": \"2042\",\r\n    \"ID Group\": \"2062\",\r\n    \"ID Subject\": \"2067\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/grade",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"grade"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GRD01 - addGrade 3.2",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Type\": \"ORAL\",\r\n    \"Value\": \"3\",\r\n    \"Stage\": \"FIRST\",\r\n    \"ID Student\": \"2020\",\r\n    \"ID Teacher\": \"2042\",\r\n    \"ID Group\": \"2062\",\r\n    \"ID Subject\": \"2067\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/grade",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"grade"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GRD01 - addGrade 3.3",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Type\": \"WRITTEN\",\r\n    \"Value\": \"5\",\r\n    \"Stage\": \"FIRST\",\r\n    \"ID Student\": \"2021\",\r\n    \"ID Teacher\": \"2042\",\r\n    \"ID Group\": \"2062\",\r\n    \"ID Subject\": \"2067\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/grade",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"grade"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GRD01 - addGrade 3.4",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Type\": \"ORAL\",\r\n    \"Value\": \"4\",\r\n    \"Stage\": \"FIRST\",\r\n    \"ID Student\": \"2021\",\r\n    \"ID Teacher\": \"2042\",\r\n    \"ID Group\": \"2062\",\r\n    \"ID Subject\": \"2067\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/grade",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"grade"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GRD01 - addGrade 3.5",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Type\": \"WRITTEN\",\r\n    \"Value\": \"2\",\r\n    \"Stage\": \"FIRST\",\r\n    \"ID Student\": \"2027\",\r\n    \"ID Teacher\": \"2042\",\r\n    \"ID Group\": \"2064\",\r\n    \"ID Subject\": \"2067\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/grade",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"grade"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GRD01 - addGrade 3.6",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Type\": \"ORAL\",\r\n    \"Value\": \"3\",\r\n    \"Stage\": \"FIRST\",\r\n    \"ID Student\": \"2027\",\r\n    \"ID Teacher\": \"2042\",\r\n    \"ID Group\": \"2064\",\r\n    \"ID Subject\": \"2067\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/grade",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"grade"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GRD01 - addGrade 3.7",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Type\": \"WRITTEN\",\r\n    \"Value\": \"4\",\r\n    \"Stage\": \"FIRST\",\r\n    \"ID Student\": \"2028\",\r\n    \"ID Teacher\": \"2042\",\r\n    \"ID Group\": \"2064\",\r\n    \"ID Subject\": \"2067\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/grade",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"grade"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GRD01 - addGrade 3.8",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Type\": \"ORAL\",\r\n    \"Value\": \"3\",\r\n    \"Stage\": \"FIRST\",\r\n    \"ID Student\": \"2028\",\r\n    \"ID Teacher\": \"2042\",\r\n    \"ID Group\": \"2064\",\r\n    \"ID Subject\": \"2067\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/grade",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"grade"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GRD10 - getAllGrade",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/grade/admin",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"grade",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GRD10 - getAllGrade Copy",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/grade/admin/search?StudentId=436&SubjectId=107&TeacherId=484&GroupId=612&ClassId=25&Stage=FIRST",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"grade",
+								"admin",
+								"search"
+							],
+							"query": [
+								{
+									"key": "StudentId",
+									"value": "436"
+								},
+								{
+									"key": "SubjectId",
+									"value": "107"
+								},
+								{
+									"key": "TeacherId",
+									"value": "484"
+								},
+								{
+									"key": "GroupId",
+									"value": "612"
+								},
+								{
+									"key": "ClassId",
+									"value": "25"
+								},
+								{
+									"key": "Stage",
+									"value": "FIRST"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

@@ -64,11 +64,11 @@ public class RoleEntity {
 	public RoleEntity() {
 		super();
 	}
-	
+
 	/************************************************************
 	 * Getters & Setters
 	 ************************************************************/
-	
+
 	public ERole getRole() {
 		return role;
 	}
@@ -107,6 +107,6 @@ public class RoleEntity {
 
 	public void setStatus(EStatus status) {
 		this.status = status;
-	}	
+	}
 
 }

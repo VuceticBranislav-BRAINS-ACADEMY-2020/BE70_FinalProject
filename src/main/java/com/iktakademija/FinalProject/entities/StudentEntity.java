@@ -20,38 +20,38 @@ import com.iktakademija.FinalProject.securities.Views;
 @Table(name = "students")
 @JsonIgnoreProperties({ "handler", "hibernateLazyInitializer" })
 @PrimaryKeyJoinColumn(name = "id")
-@JsonView(value = {Views.Admin.class})
+@JsonView(value = { Views.Admin.class })
 public class StudentEntity extends UserEntity {
 
 	/************************************************************
 	 * Attributes
 	 ************************************************************/
-	
+
 	/************************************************************
 	 * Relation Attributes
 	 ************************************************************/
-	
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "student", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JsonManagedReference(value = "Student_Group_1")
 	private Set<JoinTableStudentGroup> clazz = new HashSet<>();
-	
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "student", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JsonManagedReference(value = "Student_Parent_1")
 	private Set<JoinTableStudentParent> parent = new HashSet<>();
-	
+
 	/************************************************************
 	 * Shadow Attributes
 	 ************************************************************/
-	
+
 	/************************************************************
 	 * Constructors
 	 ************************************************************/
 
 	public StudentEntity() {
 		super();
-	}	
+	}
 
 	public StudentEntity(String username, String password, PersonEntity person, RoleEntity role) {
 		super(username, password, person, role);
@@ -65,12 +65,12 @@ public class StudentEntity extends UserEntity {
 	public Set<JoinTableStudentGroup> getClazz() {
 		return clazz;
 	}
-	
+
 	@JsonIgnore
 	public void setClazz(Set<JoinTableStudentGroup> clazz) {
 		this.clazz = clazz;
 	}
-	
+
 	@JsonIgnore
 	public Set<JoinTableStudentParent> getParent() {
 		return parent;

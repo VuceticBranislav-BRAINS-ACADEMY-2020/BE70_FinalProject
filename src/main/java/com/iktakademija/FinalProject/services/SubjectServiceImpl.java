@@ -18,11 +18,12 @@ public class SubjectServiceImpl implements SubjectService {
 
 	@Autowired
 	private SubjectRepository subjectRepository;
-	
+
 	@Override
-	public SubjectDTO createDTO(SubjectEntity source) {				
+	public SubjectDTO createDTO(SubjectEntity source) {
 		SubjectDTO retVal = new SubjectDTO();
-		if (source == null) return retVal;
+		if (source == null)
+			return retVal;
 		retVal.setId(source.getId());
 		retVal.setName(source.getName());
 		retVal.setVersion(source.getVersion());
@@ -33,33 +34,36 @@ public class SubjectServiceImpl implements SubjectService {
 	@Override
 	public List<SubjectDTO> getDTOList() {
 		List<SubjectDTO> list = new ArrayList<>();
-		for (SubjectEntity subject : subjectRepository.findAllUndeleted()) 
-			list.add(this.createDTO(subject));		
+		for (SubjectEntity subject : subjectRepository.findAllUndeleted())
+			list.add(this.createDTO(subject));
 		return list;
 	}
-	
+
 	@Override
-	public List<SubjectDTO> createDTOList(List<SubjectEntity> source) {		
+	public List<SubjectDTO> createDTOList(List<SubjectEntity> source) {
 		List<SubjectDTO> list = new ArrayList<>();
-		for (SubjectEntity subject : source) 
-			list.add(this.createDTO(subject));		
+		for (SubjectEntity subject : source)
+			list.add(this.createDTO(subject));
 		return list;
 	}
 
 	@Override
 	public SubjectDTO getSubjectDTO(Integer subjectId) {
 		Optional<SubjectEntity> op = subjectRepository.findById(subjectId);
-		if (op.isPresent() == false) return null;
+		if (op.isPresent() == false)
+			return null;
 		return this.createDTO(op.get());
 	}
 
 	@Override
 	public SubjectDTO setSubject(Integer subjectId, NewSubjectDTO newSubject) {
 		Optional<SubjectEntity> op = subjectRepository.findById(subjectId);
-		if (op.isPresent() == false) return null;
-		SubjectEntity student = op.get();		
-		
-		if (newSubject.getName() != null) student.setName(newSubject.getName());
+		if (op.isPresent() == false)
+			return null;
+		SubjectEntity student = op.get();
+
+		if (newSubject.getName() != null)
+			student.setName(newSubject.getName());
 
 		student = subjectRepository.save(student);
 		return this.createDTO(student);
@@ -68,18 +72,19 @@ public class SubjectServiceImpl implements SubjectService {
 	@Override
 	public SubjectDTO removeSubject(Integer subjectId) {
 		Optional<SubjectEntity> op = subjectRepository.findById(subjectId);
-		if (op.isPresent() == false) return null;
-		SubjectEntity subject = op.get();		
-		subject.setStatus(EStatus.DELETED);			
+		if (op.isPresent() == false)
+			return null;
+		SubjectEntity subject = op.get();
+		subject.setStatus(EStatus.DELETED);
 		subject = subjectRepository.save(subject);
-		return this.createDTO(subject);	
+		return this.createDTO(subject);
 	}
 
 	@Override
-	public SubjectEntity createSubject(NewSubjectDTO source) {				
-		SubjectEntity subject = new SubjectEntity(source.getName());	
+	public SubjectEntity createSubject(NewSubjectDTO source) {
+		SubjectEntity subject = new SubjectEntity(source.getName());
 		subject = subjectRepository.save(subject);
-		return subject;	
+		return subject;
 	}
 
 }

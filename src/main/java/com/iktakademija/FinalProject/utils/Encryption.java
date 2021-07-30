@@ -3,9 +3,11 @@ package com.iktakademija.FinalProject.utils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
- * Contains methodes for encoding and validating password using hashing algorithm.
+ * Contains methodes for encoding and validating password using hashing
+ * algorithm.
+ * 
  * @see BCryptPasswordEncoder
- * @see Encryption#validatePassword	 
+ * @see Encryption#validatePassword
  * @see Encryption#passwordEncode
  */
 public class Encryption {

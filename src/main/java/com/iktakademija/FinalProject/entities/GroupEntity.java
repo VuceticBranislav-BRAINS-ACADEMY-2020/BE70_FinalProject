@@ -32,31 +32,31 @@ public class GroupEntity {
 	/************************************************************
 	 * Attributes
 	 ************************************************************/
-	
+
 	@Column(nullable = false)
-	private String letter;		
+	private String letter;
 
 	/************************************************************
 	 * Relation Attributes
 	 ************************************************************/
-	
+
 	@OneToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "idhometeacher", nullable = false)
 	private TeacherEntity homeClassMaster;
-	
+
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "idclass", nullable = false)
 	@JsonBackReference(value = "Group_Class_1")
 	private ClassEntity clazz;
-	
+
 	@OneToMany(mappedBy = "group", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JsonManagedReference(value = "Student_Group_2")
 	private Set<JoinTableStudentGroup> student = new HashSet<>();
-	
+
 	@OneToMany(mappedBy = "group", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JsonManagedReference(value = "Student_Group_4")
 	private Set<JoinTableSubjectTeacher> teacher = new HashSet<>();
-	
+
 	/************************************************************
 	 * Shadow Attributes
 	 ************************************************************/
@@ -71,7 +71,7 @@ public class GroupEntity {
 	@Column
 	@Enumerated(value = EnumType.STRING)
 	private EStatus status;
-	
+
 	/************************************************************
 	 * Constructors
 	 ************************************************************/
@@ -83,7 +83,7 @@ public class GroupEntity {
 	/************************************************************
 	 * Getters & Setters
 	 ************************************************************/
-	
+
 	public String getLetter() {
 		return letter;
 	}
@@ -147,5 +147,5 @@ public class GroupEntity {
 	public void setTeacher(Set<JoinTableSubjectTeacher> teacher) {
 		this.teacher = teacher;
 	}
-	
+
 }

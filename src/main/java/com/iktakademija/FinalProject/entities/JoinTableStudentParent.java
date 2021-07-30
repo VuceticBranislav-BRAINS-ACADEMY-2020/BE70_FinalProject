@@ -18,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Table(name = "student_parents", uniqueConstraints = { @UniqueConstraint(columnNames = { "idstudent", "idparent" }) })
 @JsonIgnoreProperties({ "handler", "hibernateLazyInitializer" })
 public class JoinTableStudentParent {
-	
+
 	/************************************************************
 	 * Attributes
 	 ************************************************************/
@@ -26,17 +26,17 @@ public class JoinTableStudentParent {
 	/************************************************************
 	 * Relation Attributes
 	 ************************************************************/
-	
+
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "idstudent", nullable = false)
 	@JsonBackReference(value = "Student_Parent_1")
 	private StudentEntity student;
-	
+
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "idparent", nullable = false)
 	@JsonBackReference(value = "Student_Parent_2")
 	private ParentEntity parent;
-	
+
 	/************************************************************
 	 * Shadow Attributes
 	 ************************************************************/
@@ -44,7 +44,7 @@ public class JoinTableStudentParent {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-	
+
 	/************************************************************
 	 * Constructors
 	 ************************************************************/
@@ -52,7 +52,7 @@ public class JoinTableStudentParent {
 	public JoinTableStudentParent() {
 		super();
 	}
-	
+
 	public JoinTableStudentParent(ParentEntity parent, StudentEntity student) {
 		super();
 		this.parent = parent;
@@ -62,7 +62,7 @@ public class JoinTableStudentParent {
 	/************************************************************
 	 * Getters & Setters
 	 ************************************************************/
-	
+
 	public StudentEntity getStudent() {
 		return student;
 	}
@@ -86,5 +86,5 @@ public class JoinTableStudentParent {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	
+
 }

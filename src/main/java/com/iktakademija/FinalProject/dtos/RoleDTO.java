@@ -9,31 +9,32 @@ import com.iktakademija.FinalProject.entities.enums.EStatus;
 import com.iktakademija.FinalProject.securities.Views;
 
 /**
- * Role DTO.
- * <BR>Provide all information related to {@link RoleEntity}.
+ * Role DTO. <BR>
+ * Provide all information related to {@link RoleEntity}.
+ * 
  * @see RoleEntity
  * @author GM
  */
 @JsonView(value = Views.Admin.class)
-@JsonPropertyOrder(value =  {"id", "roleId", "version", "status"})
+@JsonPropertyOrder(value = { "id", "roleId", "version", "status" })
 public class RoleDTO {
-	
+
 	/************************************************************
 	 * Attributes
 	 ************************************************************/
-	
+
 	@JsonProperty(value = "ID")
-	private Integer id;		
+	private Integer id;
 
 	@JsonProperty(value = "Role Name")
-	private ERole roleId;	
-	
+	private ERole roleId;
+
 	@JsonProperty(value = "Version")
 	private Integer version;
-	
+
 	@JsonProperty(value = "Status")
-	private EStatus status;		
-	
+	private EStatus status;
+
 	/************************************************************
 	 * Constructors
 	 ************************************************************/
@@ -45,7 +46,7 @@ public class RoleDTO {
 	/************************************************************
 	 * Getters & Setters
 	 ************************************************************/
-	
+
 	public Integer getId() {
 		return id;
 	}

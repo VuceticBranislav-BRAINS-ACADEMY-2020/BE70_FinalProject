@@ -12,33 +12,34 @@ import com.iktakademija.FinalProject.entities.enums.EStatus;
 import com.iktakademija.FinalProject.securities.Views;
 
 /**
- * Group DTO.
- * <BR>Provide all information related to {@link GroupEntity}.
+ * Group DTO. <BR>
+ * Provide all information related to {@link GroupEntity}.
+ * 
  * @see GroupEntity
  * @author GM
  */
 @JsonView(value = Views.Student.class)
-@JsonPropertyOrder(value =  {"letter", "homeClassMaster", "clazz", "status"})
+@JsonPropertyOrder(value = { "letter", "homeClassMaster", "clazz", "status" })
 public class NewGroupDTO {
-	
+
 	/************************************************************
 	 * Attributes
 	 ************************************************************/
-	
+
 	@NotEmpty(message = "Class mark can not be empty.")
 	@JsonProperty(value = "Class Mark")
-	private String letter;	
+	private String letter;
 
 	@NotNull(message = "Must not be null.")
 	@Positive(message = "Must be positiv index number.")
 	@JsonProperty(value = "ID Homeclass Teacher")
 	private Integer homeClassMaster;
-	
+
 	@NotNull(message = "Must not be null.")
 	@Positive(message = "Must be positiv index number.")
 	@JsonProperty(value = "ID Class")
 	private Integer clazz;
-	
+
 	@NotNull(message = "Must not be null.")
 	@JsonProperty(value = "Status")
 	private EStatus status;

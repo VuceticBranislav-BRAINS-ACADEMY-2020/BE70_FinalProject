@@ -30,7 +30,7 @@ public class JoinTableSubjectTeacherServiceImpl implements JoinTableSubjectTeach
 
 	@Autowired
 	private GroupRepository groupRepository;
-	
+
 	@Autowired
 	private SubjectRepository subjectRepository;
 
@@ -144,36 +144,41 @@ public class JoinTableSubjectTeacherServiceImpl implements JoinTableSubjectTeach
 			list.add(this.createDTO(entity));
 		return list;
 	}
-	
+
 	@Override
 	public JoinTableSubjectTeacher addTeacherToSubjectByGroup(Integer teacherid, Integer subjectid, Integer groupid) {
-		
+
 		// Find teacher by id
 		Optional<TeacherEntity> op1 = teacherRepository.findById(teacherid);
-		if (op1.isPresent() == false) return null;
+		if (op1.isPresent() == false)
+			return null;
 		TeacherEntity teacher = op1.get();
-		
+
 		// Find subject by id
 		Optional<SubjectEntity> op2 = subjectRepository.findById(subjectid);
-		if (op2.isPresent() == false) return null;
+		if (op2.isPresent() == false)
+			return null;
 		SubjectEntity subject = op2.get();
-		
+
 		// Find class by id
 		Optional<GroupEntity> op3 = groupRepository.findById(groupid);
-		if (op3.isPresent() == false) return null;
+		if (op3.isPresent() == false)
+			return null;
 		GroupEntity group = op3.get();
-				
+
 		// Find student by id
-		Optional<JoinTableSubjectClass> op4 = joinTableSubjectClassRepository.findBySubjectAndClazz(subject, group.getClazz());
-		if (op4.isPresent() == false) return null;
+		Optional<JoinTableSubjectClass> op4 = joinTableSubjectClassRepository.findBySubjectAndClazz(subject,
+				group.getClazz());
+		if (op4.isPresent() == false)
+			return null;
 		JoinTableSubjectClass item1 = op4.get();
-		
+
 		JoinTableSubjectTeacher item = new JoinTableSubjectTeacher();
 		item.setTeachers(teacher);
 		item.setSub_cls(item1);
 		item.setGroup(group);
-		
-		item = joinTableSubjectTeacherRepository.save(item);		
+
+		item = joinTableSubjectTeacherRepository.save(item);
 		return item;
 	}
 

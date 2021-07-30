@@ -26,7 +26,7 @@ import com.iktakademija.FinalProject.securities.Views;
 @Entity
 @Table(name = "addresses")
 @JsonIgnoreProperties({ "handler", "hibernateLazyInitializer" })
-@JsonView(value = {Views.Admin.class})
+@JsonView(value = { Views.Admin.class })
 public class AddressEntity {
 
 	/************************************************************
@@ -48,7 +48,7 @@ public class AddressEntity {
 	/************************************************************
 	 * Relation Attributes
 	 ************************************************************/
-	
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "address", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JsonManagedReference(value = "Person_Address_1")
@@ -64,7 +64,7 @@ public class AddressEntity {
 
 	@Version
 	private Integer version;
-	
+
 	@Column
 	@Enumerated(value = EnumType.STRING)
 	private EStatus status;
@@ -76,7 +76,7 @@ public class AddressEntity {
 	public AddressEntity() {
 		super();
 	}
-	
+
 	/************************************************************
 	 * Getters & Setters
 	 ************************************************************/
@@ -143,6 +143,6 @@ public class AddressEntity {
 
 	public void setStatus(EStatus status) {
 		this.status = status;
-	}	
+	}
 
 }

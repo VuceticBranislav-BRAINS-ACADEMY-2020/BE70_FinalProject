@@ -42,16 +42,16 @@ public class PersonEntity {
 
 	@Column(nullable = false)
 	private String firstname;
-	
+
 	@Column(nullable = false)
 	private String lastname;
-	
+
 	@Column(nullable = false, unique = true)
 	private String jmbg;
-	
+
 	@Column(nullable = false)
 	private String mphone;
-	
+
 	@Column(nullable = false)
 	@DateTimeFormat(iso = ISO.DATE)
 	private LocalDate birthdate;
@@ -64,7 +64,7 @@ public class PersonEntity {
 	@JoinColumn(name = "idaddress", nullable = false)
 	@JsonBackReference(value = "Person_Address_1")
 	private AddressEntity address;
-	
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "person", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JsonManagedReference(value = "User_Person_1")
@@ -96,7 +96,7 @@ public class PersonEntity {
 	/************************************************************
 	 * Getters & Setters
 	 ************************************************************/
-	
+
 	public String getFirstname() {
 		return firstname;
 	}
@@ -144,12 +144,12 @@ public class PersonEntity {
 	public void setAddress(AddressEntity address) {
 		this.address = address;
 	}
-	
+
 	@JsonIgnore
 	public Set<UserEntity> getUsers() {
 		return users;
 	}
-	
+
 	@JsonIgnore
 	public void setUsers(Set<UserEntity> users) {
 		this.users = users;

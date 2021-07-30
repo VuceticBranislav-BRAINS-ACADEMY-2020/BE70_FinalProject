@@ -20,7 +20,7 @@ import com.iktakademija.FinalProject.securities.Views;
 @Table(name = "teachers")
 @JsonIgnoreProperties({ "handler", "hibernateLazyInitializer" })
 @PrimaryKeyJoinColumn(name = "id")
-@JsonView(value = {Views.Admin.class})
+@JsonView(value = { Views.Admin.class })
 public class TeacherEntity extends UserEntity {
 
 	/************************************************************
@@ -33,13 +33,12 @@ public class TeacherEntity extends UserEntity {
 
 	@OneToOne(mappedBy = "homeClassMaster", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	private GroupEntity homeClassMaster;
-	
+
 //	@JsonIgnore
 	@OneToMany(mappedBy = "teachers", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JsonManagedReference(value = "Subject_Teacher_1")
 	private Set<JoinTableSubjectTeacher> subject = new HashSet<>();
-	
-	
+
 	/************************************************************
 	 * Constructors
 	 ************************************************************/
@@ -47,7 +46,7 @@ public class TeacherEntity extends UserEntity {
 	public TeacherEntity() {
 		super();
 	}
-	
+
 	public TeacherEntity(String username, String password, PersonEntity person, RoleEntity role) {
 		super(username, password, person, role);
 	}
@@ -55,7 +54,7 @@ public class TeacherEntity extends UserEntity {
 	/************************************************************
 	 * Getters & Setters
 	 ************************************************************/
-	
+
 	public GroupEntity getHomeClassMaster() {
 		return homeClassMaster;
 	}
@@ -63,7 +62,7 @@ public class TeacherEntity extends UserEntity {
 	public void setHomeClassMaster(GroupEntity homeClassMaster) {
 		this.homeClassMaster = homeClassMaster;
 	}
-	
+
 //	@JsonIgnore
 	public Set<JoinTableSubjectTeacher> getSubject() {
 		return subject;

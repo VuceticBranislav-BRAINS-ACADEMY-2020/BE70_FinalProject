@@ -12,54 +12,56 @@ import com.iktakademija.FinalProject.entities.enums.EStatus;
 import com.iktakademija.FinalProject.securities.Views;
 
 /**
- * Class DTO.
- * <BR>Provide all information related to {@link ClassEntity}.
+ * Class DTO. <BR>
+ * Provide all information related to {@link ClassEntity}.
+ * 
  * @see ClassEntity
  * @author GM
  */
 @JsonView(value = Views.Student.class)
-@JsonPropertyOrder(value =  {"id", "type", "value", "entered", "stage", "version", "status", "groupName", "teacherName", "subjectName", "studentName"})
+@JsonPropertyOrder(value = { "id", "type", "value", "entered", "stage", "version", "status", "groupName", "teacherName",
+		"subjectName", "studentName" })
 public class GradeDTO {
-	
+
 	/************************************************************
 	 * Attributes
 	 ************************************************************/
-	
+
 	@JsonView(value = Views.Teacher.class)
 	@JsonProperty(value = "ID")
-	private Integer id;	
-	
+	private Integer id;
+
 	@JsonProperty(value = "Type")
 	private EGradeType type;
-	
+
 	@JsonProperty(value = "Value")
 	private Integer value;
-	
+
 	@JsonProperty(value = "Date Entered")
 	private LocalDate entered;
-	
+
 	@JsonProperty(value = "Stage")
-	private EStage stage;	
-	
+	private EStage stage;
+
 	@JsonView(value = Views.Admin.class)
 	@JsonProperty(value = "Version")
 	private Integer version;
-	
+
 	@JsonProperty(value = "Status")
-	private EStatus status;	
-	
+	private EStatus status;
+
 	@JsonProperty(value = "Group")
 	private String groupName;
 
 	@JsonProperty(value = "Teacher")
 	private String teacherName;
-	
+
 	@JsonProperty(value = "Subject")
 	private String subjectName;
-	
+
 	@JsonProperty(value = "Student")
 	private String studentName;
-	
+
 	/************************************************************
 	 * Constructors
 	 ************************************************************/
@@ -71,7 +73,7 @@ public class GradeDTO {
 	/************************************************************
 	 * Getters & Setters
 	 ************************************************************/
-	
+
 	public Integer getId() {
 		return id;
 	}

@@ -11,25 +11,25 @@ import com.iktakademija.FinalProject.entities.enums.ERole;
 
 @Service
 public class RoleServiceImpl implements RoleService {
-	
+
 	@Override
 	public RoleDTO createDTO(RoleEntity source) {
-		
-		RoleDTO retVal = new RoleDTO();		
+
+		RoleDTO retVal = new RoleDTO();
 		retVal.setId(source.getId());
 		retVal.setRoleId(source.getRole());
-		retVal.setVersion( source.getVersion());
-		retVal.setStatus( source.getStatus());
+		retVal.setVersion(source.getVersion());
+		retVal.setStatus(source.getStatus());
 		return retVal;
-		
+
 	}
-	
+
 	@Override
 	public List<ERole> getRoleFromStringList(List<String> list) {
-		
+
 		// Prepare rturn value
 		List<ERole> retVal = new ArrayList<ERole>();
-		
+
 		// Convert all string to roles
 		ERole role;
 		for (String string : list) {
@@ -40,11 +40,11 @@ public class RoleServiceImpl implements RoleService {
 		}
 		return retVal;
 	}
-	
+
 	@Override
 	public ERole getRoleFromString(String role) {
 
 		return ERole.valueOf(role);
 	}
-	
+
 }

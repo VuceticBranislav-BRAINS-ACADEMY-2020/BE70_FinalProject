@@ -8,40 +8,41 @@ import com.iktakademija.FinalProject.entities.enums.EStatus;
 import com.iktakademija.FinalProject.securities.Views;
 
 /**
- * Administration DTO.
- * <BR>Provide all information related to {@link AdminEntity}
+ * Administration DTO. <BR>
+ * Provide all information related to {@link AdminEntity}
+ * 
  * @see AdminEntity
  * @author GM
  */
 @JsonView(value = Views.Admin.class)
-@JsonPropertyOrder(value =  {"id", "username", "person", "role", "version", "status", "email"})
+@JsonPropertyOrder(value = { "id", "username", "person", "role", "version", "status", "email" })
 public class AdminDTO {
-	
+
 	/************************************************************
 	 * Attributes
 	 ************************************************************/
-	
+
 	@JsonProperty(value = "ID")
-	private Integer id;	
-	
+	private Integer id;
+
 	@JsonProperty(value = "Username")
 	private String username;
 
 	@JsonProperty(value = "Person")
-	private PersonDTO person;	
+	private PersonDTO person;
 
 	@JsonProperty(value = "Role")
-	private RoleDTO role;	
-	
+	private RoleDTO role;
+
 	@JsonProperty(value = "Version")
 	private Integer version;
-	
+
 	@JsonProperty(value = "Status")
 	private EStatus status;
-	
+
 	@JsonProperty(value = "eMail")
 	private String email;
-	
+
 	/************************************************************
 	 * Constructors
 	 ************************************************************/
@@ -49,7 +50,7 @@ public class AdminDTO {
 	public AdminDTO() {
 		super();
 	}
-	
+
 	/************************************************************
 	 * Getters & Setters
 	 ************************************************************/
@@ -108,6 +109,6 @@ public class AdminDTO {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}	
+	}
 
 }

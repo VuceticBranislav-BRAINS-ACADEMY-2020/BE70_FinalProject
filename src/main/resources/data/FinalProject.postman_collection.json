@@ -700,6 +700,61 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "PAR40 - search",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/parent/search?StudentId=436&SubjectId=107&TeacherId=484&GroupId=612&ClassId=25&Stage=FIRST",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"parent",
+								"search"
+							],
+							"query": [
+								{
+									"key": "StudentId",
+									"value": "436"
+								},
+								{
+									"key": "SubjectId",
+									"value": "107"
+								},
+								{
+									"key": "TeacherId",
+									"value": "484"
+								},
+								{
+									"key": "GroupId",
+									"value": "612"
+								},
+								{
+									"key": "ClassId",
+									"value": "25"
+								},
+								{
+									"key": "Stage",
+									"value": "FIRST"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -873,6 +928,69 @@
 					"response": []
 				},
 				{
+					"name": "TEA15 - addTeacherToSubjectByGroup",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/teacher/admin/474/107/600",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"teacher",
+								"admin",
+								"474",
+								"107",
+								"600"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TEA16 - getTeacherSubjectsById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/teacher/admin/subjects/474",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"teacher",
+								"admin",
+								"subjects",
+								"474"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "TEA20 - getAllGrades",
 					"request": {
 						"auth": {
@@ -940,6 +1058,61 @@
 								"{{ApiVersion}}",
 								"teacher",
 								"changecredentials"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TEA40 - search",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/teacher/search?ClassMaster=false&StudentId=436&SubjectId=107&GroupId=612&ClassId=25&Stage=FIRST",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"teacher",
+								"search"
+							],
+							"query": [
+								{
+									"key": "ClassMaster",
+									"value": "false"
+								},
+								{
+									"key": "StudentId",
+									"value": "436"
+								},
+								{
+									"key": "SubjectId",
+									"value": "107"
+								},
+								{
+									"key": "GroupId",
+									"value": "612"
+								},
+								{
+									"key": "ClassId",
+									"value": "25"
+								},
+								{
+									"key": "Stage",
+									"value": "FIRST"
+								}
 							]
 						}
 					},
@@ -1115,6 +1288,37 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "GRP14 - addStudentToGroup",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/group/admin/600/423",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"group",
+								"admin",
+								"600",
+								"423"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -1286,6 +1490,38 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "CLS14 - addSubjectToClass",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/class/admin/25/100/6",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"class",
+								"admin",
+								"25",
+								"100",
+								"6"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -1375,7 +1611,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{LocalHost}}/{{ApiVersion}}/student/admin/33",
+							"raw": "{{LocalHost}}/{{ApiVersion}}/student/admin/402",
 							"host": [
 								"{{LocalHost}}"
 							],
@@ -1383,7 +1619,7 @@
 								"{{ApiVersion}}",
 								"student",
 								"admin",
-								"33"
+								"402"
 							]
 						}
 					},
@@ -1490,6 +1726,47 @@
 					"response": []
 				},
 				{
+					"name": "STU15 - addParent",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/student/admin/parent/?child=432&parent=472",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"student",
+								"admin",
+								"parent",
+								""
+							],
+							"query": [
+								{
+									"key": "child",
+									"value": "432"
+								},
+								{
+									"key": "parent",
+									"value": "472"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "STU20 - getStudentInfo",
 					"request": {
 						"auth": {
@@ -1557,6 +1834,57 @@
 								"{{ApiVersion}}",
 								"student",
 								"changecredentials"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "STU40 - search",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/student/search?SubjectId=107&TeacherId=484&GroupId=612&ClassId=25&Stage=FIRST",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"student",
+								"search"
+							],
+							"query": [
+								{
+									"key": "SubjectId",
+									"value": "107"
+								},
+								{
+									"key": "TeacherId",
+									"value": "484"
+								},
+								{
+									"key": "GroupId",
+									"value": "612"
+								},
+								{
+									"key": "ClassId",
+									"value": "25"
+								},
+								{
+									"key": "Stage",
+									"value": "FIRST"
+								}
 							]
 						}
 					},
@@ -2241,6 +2569,93 @@
 								{
 									"key": "id",
 									"value": "2020"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GRD14 - getAllGradePage",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/grade/admin/page/0",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"grade",
+								"admin",
+								"page",
+								"0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GRD40 - search",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AuthToken_Admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LocalHost}}/{{ApiVersion}}/grade/admin/search?StudentId=436&SubjectId=107&TeacherId=484&GroupId=612&ClassId=25&Stage=FIRST",
+							"host": [
+								"{{LocalHost}}"
+							],
+							"path": [
+								"{{ApiVersion}}",
+								"grade",
+								"admin",
+								"search"
+							],
+							"query": [
+								{
+									"key": "StudentId",
+									"value": "436"
+								},
+								{
+									"key": "SubjectId",
+									"value": "107"
+								},
+								{
+									"key": "TeacherId",
+									"value": "484"
+								},
+								{
+									"key": "GroupId",
+									"value": "612"
+								},
+								{
+									"key": "ClassId",
+									"value": "25"
+								},
+								{
+									"key": "Stage",
+									"value": "FIRST"
 								}
 							]
 						}

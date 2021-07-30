@@ -22,7 +22,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.iktakademija.FinalProject.entities.enums.EStatus;
 
 @Entity
-@Table(name = "users", uniqueConstraints = { @UniqueConstraint(columnNames = { "idperson", "idrole"}) })
+@Table(name = "users", uniqueConstraints = { @UniqueConstraint(columnNames = { "idperson", "idrole" }) })
 @JsonIgnoreProperties({ "handler", "hibernateLazyInitializer" })
 @Inheritance(strategy = InheritanceType.JOINED)
 //@JsonView(value = {Views.Admin.class})
@@ -34,7 +34,7 @@ public class UserEntity {
 
 	@Column(nullable = false)
 	protected String password;
-	
+
 	@Column(nullable = false, unique = true)
 	protected String username;
 
@@ -46,7 +46,7 @@ public class UserEntity {
 	@JoinColumn(name = "idperson", nullable = false)
 	@JsonBackReference(value = "User_Person_1")
 	protected PersonEntity person;
-	
+
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "idrole", nullable = false)
 	@JsonBackReference(value = "Role_User_1")
@@ -73,8 +73,8 @@ public class UserEntity {
 
 	public UserEntity() {
 		super();
-	}	
-	
+	}
+
 	public UserEntity(String username, String password, PersonEntity person, RoleEntity role) {
 		super();
 		this.password = password;
@@ -103,7 +103,7 @@ public class UserEntity {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	
+
 	public PersonEntity getPerson() {
 		return person;
 	}

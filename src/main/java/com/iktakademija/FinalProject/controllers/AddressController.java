@@ -162,7 +162,7 @@ public class AddressController {
 			return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_PARAMETERS),
 					HttpStatus.BAD_REQUEST);
 		}
-		
+
 		// Retrive address DTO by id
 		AddressDTO dto = addressService.setAddress(addressId, newAddress);
 		if (dto == null) {

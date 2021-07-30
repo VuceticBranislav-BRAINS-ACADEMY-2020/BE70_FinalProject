@@ -20,10 +20,10 @@ public class JoinTableSubjectClassServiceImpl implements JoinTableSubjectClassSe
 
 	@Autowired
 	private JoinTableSubjectClassRepository joinTableSubjectClassRepository;
-	
+
 	@Autowired
 	private SubjectRepository subjectRepository;
-	
+
 	@Autowired
 	private ClassRepository classRepository;
 
@@ -47,7 +47,7 @@ public class JoinTableSubjectClassServiceImpl implements JoinTableSubjectClassSe
 		table.setSubject(subject);
 		table.setClazz(clazz);
 		table.setFond(source.getFond());
-		
+
 		table = joinTableSubjectClassRepository.save(table);
 		return table;
 	}
@@ -62,7 +62,7 @@ public class JoinTableSubjectClassServiceImpl implements JoinTableSubjectClassSe
 		retVal.setSubject(source.getSubject().getId());
 		retVal.setFond(source.getFond());
 		retVal.setId(source.getId());
-		
+
 		return retVal;
 	}
 
@@ -76,12 +76,12 @@ public class JoinTableSubjectClassServiceImpl implements JoinTableSubjectClassSe
 
 	@Override
 	public JoinTableSubjectClassDTO setEntity(Integer id, JoinTableSubjectClassDTO newEntity) {
-		
+
 		Optional<JoinTableSubjectClass> op = joinTableSubjectClassRepository.findById(id);
 		if (op.isPresent() == false)
 			return null;
 		JoinTableSubjectClass entity = op.get();
-		
+
 		Optional<SubjectEntity> op1 = subjectRepository.findById(newEntity.getSubject());
 		if (op1.isPresent() == false)
 			return null;
@@ -91,7 +91,7 @@ public class JoinTableSubjectClassServiceImpl implements JoinTableSubjectClassSe
 		if (op2.isPresent() == false)
 			return null;
 		ClassEntity clazz = op2.get();
-		
+
 		// Change entity
 		if (newEntity.getSubject() != null)
 			entity.setSubject(subject);
@@ -99,7 +99,7 @@ public class JoinTableSubjectClassServiceImpl implements JoinTableSubjectClassSe
 			entity.setClazz(clazz);
 		if (newEntity.getFond() != null)
 			entity.setFond(newEntity.getFond());
-		
+
 		// Save and return DTO
 		entity = joinTableSubjectClassRepository.save(entity);
 		return this.createDTO(entity);
@@ -107,23 +107,22 @@ public class JoinTableSubjectClassServiceImpl implements JoinTableSubjectClassSe
 
 	@Override
 	public JoinTableSubjectClassDTO removeEntity(Integer id) {
-		
+
 		Optional<JoinTableSubjectClass> op = joinTableSubjectClassRepository.findById(id);
 		if (op.isPresent() == false)
 			return null;
 		JoinTableSubjectClass entity = op.get();
-		
+
 		joinTableSubjectClassRepository.delete(entity);
 		return this.createDTO(entity);
 	}
 
-	
 	@Override
 	public List<JoinTableSubjectClassDTO> getDTOList() {
 		List<JoinTableSubjectClassDTO> list = new ArrayList<>();
 		for (JoinTableSubjectClass entity : joinTableSubjectClassRepository.findAll())
 			list.add(this.createDTO(entity));
 		return list;
-	}	
+	}
 
 }

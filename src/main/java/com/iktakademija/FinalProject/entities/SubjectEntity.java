@@ -35,11 +35,11 @@ public class SubjectEntity {
 	/************************************************************
 	 * Relation Attributes
 	 ************************************************************/
-	
+
 	@OneToMany(mappedBy = "subject", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JsonManagedReference(value = "Subject_Class_2")
-	private Set<JoinTableSubjectClass> clazz = new HashSet<>();	
-	
+	private Set<JoinTableSubjectClass> clazz = new HashSet<>();
+
 	/************************************************************
 	 * Shadow Attributes
 	 ************************************************************/
@@ -80,7 +80,7 @@ public class SubjectEntity {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	public Integer getId() {
 		return id;
 	}
@@ -112,5 +112,5 @@ public class SubjectEntity {
 	public void setClazz(Set<JoinTableSubjectClass> clazz) {
 		this.clazz = clazz;
 	}
-	
+
 }

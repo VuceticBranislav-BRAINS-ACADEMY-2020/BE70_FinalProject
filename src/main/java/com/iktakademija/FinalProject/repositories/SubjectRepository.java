@@ -12,9 +12,10 @@ public interface SubjectRepository extends CrudRepository<SubjectEntity, Integer
 
 	Optional<SubjectEntity> findById(Integer id);
 
-	@Query(value = "FROM SubjectEntity AS s WHERE s.status<>'DELETED'")
+	@Query(value = "FROM SubjectEntity AS s WHERE s.status <> 'DELETED'")
 	List<SubjectEntity> findAllUndeleted();
-	
+
 	List<SubjectEntity> findAllById(Integer id);
+
 	List<SubjectEntity> findAll();
 }

@@ -118,16 +118,31 @@ public class GradeServiceImpl implements GradeService {
 		GroupEntity group = null;
 		ClassEntity clazz = null;
 
-		if (studentId != null)
+		if (studentId != null) {
 			student = studentRepository.findById(studentId).orElse(null);
-		if (subjectId != null)
+			if (student == null)
+				return null;
+		}
+		if (subjectId != null) {
 			subject = subjectRepository.findById(subjectId).orElse(null);
-		if (teacherId != null)
+			if (subject == null)
+				return null;
+		}
+		if (teacherId != null) {
 			teacher = teacherRepository.findById(teacherId).orElse(null);
-		if (groupId != null)
+			if (teacher == null)
+				return null;
+		}
+		if (groupId != null) {
 			group = groupRepository.findById(groupId).orElse(null);
-		if (classId != null)
+			if (group == null)
+				return null;
+		}
+		if (classId != null) {
 			clazz = classRepository.findById(classId).orElse(null);
+			if (clazz == null)
+				return null;
+		}
 
 		return getFilteredByObjects(student, subject, teacher, group, clazz, stage);
 	}

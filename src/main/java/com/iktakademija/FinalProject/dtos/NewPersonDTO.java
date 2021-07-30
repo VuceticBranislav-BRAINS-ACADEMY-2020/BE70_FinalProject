@@ -18,15 +18,16 @@ import com.iktakademija.FinalProject.entities.enums.EStatus;
 import com.iktakademija.FinalProject.securities.Views;
 
 /**
- * Person DTO.
- * <BR>Provide all information needed for creating of new person.
+ * Person DTO. <BR>
+ * Provide all information needed for creating of new person.
+ * 
  * @see PersonEntity
  * @author GM
  */
-@JsonPropertyOrder(value = {"firstname", "lastname", "jmbg", "mphone", "birthdate", "address"})
+@JsonPropertyOrder(value = { "firstname", "lastname", "jmbg", "mphone", "birthdate", "address" })
 @JsonView(value = Views.Admin.class)
 public class NewPersonDTO {
-	
+
 	/************************************************************
 	 * Attributes
 	 ************************************************************/
@@ -34,20 +35,20 @@ public class NewPersonDTO {
 	@NotBlank(message = "Can not be blank or null.")
 	@JsonProperty(value = "First Name")
 	private String firstname;
-	
+
 	@NotBlank(message = "Can not be blank or null.")
 	@JsonProperty(value = "Last Name")
 	private String lastname;
-	
+
 	@NotNull(message = "Must not be null.")
 	@Pattern(regexp = "^(0[1-9]|[12][0-9]|3[01])(0[1-9]|1[012])[0-9]{9}$", message = "Provide a valid JMBG.")
 	@JsonProperty(value = "JMBG")
-	private String jmbg;	
-	
+	private String jmbg;
+
 	@NotNull(message = "Must not be null.")
 	@Pattern(regexp = "^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.\\/]\\d{3}[\\s.-]\\d{3}$", message = "Provide a valid phone number in format xxx/xxx-xxx.")
 	@JsonProperty(value = "Phone Number")
-	private String mphone;	
+	private String mphone;
 
 	@Past(message = "Can not be date in future.")
 	@JsonFormat(shape = Shape.STRING, pattern = "dd-MM-yyyy")
@@ -58,10 +59,10 @@ public class NewPersonDTO {
 	@Positive(message = "Must be positiv index number.")
 	@JsonProperty(value = "ID Address")
 	private Integer address;
-	
+
 	@JsonProperty(value = "Status")
-	private EStatus status;	
-	
+	private EStatus status;
+
 	/************************************************************
 	 * Constructors
 	 ************************************************************/
@@ -73,7 +74,7 @@ public class NewPersonDTO {
 	/************************************************************
 	 * Getters & Setters
 	 ************************************************************/
-	
+
 	public String getFirstname() {
 		return firstname;
 	}
@@ -129,5 +130,5 @@ public class NewPersonDTO {
 	public void setAddress(Integer address) {
 		this.address = address;
 	}
-	
+
 }

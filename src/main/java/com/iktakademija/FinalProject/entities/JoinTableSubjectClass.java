@@ -21,7 +21,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
-@Table(name = "subject_classes", uniqueConstraints = { @UniqueConstraint(columnNames = { "idclass", "idsubject"}) })
+@Table(name = "subject_classes", uniqueConstraints = { @UniqueConstraint(columnNames = { "idclass", "idsubject" }) })
 @JsonIgnoreProperties({ "handler", "hibernateLazyInitializer" })
 public class JoinTableSubjectClass {
 
@@ -31,25 +31,25 @@ public class JoinTableSubjectClass {
 
 	@Column
 	private Integer fond;
-	
+
 	/************************************************************
 	 * Relation Attributes
 	 ************************************************************/
-	
+
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "idclass", nullable = false)
 	@JsonBackReference(value = "Subject_Class_1")
 	private ClassEntity clazz;
-	
+
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "idsubject", nullable = false)
 	@JsonBackReference(value = "Subject_Class_2")
 	private SubjectEntity subject;
-	
+
 	@OneToMany(mappedBy = "sub_cls", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JsonManagedReference(value = "Subject_Teacher_2")
 	private Set<JoinTableSubjectTeacher> sub_cls = new HashSet<>();
-	
+
 	/************************************************************
 	 * Shadow Attributes
 	 ************************************************************/
@@ -57,7 +57,7 @@ public class JoinTableSubjectClass {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-	
+
 	/************************************************************
 	 * Constructors
 	 ************************************************************/
@@ -69,7 +69,7 @@ public class JoinTableSubjectClass {
 	/************************************************************
 	 * Getters & Setters
 	 ************************************************************/
-	
+
 	public Integer getFond() {
 		return fond;
 	}
@@ -109,5 +109,5 @@ public class JoinTableSubjectClass {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	
+
 }

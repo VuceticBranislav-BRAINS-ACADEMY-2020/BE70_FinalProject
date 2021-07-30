@@ -10,42 +10,43 @@ import com.iktakademija.FinalProject.entities.enums.EStatus;
 import com.iktakademija.FinalProject.securities.Views;
 
 /**
- * Student DTO.
- * <BR>Provide all information related to {@link StudentEntity}.
+ * Student DTO. <BR>
+ * Provide all information related to {@link StudentEntity}.
+ * 
  * @see StudentEntity
  * @author GM
  */
 @JsonView(value = Views.Student.class)
-@JsonPropertyOrder(value =  {"id", "username", "person", "roleId", "version", "status", "grades"})
+@JsonPropertyOrder(value = { "id", "username", "person", "roleId", "version", "status", "grades" })
 public class StudentDTO {
-	
+
 	/************************************************************
 	 * Attributes
 	 ************************************************************/
-	
+
 	@JsonProperty(value = "ID")
-	private Integer id;	
-	
+	private Integer id;
+
 	@JsonProperty(value = "Username")
 	private String username;
-	
+
 	@JsonProperty(value = "Person")
-	private PersonDTO person;	
-	
+	private PersonDTO person;
+
 	@JsonView(value = Views.Admin.class)
 	@JsonProperty(value = "Role")
-	private RoleDTO role;	
-	
+	private RoleDTO role;
+
 	@JsonView(value = Views.Admin.class)
 	@JsonProperty(value = "Version")
 	private Integer version;
-	
+
 	@JsonProperty(value = "Status")
 	private EStatus status;
-	
+
 	@JsonProperty(value = "Grades")
 	private List<GradeDTO> grades;
-	
+
 	/************************************************************
 	 * Constructors
 	 ************************************************************/
@@ -57,7 +58,7 @@ public class StudentDTO {
 	/************************************************************
 	 * Getters & Setters
 	 ************************************************************/
-	
+
 	public String getUsername() {
 		return username;
 	}

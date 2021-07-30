@@ -8,11 +8,17 @@ import com.iktakademija.FinalProject.entities.SubjectEntity;
 
 public interface SubjectService {
 	SubjectDTO createDTO(SubjectEntity source);
-	List<SubjectDTO> createDTOList(List<SubjectEntity> source);	
+
+	List<SubjectDTO> createDTOList(List<SubjectEntity> source);
+
 	List<SubjectDTO> getDTOList();
+
 	SubjectDTO getSubjectDTO(Integer subjectId);
+
 	SubjectDTO setSubject(Integer subjectId, NewSubjectDTO newSubject);
+
 	SubjectDTO removeSubject(Integer subjectId);
+
 	SubjectEntity createSubject(NewSubjectDTO source);
 
 }

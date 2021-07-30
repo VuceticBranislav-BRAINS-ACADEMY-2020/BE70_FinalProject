@@ -20,7 +20,7 @@ import com.iktakademija.FinalProject.securities.Views;
  * @see GradeEntity
  * @author GM
  */
-@JsonPropertyOrder(value = { "type", "value", "stage", "state"})
+@JsonPropertyOrder(value = { "type", "value", "stage", "state" })
 @JsonView(value = Views.Teacher.class)
 public class ChangeGradeDTO {
 
@@ -31,25 +31,25 @@ public class ChangeGradeDTO {
 	@NotNull(message = "Value must be existing grade id.")
 	@JsonProperty(value = "ID")
 	private Integer id;
-	
+
 	@NotNull(message = "Grade type must be: EXAM, WRITTEN, ORAL or FINAL.")
 	@JsonProperty(value = "Type")
 	private EGradeType type;
-	
+
 	@NotNull(message = "Pleas enter grade value foomr 1 to 5.")
 	@Min(value = 1, message = "Grade must be at least 1.")
 	@Max(value = 5, message = "Grade can be 5 or less.")
 	@JsonProperty(value = "Value")
 	private Integer value;
-	
+
 	@NotNull(message = "Stage must be FIRST or SECOND.")
 	@JsonProperty(value = "Stage")
-	private EStage stage;	
+	private EStage stage;
 
 	@NotNull(message = "State must be ACTIVE or DELETED.")
 	@JsonProperty(value = "State")
-	private EStatus state;	
-	
+	private EStatus state;
+
 	/************************************************************
 	 * Constructors
 	 ************************************************************/
@@ -57,11 +57,11 @@ public class ChangeGradeDTO {
 	public ChangeGradeDTO() {
 		super();
 	}
-	
+
 	/************************************************************
 	 * Getters & Setters
 	 ************************************************************/
-	
+
 	public EGradeType getType() {
 		return type;
 	}
@@ -107,5 +107,5 @@ public class ChangeGradeDTO {
 		return "ChangeGradeDTO [id=" + id + ", type=" + type + ", value=" + value + ", stage=" + stage + ", state="
 				+ state + "]";
 	}
-	
+
 }

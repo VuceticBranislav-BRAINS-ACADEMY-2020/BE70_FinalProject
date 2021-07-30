@@ -20,7 +20,7 @@ import com.iktakademija.FinalProject.securities.Views;
 @Table(name = "parents")
 @JsonIgnoreProperties({ "handler", "hibernateLazyInitializer" })
 @PrimaryKeyJoinColumn(name = "id")
-@JsonView(value = {Views.Admin.class})
+@JsonView(value = { Views.Admin.class })
 public class ParentEntity extends UserEntity {
 
 	/************************************************************
@@ -33,11 +33,11 @@ public class ParentEntity extends UserEntity {
 	/************************************************************
 	 * Relation Attributes
 	 ************************************************************/
-	
+
 	@OneToMany(mappedBy = "parent", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JsonManagedReference(value = "Student_Parent_2")
 	private Set<JoinTableStudentParent> student = new HashSet<>();
-	
+
 	/************************************************************
 	 * Constructors
 	 ************************************************************/
@@ -45,11 +45,11 @@ public class ParentEntity extends UserEntity {
 	public ParentEntity() {
 		super();
 	}
-	
+
 	public ParentEntity(String username, String password, PersonEntity person, RoleEntity role) {
 		super(username, password, person, role);
-	}	
-	
+	}
+
 	/************************************************************
 	 * Getters & Setters
 	 ************************************************************/
@@ -61,11 +61,11 @@ public class ParentEntity extends UserEntity {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
+
 	public Set<JoinTableStudentParent> getStudents() {
 		return student;
 	}
-	
+
 	public void setStudent(Set<JoinTableStudentParent> student) {
 		this.student = student;
 	}

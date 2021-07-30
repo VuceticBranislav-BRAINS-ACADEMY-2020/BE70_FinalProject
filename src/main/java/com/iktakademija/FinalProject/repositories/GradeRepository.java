@@ -15,7 +15,8 @@ import com.iktakademija.FinalProject.entities.TeacherEntity;
 
 public interface GradeRepository extends PagingAndSortingRepository<GradeEntity, Integer> {
 
-	//SELECT * FROM db_finalproject.grades as a inner join student_groups as b  on a.idstd_grp = b.id where b.idstudent = 407;
+	// SELECT * FROM db_finalproject.grades as a inner join student_groups as b on
+	// a.idstd_grp = b.id where b.idstudent = 407;
 	@Query(value = "FROM GradeEntity AS a INNER JOIN FETCH a.std_grp AS b WHERE b.student = :student")
 	List<GradeEntity> findAllGradesForStudent(@Param("student") StudentEntity student);
 
@@ -23,17 +24,17 @@ public interface GradeRepository extends PagingAndSortingRepository<GradeEntity,
 
 	@Query(value = "FROM GradeEntity AS g WHERE g.id = :id")
 	Optional<GradeEntity> findByIdIgnoreState(@Param("id") Integer id);
-	
+
 	@Query(value = "FROM GradeEntity AS g WHERE g.status <> 'DELETED'")
 	List<GradeEntity> findAllUndeleted();
-		
+
 	@Query(value = "FROM GradeEntity AS a LEFT JOIN JoinTableStudentGroup AS b ON a.std_grp = b.id "
 			+ "INNER JOIN JoinTableSubjectTeacher AS c ON a.sub_tch = c.id "
 			+ "WHERE b.group = c.group AND a.status <> 'DELETED' AND c.teachers = :teacher")
 	List<GradeEntity> findAllGradesForStudentsAndSubjects(@Param("teacher") TeacherEntity teacher);
-	
+
 	Page<GradeEntity> findAll(Pageable pageable);
-	
+
 	List<GradeEntity> findAll();
-	
+
 }

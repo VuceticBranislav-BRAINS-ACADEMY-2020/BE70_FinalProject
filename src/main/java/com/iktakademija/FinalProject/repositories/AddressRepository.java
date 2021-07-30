@@ -11,18 +11,19 @@ import org.springframework.data.repository.query.Param;
 import com.iktakademija.FinalProject.entities.AddressEntity;
 
 public interface AddressRepository extends CrudRepository<AddressEntity, Integer> {
-	
-	Optional<AddressEntity> findById(@Param("id") Integer id);
-	 
+
+	Optional<AddressEntity> findById(Integer id);
+
 	@Override
 	Set<AddressEntity> findAll();
-	
+
 	@Query(value = "SELECT COUNT(*)>0 FROM AddressEntity AS a WHERE a.city = :city AND a.street = :street AND a.number = :number AND a.apartment = :apartment")
-	Boolean isAddressExists(@Param("city") String city, @Param("street") String street, @Param("number") String number, @Param("apartment") String apartment);
-	
+	Boolean isAddressExists(@Param("city") String city, @Param("street") String street, @Param("number") String number,
+			@Param("apartment") String apartment);
+
 	@Query(value = "SELECT COUNT(*)>0 FROM AddressEntity AS a WHERE a.city = :city AND a.street = :street AND a.number = :number")
 	Boolean isAddressExists(@Param("city") String city, @Param("street") String street, @Param("number") String number);
-	
+
 	@Query(value = "FROM AddressEntity AS a WHERE a.status <> 'DELETED'")
 	List<AddressEntity> findAllUndeleted();
 

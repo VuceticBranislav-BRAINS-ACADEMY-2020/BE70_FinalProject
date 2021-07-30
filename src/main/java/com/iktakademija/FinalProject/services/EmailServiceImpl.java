@@ -21,26 +21,26 @@ public class EmailServiceImpl implements EmailService {
 
 	@Autowired
 	private JavaMailSender mailSender;
-	
+
 	@Autowired
 	private LoggingService loggingService;
-	
+
 	@Value("${spring.mail.deture}")
 	private String deturedEmail;
 
 	@Value("${spring.mail.send}")
 	private boolean sendEmail;
-	
+
 	@Override
 	public void sendTemplateMessage(EmailObject object, GradeDTO dto) throws Exception {
-		
+
 		if (sendEmail == false) {
 			loggingService.loggMessageWithoutHeader(" >>> Email sending", Level.INFO);
 			loggingService.loggMessageWithoutHeader("  |  Email sending disabled.", Level.INFO);
 			loggingService.loggMessageWithoutHeader(" >>> -------------", Level.INFO);
 			return;
 		}
-		
+
 		MimeMessage mail = mailSender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(mail, true);
 
@@ -55,25 +55,15 @@ public class EmailServiceImpl implements EmailService {
 				+ "<td style='border-style: hidden;'><strong>Teacher</strong></td>"
 				+ "<td style='border-style: hidden;'><strong>Subject</strong></td>"
 				+ "<td style='border-style: hidden;'><strong>Status</strong></td> </tr> <tr>"
+				+ "<td style='border-style: hidden;'>%s</td>" + "<td style='border-style: hidden;'>%s</td>"
+				+ "<td style='border-style: hidden;'>%s</td>" + "<td style='border-style: hidden;'>%s</td>"
+				+ "<td style='border-style: hidden;'>%s</td>" + "<td style='border-style: hidden;'>%s</td>"
 				+ "<td style='border-style: hidden;'>%s</td>"
-				+ "<td style='border-style: hidden;'>%s</td>"
-				+ "<td style='border-style: hidden;'>%s</td>"
-				+ "<td style='border-style: hidden;'>%s</td>"
-				+ "<td style='border-style: hidden;'>%s</td>"
-				+ "<td style='border-style: hidden;'>%s</td>"
-				+ "<td style='border-style: hidden;'>%s</td>"
-				+ "<td style='border-style: hidden;'>%s</td> </tr> </tbody></table>"
-				+ "<br>Have a nice day.";
+				+ "<td style='border-style: hidden;'>%s</td> </tr> </tbody></table>" + "<br>Have a nice day.";
 
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MMM-dd");
-		text = String.format(text, 
-				dto.getValue().toString(), 
-				dto.getType().toString(),
-				dto.getStage().toString(),
-				dto.getEntered().format(formatter),
-				dto.getGroupName(),
-				dto.getTeacherName(),
-				dto.getSubjectName(),
+		text = String.format(text, dto.getValue().toString(), dto.getType().toString(), dto.getStage().toString(),
+				dto.getEntered().format(formatter), dto.getGroupName(), dto.getTeacherName(), dto.getSubjectName(),
 				dto.getStatus().toString());
 		helper.setText(text, true);
 		mailSender.send(mail);
@@ -88,7 +78,7 @@ public class EmailServiceImpl implements EmailService {
 			loggingService.loggMessageWithoutHeader(" >>> -------------", Level.INFO);
 			return;
 		}
-		
+
 		MimeMessage mimeMessage = mailSender.createMimeMessage();
 		FileSystemResource file = new FileSystemResource(new File(pathToAttachment));
 		MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
@@ -101,27 +91,28 @@ public class EmailServiceImpl implements EmailService {
 
 	@Override
 	public String[] emailDeture(String[] email) {
-		
-		if (deturedEmail == "") return email;
-		
+
+		if (deturedEmail == "")
+			return email;
+
 		String[] retVal = new String[1];
 		retVal[0] = deturedEmail;
-		return retVal;		
-		
+		return retVal;
+
 	}
-	
+
 	@Override
 	public String[] emailDeture(String email) {
-		
+
 		String[] retVal = new String[1];
 		if (deturedEmail == "") {
 			retVal[0] = email;
 			return retVal;
-		}		
-		
+		}
+
 		retVal[0] = deturedEmail;
-		return retVal;		
-		
+		return retVal;
+
 	}
-	
+
 }

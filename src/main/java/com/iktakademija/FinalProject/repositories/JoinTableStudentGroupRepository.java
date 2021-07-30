@@ -12,12 +12,12 @@ import com.iktakademija.FinalProject.entities.StudentEntity;
 public interface JoinTableStudentGroupRepository extends CrudRepository<JoinTableStudentGroup, Integer> {
 
 	JoinTableStudentGroup findByStudentAndGroup(StudentEntity student, GroupEntity group);
-	
+
 	@Override
 	List<JoinTableStudentGroup> findAll();
-	
+
 	@Override
 	Optional<JoinTableStudentGroup> findById(Integer id);
-	
+
 	Optional<JoinTableStudentGroup> findByStudent(StudentEntity student);
 }

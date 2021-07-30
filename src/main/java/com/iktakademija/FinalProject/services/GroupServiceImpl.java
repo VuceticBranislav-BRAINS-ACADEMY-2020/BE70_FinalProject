@@ -38,13 +38,13 @@ public class GroupServiceImpl implements GroupService {
 
 	@Autowired
 	private TeacherService teacherService;
-	
+
 	@Autowired
 	private StudentRepository studentRepository;
-	
+
 	@Autowired
 	private JoinTableStudentGroupRepository joinTableStudentGroupRepository;
-		
+
 	@Override
 	public GroupEntity createGroup(NewGroupDTO source) {
 
@@ -139,28 +139,30 @@ public class GroupServiceImpl implements GroupService {
 		group = groupRepository.save(group);
 		return this.createDTO(group);
 	}
-	
+
 	@Override
 	public JoinTableStudentGroup addStudentToGroup(Integer studentId, Integer groupId) {
-		
+
 		// Find group by id
 		Optional<GroupEntity> op1 = groupRepository.findById(groupId);
-		if (op1.isPresent() == false) return null;
+		if (op1.isPresent() == false)
+			return null;
 		GroupEntity group = op1.get();
-		
+
 		// Find student by id
 		Optional<StudentEntity> op2 = studentRepository.findById(studentId);
-		if (op2.isPresent() == false) return null;
+		if (op2.isPresent() == false)
+			return null;
 		StudentEntity student = op2.get();
-		
+
 		JoinTableStudentGroup item = new JoinTableStudentGroup();
 		item.setGroup(group);
 		item.setStudent(student);
-		
-		item = joinTableStudentGroupRepository.save(item);		
+
+		item = joinTableStudentGroupRepository.save(item);
 		return item;
 	}
-	
+
 	// prmedbe
 	// + dodavanje roditrelja uceniku - obrnuto
 	// + endpoint dodavanje predmeta razredu

@@ -26,25 +26,26 @@ import io.jsonwebtoken.SignatureAlgorithm;
 
 @Service
 public class LoginServiceImpl implements LoginService {
-	
+
 	@Autowired
 	private TeacherRepository teacherRepository;
-	
+
 	@Autowired
-	private AdminRepository adminRepository;	
-	
+	private AdminRepository adminRepository;
+
 	@Autowired
-	private UserRepository userRepository;		
-	
+	private UserRepository userRepository;
+
 	@Value("${spring.security.secret-key}")
 	private String securityKey;
-	
+
 	@Value("${spring.security.token-duration}")
 	private Integer tokenDuration;
-	
+
 	/**
 	 * Provide JWT token for given user.<BR>
-	 * Token subject is username provided and it will expire based on time in application.configuration file. 
+	 * Token subject is username provided and it will expire based on time in
+	 * application.configuration file.
 	 */
 	public String getJWTToken(UserEntity userEntity) {
 		// Generate list of authorities
@@ -62,53 +63,54 @@ public class LoginServiceImpl implements LoginService {
 				.compact(); // ...generate token.
 		return token;
 	}
-	
+
 	@Override
-	public TeacherEntity getTeacherFromLogIn() {					
+	public TeacherEntity getTeacherFromLogIn() {
 		// Get authentication holder
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		
+
 		// Get username
 		TeacherEntity retVal = null;
 		if ((authentication instanceof AnonymousAuthenticationToken) == false) {
 			retVal = teacherRepository.findByUsername(authentication.getName()).get();
 		}
 
-		// Return 		
+		// Return
 		return retVal;
 	}
-	
+
 	@Override
-	public AdminEntity getAdminFromLogIn() {					
+	public AdminEntity getAdminFromLogIn() {
 		// Get authentication holder
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		
+
 		// Get username
 		AdminEntity retVal = null;
 		if ((authentication instanceof AnonymousAuthenticationToken) == false) {
 			retVal = adminRepository.findByUsername(authentication.getName()).get();
 		}
 
-		// Return 		
+		// Return
 		return retVal;
 	}
-	
+
 	@Override
-	public UserEntity getUser() {			
-		
+	public UserEntity getUser() {
+
 		// Get authentication holder
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		
+
 		// Get user or return null if not found
 		UserEntity retVal = null;
 		if ((authentication instanceof AnonymousAuthenticationToken) == false) {
 			Optional<UserEntity> op = userRepository.findByUsername(authentication.getName());
-			if (op.isPresent() == false) return null;
+			if (op.isPresent() == false)
+				return null;
 			retVal = op.get();
 		}
-		
-		// Return found user	
+
+		// Return found user
 		return retVal;
 	}
-	
+
 }

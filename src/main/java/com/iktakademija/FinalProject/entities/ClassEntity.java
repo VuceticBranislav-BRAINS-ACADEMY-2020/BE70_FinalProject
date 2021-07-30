@@ -35,18 +35,18 @@ public class ClassEntity {
 
 	@Column(nullable = false)
 	private String name;
-	
+
 	@Column(nullable = false)
 	private Integer year;
 
 	/************************************************************
 	 * Relation Attributes
 	 ************************************************************/
-	
+
 	@OneToMany(mappedBy = "clazz", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JsonManagedReference(value = "Subject_Class_1")
 	private Set<JoinTableSubjectClass> subject = new HashSet<>();
-	
+
 	/************************************************************
 	 * Shadow Attributes
 	 ************************************************************/
@@ -55,8 +55,8 @@ public class ClassEntity {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 
-	@Version	
-	@JsonView(value = Views.Admin.class)	
+	@Version
+	@JsonView(value = Views.Admin.class)
 	private Integer version;
 
 	@Column
@@ -70,11 +70,11 @@ public class ClassEntity {
 	public ClassEntity() {
 		super();
 	}
-	
+
 	/************************************************************
 	 * Getters & Setters
 	 ************************************************************/
-	
+
 	public String getName() {
 		return name;
 	}

@@ -22,7 +22,7 @@ public class ClassServiceImpl implements ClassService {
 
 	@Autowired
 	private ClassRepository classRepository;
-	
+
 	@Autowired
 	private SubjectRepository subjectRepository;
 
@@ -119,11 +119,12 @@ public class ClassServiceImpl implements ClassService {
 		JoinTableSubjectClass item = new JoinTableSubjectClass();
 		item.setClazz(clazz);
 		item.setSubject(subject);
-		if (fond == null) return null;
+		if (fond == null)
+			return null;
 		item.setFond(fond);
 
 		item = joinTableSubjectClassRepository.save(item);
 		return item;
 	}
-	
+
 }

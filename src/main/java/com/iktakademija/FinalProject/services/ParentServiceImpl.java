@@ -26,133 +26,151 @@ import com.iktakademija.FinalProject.utils.Encryption;
 public class ParentServiceImpl implements ParentService {
 
 	@Autowired
-	private ParentRepository parentRepository;	
-	
+	private ParentRepository parentRepository;
+
 	@Autowired
 	private PersonService personService;
-	
+
 	@Autowired
 	private PersonRepository personRepository;
-	
+
 	@Autowired
 	private RoleService roleService;
-	
+
 	@Autowired
 	private RoleRepository roleRepository;
-	
+
 	@Autowired
 	private StudentRepository studentRepository;
-	
+
 	@Autowired
 	private StudentService studentService;
-	
+
 	@Override
 	public ParentEntity createParent(NewParentDTO source) {
-		
+
 		Optional<RoleEntity> opr = roleRepository.findByRole(ERole.ROLE_PARENT);
-		if (opr.isPresent() == false) return null;
+		if (opr.isPresent() == false)
+			return null;
 		RoleEntity role = opr.get();
-		
+
 		Optional<PersonEntity> opp = personRepository.findById(source.getPersonId());
-		if (opp.isPresent() == false) return null;
+		if (opp.isPresent() == false)
+			return null;
 		PersonEntity person = opp.get();
-		
-		ParentEntity parent = new ParentEntity(source.getUsername(), Encryption.passwordEncode(source.getPassword()), person, role);	
+
+		ParentEntity parent = new ParentEntity(source.getUsername(), Encryption.passwordEncode(source.getPassword()),
+				person, role);
 		parent.setEmail(source.getEmail());
-		
-		parent = parentRepository.save(parent);	
+
+		parent = parentRepository.save(parent);
 		return parent;
 	}
-	
+
 	@Override
-	public ParentDTO createDTO(ParentEntity source) {	
+	public ParentDTO createDTO(ParentEntity source) {
 		ParentDTO retVal = new ParentDTO();
-		if (source == null) return retVal;
+		if (source == null)
+			return retVal;
 		retVal.setId(source.getId());
 		retVal.setUsername(source.getUsername());
 		retVal.setPerson(personService.createDTO(source.getPerson()));
 		retVal.setRole(roleService.createDTO(source.getRole()));
 		retVal.setVersion(source.getVersion());
 		retVal.setStatus(source.getStatus());
-		retVal.setEmail(source.getEmail());			
+		retVal.setEmail(source.getEmail());
 		List<StudentEntity> list = parentRepository.findAllChildrens(source);
 		retVal.setChilds(studentService.createDTOList(list));
-		return retVal;			
+		return retVal;
 	}
-	
+
 	@Override
-	public List<ParentDTO> createDTOList(List<ParentEntity> source) {		
+	public List<ParentDTO> createDTOList(List<ParentEntity> source) {
 		List<ParentDTO> list = new ArrayList<>();
-		for (ParentEntity parent : source) 
-			list.add(this.createDTO(parent));		
+		for (ParentEntity parent : source)
+			list.add(this.createDTO(parent));
 		return list;
 	}
-	
+
 	@Override
-	public List<ParentDTO> getDTOList() {	
+	public List<ParentDTO> getDTOList() {
 		return this.createDTOList(parentRepository.findAllUndeleted());
 	}
-	
-	public ParentDTO getParentDTO(Integer parentId){		
-		
+
+	public ParentDTO getParentDTO(Integer parentId) {
+
 		Optional<ParentEntity> op = parentRepository.findById(parentId);
-		if (op.isPresent() == false) return null;		
-		
+		if (op.isPresent() == false)
+			return null;
+
 		return getDTOfromEntity(op.get());
-	};	
-	
+	};
+
 	private ParentDTO getDTOfromEntity(ParentEntity source) {
-		
+
 		ParentDTO dto = new ParentDTO();
-			
-		if (source.getUsername() != null) dto.setUsername(source.getUsername());	
-		if (source.getPerson() != null) dto.setPerson(personService.createDTO(source.getPerson()));
-		if (source.getRole() != null) dto.setRole(roleService.createDTO(source.getRole()));		
-		if (source.getStatus() != null) dto.setStatus(source.getStatus());			
-		if (source.getEmail() != null) dto.setEmail(source.getEmail());			
-		if (source.getStatus() != null) dto.setStatus(source.getStatus());	
-		
+
+		if (source.getUsername() != null)
+			dto.setUsername(source.getUsername());
+		if (source.getPerson() != null)
+			dto.setPerson(personService.createDTO(source.getPerson()));
+		if (source.getRole() != null)
+			dto.setRole(roleService.createDTO(source.getRole()));
+		if (source.getStatus() != null)
+			dto.setStatus(source.getStatus());
+		if (source.getEmail() != null)
+			dto.setEmail(source.getEmail());
+		if (source.getStatus() != null)
+			dto.setStatus(source.getStatus());
+
 		if (source.getId() != null) {
 			List<StudentEntity> list = parentRepository.findAllChildrens(source);
-			dto.setChilds(studentService.createDTOList(list));	
-		}			
+			dto.setChilds(studentService.createDTOList(list));
+		}
 		return dto;
-	}	
-	
+	}
+
 	@Override
 	public ParentDTO setParent(Integer parentId, NewParentDTO newParent) {
 		Optional<ParentEntity> op1 = parentRepository.findById(parentId);
-		if (op1.isPresent() == false) return null;
-		ParentEntity parent = op1.get();		
-		if (newParent.getPassword() != null) parent.setPassword(Encryption.passwordEncode(newParent.getPassword()));
-		
+		if (op1.isPresent() == false)
+			return null;
+		ParentEntity parent = op1.get();
+		if (newParent.getPassword() != null)
+			parent.setPassword(Encryption.passwordEncode(newParent.getPassword()));
+
 		Optional<PersonEntity> opp = personRepository.findById(newParent.getPersonId());
-		if (opp.isPresent() == false) return null;
-		PersonEntity person = opp.get();	
-		
-		if (newParent.getPersonId() != null) parent.setPerson(person); // TODO Fix this
-		if (newParent.getUsername() != null) parent.setUsername(newParent.getUsername());
-		if (newParent.getEmail() != null) parent.setEmail(newParent.getEmail());
-		
+		if (opp.isPresent() == false)
+			return null;
+		PersonEntity person = opp.get();
+
+		if (newParent.getPersonId() != null)
+			parent.setPerson(person); // TODO Fix this
+		if (newParent.getUsername() != null)
+			parent.setUsername(newParent.getUsername());
+		if (newParent.getEmail() != null)
+			parent.setEmail(newParent.getEmail());
+
 		parent = parentRepository.save(parent);
-		return this.createDTO(parent);	
-	}	
-	
-	@Override
-	public ParentDTO removeParent(Integer parentId) {			
-		Optional<ParentEntity> op = parentRepository.findById(parentId);
-		if (op.isPresent() == false) return null;
-		ParentEntity parent = op.get();		
-		parent.setStatus(EStatus.DELETED);			
-		parent = parentRepository.save(parent);
-		return this.createDTO(parent);		
+		return this.createDTO(parent);
 	}
-	
+
 	@Override
-	public List<StudentDTO> getAllChildrens(ParentEntity childId) {	
+	public ParentDTO removeParent(Integer parentId) {
+		Optional<ParentEntity> op = parentRepository.findById(parentId);
+		if (op.isPresent() == false)
+			return null;
+		ParentEntity parent = op.get();
+		parent.setStatus(EStatus.DELETED);
+		parent = parentRepository.save(parent);
+		return this.createDTO(parent);
+	}
+
+	@Override
+	public List<StudentDTO> getAllChildrens(ParentEntity childId) {
 		return studentService.createDTOList(studentRepository.findAllChildrens(childId));
 	}
-	
+
 //	@PersistenceContext()
 //	private EntityManager em;
 //	
@@ -182,7 +200,7 @@ public class ParentServiceImpl implements ParentService {
 //		
 //		return retVal;
 //	}
-	
+
 //	@Test
 //	public void whenUsingMultipleQueries_thenRetrieveSuccess() {
 //	    String jpql = "SELECT DISTINCT artist FROM Artist artist "
@@ -203,5 +221,5 @@ public class ParentServiceImpl implements ParentService {
 //
 //	    assertEquals(2, artists.size());
 //	}
-	
+
 }

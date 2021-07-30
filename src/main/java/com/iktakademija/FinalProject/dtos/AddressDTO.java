@@ -8,54 +8,55 @@ import com.iktakademija.FinalProject.entities.enums.EStatus;
 import com.iktakademija.FinalProject.securities.Views;
 
 /**
- * Adress DTO.
- * <BR>Provide all information related to {@link AddressEntity}.
+ * Adress DTO. <BR>
+ * Provide all information related to {@link AddressEntity}.
+ * 
  * @see AddressEntity
  * @author GM
  */
-@JsonPropertyOrder(value =  {"id", "city", "street", "number", "apartment", "version", "status"})
+@JsonPropertyOrder(value = { "id", "city", "street", "number", "apartment", "version", "status" })
 @JsonView(value = Views.Student.class)
 public class AddressDTO {
-	
+
 	/************************************************************
 	 * Attributes
 	 ************************************************************/
 
 	@JsonProperty(value = "ID")
-	private Integer id;	
-	
+	private Integer id;
+
 	@JsonProperty(value = "City")
-	private String city;	
-	
+	private String city;
+
 	@JsonProperty(value = "Street")
 	private String street;
-	
+
 	@JsonProperty(value = "Number")
-	private String number;	
+	private String number;
 
 	@JsonProperty(value = "Apartment")
-	private String apartment;	
-	
+	private String apartment;
+
 	@JsonView(value = Views.Admin.class)
 	@JsonProperty(value = "Version")
 	private Integer version;
-	
+
 	@JsonView(value = Views.Admin.class)
 	@JsonProperty(value = "Status")
 	private EStatus status;
-	
+
 	/************************************************************
 	 * Constructors
 	 ************************************************************/
 
 	public AddressDTO() {
 		super();
-	}		
-	
+	}
+
 	/************************************************************
 	 * Getters & Setters
 	 ************************************************************/
-	
+
 	public String getCity() {
 		return city;
 	}
@@ -110,6 +111,6 @@ public class AddressDTO {
 
 	public void setStatus(EStatus status) {
 		this.status = status;
-	}	
+	}
 
 }

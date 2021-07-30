@@ -20,7 +20,7 @@ import com.iktakademija.FinalProject.securities.Views;
  * @see GradeEntity
  * @author GM
  */
-@JsonPropertyOrder(value = { "type", "value", "stage", "idStudent", "idTeacher", "idSubject", "idGroup"})
+@JsonPropertyOrder(value = { "type", "value", "stage", "idStudent", "idTeacher", "idSubject", "idGroup" })
 @JsonView(value = Views.Teacher.class)
 public class NewGradeDTO {
 
@@ -31,37 +31,37 @@ public class NewGradeDTO {
 	@NotNull(message = "Grade type must be: EXAM, WRITTEN, ORAL or FINAL.")
 	@JsonProperty(value = "Type")
 	private EGradeType type;
-	
+
 	@NotNull(message = "Pleas enter grade value foomr 1 to 5.")
 	@Min(value = 1, message = "Grade must be at least 1.")
 	@Max(value = 5, message = "Grade can be 5 or less.")
 	@JsonProperty(value = "Value")
 	private Integer value;
-	
+
 	@NotNull(message = "Stage must be FIRST or SECOND.")
 	@JsonProperty(value = "Stage")
-	private EStage stage;	
+	private EStage stage;
 
 	@NotNull(message = "Must not be null.")
 	@Positive(message = "Student with given ID do not exists. Pleas enter valid student ID.")
 	@JsonProperty(value = "ID Student")
 	private Integer idStudent;
-	
+
 	@NotNull(message = "Must not be null.")
 	@Positive(message = "Teacher with given ID do not exists. Pleas enter valid teacher ID.")
 	@JsonProperty(value = "ID Teacher")
 	private Integer idTeacher;
-	
+
 	@NotNull(message = "Must not be null.")
 	@Positive(message = "Subject with given ID do not exists. Pleas enter valid subject ID.")
 	@JsonProperty(value = "ID Subject")
-	private Integer idSubject;	
-	
+	private Integer idSubject;
+
 	@NotNull(message = "Must not be null.")
 	@Positive(message = "Group with given ID do not exists. Pleas enter valid group ID.")
 	@JsonProperty(value = "ID Group")
 	private Integer idGroup;
-	
+
 	/************************************************************
 	 * Constructors
 	 ************************************************************/
@@ -69,7 +69,7 @@ public class NewGradeDTO {
 	public NewGradeDTO() {
 		super();
 	}
-	
+
 	/************************************************************
 	 * Getters & Setters
 	 ************************************************************/
@@ -121,7 +121,7 @@ public class NewGradeDTO {
 	public void setIdSubject(Integer idSubject) {
 		this.idSubject = idSubject;
 	}
-	
+
 	public Integer getIdGroup() {
 		return idGroup;
 	}
@@ -135,5 +135,5 @@ public class NewGradeDTO {
 		return "NewGradeDTO [type=" + type + ", value=" + value + ", stage=" + stage + ", idStudent=" + idStudent
 				+ ", idTeacher=" + idTeacher + ", idSubject=" + idSubject + "]";
 	}
-	
+
 }

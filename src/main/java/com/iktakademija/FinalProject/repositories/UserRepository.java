@@ -9,5 +9,5 @@ import com.iktakademija.FinalProject.entities.UserEntity;
 public interface UserRepository extends CrudRepository<UserEntity, Integer> {
 
 	Optional<UserEntity> findByUsername(String username);
-	
+
 }
