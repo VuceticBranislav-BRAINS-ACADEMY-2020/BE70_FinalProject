@@ -33,4 +33,7 @@ public interface GradeRepository extends PagingAndSortingRepository<GradeEntity,
 	List<GradeEntity> findAllGradesForStudentsAndSubjects(@Param("teacher") TeacherEntity teacher);
 	
 	Page<GradeEntity> findAll(Pageable pageable);
+	
+	List<GradeEntity> findAll();
+	
 }

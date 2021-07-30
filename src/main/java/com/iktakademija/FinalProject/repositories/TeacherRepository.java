@@ -14,7 +14,7 @@ import com.iktakademija.FinalProject.entities.TeacherEntity;
 
 public interface TeacherRepository extends CrudRepository<TeacherEntity, Integer> {
 
-	Optional<TeacherEntity> findById(@Param("id") Integer id);
+	Optional<TeacherEntity> findById(Integer id);
 
 	@Query(value = "FROM TeacherEntity AS t WHERE t.status <> 'DELETED'")
 	List<TeacherEntity> findAllUndeleted();
@@ -29,4 +29,6 @@ public interface TeacherRepository extends CrudRepository<TeacherEntity, Integer
 	@Query(value = "FROM TeacherEntity AS t WHERE t.username = :username AND t.status <> 'DELETED'")
 	Optional<TeacherEntity> findByUsername(@Param("username") String username);
 	
+	List<TeacherEntity> findAllById(Integer id);
+	List<TeacherEntity> findAll();
 }

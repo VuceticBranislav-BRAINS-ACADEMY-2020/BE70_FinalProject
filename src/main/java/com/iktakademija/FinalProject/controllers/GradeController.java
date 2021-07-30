@@ -36,6 +36,7 @@ import com.iktakademija.FinalProject.entities.dtos.EmailObject;
 import com.iktakademija.FinalProject.entities.dtos.GradeDTO;
 import com.iktakademija.FinalProject.entities.dtos.NewGradeDTO;
 import com.iktakademija.FinalProject.entities.enums.ERole;
+import com.iktakademija.FinalProject.entities.enums.EStage;
 import com.iktakademija.FinalProject.entities.enums.EStatus;
 import com.iktakademija.FinalProject.exceptions.NewGradeDTOValidator;
 import com.iktakademija.FinalProject.repositories.GradeRepository;
@@ -121,33 +122,8 @@ public class GradeController {
 		loggingService.loggAndGetUser(user, Level.INFO);
 		loggingService.loggMessage("Method: GradeController.getAllGrades()", Level.INFO);
 
-		// Get list of all users
+		// Get list of all grades
 		List<GradeDTO> retVal = gradeService.getDTOList();
-
-		// Log results and make respons
-		loggingService.loggOutMessage(HttpStatus.OK.toString(), Level.INFO);
-		return new ResponseEntity<List<GradeDTO>>(retVal, HttpStatus.OK);
-	}
-	
-	/**
-	 * REST endpoint that returns grades from data base in pages.
-	 * 
-	 * Postman code: <B>GRD14</B>
-	 * 
-	 * @return pages of {@link GradeDTO} from database or empty set if nothing to
-	 *         return.
-	 */
-	@Secured("ROLE_ADMIN")
-	@RequestMapping(method = RequestMethod.GET, path = "/admin/page/{id}")
-	public ResponseEntity<?> getAllGradesPage(@PathVariable(value = "id") Integer pageId) {
-
-		// Logging and retriving user.
-		UserEntity user = loginService.getUser();
-		loggingService.loggAndGetUser(user, Level.INFO);
-		loggingService.loggMessage("Method: GradeController.getAllGrades()", Level.INFO);
-
-		// Get list of all users on page
-		List<GradeDTO> retVal = gradeService.getPageDTO(pageId);
 
 		// Log results and make respons
 		loggingService.loggOutMessage(HttpStatus.OK.toString(), Level.INFO);
@@ -425,4 +401,81 @@ public class GradeController {
 		loggingService.loggOutMessage(HttpStatus.OK.toString(), Level.INFO);	
 		return new ResponseEntity<>(HttpStatus.OK);		
 	}
+
+	/**
+	 * REST endpoint to filter grades.<BR>
+	 * 
+	 * Postman code: <B>GRD19</B>
+	 */
+	@Secured("ROLE_ADMIN")
+	@RequestMapping(method = RequestMethod.GET, path = "/admin/filter")
+	public ResponseEntity<?> getFiltered() {
+
+		// Logging and retriving user.
+		UserEntity user = loginService.getUser();
+		loggingService.loggAndGetUser(user, Level.INFO);
+		loggingService.loggMessage("Method: GradeController.getFiltered()", Level.INFO);
+
+		// Get list of all grades
+		List<GradeDTO> retVal = gradeService.getDTOList();
+
+		// Log results and make respons
+		loggingService.loggOutMessage(HttpStatus.OK.toString(), Level.INFO);
+		return new ResponseEntity<List<GradeDTO>>(retVal, HttpStatus.OK);
+	}
+	
+
+	/**
+	 * REST endpoint that returns grades from data base in pages.
+	 * 
+	 * Postman code: <B>GRD14</B>
+	 * 
+	 * @return pages of {@link GradeDTO} from database or empty set if nothing to
+	 *         return.
+	 */
+	@Secured("ROLE_ADMIN")
+	@RequestMapping(method = RequestMethod.GET, path = "/admin/page/{id}")
+	public ResponseEntity<?> getAllGradesPage(@PathVariable(value = "id") Integer pageId) {
+
+		// Logging and retriving user.
+		UserEntity user = loginService.getUser();
+		loggingService.loggAndGetUser(user, Level.INFO);
+		loggingService.loggMessage("Method: GradeController.getAllGrades()", Level.INFO);
+
+		// Get list of all users on page
+		List<GradeDTO> retVal = gradeService.getPageDTO(pageId);
+
+		// Log results and make respons
+		loggingService.loggOutMessage(HttpStatus.OK.toString(), Level.INFO);
+		return new ResponseEntity<List<GradeDTO>>(retVal, HttpStatus.OK);
+	}
+	
+	/**
+	 * Filter all grades
+	 * 
+	 * Postman code: <B>GRD15</B>
+	 */
+	@Secured("ROLE_ADMIN")
+	@RequestMapping(method = RequestMethod.GET, path = "/admin/search")
+	public ResponseEntity<?> searchAll(@RequestParam(required = false, name = "StudentId") Integer studentId, 
+			@RequestParam(required = false, name = "SubjectId") Integer subjectId, 
+			@RequestParam(required = false, name = "TeacherId") Integer teacherId, 
+			@RequestParam(required = false, name = "GroupId") Integer groupId,
+			@RequestParam(required = false, name = "ClassId") Integer classId, 
+			@RequestParam(required = false, name = "Stage") EStage stage) {
+		
+		// Logging and retriving user.
+		UserEntity user = loginService.getUser();
+		loggingService.loggAndGetUser(user, Level.INFO);
+		loggingService.loggMessage("Method: GradeController.getAllGradesPage()", Level.INFO);
+
+		// Get list of all users on page
+		List<GradeEntity> list = gradeService.getFiltered(studentId, subjectId, teacherId, groupId, classId, stage);
+		List<GradeDTO> retVal = gradeService.createDTOList(list);
+
+		// Log results and make respons
+		loggingService.loggOutMessage(HttpStatus.OK.toString(), Level.INFO);
+		return new ResponseEntity<List<GradeDTO>>(retVal, HttpStatus.OK);
+	}
+	
 }

@@ -190,18 +190,5 @@ public class TeacherServiceImpl implements TeacherService {
 		
 		return teacher.getSubject().stream().map( i -> i.getSub_cls().getSubject()).collect(Collectors.toList());
 	}
-	
-//	@PersistenceContext
-//	private EntityManager entityManager;	
-//		TypedQuery<ClassEntity> query = entityManager.createQuery(
-//				  "SELECT e FROM ClassEntity e WHERE e.id IN ('10', '11')" , ClassEntity.class);
-//				List<ClassEntity> aaaaa = query.getResultList();
-//		
-//		TypedQuery<JoinTableSubjectClass> query1 = entityManager.createQuery(
-//				  "SELECT e FROM JoinTableSubjectClass e WHERE e.clazz IN (?1)" , JoinTableSubjectClass.class);
-//				List<JoinTableSubjectClass> employees = query1.setParameter(1, aaaaa).getResultList();
-//
-//	String sql = "SELECT a FROM AddressEntity AS a LEFT JOIN FETCH a.users AS u WHERE u.name = :name";
-//	// mesto ON postoji FETCH koji je lista veza
 		
 }

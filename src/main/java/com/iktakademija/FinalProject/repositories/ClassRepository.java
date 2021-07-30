@@ -15,5 +15,7 @@ public interface ClassRepository extends CrudRepository<ClassEntity, Integer> {
 	List<ClassEntity> findAllUndeleted();
 	
 	Optional<ClassEntity> findById(@Param("id") Integer id);
-
+	
+	List<ClassEntity> findAllById(Integer id);
+	List<ClassEntity> findAll();
 }

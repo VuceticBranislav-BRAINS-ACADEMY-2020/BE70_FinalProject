@@ -11,10 +11,12 @@ import com.iktakademija.FinalProject.entities.GroupEntity;
 
 public interface GroupRepository extends CrudRepository<GroupEntity, Integer> {
 
-	@Override
-	Optional<GroupEntity> findById(@Param("id") Integer id);
+	Optional<GroupEntity> findById(Integer id);
 
 	@Query(value = "FROM GroupEntity AS t WHERE t.status <> 'DELETED'")
 	List<GroupEntity> findAllUndeleted();
+	
+	List<GroupEntity> findAllById(Integer id);
+	List<GroupEntity> findAll();
 	
 }

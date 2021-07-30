@@ -316,7 +316,8 @@ public class TeacherController {
 	}
 	
 	/**
-	 * Add teacher to subject. Postman code: <B>TEA14</B>
+	 * Add teacher to subject. 
+	 * Postman code: <B>TEA15</B>
 	 */
 	@Secured("ROLE_ADMIN")
 	@JsonView(value = Views.Admin.class)
@@ -344,7 +345,6 @@ public class TeacherController {
 	
 	/**
 	 * Return all subjects of teacher.
-
 	 * 
 	 * Postman code: <B>TEA16</B>
 	 */
