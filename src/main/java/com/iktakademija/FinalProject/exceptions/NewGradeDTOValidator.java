@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-import com.iktakademija.FinalProject.entities.dtos.NewGradeDTO;
+import com.iktakademija.FinalProject.dtos.NewGradeDTO;
 import com.iktakademija.FinalProject.repositories.GroupRepository;
 import com.iktakademija.FinalProject.repositories.StudentRepository;
 import com.iktakademija.FinalProject.repositories.SubjectRepository;

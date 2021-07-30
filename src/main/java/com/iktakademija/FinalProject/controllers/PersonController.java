@@ -15,13 +15,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import com.iktakademija.FinalProject.controllers.utils.RESTError;
-import com.iktakademija.FinalProject.controllers.utils.enums.ERESTErrorCodes;
+import com.iktakademija.FinalProject.dtos.NewPersonDTO;
+import com.iktakademija.FinalProject.dtos.PersonDTO;
 import com.iktakademija.FinalProject.entities.PersonEntity;
-import com.iktakademija.FinalProject.entities.dtos.NewPersonDTO;
-import com.iktakademija.FinalProject.entities.dtos.PersonDTO;
 import com.iktakademija.FinalProject.securities.Views;
 import com.iktakademija.FinalProject.services.PersonService;
+import com.iktakademija.FinalProject.utils.ERESTErrorCodes;
+import com.iktakademija.FinalProject.utils.RESTError;
 
 @RestController
 @RequestMapping(path = "/api/v1/person")

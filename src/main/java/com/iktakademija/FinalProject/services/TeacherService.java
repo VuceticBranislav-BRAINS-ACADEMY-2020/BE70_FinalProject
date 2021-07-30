@@ -2,11 +2,11 @@ package com.iktakademija.FinalProject.services;
 
 import java.util.List;
 
+import com.iktakademija.FinalProject.dtos.GradeDTO;
+import com.iktakademija.FinalProject.dtos.NewTeacherDTO;
+import com.iktakademija.FinalProject.dtos.TeacherDTO;
 import com.iktakademija.FinalProject.entities.SubjectEntity;
 import com.iktakademija.FinalProject.entities.TeacherEntity;
-import com.iktakademija.FinalProject.entities.dtos.GradeDTO;
-import com.iktakademija.FinalProject.entities.dtos.NewTeacherDTO;
-import com.iktakademija.FinalProject.entities.dtos.TeacherDTO;
 
 public interface TeacherService {
 	

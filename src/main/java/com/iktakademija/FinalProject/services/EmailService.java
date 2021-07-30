@@ -1,7 +1,7 @@
 package com.iktakademija.FinalProject.services;
 
-import com.iktakademija.FinalProject.entities.dtos.EmailObject;
-import com.iktakademija.FinalProject.entities.dtos.GradeDTO;
+import com.iktakademija.FinalProject.dtos.EmailObject;
+import com.iktakademija.FinalProject.dtos.GradeDTO;
 
 public interface EmailService {
 	

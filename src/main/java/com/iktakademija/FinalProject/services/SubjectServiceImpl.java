@@ -7,9 +7,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.iktakademija.FinalProject.dtos.NewSubjectDTO;
+import com.iktakademija.FinalProject.dtos.SubjectDTO;
 import com.iktakademija.FinalProject.entities.SubjectEntity;
-import com.iktakademija.FinalProject.entities.dtos.NewSubjectDTO;
-import com.iktakademija.FinalProject.entities.dtos.SubjectDTO;
 import com.iktakademija.FinalProject.entities.enums.EStatus;
 import com.iktakademija.FinalProject.repositories.SubjectRepository;
 

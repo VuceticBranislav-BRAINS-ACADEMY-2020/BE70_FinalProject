@@ -17,19 +17,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import com.iktakademija.FinalProject.controllers.utils.RESTError;
-import com.iktakademija.FinalProject.controllers.utils.enums.ERESTErrorCodes;
+import com.iktakademija.FinalProject.dtos.AdminDTO;
+import com.iktakademija.FinalProject.dtos.EmailObject;
+import com.iktakademija.FinalProject.dtos.NewAdminDTO;
 import com.iktakademija.FinalProject.entities.AdminEntity;
 import com.iktakademija.FinalProject.entities.UserEntity;
-import com.iktakademija.FinalProject.entities.dtos.AdminDTO;
-import com.iktakademija.FinalProject.entities.dtos.EmailObject;
-import com.iktakademija.FinalProject.entities.dtos.NewAdminDTO;
 import com.iktakademija.FinalProject.entities.enums.EStatus;
 import com.iktakademija.FinalProject.securities.Views;
 import com.iktakademija.FinalProject.services.AdminService;
 import com.iktakademija.FinalProject.services.EmailService;
 import com.iktakademija.FinalProject.services.LoggingService;
 import com.iktakademija.FinalProject.services.LoginService;
+import com.iktakademija.FinalProject.utils.ERESTErrorCodes;
+import com.iktakademija.FinalProject.utils.RESTError;
 
 /**
  * Admin endpoint.

@@ -2,10 +2,10 @@ package com.iktakademija.FinalProject.services;
 
 import java.util.List;
 
+import com.iktakademija.FinalProject.dtos.NewParentDTO;
+import com.iktakademija.FinalProject.dtos.ParentDTO;
+import com.iktakademija.FinalProject.dtos.StudentDTO;
 import com.iktakademija.FinalProject.entities.ParentEntity;
-import com.iktakademija.FinalProject.entities.dtos.NewParentDTO;
-import com.iktakademija.FinalProject.entities.dtos.ParentDTO;
-import com.iktakademija.FinalProject.entities.dtos.StudentDTO;
 
 public interface ParentService {	
 	ParentDTO createDTO(ParentEntity source);

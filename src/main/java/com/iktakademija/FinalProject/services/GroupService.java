@@ -2,10 +2,10 @@ package com.iktakademija.FinalProject.services;
 
 import java.util.List;
 
+import com.iktakademija.FinalProject.dtos.GroupDTO;
+import com.iktakademija.FinalProject.dtos.NewGroupDTO;
 import com.iktakademija.FinalProject.entities.GroupEntity;
 import com.iktakademija.FinalProject.entities.JoinTableStudentGroup;
-import com.iktakademija.FinalProject.entities.dtos.GroupDTO;
-import com.iktakademija.FinalProject.entities.dtos.NewGroupDTO;
 
 public interface GroupService {
 	

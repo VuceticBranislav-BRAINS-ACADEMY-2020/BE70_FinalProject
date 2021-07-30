@@ -7,10 +7,10 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.iktakademija.FinalProject.dtos.NewPersonDTO;
+import com.iktakademija.FinalProject.dtos.PersonDTO;
 import com.iktakademija.FinalProject.entities.AddressEntity;
 import com.iktakademija.FinalProject.entities.PersonEntity;
-import com.iktakademija.FinalProject.entities.dtos.NewPersonDTO;
-import com.iktakademija.FinalProject.entities.dtos.PersonDTO;
 import com.iktakademija.FinalProject.entities.enums.EStatus;
 import com.iktakademija.FinalProject.repositories.AddressRepository;
 import com.iktakademija.FinalProject.repositories.PersonRepository;

@@ -19,8 +19,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.iktakademija.FinalProject.controllers.utils.RESTError;
-import com.iktakademija.FinalProject.controllers.utils.enums.ERESTErrorCodes;
+import com.iktakademija.FinalProject.dtos.ChangeGradeDTO;
+import com.iktakademija.FinalProject.dtos.EmailObject;
+import com.iktakademija.FinalProject.dtos.GradeDTO;
+import com.iktakademija.FinalProject.dtos.NewGradeDTO;
 import com.iktakademija.FinalProject.entities.GradeEntity;
 import com.iktakademija.FinalProject.entities.GroupEntity;
 import com.iktakademija.FinalProject.entities.JoinTableStudentGroup;
@@ -31,10 +33,6 @@ import com.iktakademija.FinalProject.entities.StudentEntity;
 import com.iktakademija.FinalProject.entities.SubjectEntity;
 import com.iktakademija.FinalProject.entities.TeacherEntity;
 import com.iktakademija.FinalProject.entities.UserEntity;
-import com.iktakademija.FinalProject.entities.dtos.ChangeGradeDTO;
-import com.iktakademija.FinalProject.entities.dtos.EmailObject;
-import com.iktakademija.FinalProject.entities.dtos.GradeDTO;
-import com.iktakademija.FinalProject.entities.dtos.NewGradeDTO;
 import com.iktakademija.FinalProject.entities.enums.ERole;
 import com.iktakademija.FinalProject.entities.enums.EStage;
 import com.iktakademija.FinalProject.entities.enums.EStatus;
@@ -52,6 +50,8 @@ import com.iktakademija.FinalProject.services.EmailService;
 import com.iktakademija.FinalProject.services.GradeService;
 import com.iktakademija.FinalProject.services.LoggingService;
 import com.iktakademija.FinalProject.services.LoginService;
+import com.iktakademija.FinalProject.utils.ERESTErrorCodes;
+import com.iktakademija.FinalProject.utils.RESTError;
 
 @RestController
 @RequestMapping(path = "/api/v1/grade")
@@ -453,7 +453,7 @@ public class GradeController {
 	/**
 	 * Filter all grades
 	 * 
-	 * Postman code: <B>GRD15</B>
+	 * Postman code: <B>GRD40</B>
 	 */
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(method = RequestMethod.GET, path = "/admin/search")

@@ -2,10 +2,10 @@ package com.iktakademija.FinalProject.services;
 
 import java.util.List;
 
+import com.iktakademija.FinalProject.dtos.ClassDTO;
+import com.iktakademija.FinalProject.dtos.NewClassDTO;
 import com.iktakademija.FinalProject.entities.ClassEntity;
 import com.iktakademija.FinalProject.entities.JoinTableSubjectClass;
-import com.iktakademija.FinalProject.entities.dtos.ClassDTO;
-import com.iktakademija.FinalProject.entities.dtos.NewClassDTO;
 
 public interface ClassService {
 

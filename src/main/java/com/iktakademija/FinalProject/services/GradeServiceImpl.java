@@ -14,13 +14,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
+import com.iktakademija.FinalProject.dtos.GradeDTO;
 import com.iktakademija.FinalProject.entities.ClassEntity;
 import com.iktakademija.FinalProject.entities.GradeEntity;
 import com.iktakademija.FinalProject.entities.GroupEntity;
 import com.iktakademija.FinalProject.entities.StudentEntity;
 import com.iktakademija.FinalProject.entities.SubjectEntity;
 import com.iktakademija.FinalProject.entities.TeacherEntity;
-import com.iktakademija.FinalProject.entities.dtos.GradeDTO;
 import com.iktakademija.FinalProject.entities.enums.EStage;
 import com.iktakademija.FinalProject.repositories.ClassRepository;
 import com.iktakademija.FinalProject.repositories.GradeRepository;

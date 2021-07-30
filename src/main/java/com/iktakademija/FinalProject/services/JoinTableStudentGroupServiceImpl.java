@@ -7,10 +7,10 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.iktakademija.FinalProject.dtos.JoinTableStudentGroupDTO;
 import com.iktakademija.FinalProject.entities.GroupEntity;
 import com.iktakademija.FinalProject.entities.JoinTableStudentGroup;
 import com.iktakademija.FinalProject.entities.StudentEntity;
-import com.iktakademija.FinalProject.entities.dtos.JoinTableStudentGroupDTO;
 import com.iktakademija.FinalProject.repositories.GroupRepository;
 import com.iktakademija.FinalProject.repositories.JoinTableStudentGroupRepository;
 import com.iktakademija.FinalProject.repositories.StudentRepository;

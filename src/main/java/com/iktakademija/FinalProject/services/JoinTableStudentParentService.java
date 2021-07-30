@@ -2,8 +2,8 @@ package com.iktakademija.FinalProject.services;
 
 import java.util.List;
 
+import com.iktakademija.FinalProject.dtos.JoinTableStudentParentDTO;
 import com.iktakademija.FinalProject.entities.JoinTableStudentParent;
-import com.iktakademija.FinalProject.entities.dtos.JoinTableStudentParentDTO;
 
 public interface JoinTableStudentParentService {
 	JoinTableStudentParentDTO createDTO(JoinTableStudentParent source);

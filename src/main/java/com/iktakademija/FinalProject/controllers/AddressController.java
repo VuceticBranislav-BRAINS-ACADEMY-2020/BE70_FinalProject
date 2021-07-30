@@ -16,16 +16,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import com.iktakademija.FinalProject.controllers.utils.RESTError;
-import com.iktakademija.FinalProject.controllers.utils.enums.ERESTErrorCodes;
+import com.iktakademija.FinalProject.dtos.AddressDTO;
+import com.iktakademija.FinalProject.dtos.NewAddressDTO;
 import com.iktakademija.FinalProject.entities.AddressEntity;
 import com.iktakademija.FinalProject.entities.UserEntity;
-import com.iktakademija.FinalProject.entities.dtos.AddressDTO;
-import com.iktakademija.FinalProject.entities.dtos.NewAddressDTO;
 import com.iktakademija.FinalProject.securities.Views;
 import com.iktakademija.FinalProject.services.AddressService;
 import com.iktakademija.FinalProject.services.LoggingService;
 import com.iktakademija.FinalProject.services.LoginService;
+import com.iktakademija.FinalProject.utils.ERESTErrorCodes;
+import com.iktakademija.FinalProject.utils.RESTError;
 
 /**
  * Address controller. Address controller provide entpoints for manipulation

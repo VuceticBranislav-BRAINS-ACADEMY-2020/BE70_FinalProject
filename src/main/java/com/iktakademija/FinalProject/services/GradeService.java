@@ -2,10 +2,8 @@ package com.iktakademija.FinalProject.services;
 
 import java.util.List;
 
+import com.iktakademija.FinalProject.dtos.GradeDTO;
 import com.iktakademija.FinalProject.entities.GradeEntity;
-import com.iktakademija.FinalProject.entities.SubjectEntity;
-import com.iktakademija.FinalProject.entities.dtos.GradeDTO;
-import com.iktakademija.FinalProject.entities.dtos.SubjectDTO;
 import com.iktakademija.FinalProject.entities.enums.EStage;
 
 public interface GradeService {

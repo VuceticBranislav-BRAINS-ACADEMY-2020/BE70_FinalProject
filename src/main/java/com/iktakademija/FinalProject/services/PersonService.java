@@ -2,9 +2,9 @@ package com.iktakademija.FinalProject.services;
 
 import java.util.List;
 
+import com.iktakademija.FinalProject.dtos.NewPersonDTO;
+import com.iktakademija.FinalProject.dtos.PersonDTO;
 import com.iktakademija.FinalProject.entities.PersonEntity;
-import com.iktakademija.FinalProject.entities.dtos.NewPersonDTO;
-import com.iktakademija.FinalProject.entities.dtos.PersonDTO;
 
 public interface PersonService {
 	

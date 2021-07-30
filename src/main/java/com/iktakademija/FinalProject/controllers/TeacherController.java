@@ -18,17 +18,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import com.iktakademija.FinalProject.controllers.utils.RESTError;
-import com.iktakademija.FinalProject.controllers.utils.enums.ERESTErrorCodes;
+import com.iktakademija.FinalProject.dtos.GradeDTO;
+import com.iktakademija.FinalProject.dtos.JoinTableSubjectTeacherDTO;
+import com.iktakademija.FinalProject.dtos.NewTeacherDTO;
+import com.iktakademija.FinalProject.dtos.SubjectDTO;
+import com.iktakademija.FinalProject.dtos.TeacherDTO;
 import com.iktakademija.FinalProject.entities.JoinTableSubjectTeacher;
 import com.iktakademija.FinalProject.entities.SubjectEntity;
 import com.iktakademija.FinalProject.entities.TeacherEntity;
 import com.iktakademija.FinalProject.entities.UserEntity;
-import com.iktakademija.FinalProject.entities.dtos.GradeDTO;
-import com.iktakademija.FinalProject.entities.dtos.JoinTableSubjectTeacherDTO;
-import com.iktakademija.FinalProject.entities.dtos.NewTeacherDTO;
-import com.iktakademija.FinalProject.entities.dtos.SubjectDTO;
-import com.iktakademija.FinalProject.entities.dtos.TeacherDTO;
 import com.iktakademija.FinalProject.entities.enums.EStatus;
 import com.iktakademija.FinalProject.repositories.TeacherRepository;
 import com.iktakademija.FinalProject.securities.Views;
@@ -38,6 +36,8 @@ import com.iktakademija.FinalProject.services.LoginService;
 import com.iktakademija.FinalProject.services.SubjectService;
 import com.iktakademija.FinalProject.services.TeacherService;
 import com.iktakademija.FinalProject.services.UserService;
+import com.iktakademija.FinalProject.utils.ERESTErrorCodes;
+import com.iktakademija.FinalProject.utils.RESTError;
 
 /**
  * Teacher controller.<BR>

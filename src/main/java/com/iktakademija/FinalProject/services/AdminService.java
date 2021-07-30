@@ -2,10 +2,10 @@ package com.iktakademija.FinalProject.services;
 
 import java.util.List;
 
+import com.iktakademija.FinalProject.dtos.AdminDTO;
+import com.iktakademija.FinalProject.dtos.NewAdminDTO;
 import com.iktakademija.FinalProject.entities.AdminEntity;
 import com.iktakademija.FinalProject.entities.StudentEntity;
-import com.iktakademija.FinalProject.entities.dtos.AdminDTO;
-import com.iktakademija.FinalProject.entities.dtos.NewAdminDTO;
 
 public interface AdminService {
 	

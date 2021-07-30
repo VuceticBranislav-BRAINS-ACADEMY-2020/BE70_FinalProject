@@ -16,19 +16,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import com.iktakademija.FinalProject.controllers.utils.RESTError;
-import com.iktakademija.FinalProject.controllers.utils.enums.ERESTErrorCodes;
+import com.iktakademija.FinalProject.dtos.GroupDTO;
+import com.iktakademija.FinalProject.dtos.JoinTableStudentGroupDTO;
+import com.iktakademija.FinalProject.dtos.NewGroupDTO;
 import com.iktakademija.FinalProject.entities.GroupEntity;
 import com.iktakademija.FinalProject.entities.JoinTableStudentGroup;
 import com.iktakademija.FinalProject.entities.UserEntity;
-import com.iktakademija.FinalProject.entities.dtos.GroupDTO;
-import com.iktakademija.FinalProject.entities.dtos.JoinTableStudentGroupDTO;
-import com.iktakademija.FinalProject.entities.dtos.NewGroupDTO;
 import com.iktakademija.FinalProject.securities.Views;
 import com.iktakademija.FinalProject.services.GroupService;
 import com.iktakademija.FinalProject.services.JoinTableStudentGroupService;
 import com.iktakademija.FinalProject.services.LoggingService;
 import com.iktakademija.FinalProject.services.LoginService;
+import com.iktakademija.FinalProject.utils.ERESTErrorCodes;
+import com.iktakademija.FinalProject.utils.RESTError;
 
 @RestController
 @RequestMapping(path = "/api/v1/group")

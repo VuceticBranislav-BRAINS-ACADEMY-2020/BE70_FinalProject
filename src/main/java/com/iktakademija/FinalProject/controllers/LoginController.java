@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.iktakademija.FinalProject.controllers.dto.UserTokenDTO;
-import com.iktakademija.FinalProject.controllers.utils.RESTError;
-import com.iktakademija.FinalProject.controllers.utils.enums.ERESTErrorCodes;
+import com.iktakademija.FinalProject.dtos.UserTokenDTO;
 import com.iktakademija.FinalProject.entities.UserEntity;
 import com.iktakademija.FinalProject.repositories.UserRepository;
 import com.iktakademija.FinalProject.services.LoggingService;
 import com.iktakademija.FinalProject.services.LoginService;
+import com.iktakademija.FinalProject.utils.ERESTErrorCodes;
 import com.iktakademija.FinalProject.utils.Encryption;
+import com.iktakademija.FinalProject.utils.RESTError;
 
 /**
  * Login endpoint.

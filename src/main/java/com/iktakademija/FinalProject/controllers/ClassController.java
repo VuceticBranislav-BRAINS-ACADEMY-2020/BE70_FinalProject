@@ -16,19 +16,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import com.iktakademija.FinalProject.controllers.utils.RESTError;
-import com.iktakademija.FinalProject.controllers.utils.enums.ERESTErrorCodes;
+import com.iktakademija.FinalProject.dtos.ClassDTO;
+import com.iktakademija.FinalProject.dtos.JoinTableSubjectClassDTO;
+import com.iktakademija.FinalProject.dtos.NewClassDTO;
 import com.iktakademija.FinalProject.entities.ClassEntity;
 import com.iktakademija.FinalProject.entities.JoinTableSubjectClass;
 import com.iktakademija.FinalProject.entities.UserEntity;
-import com.iktakademija.FinalProject.entities.dtos.ClassDTO;
-import com.iktakademija.FinalProject.entities.dtos.JoinTableSubjectClassDTO;
-import com.iktakademija.FinalProject.entities.dtos.NewClassDTO;
 import com.iktakademija.FinalProject.securities.Views;
 import com.iktakademija.FinalProject.services.ClassService;
 import com.iktakademija.FinalProject.services.JoinTableSubjectClassService;
 import com.iktakademija.FinalProject.services.LoggingService;
 import com.iktakademija.FinalProject.services.LoginService;
+import com.iktakademija.FinalProject.utils.ERESTErrorCodes;
+import com.iktakademija.FinalProject.utils.RESTError;
 
 /**
  * Class controller.<BR>

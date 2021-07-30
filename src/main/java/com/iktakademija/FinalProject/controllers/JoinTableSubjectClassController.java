@@ -16,15 +16,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.iktakademija.FinalProject.controllers.utils.RESTError;
-import com.iktakademija.FinalProject.controllers.utils.enums.ERESTErrorCodes;
+import com.iktakademija.FinalProject.dtos.JoinTableSubjectClassDTO;
 import com.iktakademija.FinalProject.entities.JoinTableSubjectClass;
 import com.iktakademija.FinalProject.entities.UserEntity;
-import com.iktakademija.FinalProject.entities.dtos.JoinTableSubjectClassDTO;
 import com.iktakademija.FinalProject.repositories.JoinTableSubjectClassRepository;
 import com.iktakademija.FinalProject.services.JoinTableSubjectClassService;
 import com.iktakademija.FinalProject.services.LoggingService;
 import com.iktakademija.FinalProject.services.LoginService;
+import com.iktakademija.FinalProject.utils.ERESTErrorCodes;
+import com.iktakademija.FinalProject.utils.RESTError;
 
 @RestController
 @RequestMapping(path = "/api/v1/jtsc")

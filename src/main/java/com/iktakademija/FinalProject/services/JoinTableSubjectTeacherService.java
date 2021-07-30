@@ -2,8 +2,8 @@ package com.iktakademija.FinalProject.services;
 
 import java.util.List;
 
+import com.iktakademija.FinalProject.dtos.JoinTableSubjectTeacherDTO;
 import com.iktakademija.FinalProject.entities.JoinTableSubjectTeacher;
-import com.iktakademija.FinalProject.entities.dtos.JoinTableSubjectTeacherDTO;
 
 public interface JoinTableSubjectTeacherService {
 	JoinTableSubjectTeacherDTO createDTO(JoinTableSubjectTeacher source);

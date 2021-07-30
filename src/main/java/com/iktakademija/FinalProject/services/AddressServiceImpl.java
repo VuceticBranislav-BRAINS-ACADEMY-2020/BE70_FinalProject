@@ -7,9 +7,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.iktakademija.FinalProject.dtos.AddressDTO;
+import com.iktakademija.FinalProject.dtos.NewAddressDTO;
 import com.iktakademija.FinalProject.entities.AddressEntity;
-import com.iktakademija.FinalProject.entities.dtos.AddressDTO;
-import com.iktakademija.FinalProject.entities.dtos.NewAddressDTO;
 import com.iktakademija.FinalProject.entities.enums.EStatus;
 import com.iktakademija.FinalProject.repositories.AddressRepository;
 

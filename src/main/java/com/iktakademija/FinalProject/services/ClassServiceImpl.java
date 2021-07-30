@@ -7,11 +7,11 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.iktakademija.FinalProject.dtos.ClassDTO;
+import com.iktakademija.FinalProject.dtos.NewClassDTO;
 import com.iktakademija.FinalProject.entities.ClassEntity;
 import com.iktakademija.FinalProject.entities.JoinTableSubjectClass;
 import com.iktakademija.FinalProject.entities.SubjectEntity;
-import com.iktakademija.FinalProject.entities.dtos.ClassDTO;
-import com.iktakademija.FinalProject.entities.dtos.NewClassDTO;
 import com.iktakademija.FinalProject.entities.enums.EStatus;
 import com.iktakademija.FinalProject.repositories.ClassRepository;
 import com.iktakademija.FinalProject.repositories.JoinTableSubjectClassRepository;

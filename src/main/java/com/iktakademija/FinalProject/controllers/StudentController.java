@@ -18,15 +18,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import com.iktakademija.FinalProject.controllers.utils.RESTError;
-import com.iktakademija.FinalProject.controllers.utils.enums.ERESTErrorCodes;
+import com.iktakademija.FinalProject.dtos.NewStudentDTO;
+import com.iktakademija.FinalProject.dtos.ParentDTO;
+import com.iktakademija.FinalProject.dtos.StudentDTO;
 import com.iktakademija.FinalProject.entities.JoinTableStudentParent;
 import com.iktakademija.FinalProject.entities.ParentEntity;
 import com.iktakademija.FinalProject.entities.StudentEntity;
 import com.iktakademija.FinalProject.entities.UserEntity;
-import com.iktakademija.FinalProject.entities.dtos.NewStudentDTO;
-import com.iktakademija.FinalProject.entities.dtos.ParentDTO;
-import com.iktakademija.FinalProject.entities.dtos.StudentDTO;
 import com.iktakademija.FinalProject.entities.enums.EStatus;
 import com.iktakademija.FinalProject.repositories.JoinTableStudentParentRepository;
 import com.iktakademija.FinalProject.repositories.ParentRepository;
@@ -37,6 +35,8 @@ import com.iktakademija.FinalProject.services.LoginService;
 import com.iktakademija.FinalProject.services.ParentService;
 import com.iktakademija.FinalProject.services.StudentService;
 import com.iktakademija.FinalProject.services.UserService;
+import com.iktakademija.FinalProject.utils.ERESTErrorCodes;
+import com.iktakademija.FinalProject.utils.RESTError;
 
 /**
  * Student endpoint. <BR>

@@ -5,8 +5,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.iktakademija.FinalProject.dtos.RoleDTO;
 import com.iktakademija.FinalProject.entities.RoleEntity;
-import com.iktakademija.FinalProject.entities.dtos.RoleDTO;
 import com.iktakademija.FinalProject.entities.enums.ERole;
 
 @Service

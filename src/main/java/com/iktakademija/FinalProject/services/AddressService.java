@@ -2,9 +2,9 @@ package com.iktakademija.FinalProject.services;
 
 import java.util.List;
 
+import com.iktakademija.FinalProject.dtos.AddressDTO;
+import com.iktakademija.FinalProject.dtos.NewAddressDTO;
 import com.iktakademija.FinalProject.entities.AddressEntity;
-import com.iktakademija.FinalProject.entities.dtos.AddressDTO;
-import com.iktakademija.FinalProject.entities.dtos.NewAddressDTO;
 
 public interface AddressService {
 	
