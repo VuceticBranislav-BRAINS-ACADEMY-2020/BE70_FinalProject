@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import com.iktakademija.FinalProject.entities.GroupEntity;
+import com.iktakademija.FinalProject.entities.TeacherEntity;
 
 public interface GroupRepository extends CrudRepository<GroupEntity, Integer> {
 
@@ -18,4 +19,5 @@ public interface GroupRepository extends CrudRepository<GroupEntity, Integer> {
 	List<GroupEntity> findAllById(Integer id);
 	List<GroupEntity> findAll();
 	
+	Optional<GroupEntity> findByHomeClassMaster(TeacherEntity homeClassMaster);
 }

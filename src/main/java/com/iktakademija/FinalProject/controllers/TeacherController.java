@@ -24,12 +24,14 @@ import com.iktakademija.FinalProject.dtos.NewTeacherDTO;
 import com.iktakademija.FinalProject.dtos.SubjectDTO;
 import com.iktakademija.FinalProject.dtos.TeacherDTO;
 import com.iktakademija.FinalProject.entities.GradeEntity;
+import com.iktakademija.FinalProject.entities.GroupEntity;
 import com.iktakademija.FinalProject.entities.JoinTableSubjectTeacher;
 import com.iktakademija.FinalProject.entities.SubjectEntity;
 import com.iktakademija.FinalProject.entities.TeacherEntity;
 import com.iktakademija.FinalProject.entities.UserEntity;
 import com.iktakademija.FinalProject.entities.enums.EStage;
 import com.iktakademija.FinalProject.entities.enums.EStatus;
+import com.iktakademija.FinalProject.repositories.GroupRepository;
 import com.iktakademija.FinalProject.repositories.TeacherRepository;
 import com.iktakademija.FinalProject.securities.Views;
 import com.iktakademija.FinalProject.services.GradeService;
@@ -72,6 +74,9 @@ public class TeacherController {
 	
 	@Autowired
 	private GradeService gradeService;
+	
+	@Autowired
+	private GroupRepository groupRepository;
 	
 	/**
 	 * REST endpoint that returns all teachers from data base. Method always return
@@ -389,7 +394,8 @@ public class TeacherController {
 	@Secured("ROLE_TEACHER")
 	@JsonView(value = Views.Student.class)
 	@RequestMapping(method = RequestMethod.GET, path = "/search")
-	public ResponseEntity<?> searchAll(@RequestParam(required = false, name = "StudentId") Integer studentId, 
+	public ResponseEntity<?> searchAll(@RequestParam(name = "ClassMaster") Boolean classmaster, 
+			@RequestParam(required = false, name = "StudentId") Integer studentId, 
 			@RequestParam(required = false, name = "SubjectId") Integer subjectId, 
 			@RequestParam(required = false, name = "GroupId") Integer groupId,
 			@RequestParam(required = false, name = "ClassId") Integer classId, 
@@ -410,8 +416,22 @@ public class TeacherController {
 		TeacherEntity teacher = op.get();
 		
 		// Get list of all users on page
-		List<GradeEntity> list = gradeService.getFiltered(studentId, subjectId, teacher.getId(), groupId, classId, stage);
-		List<GradeDTO> retVal = gradeService.createDTOList(list);
+		List<GradeDTO> retVal = null;
+		if (classmaster) {
+			Optional<GroupEntity> op1 = groupRepository.findByHomeClassMaster(teacher);
+			if (op1.isPresent() == false) {
+				loggingService.loggTwoOutMessage("Teacher is not class master", HttpStatus.BAD_REQUEST.toString(), Level.INFO);
+				return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_TEACHER),
+						HttpStatus.BAD_REQUEST);
+			}
+			List<GradeEntity> list = gradeService.getFiltered(null, null, null, op1.get().getId(), classId, stage);
+			retVal = gradeService.createDTOList(list);
+		}
+		else
+		{
+			List<GradeEntity> list = gradeService.getFiltered(studentId, subjectId, teacher.getId(), groupId, classId, stage);
+			retVal = gradeService.createDTOList(list);
+		}
 
 		// Log results and make respons
 		loggingService.loggOutMessage(HttpStatus.OK.toString(), Level.INFO);

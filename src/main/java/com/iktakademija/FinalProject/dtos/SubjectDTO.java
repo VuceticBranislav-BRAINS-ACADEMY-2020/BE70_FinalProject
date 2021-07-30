@@ -14,7 +14,7 @@ import com.iktakademija.FinalProject.securities.Views;
  * @author GM
  */
 @JsonView(value = Views.Student.class)
-@JsonPropertyOrder(value =  {"id", "name", "fond", "version", "status"})
+@JsonPropertyOrder(value =  {"id", "name", "version", "status"})
 public class SubjectDTO {
 	
 	/************************************************************
@@ -27,10 +27,6 @@ public class SubjectDTO {
 	
 	@JsonProperty(value = "Name")
 	private String name;
-
-	@JsonView(value = Views.Teacher.class)
-	@JsonProperty(value = "Fond")
-	private Integer fond;
 	
 	@JsonView(value = Views.Admin.class)
 	@JsonProperty(value = "Version")
@@ -65,14 +61,6 @@ public class SubjectDTO {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public Integer getFond() {
-		return fond;
-	}
-
-	public void setFond(Integer fond) {
-		this.fond = fond;
 	}
 
 	public Integer getVersion() {
