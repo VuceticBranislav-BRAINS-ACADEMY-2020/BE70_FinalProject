@@ -1,12 +1,13 @@
 package com.iktakademija.FinalProject.utils;
 
 /**
- * REST Message Codes
+ * REST Message Codes 
  * <BR> 1 - Note.
  * <BR> 2 - Unexpected behavoury.
  * <BR> 50 - Username not in data base.
  * <BR> 51 - Token not availible for this user.
  * <BR> 100 - Invalid parameters, or null.
+ * <BR> 102 - Message: "Invalid child index.
  * <BR> 110 - Requested item not found.
  * <BR> 111 - Found item do not satisfy requirements. 
  * <BR> 112 - Item with provided credentials already exists in data base. 
@@ -38,6 +39,10 @@ public enum ERESTErrorCodes {
 	 * Code: 100<BR>Message: "Invalid parameters, or null."
 	 */
 	INVALID_PARAMETERS (100, "Invalid parameters, or null."),
+	/**
+	 * Code: 102<BR>Message: "Invalid child index."
+	 */
+	INVALID_CHILD      (102, "Invalid child index."),
 	/**
 	 *  Code: 110<BR>Message: "Requested item not found"
 	 */

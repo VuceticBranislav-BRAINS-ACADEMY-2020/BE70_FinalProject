@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.iktakademija.FinalProject.dtos.ChangeGradeDTO;
 import com.iktakademija.FinalProject.dtos.EmailObject;
 import com.iktakademija.FinalProject.dtos.GradeDTO;
@@ -46,6 +47,7 @@ import com.iktakademija.FinalProject.repositories.ParentRepository;
 import com.iktakademija.FinalProject.repositories.StudentRepository;
 import com.iktakademija.FinalProject.repositories.SubjectRepository;
 import com.iktakademija.FinalProject.repositories.TeacherRepository;
+import com.iktakademija.FinalProject.securities.Views;
 import com.iktakademija.FinalProject.services.EmailService;
 import com.iktakademija.FinalProject.services.GradeService;
 import com.iktakademija.FinalProject.services.LoggingService;
@@ -456,6 +458,7 @@ public class GradeController {
 	 * Postman code: <B>GRD40</B>
 	 */
 	@Secured("ROLE_ADMIN")
+	@JsonView(value = Views.Admin.class)
 	@RequestMapping(method = RequestMethod.GET, path = "/admin/search")
 	public ResponseEntity<?> searchAll(@RequestParam(required = false, name = "StudentId") Integer studentId, 
 			@RequestParam(required = false, name = "SubjectId") Integer subjectId, 
@@ -467,7 +470,7 @@ public class GradeController {
 		// Logging and retriving user.
 		UserEntity user = loginService.getUser();
 		loggingService.loggAndGetUser(user, Level.INFO);
-		loggingService.loggMessage("Method: GradeController.getAllGradesPage()", Level.INFO);
+		loggingService.loggMessage("Method: GradeController.searchAll()", Level.INFO);
 
 		// Get list of all users on page
 		List<GradeEntity> list = gradeService.getFiltered(studentId, subjectId, teacherId, groupId, classId, stage);

@@ -18,18 +18,22 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.iktakademija.FinalProject.dtos.GradeDTO;
 import com.iktakademija.FinalProject.dtos.NewParentDTO;
 import com.iktakademija.FinalProject.dtos.ParentDTO;
 import com.iktakademija.FinalProject.dtos.StudentDTO;
+import com.iktakademija.FinalProject.entities.GradeEntity;
 import com.iktakademija.FinalProject.entities.JoinTableStudentParent;
 import com.iktakademija.FinalProject.entities.ParentEntity;
 import com.iktakademija.FinalProject.entities.StudentEntity;
 import com.iktakademija.FinalProject.entities.UserEntity;
+import com.iktakademija.FinalProject.entities.enums.EStage;
 import com.iktakademija.FinalProject.entities.enums.EStatus;
 import com.iktakademija.FinalProject.repositories.JoinTableStudentParentRepository;
 import com.iktakademija.FinalProject.repositories.ParentRepository;
 import com.iktakademija.FinalProject.repositories.StudentRepository;
 import com.iktakademija.FinalProject.securities.Views;
+import com.iktakademija.FinalProject.services.GradeService;
 import com.iktakademija.FinalProject.services.LoggingService;
 import com.iktakademija.FinalProject.services.LoginService;
 import com.iktakademija.FinalProject.services.ParentService;
@@ -65,6 +69,9 @@ public class ParentController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private GradeService gradeService;
 	
 	// PAR10
 	@Secured("ROLE_ADMIN")
@@ -244,4 +251,52 @@ public class ParentController {
 		return new ResponseEntity<ParentDTO>(parentService.createDTO(parent), HttpStatus.OK);
 	}
 	
+	/**
+	 * Filter all grades
+	 * 
+	 * Postman code: <B>PAR40</B>
+	 */
+	@Secured("ROLE_PARENT")
+	@JsonView(value = Views.Student.class)
+	@RequestMapping(method = RequestMethod.GET, path = "/search")
+	public ResponseEntity<?> searchAll(@RequestParam(required = false, name = "StudentId") Integer studentId, 
+			@RequestParam(required = false, name = "SubjectId") Integer subjectId, 
+			@RequestParam(required = false, name = "TeacherId") Integer teacherId, 
+			@RequestParam(required = false, name = "GroupId") Integer groupId,
+			@RequestParam(required = false, name = "ClassId") Integer classId, 
+			@RequestParam(required = false, name = "Stage") EStage stage) {
+		
+		// Logging and retriving user.
+		UserEntity user = loginService.getUser();
+		loggingService.loggAndGetUser(user, Level.INFO);
+		loggingService.loggMessage("Method: ParentController.searchAll()", Level.INFO);
+
+		// Check id
+		Optional<ParentEntity> op = parentRepository.findById(user.getId());
+		if (op.isPresent() == false) {
+			loggingService.loggTwoOutMessage("Invalid id.", HttpStatus.BAD_REQUEST.toString(), Level.INFO);
+			return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_PARAMETERS),
+					HttpStatus.BAD_REQUEST);
+		}
+		ParentEntity parent = op.get();
+		
+		// Check childs
+		boolean childValid = false;
+		for (JoinTableStudentParent child : parent.getStudents()) {
+			if (child.getStudent().getId().equals(studentId));
+		}
+		if (childValid == false) {
+			loggingService.loggTwoOutMessage("Childs do not belong to teacher.", HttpStatus.BAD_REQUEST.toString(), Level.INFO);
+			return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_CHILD),
+					HttpStatus.BAD_REQUEST);
+		}
+		
+		// Get list of all users on page
+		List<GradeEntity> list = gradeService.getFiltered(studentId, subjectId, teacherId, groupId, classId, stage);
+		List<GradeDTO> retVal = gradeService.createDTOList(list);
+
+		// Log results and make respons
+		loggingService.loggOutMessage(HttpStatus.OK.toString(), Level.INFO);
+		return new ResponseEntity<List<GradeDTO>>(retVal, HttpStatus.OK);
+	}
 }

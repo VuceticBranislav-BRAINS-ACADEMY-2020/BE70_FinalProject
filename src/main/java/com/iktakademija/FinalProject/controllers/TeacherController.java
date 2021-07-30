@@ -23,13 +23,16 @@ import com.iktakademija.FinalProject.dtos.JoinTableSubjectTeacherDTO;
 import com.iktakademija.FinalProject.dtos.NewTeacherDTO;
 import com.iktakademija.FinalProject.dtos.SubjectDTO;
 import com.iktakademija.FinalProject.dtos.TeacherDTO;
+import com.iktakademija.FinalProject.entities.GradeEntity;
 import com.iktakademija.FinalProject.entities.JoinTableSubjectTeacher;
 import com.iktakademija.FinalProject.entities.SubjectEntity;
 import com.iktakademija.FinalProject.entities.TeacherEntity;
 import com.iktakademija.FinalProject.entities.UserEntity;
+import com.iktakademija.FinalProject.entities.enums.EStage;
 import com.iktakademija.FinalProject.entities.enums.EStatus;
 import com.iktakademija.FinalProject.repositories.TeacherRepository;
 import com.iktakademija.FinalProject.securities.Views;
+import com.iktakademija.FinalProject.services.GradeService;
 import com.iktakademija.FinalProject.services.JoinTableSubjectTeacherService;
 import com.iktakademija.FinalProject.services.LoggingService;
 import com.iktakademija.FinalProject.services.LoginService;
@@ -66,7 +69,10 @@ public class TeacherController {
 	
 	@Autowired
 	private SubjectService subjectService;
-
+	
+	@Autowired
+	private GradeService gradeService;
+	
 	/**
 	 * REST endpoint that returns all teachers from data base. Method always return
 	 * {@link HttpStatus.OK} if there is no internal error.<BR>
@@ -373,6 +379,43 @@ public class TeacherController {
 		// Log results and make respons
 		loggingService.loggOutMessage(HttpStatus.OK.toString(), Level.INFO);
 		return new ResponseEntity<List<SubjectDTO>>(subjectService.createDTOList(dto), HttpStatus.OK);
+	}
+	
+	/**
+	 * Filter all grades
+	 * 
+	 * Postman code: <B>TEA40</B>
+	 */
+	@Secured("ROLE_TEACHER")
+	@JsonView(value = Views.Student.class)
+	@RequestMapping(method = RequestMethod.GET, path = "/search")
+	public ResponseEntity<?> searchAll(@RequestParam(required = false, name = "StudentId") Integer studentId, 
+			@RequestParam(required = false, name = "SubjectId") Integer subjectId, 
+			@RequestParam(required = false, name = "GroupId") Integer groupId,
+			@RequestParam(required = false, name = "ClassId") Integer classId, 
+			@RequestParam(required = false, name = "Stage") EStage stage) {
+		
+		// Logging and retriving user.
+		UserEntity user = loginService.getUser();
+		loggingService.loggAndGetUser(user, Level.INFO);
+		loggingService.loggMessage("Method: TeacherController.searchAll()", Level.INFO);
+
+		// Check id
+		Optional<TeacherEntity> op = teacherRepository.findById(user.getId());
+		if (op.isPresent() == false) {
+			loggingService.loggTwoOutMessage("Invalid id.", HttpStatus.BAD_REQUEST.toString(), Level.INFO);
+			return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_PARAMETERS),
+					HttpStatus.BAD_REQUEST);
+		}
+		TeacherEntity teacher = op.get();
+		
+		// Get list of all users on page
+		List<GradeEntity> list = gradeService.getFiltered(studentId, subjectId, teacher.getId(), groupId, classId, stage);
+		List<GradeDTO> retVal = gradeService.createDTOList(list);
+
+		// Log results and make respons
+		loggingService.loggOutMessage(HttpStatus.OK.toString(), Level.INFO);
+		return new ResponseEntity<List<GradeDTO>>(retVal, HttpStatus.OK);
 	}
 
 }
