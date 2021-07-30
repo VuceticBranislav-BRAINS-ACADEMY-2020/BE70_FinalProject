@@ -42,18 +42,22 @@ public class NewGradeDTO {
 	@JsonProperty(value = "Stage")
 	private EStage stage;	
 
+	@NotNull(message = "Must not be null.")
 	@Positive(message = "Student with given ID do not exists. Pleas enter valid student ID.")
 	@JsonProperty(value = "ID Student")
 	private Integer idStudent;
 	
+	@NotNull(message = "Must not be null.")
 	@Positive(message = "Teacher with given ID do not exists. Pleas enter valid teacher ID.")
 	@JsonProperty(value = "ID Teacher")
 	private Integer idTeacher;
 	
+	@NotNull(message = "Must not be null.")
 	@Positive(message = "Subject with given ID do not exists. Pleas enter valid subject ID.")
 	@JsonProperty(value = "ID Subject")
 	private Integer idSubject;	
 	
+	@NotNull(message = "Must not be null.")
 	@Positive(message = "Group with given ID do not exists. Pleas enter valid group ID.")
 	@JsonProperty(value = "ID Group")
 	private Integer idGroup;

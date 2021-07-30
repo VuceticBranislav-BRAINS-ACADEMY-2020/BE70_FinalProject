@@ -18,4 +18,7 @@ public interface JoinTableSubjectClassRepository extends CrudRepository<JoinTabl
 	
 	@Override
 	Optional<JoinTableSubjectClass> findById(Integer id);
+	
+	Optional<JoinTableSubjectClass> findBySubjectAndClazz(SubjectEntity subject, ClassEntity clazz);
+
 }

@@ -19,11 +19,14 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.iktakademija.FinalProject.controllers.utils.RESTError;
 import com.iktakademija.FinalProject.controllers.utils.enums.ERESTErrorCodes;
 import com.iktakademija.FinalProject.entities.ClassEntity;
+import com.iktakademija.FinalProject.entities.JoinTableSubjectClass;
 import com.iktakademija.FinalProject.entities.UserEntity;
 import com.iktakademija.FinalProject.entities.dtos.ClassDTO;
+import com.iktakademija.FinalProject.entities.dtos.JoinTableSubjectClassDTO;
 import com.iktakademija.FinalProject.entities.dtos.NewClassDTO;
 import com.iktakademija.FinalProject.securities.Views;
 import com.iktakademija.FinalProject.services.ClassService;
+import com.iktakademija.FinalProject.services.JoinTableSubjectClassService;
 import com.iktakademija.FinalProject.services.LoggingService;
 import com.iktakademija.FinalProject.services.LoginService;
 
@@ -40,10 +43,13 @@ public class ClassController {
 
 	@Autowired
 	private LoggingService loggingService;
-	
+
 	@Autowired
 	private ClassService classService;
-	
+
+	@Autowired
+	private JoinTableSubjectClassService joinTableSubjectClassService;
+
 	/**
 	 * REST endpoint that returns all class from data base. Method always return
 	 * {@link HttpStatus.OK} if there is no internal error.<BR>
@@ -104,7 +110,7 @@ public class ClassController {
 		loggingService.loggOutMessage(HttpStatus.OK.toString(), Level.INFO);
 		return new ResponseEntity<ClassDTO>(dto, HttpStatus.OK);
 	}
-	
+
 	/**
 	 * Add new class to database. If there is no internal error method return
 	 * {@link HttpStatus.OK}.<BR>
@@ -145,8 +151,7 @@ public class ClassController {
 	 */
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(method = RequestMethod.PUT, path = "/admin/{id}")
-	public ResponseEntity<?> setClass(@PathVariable(value = "id") Integer classId,
-			@RequestBody NewClassDTO newClass) {
+	public ResponseEntity<?> setClass(@PathVariable(value = "id") Integer classId, @RequestBody NewClassDTO newClass) {
 
 		// Logging and retriving user.
 		UserEntity user = loginService.getUser();
@@ -154,8 +159,8 @@ public class ClassController {
 		loggingService.loggMessage("Method: ClassController.setClass()", Level.INFO);
 
 		if (classId == null || newClass == null) {
-			loggingService.loggTwoOutMessage("Invalid class id or new teacher data.",
-					HttpStatus.BAD_REQUEST.toString(), Level.INFO);
+			loggingService.loggTwoOutMessage("Invalid class id or new teacher data.", HttpStatus.BAD_REQUEST.toString(),
+					Level.INFO);
 			return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_PARAMETERS),
 					HttpStatus.BAD_REQUEST);
 		}
@@ -207,4 +212,33 @@ public class ClassController {
 		loggingService.loggOutMessage(HttpStatus.OK.toString(), Level.INFO);
 		return new ResponseEntity<ClassDTO>(dto, HttpStatus.OK);
 	}
+
+	/**
+	 * Add subject to class. Postman code: <B>CLS14</B>
+	 */
+	@Secured("ROLE_ADMIN")
+	@JsonView(value = Views.Admin.class)
+	@RequestMapping(method = RequestMethod.PUT, path = "/admin/{classid}/{subjectid}/{fond}")
+	public ResponseEntity<?> addSubjectToClass(@PathVariable("subjectid") Integer subjectid,
+			@PathVariable("classid") Integer classid, @PathVariable("fond") Integer fond) {
+
+		// Logging and retriving user.
+		UserEntity user = loginService.getUser();
+		loggingService.loggAndGetUser(user, Level.INFO);
+		loggingService.loggMessage("Method: SubjectController.addSubjectToClass()", Level.INFO);
+
+		JoinTableSubjectClass item = classService.addSubjectToClass(subjectid, classid, fond);
+		if (item == null) {
+			loggingService.loggTwoOutMessage("Subject can not be added to class. Invalid data provided.",
+					HttpStatus.BAD_REQUEST.toString(), Level.INFO);
+			return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_PARAMETERS),
+					HttpStatus.BAD_REQUEST);
+		}
+
+		// Log results and make respons
+		loggingService.loggOutMessage(HttpStatus.OK.toString(), Level.INFO);
+		return new ResponseEntity<JoinTableSubjectClassDTO>(joinTableSubjectClassService.createDTO(item),
+				HttpStatus.OK);
+	}
+
 }

@@ -1,5 +1,6 @@
 package com.iktakademija.FinalProject.entities.dtos;
 
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -23,17 +24,21 @@ public class JoinTableSubjectClassDTO {
 	 * Attributes
 	 ************************************************************/
 
+	@NotNull(message = "Must not be null.")
 	@JsonProperty(value = "ID")
 	private Integer id;	
 	
+	@NotNull(message = "Must not be null.")
 	@Positive(message = "Must be positiv index number.")
 	@JsonProperty(value = "ID Subject")
 	private Integer subject;
 
+	@NotNull(message = "Must not be null.")
 	@Positive(message = "Must be positiv index number.")
 	@JsonProperty(value = "ID Class")
 	private Integer clazz;
 
+	@NotNull(message = "Must not be null.")
 	@Positive(message = "Must be positiv number.")
 	@JsonProperty(value = "Fond")
 	private Integer fond;

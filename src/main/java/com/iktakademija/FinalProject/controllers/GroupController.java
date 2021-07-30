@@ -19,11 +19,14 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.iktakademija.FinalProject.controllers.utils.RESTError;
 import com.iktakademija.FinalProject.controllers.utils.enums.ERESTErrorCodes;
 import com.iktakademija.FinalProject.entities.GroupEntity;
+import com.iktakademija.FinalProject.entities.JoinTableStudentGroup;
 import com.iktakademija.FinalProject.entities.UserEntity;
 import com.iktakademija.FinalProject.entities.dtos.GroupDTO;
+import com.iktakademija.FinalProject.entities.dtos.JoinTableStudentGroupDTO;
 import com.iktakademija.FinalProject.entities.dtos.NewGroupDTO;
 import com.iktakademija.FinalProject.securities.Views;
 import com.iktakademija.FinalProject.services.GroupService;
+import com.iktakademija.FinalProject.services.JoinTableStudentGroupService;
 import com.iktakademija.FinalProject.services.LoggingService;
 import com.iktakademija.FinalProject.services.LoginService;
 
@@ -39,6 +42,9 @@ public class GroupController {
 
 	@Autowired
 	private GroupService groupService;
+
+	@Autowired
+	private JoinTableStudentGroupService joinTableStudentGroupService;
 
 	/**
 	 * REST endpoint that returns all groups from data base. Method always return
@@ -201,6 +207,34 @@ public class GroupController {
 		// Log results and make respons
 		loggingService.loggOutMessage(HttpStatus.OK.toString(), Level.INFO);
 		return new ResponseEntity<GroupDTO>(dto, HttpStatus.OK);
+	}
+
+	/**
+	 * Add student to group. Postman code: <B>GRP14</B>
+	 */
+	@Secured("ROLE_ADMIN")
+	@JsonView(value = Views.Admin.class)
+	@RequestMapping(method = RequestMethod.PUT, path = "/admin/{groupid}/{studentid}")
+	public ResponseEntity<?> addStudentToGroup(@PathVariable("groupid") Integer groupid,
+			@PathVariable("studentid") Integer studentid) {
+
+		// Logging and retriving user.
+		UserEntity user = loginService.getUser();
+		loggingService.loggAndGetUser(user, Level.INFO);
+		loggingService.loggMessage("Method: GroupController.addStudentToGroup()", Level.INFO);
+
+		JoinTableStudentGroup item = groupService.addStudentToGroup(studentid, groupid);
+		if (item == null) {
+			loggingService.loggTwoOutMessage("Student can not be added to group. Invalid data provided.",
+					HttpStatus.BAD_REQUEST.toString(), Level.INFO);
+			return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_PARAMETERS),
+					HttpStatus.BAD_REQUEST);
+		}
+
+		// Log results and make respons
+		loggingService.loggOutMessage(HttpStatus.OK.toString(), Level.INFO);
+		return new ResponseEntity<JoinTableStudentGroupDTO>(joinTableStudentGroupService.createDTO(item),
+				HttpStatus.OK);
 	}
 
 }

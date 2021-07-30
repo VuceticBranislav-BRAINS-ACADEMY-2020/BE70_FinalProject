@@ -10,11 +10,13 @@ import org.springframework.stereotype.Service;
 import com.iktakademija.FinalProject.entities.GroupEntity;
 import com.iktakademija.FinalProject.entities.JoinTableSubjectClass;
 import com.iktakademija.FinalProject.entities.JoinTableSubjectTeacher;
+import com.iktakademija.FinalProject.entities.SubjectEntity;
 import com.iktakademija.FinalProject.entities.TeacherEntity;
 import com.iktakademija.FinalProject.entities.dtos.JoinTableSubjectTeacherDTO;
 import com.iktakademija.FinalProject.repositories.GroupRepository;
 import com.iktakademija.FinalProject.repositories.JoinTableSubjectClassRepository;
 import com.iktakademija.FinalProject.repositories.JoinTableSubjectTeacherRepository;
+import com.iktakademija.FinalProject.repositories.SubjectRepository;
 import com.iktakademija.FinalProject.repositories.TeacherRepository;
 
 @Service
@@ -28,6 +30,9 @@ public class JoinTableSubjectTeacherServiceImpl implements JoinTableSubjectTeach
 
 	@Autowired
 	private GroupRepository groupRepository;
+	
+	@Autowired
+	private SubjectRepository subjectRepository;
 
 	@Autowired
 	private JoinTableSubjectClassRepository joinTableSubjectClassRepository;
@@ -138,6 +143,38 @@ public class JoinTableSubjectTeacherServiceImpl implements JoinTableSubjectTeach
 		for (JoinTableSubjectTeacher entity : joinTableSubjectTeacherRepository.findAll())
 			list.add(this.createDTO(entity));
 		return list;
+	}
+	
+	@Override
+	public JoinTableSubjectTeacher addTeacherToSubjectByGroup(Integer teacherid, Integer subjectid, Integer groupid) {
+		
+		// Find teacher by id
+		Optional<TeacherEntity> op1 = teacherRepository.findById(teacherid);
+		if (op1.isPresent() == false) return null;
+		TeacherEntity teacher = op1.get();
+		
+		// Find subject by id
+		Optional<SubjectEntity> op2 = subjectRepository.findById(subjectid);
+		if (op2.isPresent() == false) return null;
+		SubjectEntity subject = op2.get();
+		
+		// Find class by id
+		Optional<GroupEntity> op3 = groupRepository.findById(groupid);
+		if (op3.isPresent() == false) return null;
+		GroupEntity group = op3.get();
+				
+		// Find student by id
+		Optional<JoinTableSubjectClass> op4 = joinTableSubjectClassRepository.findBySubjectAndClazz(subject, group.getClazz());
+		if (op4.isPresent() == false) return null;
+		JoinTableSubjectClass item1 = op4.get();
+		
+		JoinTableSubjectTeacher item = new JoinTableSubjectTeacher();
+		item.setTeachers(teacher);
+		item.setSub_cls(item1);
+		item.setGroup(group);
+		
+		item = joinTableSubjectTeacherRepository.save(item);		
+		return item;
 	}
 
 }

@@ -3,6 +3,7 @@ package com.iktakademija.FinalProject.entities.dtos;
 import java.time.LocalDate;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Positive;
@@ -13,6 +14,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.iktakademija.FinalProject.entities.PersonEntity;
+import com.iktakademija.FinalProject.entities.enums.EStatus;
 import com.iktakademija.FinalProject.securities.Views;
 
 /**
@@ -37,10 +39,12 @@ public class NewPersonDTO {
 	@JsonProperty(value = "Last Name")
 	private String lastname;
 	
+	@NotNull(message = "Must not be null.")
 	@Pattern(regexp = "^(0[1-9]|[12][0-9]|3[01])(0[1-9]|1[012])[0-9]{9}$", message = "Provide a valid JMBG.")
 	@JsonProperty(value = "JMBG")
 	private String jmbg;	
 	
+	@NotNull(message = "Must not be null.")
 	@Pattern(regexp = "^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.\\/]\\d{3}[\\s.-]\\d{3}$", message = "Provide a valid phone number in format xxx/xxx-xxx.")
 	@JsonProperty(value = "Phone Number")
 	private String mphone;	
@@ -50,9 +54,13 @@ public class NewPersonDTO {
 	@JsonProperty(value = "Birth Date")
 	private LocalDate birthdate;
 
+	@NotNull(message = "Must not be null.")
 	@Positive(message = "Must be positiv index number.")
 	@JsonProperty(value = "ID Address")
 	private Integer address;
+	
+	@JsonProperty(value = "Status")
+	private EStatus status;	
 	
 	/************************************************************
 	 * Constructors
@@ -108,6 +116,14 @@ public class NewPersonDTO {
 
 	public Integer getAddress() {
 		return address;
+	}
+
+	public EStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(EStatus status) {
+		this.status = status;
 	}
 
 	public void setAddress(Integer address) {

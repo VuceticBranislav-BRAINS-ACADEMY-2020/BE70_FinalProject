@@ -1,5 +1,6 @@
 package com.iktakademija.FinalProject.entities.dtos;
 
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
@@ -25,14 +26,17 @@ public class NewTeacherDTO {
 	 * Attributes
 	 ************************************************************/
 	
+	@NotNull(message = "Must not be null.")
 	@Size(min = 5, max = 10, message = "Username must be between {min} and {max} characters long.")
 	@JsonProperty(value = "Username")
 	private String username;
 
+	@NotNull(message = "Must not be null.")
 	@Pattern(regexp = "^[A-Za-z\\d]{4,}$", message = "Password  must contain at least 4 characters.")
 	@JsonProperty(value = "Password")
 	private String password;
 
+	@NotNull(message = "Must not be null.")
 	@Positive(message = "Must be positiv index number.")
 	@JsonProperty(value = "ID Person")
 	private Integer personId;	

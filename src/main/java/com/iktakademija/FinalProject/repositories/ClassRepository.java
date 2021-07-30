@@ -16,5 +16,4 @@ public interface ClassRepository extends CrudRepository<ClassEntity, Integer> {
 	
 	Optional<ClassEntity> findById(@Param("id") Integer id);
 
-
 }

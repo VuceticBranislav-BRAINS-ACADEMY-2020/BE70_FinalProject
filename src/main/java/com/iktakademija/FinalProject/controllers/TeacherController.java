@@ -20,16 +20,22 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.iktakademija.FinalProject.controllers.utils.RESTError;
 import com.iktakademija.FinalProject.controllers.utils.enums.ERESTErrorCodes;
+import com.iktakademija.FinalProject.entities.JoinTableSubjectTeacher;
+import com.iktakademija.FinalProject.entities.SubjectEntity;
 import com.iktakademija.FinalProject.entities.TeacherEntity;
 import com.iktakademija.FinalProject.entities.UserEntity;
 import com.iktakademija.FinalProject.entities.dtos.GradeDTO;
+import com.iktakademija.FinalProject.entities.dtos.JoinTableSubjectTeacherDTO;
 import com.iktakademija.FinalProject.entities.dtos.NewTeacherDTO;
+import com.iktakademija.FinalProject.entities.dtos.SubjectDTO;
 import com.iktakademija.FinalProject.entities.dtos.TeacherDTO;
 import com.iktakademija.FinalProject.entities.enums.EStatus;
 import com.iktakademija.FinalProject.repositories.TeacherRepository;
 import com.iktakademija.FinalProject.securities.Views;
+import com.iktakademija.FinalProject.services.JoinTableSubjectTeacherService;
 import com.iktakademija.FinalProject.services.LoggingService;
 import com.iktakademija.FinalProject.services.LoginService;
+import com.iktakademija.FinalProject.services.SubjectService;
 import com.iktakademija.FinalProject.services.TeacherService;
 import com.iktakademija.FinalProject.services.UserService;
 
@@ -43,10 +49,9 @@ public class TeacherController {
 
 	@Autowired
 	private TeacherService teacherService;
-
 	@Autowired
 	private LoginService loginService;
-
+	
 	@Autowired
 	private LoggingService loggingService;
 
@@ -55,6 +60,12 @@ public class TeacherController {
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private JoinTableSubjectTeacherService joinTableSubjectTeacherService;
+	
+	@Autowired
+	private SubjectService subjectService;
 
 	/**
 	 * REST endpoint that returns all teachers from data base. Method always return
@@ -302,6 +313,66 @@ public class TeacherController {
 		// Log results and make respons
 		loggingService.loggOutMessage(HttpStatus.OK.toString(), Level.INFO);
 		return new ResponseEntity<TeacherDTO>(teacherService.createDTO(teacher), HttpStatus.OK);
+	}
+	
+	/**
+	 * Add teacher to subject. Postman code: <B>TEA14</B>
+	 */
+	@Secured("ROLE_ADMIN")
+	@JsonView(value = Views.Admin.class)
+	@RequestMapping(method = RequestMethod.PUT, path = "/admin/{teacherid}/{subjectid}/{groupid}")
+	public ResponseEntity<?> addTeacherToSubjectByClass(@PathVariable("teacherid") Integer teacherid,
+			@PathVariable("subjectid") Integer subjectid, @PathVariable("groupid") Integer groupid) {
+
+		// Logging and retriving user.
+		UserEntity user = loginService.getUser();
+		loggingService.loggAndGetUser(user, Level.INFO);
+		loggingService.loggMessage("Method: TeacherController.addTeacherToSubjectByClass()", Level.INFO);
+
+		JoinTableSubjectTeacher item = joinTableSubjectTeacherService.addTeacherToSubjectByGroup(teacherid, subjectid, groupid);
+		if (item == null) {
+			loggingService.loggTwoOutMessage(String.format("Teacher [%s] on subject [%s] can not be added to group [%s]. Invalid data provided.", teacherid, subjectid, groupid),
+					HttpStatus.BAD_REQUEST.toString(), Level.INFO);
+			return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_PARAMETERS),
+					HttpStatus.BAD_REQUEST);
+		}
+
+		// Log results and make respons
+		loggingService.loggOutMessage(HttpStatus.OK.toString(), Level.INFO);
+		return new ResponseEntity<JoinTableSubjectTeacherDTO>(joinTableSubjectTeacherService.createDTO(item), HttpStatus.OK);
+	}
+	
+	/**
+	 * Return all subjects of teacher.
+
+	 * 
+	 * Postman code: <B>TEA16</B>
+	 */
+	@Secured("ROLE_ADMIN")
+	@RequestMapping(method = RequestMethod.GET, path = "/admin/subjects/{id}")
+	public ResponseEntity<?> getTeacherSubjectsById(@PathVariable(value = "id") Integer teacherId) {
+
+		// Logging and retriving user.
+		UserEntity user = loginService.getUser();
+		loggingService.loggAndGetUser(user, Level.INFO);
+		loggingService.loggMessage("Method: TeacherController.getTeacherById()", Level.INFO);
+
+		// Check teacher id
+		if (teacherId == null) {
+			loggingService.loggTwoOutMessage("Invalid teacher id.", HttpStatus.BAD_REQUEST.toString(), Level.INFO);
+			return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_PARAMETERS),
+					HttpStatus.BAD_REQUEST);
+		}
+
+		List<SubjectEntity> dto = teacherService.getAllSubjectsByTeacher(teacherId);
+		if (dto == null) {
+			loggingService.loggTwoOutMessage("Teacher not found.", HttpStatus.BAD_REQUEST.toString(), Level.INFO);
+			return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.NOT_FOUND), HttpStatus.BAD_REQUEST);
+		}
+
+		// Log results and make respons
+		loggingService.loggOutMessage(HttpStatus.OK.toString(), Level.INFO);
+		return new ResponseEntity<List<SubjectDTO>>(subjectService.createDTOList(dto), HttpStatus.OK);
 	}
 
 }

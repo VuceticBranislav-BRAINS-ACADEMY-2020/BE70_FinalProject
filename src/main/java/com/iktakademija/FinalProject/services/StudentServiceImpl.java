@@ -113,8 +113,9 @@ public class StudentServiceImpl implements StudentService {
 		if (opp.isPresent() == false) return null;
 		PersonEntity person = opp.get();	
 		
-		if (newStudent.getPersonId() != null) student.setPerson(person); // TODO Fix this
+		if (newStudent.getPersonId() != null) student.setPerson(person);
 		if (newStudent.getUsername() != null) student.setUsername(newStudent.getUsername());
+		if (newStudent.getStatus() != null) student.setStatus(newStudent.getStatus());
 
 		student = studentRepository.save(student);
 		return this.createDTO(student);

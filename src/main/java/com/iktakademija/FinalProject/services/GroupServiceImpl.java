@@ -9,12 +9,16 @@ import org.springframework.stereotype.Service;
 
 import com.iktakademija.FinalProject.entities.ClassEntity;
 import com.iktakademija.FinalProject.entities.GroupEntity;
+import com.iktakademija.FinalProject.entities.JoinTableStudentGroup;
+import com.iktakademija.FinalProject.entities.StudentEntity;
 import com.iktakademija.FinalProject.entities.TeacherEntity;
 import com.iktakademija.FinalProject.entities.dtos.GroupDTO;
 import com.iktakademija.FinalProject.entities.dtos.NewGroupDTO;
 import com.iktakademija.FinalProject.entities.enums.EStatus;
 import com.iktakademija.FinalProject.repositories.ClassRepository;
 import com.iktakademija.FinalProject.repositories.GroupRepository;
+import com.iktakademija.FinalProject.repositories.JoinTableStudentGroupRepository;
+import com.iktakademija.FinalProject.repositories.StudentRepository;
 import com.iktakademija.FinalProject.repositories.TeacherRepository;
 
 @Service
@@ -35,6 +39,12 @@ public class GroupServiceImpl implements GroupService {
 	@Autowired
 	private TeacherService teacherService;
 	
+	@Autowired
+	private StudentRepository studentRepository;
+	
+	@Autowired
+	private JoinTableStudentGroupRepository joinTableStudentGroupRepository;
+		
 	@Override
 	public GroupEntity createGroup(NewGroupDTO source) {
 
@@ -92,13 +102,13 @@ public class GroupServiceImpl implements GroupService {
 	@Override
 	public GroupDTO setGroup(Integer groupId, NewGroupDTO newGroup) {
 
-		// Find address by id
+		// Find group by id
 		Optional<GroupEntity> op = groupRepository.findById(groupId);
 		if (op.isPresent() == false)
 			return null;
 		GroupEntity group = op.get();
 
-		// Change address
+		// Change group
 		Optional<ClassEntity> op1 = classRepository.findById(newGroup.getClazz());
 		if (op1.isPresent() == false)
 			return null;
@@ -129,5 +139,32 @@ public class GroupServiceImpl implements GroupService {
 		group = groupRepository.save(group);
 		return this.createDTO(group);
 	}
+	
+	@Override
+	public JoinTableStudentGroup addStudentToGroup(Integer studentId, Integer groupId) {
+		
+		// Find group by id
+		Optional<GroupEntity> op1 = groupRepository.findById(groupId);
+		if (op1.isPresent() == false) return null;
+		GroupEntity group = op1.get();
+		
+		// Find student by id
+		Optional<StudentEntity> op2 = studentRepository.findById(studentId);
+		if (op2.isPresent() == false) return null;
+		StudentEntity student = op2.get();
+		
+		JoinTableStudentGroup item = new JoinTableStudentGroup();
+		item.setGroup(group);
+		item.setStudent(student);
+		
+		item = joinTableStudentGroupRepository.save(item);		
+		return item;
+	}
+	
+	// prmedbe
+	// + dodavanje roditrelja uceniku - obrnuto
+	// + endpoint dodavanje predmeta razredu
+	// - endpoint dodavanje profesora predmetu
+	// + endpoint dodavanje ucenika odeljenju
 
 }

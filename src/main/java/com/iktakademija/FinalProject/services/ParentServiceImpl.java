@@ -104,36 +104,18 @@ public class ParentServiceImpl implements ParentService {
 	private ParentDTO getDTOfromEntity(ParentEntity source) {
 		
 		ParentDTO dto = new ParentDTO();
-		
-		if (source.getId() != null) {
-			dto.setId(source.getId());	
-		}
-		
-		if (source.getUsername() != null) {
-			dto.setUsername(source.getUsername());	
-		}
-		
-		if (source.getPerson() != null) {
-			dto.setPerson(personService.createDTO(source.getPerson()));
-		}
-
-		if (source.getRole() != null) {
-			dto.setRole(roleService.createDTO(source.getRole()));
-		}
-		
-		if (source.getStatus() != null) {
-			dto.setStatus(source.getStatus());	
-		}
-		
-		if (source.getEmail() != null) {
-			dto.setEmail(source.getEmail());	
-		}
+			
+		if (source.getUsername() != null) dto.setUsername(source.getUsername());	
+		if (source.getPerson() != null) dto.setPerson(personService.createDTO(source.getPerson()));
+		if (source.getRole() != null) dto.setRole(roleService.createDTO(source.getRole()));		
+		if (source.getStatus() != null) dto.setStatus(source.getStatus());			
+		if (source.getEmail() != null) dto.setEmail(source.getEmail());			
+		if (source.getStatus() != null) dto.setStatus(source.getStatus());	
 		
 		if (source.getId() != null) {
 			List<StudentEntity> list = parentRepository.findAllChildrens(source);
 			dto.setChilds(studentService.createDTOList(list));	
-		}	
-		
+		}			
 		return dto;
 	}	
 	

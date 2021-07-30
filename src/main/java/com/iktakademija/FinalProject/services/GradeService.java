@@ -12,4 +12,5 @@ public interface GradeService {
 	List<GradeDTO> createDTOList(List<GradeEntity> source);
 	GradeDTO getGradeDTO(Integer gradeId);
 	
+	List<GradeDTO> getPageDTO(Integer page);	
 }

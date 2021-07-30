@@ -9,12 +9,15 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 
 /**
@@ -22,11 +25,13 @@ import io.jsonwebtoken.Jwts;
  */
 public class JWTAuthorizationFilter extends OncePerRequestFilter {
 
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
 	private final String authorization = "Authorization";
 	private final String bearer = "Bearer ";
-	
+
 	private String securityKey;
-	
+
 	// It is not Bean so need constructor
 	public JWTAuthorizationFilter(String securityKey) {
 		super();
@@ -34,7 +39,8 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
 	}
 
 	/**
-	 * Additional filter for authentication. All requests must satisfy this criteria.
+	 * Additional filter for authentication. All requests must satisfy this
+	 * criteria.
 	 */
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -43,27 +49,29 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
 		// Check if jwt token exists
 		if (checkJWTToken(request)) {
 			// Check the validity of jwt token, return authorities/claims
-			Claims claims = validateToken(request);
+			Claims claims = validateToken(request, response);
 			if (claims.get("authorities") != null) {
 				// If valid do setup spring security based on token authorities
 				setUpSpringAuthentication(claims);
 			} else {
 				// If validation fail, clear all context so it will be refused.
 				SecurityContextHolder.clearContext();
-			}			
+			}
 		} else {
 			// If validation fail, clear all context so it will be refused.
 			SecurityContextHolder.clearContext();
-		}	
-		// Invoke filter chain	
+		}
+		// Invoke filter chain
 		filterChain.doFilter(request, response);
 	}
-	
-	/** 
+
+	/**
 	 * Check if "Authorization" is presented in header.<BR>
-	 * Header must beguin with "Bearer " string followed by token value. 
+	 * Header must beguin with "Bearer " string followed by token value.
+	 * 
 	 * @param request HTTP request
-	 * @return True if header is presented and has bearer. Otherwise request has no walid token.
+	 * @return True if header is presented and has bearer. Otherwise request has no
+	 *         walid token.
 	 */
 	private boolean checkJWTToken(HttpServletRequest request) {
 		String authorizationHeader = request.getHeader(this.authorization);
@@ -71,34 +79,46 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
 			return false;
 		return true;
 	}
-	
+
 	/**
-	 * Return claims for user from provided token
-	 * Claims contains responsibility of user.
+	 * Return claims for user from provided token Claims contains responsibility of
+	 * user.
+	 * 
 	 * @param request HTTP request
 	 * @return All Claims of user.
+	 * @throws IOException
 	 */
-	private Claims validateToken(HttpServletRequest request) {
-		// Get token from authorization header with removed bearer. 
+	private Claims validateToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+		// Get token from authorization header with removed bearer.
 		String jwtToken = request.getHeader(this.authorization).replace(this.bearer, "");
 		// Get Claims from token
-		return Jwts.parser()  					 // parse token...
-				.setSigningKey(this.securityKey) // ...using security...
-				.parseClaimsJws(jwtToken) 		 // ... from provided token ...
-				.getBody(); 					 // ... get all Claims from body
+
+		try {
+			return Jwts.parser() // parse token...
+					.setSigningKey(this.securityKey) // ... using security ...
+					.parseClaimsJws(jwtToken) // ... from provided token ...
+					.getBody(); // ... get all Claims from body
+
+		} catch (ExpiredJwtException e) {
+			logger.warn(" >>> Token verification");
+			logger.warn("  |  Token expired or invalid.");
+			logger.warn(" <<< ------------------");
+			throw e;
+		}
+
 	}
-	
+
 	/**
 	 * Setup Spring authentication context holder to accepts access based on Claims
+	 * 
 	 * @param claims of user
 	 */
 	@SuppressWarnings("unchecked")
 	private void setUpSpringAuthentication(Claims claims) {
 		List<String> authorities = (List<String>) claims.get("authorities");
 		UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(claims.getSubject(), null,
-				authorities.stream()
-				.map(SimpleGrantedAuthority::new)
-				.collect(Collectors.toList()));
+				authorities.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList()));
 		SecurityContextHolder.getContext().setAuthentication(auth);
 	}
 

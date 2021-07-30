@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
 import com.iktakademija.FinalProject.entities.GradeEntity;
@@ -55,6 +58,14 @@ public class GradeServiceImpl implements GradeService {
 		List<GradeDTO> list = new ArrayList<>();
 		for (GradeEntity grade : source) 
 			list.add(this.createDTO(grade));		
+		return list;
+	}
+	
+	@Override
+	public List<GradeDTO> getPageDTO(Integer page) {	
+		Pageable pageRequest = PageRequest.of(page.intValue(), 5);
+		Slice<GradeEntity> retVal = gradeRepository.findAll(pageRequest);
+		List<GradeDTO> list = this.createDTOList(retVal.getContent());	
 		return list;
 	}
 	

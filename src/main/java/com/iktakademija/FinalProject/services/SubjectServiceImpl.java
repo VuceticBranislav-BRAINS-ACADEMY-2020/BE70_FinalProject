@@ -37,6 +37,14 @@ public class SubjectServiceImpl implements SubjectService {
 			list.add(this.createDTO(subject));		
 		return list;
 	}
+	
+	@Override
+	public List<SubjectDTO> createDTOList(List<SubjectEntity> source) {		
+		List<SubjectDTO> list = new ArrayList<>();
+		for (SubjectEntity subject : source) 
+			list.add(this.createDTO(subject));		
+		return list;
+	}
 
 	@Override
 	public SubjectDTO getSubjectDTO(Integer subjectId) {

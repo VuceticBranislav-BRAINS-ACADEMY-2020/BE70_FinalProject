@@ -13,13 +13,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
-@Table(name = "student_groups")
+@Table(name = "student_groups", uniqueConstraints = { @UniqueConstraint(columnNames = { "idstudent", "idgroup"}) })
 @JsonIgnoreProperties({ "handler", "hibernateLazyInitializer" })
 public class JoinTableStudentGroup {
 
@@ -32,7 +33,7 @@ public class JoinTableStudentGroup {
 	 ************************************************************/
 	
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinColumn(name = "idstudent", nullable = false, unique = true)
+	@JoinColumn(name = "idstudent", nullable = false)
 	@JsonBackReference(value = "Student_Group_1")
 	private StudentEntity student;
 	

@@ -130,6 +130,31 @@ public class GradeController {
 	}
 	
 	/**
+	 * REST endpoint that returns grades from data base in pages.
+	 * 
+	 * Postman code: <B>GRD14</B>
+	 * 
+	 * @return pages of {@link GradeDTO} from database or empty set if nothing to
+	 *         return.
+	 */
+	@Secured("ROLE_ADMIN")
+	@RequestMapping(method = RequestMethod.GET, path = "/admin/page/{id}")
+	public ResponseEntity<?> getAllGradesPage(@PathVariable(value = "id") Integer pageId) {
+
+		// Logging and retriving user.
+		UserEntity user = loginService.getUser();
+		loggingService.loggAndGetUser(user, Level.INFO);
+		loggingService.loggMessage("Method: GradeController.getAllGrades()", Level.INFO);
+
+		// Get list of all users on page
+		List<GradeDTO> retVal = gradeService.getPageDTO(pageId);
+
+		// Log results and make respons
+		loggingService.loggOutMessage(HttpStatus.OK.toString(), Level.INFO);
+		return new ResponseEntity<List<GradeDTO>>(retVal, HttpStatus.OK);
+	}
+	
+	/**
 	 * REST endpoint that returns grade from data base by id. Method always return
 	 * {@link HttpStatus.OK} if there is no internal error.<BR>
 	 * 
@@ -217,8 +242,8 @@ public class GradeController {
 		JoinTableSubjectTeacher subjectTeacher = joinTableSubjectTeacherRepository.findByTeachersAndSubclsAndGroup(teacher, subjectClass, group);
 		
 		// All is clear, grant grade.
-		try {
-			GradeEntity grade = new GradeEntity();
+		GradeEntity grade = new GradeEntity();
+		try {			
 			grade.setEntered(LocalDate.now());
 			grade.setStage(newGrade.getStage());
 			grade.setStd_grp(studentGroup);
@@ -226,7 +251,7 @@ public class GradeController {
 			grade.setType(newGrade.getType());
 			grade.setValue(newGrade.getValue());
 			grade.setStatus(EStatus.ACTIVE);
-			gradeRepository.save(grade);
+			grade = gradeRepository.save(grade);
 			
 			// Prepare and send mail
 			EmailObject object = new EmailObject();
@@ -251,7 +276,7 @@ public class GradeController {
 			return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.SOMETHING_WRONG), HttpStatus.BAD_REQUEST);
 		} 
 		loggingService.loggOutMessage(HttpStatus.OK.toString(), Level.INFO);	
-		return new ResponseEntity<>(HttpStatus.OK);		
+		return new ResponseEntity<GradeDTO>(gradeService.createDTO(grade), HttpStatus.OK);		
 	}
 
 	
@@ -292,14 +317,14 @@ public class GradeController {
 		} else
 			loggingService.loggMessage("Administration mode.", Level.INFO);			
 		
-		// All is clear, grant grade.
+		// All is clear, grant grade.		
 		try {
 			grade.setEntered(LocalDate.now());
-			grade.setStage(newGrade.getStage());
-			grade.setType(newGrade.getType());
-			grade.setValue(newGrade.getValue());
-			grade.setStatus(newGrade.getState());
-			gradeRepository.save(grade);
+			if (newGrade.getStage() != null) grade.setStage(newGrade.getStage());
+			if (newGrade.getType() != null) grade.setType(newGrade.getType());
+			if (newGrade.getValue() != null) grade.setValue(newGrade.getValue());
+			if (newGrade.getState() != null) grade.setStatus(newGrade.getState());
+			grade = gradeRepository.save(grade);
 			
 			// Prepare and send mail
 			EmailObject object = new EmailObject();
@@ -327,7 +352,7 @@ public class GradeController {
 			return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.SOMETHING_WRONG), HttpStatus.BAD_REQUEST);
 		} 
 		loggingService.loggOutMessage(HttpStatus.OK.toString(), Level.INFO);	
-		return new ResponseEntity<>(HttpStatus.OK);		
+		return new ResponseEntity<GradeDTO>(gradeService.createDTO(grade), HttpStatus.OK);		
 	}
 	
 	/**

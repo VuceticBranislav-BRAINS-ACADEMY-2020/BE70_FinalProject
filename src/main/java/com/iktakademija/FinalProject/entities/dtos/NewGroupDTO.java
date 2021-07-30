@@ -1,6 +1,7 @@
 package com.iktakademija.FinalProject.entities.dtos;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -28,14 +29,17 @@ public class NewGroupDTO {
 	@JsonProperty(value = "Class Mark")
 	private String letter;	
 
+	@NotNull(message = "Must not be null.")
 	@Positive(message = "Must be positiv index number.")
 	@JsonProperty(value = "ID Homeclass Teacher")
 	private Integer homeClassMaster;
 	
+	@NotNull(message = "Must not be null.")
 	@Positive(message = "Must be positiv index number.")
 	@JsonProperty(value = "ID Class")
 	private Integer clazz;
 	
+	@NotNull(message = "Must not be null.")
 	@JsonProperty(value = "Status")
 	private EStatus status;
 

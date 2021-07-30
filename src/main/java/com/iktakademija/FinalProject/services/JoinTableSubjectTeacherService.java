@@ -12,4 +12,6 @@ public interface JoinTableSubjectTeacherService {
 	JoinTableSubjectTeacherDTO setEntity(Integer id, JoinTableSubjectTeacherDTO newEntity);
 	JoinTableSubjectTeacherDTO removeEntity(Integer id);
 	JoinTableSubjectTeacher createEntity(JoinTableSubjectTeacherDTO source);
+	
+	JoinTableSubjectTeacher addTeacherToSubjectByGroup(Integer teacherid, Integer subjectid, Integer groupid);
 }

@@ -19,4 +19,5 @@ public interface JoinTableStudentGroupRepository extends CrudRepository<JoinTabl
 	@Override
 	Optional<JoinTableStudentGroup> findById(Integer id);
 	
+	Optional<JoinTableStudentGroup> findByStudent(StudentEntity student);
 }

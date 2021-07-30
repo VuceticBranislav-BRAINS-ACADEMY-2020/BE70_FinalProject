@@ -3,6 +3,7 @@ package com.iktakademija.FinalProject.services;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -124,6 +125,7 @@ public class TeacherServiceImpl implements TeacherService {
 		if (newTeacher.getPersonId() != null) teacher.setPerson(person);
 		if (newTeacher.getUsername() != null) teacher.setUsername(newTeacher.getUsername());			
 		if (newTeacher.getPassword() != null) teacher.setPassword(Encryption.passwordEncode(newTeacher.getPassword()));
+		if (newTeacher.getStatus() != null) teacher.setStatus(newTeacher.getStatus());
 		
 		// Save and return DTO
 		teacher = teacherRepository.save(teacher);
@@ -176,6 +178,17 @@ public class TeacherServiceImpl implements TeacherService {
 		List<GradeDTO> retVal = gradeService.createDTOList(list);
 		return retVal;
 		
+	}
+	
+	@Override
+	public List<SubjectEntity> getAllSubjectsByTeacher(Integer teacherId) {
+		
+		// Check teacher id
+		Optional<TeacherEntity> op = teacherRepository.findById(teacherId);
+		if (op.isPresent() == false ) return null;
+		TeacherEntity teacher = op.get();	
+		
+		return teacher.getSubject().stream().map( i -> i.getSub_cls().getSubject()).collect(Collectors.toList());
 	}
 	
 //	@PersistenceContext

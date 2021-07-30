@@ -32,6 +32,7 @@ public class NewClassDTO {
 	@JsonProperty(value = "Year")
 	private Integer year;
 	
+	@NotNull(message = "Must not be null.")
 	@JsonProperty(value = "Status")
 	private EStatus status;
 	

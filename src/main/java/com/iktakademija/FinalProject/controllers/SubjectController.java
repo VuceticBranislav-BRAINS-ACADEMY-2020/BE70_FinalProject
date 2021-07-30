@@ -44,7 +44,6 @@ public class SubjectController {
 
 	@Autowired
 	private LoggingService loggingService;
-
 	
 	/**
 	 * REST endpoint that returns all subjects from data base. Method always return
@@ -201,5 +200,5 @@ public class SubjectController {
 		loggingService.loggOutMessage(HttpStatus.OK.toString(), Level.INFO);
 		return new ResponseEntity<SubjectDTO>(dto, HttpStatus.OK);	
 	}	
-
+	
 }

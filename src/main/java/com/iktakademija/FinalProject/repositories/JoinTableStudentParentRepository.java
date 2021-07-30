@@ -18,10 +18,14 @@ public interface JoinTableStudentParentRepository extends CrudRepository<JoinTab
 	
 	@Query(value = "SELECT id FROM StudentEntity AS s WHERE s.id IN (SELECT student FROM JoinTableStudentParent WHERE parent = :ID)")
 	List<Integer> findChildOfParent(@Param(value = "ID") ParentEntity childID);
-
+	
 	@Override
 	List<JoinTableStudentParent> findAll();
 	
 	@Override
 	Optional<JoinTableStudentParent> findById(Integer id);
+	
+	List<JoinTableStudentParent> findByStudent(StudentEntity student);
+	
+	List<JoinTableStudentParent> findByParent(ParentEntity parent);
 }

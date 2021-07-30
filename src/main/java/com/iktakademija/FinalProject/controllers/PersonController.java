@@ -92,7 +92,7 @@ public class PersonController {
 		if (person == null ) {
 			return new ResponseEntity<RESTError>(new RESTError(ERESTErrorCodes.INVALID_PARAMETERS), HttpStatus.BAD_REQUEST);
 		}
-		return new ResponseEntity<PersonEntity>(person, HttpStatus.OK);
+		return new ResponseEntity<PersonDTO>(personService.createDTO(person), HttpStatus.OK);
 	}
 	
 }

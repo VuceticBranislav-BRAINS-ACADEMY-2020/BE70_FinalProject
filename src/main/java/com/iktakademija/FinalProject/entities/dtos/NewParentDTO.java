@@ -1,6 +1,7 @@
 package com.iktakademija.FinalProject.entities.dtos;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
@@ -9,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.iktakademija.FinalProject.entities.AdminEntity;
+import com.iktakademija.FinalProject.entities.enums.EStatus;
 import com.iktakademija.FinalProject.securities.Views;
 
 /**
@@ -25,14 +27,17 @@ public class NewParentDTO {
 	 * Attributes
 	 ************************************************************/
 	
+	@NotNull(message = "Must not be null.")
 	@Size(min = 5, max = 10, message = "Username must be between {min} and {max} characters long.")
 	@JsonProperty(value = "Username")
 	private String username;
 
+	@NotNull(message = "Must not be null.")
 	@Pattern(regexp = "^[A-Za-z\\d]{4,}$", message = "Password  must contain at least 4 characters.")
 	@JsonProperty(value = "Password")
 	private String password;
 
+	@NotNull(message = "Must not be null.")
 	@Positive(message = "Must be positiv index number.")
 	@JsonProperty(value = "ID Person")
 	private Integer personId;	
@@ -40,6 +45,9 @@ public class NewParentDTO {
 	@Email(message = "Please provide a valid email.")
 	@JsonProperty(value = "eMail")
 	private String email;
+	
+	@JsonProperty(value = "Status")
+	private EStatus status;	
 	
 	/************************************************************
 	 * Constructors
@@ -79,6 +87,14 @@ public class NewParentDTO {
 
 	public String getEmail() {
 		return email;
+	}
+
+	public EStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(EStatus status) {
+		this.status = status;
 	}
 
 	public void setEmail(String email) {
