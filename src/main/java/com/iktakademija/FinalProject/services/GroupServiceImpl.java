@@ -163,10 +163,4 @@ public class GroupServiceImpl implements GroupService {
 		return item;
 	}
 
-	// prmedbe
-	// + dodavanje roditrelja uceniku - obrnuto
-	// + endpoint dodavanje predmeta razredu
-	// - endpoint dodavanje profesora predmetu
-	// + endpoint dodavanje ucenika odeljenju
-
 }

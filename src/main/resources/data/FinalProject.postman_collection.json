@@ -214,7 +214,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"Username\": \"Admin 01\",\r\n    \"Password\": \"pass\",\r\n    \"ID Person\": 300,\r\n    \"eMail\": \"new2email@email.com\"\r\n}",
+							"raw": "{\r\n    \"Username\": \"Admin 09\",\r\n    \"Password\": \"pass\",\r\n    \"ID Person\": 302,\r\n    \"eMail\": \"new2email@email.com\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -307,14 +307,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{LocalHost}}/{{ApiVersion}}/admin/30",
+							"raw": "{{LocalHost}}/{{ApiVersion}}/admin/400",
 							"host": [
 								"{{LocalHost}}"
 							],
 							"path": [
 								"{{ApiVersion}}",
 								"admin",
-								"30"
+								"400"
 							]
 						}
 					},
@@ -337,7 +337,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"Username\": \"Admin 01\",\r\n    \"Password\": \"pass\",\r\n    \"ID Person\": \"24\",\r\n    \"eMail\": \"newemail@email.com\"\r\n}",
+							"raw": "{\r\n    \"Username\": \"Admin 01 forever\",\r\n    \"Password\": \"pass\",\r\n    \"ID Person\": \"302\",\r\n    \"eMail\": \"newemail@email.com\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -345,14 +345,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{LocalHost}}/{{ApiVersion}}/admin/30",
+							"raw": "{{LocalHost}}/{{ApiVersion}}/admin/2000",
 							"host": [
 								"{{LocalHost}}"
 							],
 							"path": [
 								"{{ApiVersion}}",
 								"admin",
-								"30"
+								"2000"
 							]
 						}
 					},
@@ -374,14 +374,14 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{LocalHost}}/{{ApiVersion}}/admin/30",
+							"raw": "{{LocalHost}}/{{ApiVersion}}/admin/2000",
 							"host": [
 								"{{LocalHost}}"
 							],
 							"path": [
 								"{{ApiVersion}}",
 								"admin",
-								"30"
+								"2000"
 							]
 						}
 					},
@@ -409,7 +409,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"Username\": \"Parent 01\",\r\n    \"Password\": \"pass\",\r\n    \"ID Person\": \"50\",\r\n    \"eMail\": \"parent@home.com\"\r\n}",
+							"raw": "{\r\n    \"Username\": \"Parent 01\",\r\n    \"Password\": \"pass\",\r\n    \"ID Person\": \"302\",\r\n    \"eMail\": \"parent@home.com\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -474,14 +474,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{LocalHost}}/{{ApiVersion}}/parent/34",
+							"raw": "{{LocalHost}}/{{ApiVersion}}/parent/2001",
 							"host": [
 								"{{LocalHost}}"
 							],
 							"path": [
 								"{{ApiVersion}}",
 								"parent",
-								"34"
+								"2001"
 							]
 						}
 					},
@@ -504,7 +504,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"Username\": \"Parent 01\",\r\n    \"Password\": \"pass\",\r\n    \"ID Person\": \"24\",\r\n    \"eMail\": \"opaopaopa@email.com\"\r\n}",
+							"raw": "{\r\n    \"Username\": \"Parent 01 best\",\r\n    \"Password\": \"pass\",\r\n    \"ID Person\": \"302\",\r\n    \"eMail\": \"opaopaopa@email.com\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -512,7 +512,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{LocalHost}}/{{ApiVersion}}/parent/admin/34",
+							"raw": "{{LocalHost}}/{{ApiVersion}}/parent/admin/2001",
 							"host": [
 								"{{LocalHost}}"
 							],
@@ -520,7 +520,7 @@
 								"{{ApiVersion}}",
 								"parent",
 								"admin",
-								"34"
+								"2001"
 							]
 						}
 					},
@@ -542,7 +542,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{LocalHost}}/{{ApiVersion}}/parent/admin/34",
+							"raw": "{{LocalHost}}/{{ApiVersion}}/parent/admin/2001",
 							"host": [
 								"{{LocalHost}}"
 							],
@@ -550,7 +550,7 @@
 								"{{ApiVersion}}",
 								"parent",
 								"admin",
-								"34"
+								"2001"
 							]
 						}
 					},
@@ -613,7 +613,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{LocalHost}}/{{ApiVersion}}/parent/admin/getchilds/34",
+							"raw": "{{LocalHost}}/{{ApiVersion}}/parent/admin/getchilds/437",
 							"host": [
 								"{{LocalHost}}"
 							],
@@ -622,7 +622,7 @@
 								"parent",
 								"admin",
 								"getchilds",
-								"34"
+								"437"
 							]
 						}
 					},
@@ -677,12 +677,12 @@
 							"urlencoded": [
 								{
 									"key": "user",
-									"value": "user 17",
+									"value": "potamolog",
 									"type": "text"
 								},
 								{
 									"key": "pass",
-									"value": "1717",
+									"value": "admin",
 									"type": "text"
 								}
 							]
@@ -778,7 +778,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"Username\": \"Teacher 01\",\r\n    \"Password\": \"pass\",\r\n    \"ID Person\": \"22\"\r\n}",
+							"raw": "{\r\n    \"Username\": \"Teacher 01\",\r\n    \"Password\": \"pass\",\r\n    \"ID Person\": \"303\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -844,7 +844,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{LocalHost}}/{{ApiVersion}}/teacher/admin/31",
+							"raw": "{{LocalHost}}/{{ApiVersion}}/teacher/admin/473",
 							"host": [
 								"{{LocalHost}}"
 							],
@@ -852,7 +852,7 @@
 								"{{ApiVersion}}",
 								"teacher",
 								"admin",
-								"31"
+								"473"
 							]
 						}
 					},
@@ -875,7 +875,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"Username\": \"Admin 015\",\r\n    \"Password\": \"pass\",\r\n    \"ID Person\": \"24\"\r\n}",
+							"raw": "{\r\n    \"Username\": \"Admin 01522\",\r\n    \"Password\": \"pass\",\r\n    \"ID Person\": \"365\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -883,7 +883,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{LocalHost}}/{{ApiVersion}}/teacher/admin/31",
+							"raw": "{{LocalHost}}/{{ApiVersion}}/teacher/admin/2002",
 							"host": [
 								"{{LocalHost}}"
 							],
@@ -891,7 +891,7 @@
 								"{{ApiVersion}}",
 								"teacher",
 								"admin",
-								"31"
+								"2002"
 							]
 						}
 					},
@@ -913,7 +913,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{LocalHost}}/{{ApiVersion}}/teacher/admin/31",
+							"raw": "{{LocalHost}}/{{ApiVersion}}/teacher/admin/2002",
 							"host": [
 								"{{LocalHost}}"
 							],
@@ -921,7 +921,7 @@
 								"{{ApiVersion}}",
 								"teacher",
 								"admin",
-								"31"
+								"2002"
 							]
 						}
 					},
@@ -943,7 +943,7 @@
 						"method": "PUT",
 						"header": [],
 						"url": {
-							"raw": "{{LocalHost}}/{{ApiVersion}}/teacher/admin/474/107/600",
+							"raw": "{{LocalHost}}/{{ApiVersion}}/teacher/admin/474/107/601",
 							"host": [
 								"{{LocalHost}}"
 							],
@@ -953,7 +953,7 @@
 								"admin",
 								"474",
 								"107",
-								"600"
+								"601"
 							]
 						}
 					},
@@ -1545,7 +1545,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"Username\": \"Student 01\",\r\n    \"Password\": \"pass\",\r\n    \"ID Person\": \"25\"\r\n}",
+							"raw": "{\r\n    \"Username\": \"Stunt0155\",\r\n    \"Password\": \"pass\",\r\n    \"ID Person\": \"350\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1642,7 +1642,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"Username\": \"Student 01\",\r\n    \"Password\": \"pass\",\r\n    \"ID Person\": \"22\"\r\n}",
+							"raw": "{\r\n    \"Username\": \"Student 08\",\r\n    \"Password\": \"pass\",\r\n    \"ID Person\": \"351\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1650,7 +1650,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{LocalHost}}/{{ApiVersion}}/student/admin/33",
+							"raw": "{{LocalHost}}/{{ApiVersion}}/student/admin/402",
 							"host": [
 								"{{LocalHost}}"
 							],
@@ -1658,7 +1658,7 @@
 								"{{ApiVersion}}",
 								"student",
 								"admin",
-								"33"
+								"402"
 							]
 						}
 					},
@@ -1680,7 +1680,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{LocalHost}}/{{ApiVersion}}/student/admin/36",
+							"raw": "{{LocalHost}}/{{ApiVersion}}/student/admin/403",
 							"host": [
 								"{{LocalHost}}"
 							],
@@ -1688,7 +1688,7 @@
 								"{{ApiVersion}}",
 								"student",
 								"admin",
-								"36"
+								"403"
 							]
 						}
 					},
@@ -1710,7 +1710,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{LocalHost}}/{{ApiVersion}}/student/admin/getparents/36",
+							"raw": "{{LocalHost}}/{{ApiVersion}}/student/admin/getparents/404",
 							"host": [
 								"{{LocalHost}}"
 							],
@@ -1719,7 +1719,7 @@
 								"student",
 								"admin",
 								"getparents",
-								"36"
+								"404"
 							]
 						}
 					},
@@ -1815,7 +1815,7 @@
 							"urlencoded": [
 								{
 									"key": "user",
-									"value": "user 17",
+									"value": "user 16",
 									"type": "text"
 								},
 								{
@@ -2017,7 +2017,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{LocalHost}}/{{ApiVersion}}/address/admin/2057",
+							"raw": "{{LocalHost}}/{{ApiVersion}}/address/admin/205",
 							"host": [
 								"{{LocalHost}}"
 							],
@@ -2025,7 +2025,7 @@
 								"{{ApiVersion}}",
 								"address",
 								"admin",
-								"2057"
+								"205"
 							]
 						}
 					},
@@ -2047,7 +2047,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{LocalHost}}/{{ApiVersion}}/address/admin/2058",
+							"raw": "{{LocalHost}}/{{ApiVersion}}/address/admin/205",
 							"host": [
 								"{{LocalHost}}"
 							],
@@ -2055,7 +2055,7 @@
 								"{{ApiVersion}}",
 								"address",
 								"admin",
-								"2058"
+								"205"
 							]
 						}
 					},
@@ -2180,7 +2180,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"First Name\": \"Petar2\",\r\n    \"Last Name\": \"Petrovic2\",\r\n    \"JMBG\": \"15102000310000\",\r\n    \"Phone Number\": \"063636300\",\r\n    \"Birth Date\": \"15-10-2011\",\r\n    \"ID Address\": \"11\"\r\n}",
+							"raw": "{\r\n    \"First Name\": \"Petar22\",\r\n    \"Last Name\": \"Petrovic2\",\r\n    \"JMBG\": \"15102000310001\",\r\n    \"Phone Number\": \"063636300\",\r\n    \"Birth Date\": \"15-10-2011\",\r\n    \"ID Address\": \"210\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2188,7 +2188,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{LocalHost}}/{{ApiVersion}}/person/admin/26",
+							"raw": "{{LocalHost}}/{{ApiVersion}}/person/admin/350",
 							"host": [
 								"{{LocalHost}}"
 							],
@@ -2196,7 +2196,7 @@
 								"{{ApiVersion}}",
 								"person",
 								"admin",
-								"26"
+								"350"
 							]
 						}
 					},
@@ -2218,7 +2218,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{LocalHost}}/{{ApiVersion}}/person/admin/26",
+							"raw": "{{LocalHost}}/{{ApiVersion}}/person/admin/360",
 							"host": [
 								"{{LocalHost}}"
 							],
@@ -2226,7 +2226,7 @@
 								"{{ApiVersion}}",
 								"person",
 								"admin",
-								"26"
+								"360"
 							]
 						}
 					},
@@ -2254,7 +2254,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"Name\": \"Biologija\"\r\n}",
+							"raw": "{\r\n    \"Name\": \"Astrofizika\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2320,7 +2320,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{LocalHost}}/{{ApiVersion}}/subject/admin/80",
+							"raw": "{{LocalHost}}/{{ApiVersion}}/subject/admin/100",
 							"host": [
 								"{{LocalHost}}"
 							],
@@ -2328,7 +2328,7 @@
 								"{{ApiVersion}}",
 								"subject",
 								"admin",
-								"80"
+								"100"
 							]
 						}
 					},
@@ -2359,7 +2359,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{LocalHost}}/{{ApiVersion}}/subject/admin/80",
+							"raw": "{{LocalHost}}/{{ApiVersion}}/subject/admin/105",
 							"host": [
 								"{{LocalHost}}"
 							],
@@ -2367,7 +2367,7 @@
 								"{{ApiVersion}}",
 								"subject",
 								"admin",
-								"80"
+								"105"
 							]
 						}
 					},
@@ -2389,7 +2389,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{LocalHost}}/{{ApiVersion}}/subject/admin/89",
+							"raw": "{{LocalHost}}/{{ApiVersion}}/subject/admin/105",
 							"host": [
 								"{{LocalHost}}"
 							],
@@ -2397,7 +2397,7 @@
 								"{{ApiVersion}}",
 								"subject",
 								"admin",
-								"89"
+								"105"
 							]
 						}
 					},
@@ -2521,7 +2521,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"ID\": \"2000\",\r\n    \"Type\": \"EXAM\",\r\n    \"Value\": \"4\",\r\n    \"Stage\": \"SECOND\",\r\n    \"State\": \"DELETED\"\r\n}",
+							"raw": "{\r\n    \"ID\": \"1100\",\r\n    \"Type\": \"EXAM\",\r\n    \"Value\": \"4\",\r\n    \"Stage\": \"SECOND\",\r\n    \"State\": \"DELETED\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
